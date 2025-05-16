@@ -1,20 +1,31 @@
-# Welcome to React Router!
+# Climate-Dry
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+A modern, production-ready React application with built-in authentication, responsive UI, and optimized for performance.
 
 ## Features
 
+- 🔒 Complete authentication system (login, register, password reset)
+- 📱 Responsive design with TailwindCSS
 - 🚀 Server-side rendering
 - ⚡️ Hot Module Replacement (HMR)
 - 📦 Asset bundling and optimization
 - 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🔒 TypeScript for type safety
+- 🧭 React Router for navigation
 
 ## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm
+
+### Clone the Repository
+
+```bash
+git clone git@github.com:dmmdcreative/climate-dry.git
+cd climate-dry
+```
 
 ### Installation
 
@@ -23,6 +34,18 @@ Install the dependencies:
 ```bash
 npm install
 ```
+
+### Environment Configuration
+
+Create a `.env` file in the root directory:
+
+```bash
+VITE_API_BASE_URL=http://localhost/api // API base URL
+VITE_SITE_ID=1 // Site ID for the application
+VITE_SECRET="cd-secret" // Secret key 
+```
+
+This environment variable is required for API connections.
 
 ### Development
 
@@ -34,6 +57,22 @@ npm run dev
 
 Your application will be available at `http://localhost:5173`.
 
+## Project Structure
+
+```
+├── app/                  # Main application code
+│   ├── assets/           # Static assets and icons
+│   ├── components/       # Reusable UI components
+│   ├── contexts/         # React contexts (auth, etc.)
+│   ├── pages/            # Page components and routes
+│   ├── services/         # API and service integrations
+│   └── utils/            # Utility functions
+├── public/               # Public static files
+├── Dockerfile            # Docker configuration
+├── package.json          # Project dependencies and scripts
+└── tsconfig.json         # TypeScript configuration
+```
+
 ## Building for Production
 
 Create a production build:
@@ -44,44 +83,26 @@ npm run build
 
 ## Deployment
 
-### Docker Deployment
-
-To build and run using Docker:
+To deploy the application:
 
 ```bash
-docker build -t my-app .
+# Build the application
+npm run build
 
-# Run the container
-docker run -p 3000:3000 my-app
+# Deploy the build folder to your hosting provider
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
+The build output will contain:
 ```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
 ├── build/
 │   ├── client/    # Static assets
 │   └── server/    # Server-side code
 ```
 
-## Styling
+## Contributing
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request

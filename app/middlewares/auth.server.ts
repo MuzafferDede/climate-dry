@@ -1,0 +1,15 @@
+import { redirect, type unstable_MiddlewareFunction } from "react-router";
+import { getCustomer } from "~/services";
+
+export const authMiddleware: unstable_MiddlewareFunction = async (
+	{ request },
+	next,
+) => {
+	const customer = await getCustomer(request);
+
+	if (!customer) {
+		throw redirect("/login");
+	}
+
+	return await next();
+};
