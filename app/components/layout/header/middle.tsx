@@ -11,7 +11,7 @@ import {
 	XMarkIcon,
 } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { Link, href, useMatches } from "react-router";
+import { Link, href, useRouteLoaderData } from "react-router";
 import { Fragment } from "react/jsx-runtime";
 import logo from "~/assets/logo.svg";
 import { Button, Input } from "~/components";
@@ -19,10 +19,9 @@ import { useAppContext } from "~/contexts";
 import type { Customer } from "~/types";
 
 export const Middle = () => {
-	const matches = useMatches();
+	const data = useRouteLoaderData<{ customer: Customer }>("pages/layout");
 
-	const layoutMatch = matches.find((match) => match.id === "pages/layout");
-	const customer = (layoutMatch?.data as Customer) || null;
+	const customer = data?.customer;
 
 	const [showSearch, setShowSerach] = useState(false);
 	const { state, updateState } = useAppContext();

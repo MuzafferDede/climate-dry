@@ -1,8 +1,8 @@
 import { Form, Link, href, redirect, useNavigation } from "react-router";
 import { z } from "zod";
-import { Button, Input } from "~/components";
+import { Button, Input, Loading } from "~/components";
 import { validator } from "~/lib/utils";
-import { guestMiddleware } from "~/middlewares";
+import { guestGuard } from "~/middlewares";
 import { fetcher } from "~/services";
 import { commitSession, getSession } from "~/services/session.server";
 import type { Customer } from "~/types";
@@ -29,6 +29,8 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export async function action({ request }: { request: Request }) {
+	await guestGuard(request);
+
 	const formData = await request.formData();
 	const formValues = Object.fromEntries(formData);
 
@@ -67,7 +69,7 @@ export async function action({ request }: { request: Request }) {
 	}
 }
 
-export const unstable_middleware = [guestMiddleware];
+// export const unstable_middleware = [guestMiddleware];
 
 export default function LoginPage({
 	actionData,
@@ -117,12 +119,12 @@ export default function LoginPage({
 					/>
 
 					<Button
-						className="w-full"
+						className="w-full gap-1"
 						variant="default"
 						type="submit"
 						disabled={isSubmitting}
 					>
-						{isSubmitting ? "Signing in..." : "Sign In"}
+						{isSubmitting && <Loading />} <span>Signin</span>
 					</Button>
 				</Form>
 

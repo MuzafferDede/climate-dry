@@ -1,4 +1,5 @@
-import { authMiddleware } from "~/middlewares";
+import type { LoaderFunctionArgs } from "react-router";
+import { authGuard } from "~/middlewares";
 
 export function meta() {
 	return [
@@ -7,13 +8,15 @@ export function meta() {
 	];
 }
 
-export function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
+	await authGuard(request);
+
 	return {
 		title: "My Account",
 	};
 }
 
-export const unstable_middleware = [authMiddleware];
+// export const unstable_middleware = [authMiddleware];
 
 export default function AccountPage() {
 	return (

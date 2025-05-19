@@ -1,9 +1,11 @@
 import { redirect } from "react-router";
-import { authMiddleware } from "~/middlewares";
+import { authGuard } from "~/middlewares";
 import { destroySession, fetcher, getSession } from "~/services";
 import type { Route } from "./+types/logout";
 
 export async function loader({ request }: Route.LoaderArgs) {
+	await authGuard(request);
+
 	try {
 		const api = await fetcher(request);
 
@@ -26,4 +28,4 @@ export async function loader({ request }: Route.LoaderArgs) {
 	}
 }
 
-export const unstable_middleware = [authMiddleware];
+// export const unstable_middleware = [authMiddleware];
