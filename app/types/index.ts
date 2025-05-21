@@ -7,11 +7,25 @@ export type Customer = {
 };
 
 export type NavigationItem = {
-	path: string;
-	label: string;
-	banner?: {
-		url: string;
-		image: string;
-	};
+	name: string;
+	slug: string;
+	banner_link?: string;
+	banner_url?: string;
+	thumbnail_url?: string;
 	children?: NavigationItem[];
 };
+
+export type HeroCategoryItem = {
+	name: "string";
+	slug: "string";
+};
+
+export type HeroBannerItem = {
+	title: "string";
+	description: "string";
+	url: string;
+	button_text: string;
+	banner_url: string;
+};
+
+export type FooterLink = { label: string; path: string };

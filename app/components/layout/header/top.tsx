@@ -2,15 +2,15 @@ import { Link, href } from "react-router";
 
 export const Top = () => {
 	return (
-		<div className="bg-gray-100 shadow">
-			<div className="container mx-auto flex items-center justify-center p-2 sm:justify-between">
-				<div className="flex gap-2 font-semibold text-sm uppercase">
+		<div className="relative z-30 border-gray-lightest border-b">
+			<div className="mx-auto flex max-w-7xl items-center justify-center p-2 sm:justify-between">
+				<div className="flex gap-2 font-semibold uppercase">
 					<h2>
 						Call <span className="hidden sm:inline">our team</span> for expert
 						advice:
 					</h2>
 					<a
-						className="text-cyan-600 hover:text-cyan-700"
+						className="text-teal hover:text-navy-darkest"
 						href="te:0808 196 9381"
 					>
 						0808 196 9381
@@ -18,20 +18,20 @@ export const Top = () => {
 				</div>
 				<div className="flex items-center gap-4">
 					<div className="hidden gap-2 font-semibold text-xs md:flex">
-						<Link className="hover:text-cyan-700" to={href("/")}>
+						<Link className="hover:text-teal" to={href("/")}>
 							About Us
 						</Link>
-						<Link className="hover:text-cyan-700" to={href("/")}>
+						<Link className="hover:text-teal" to={href("/")}>
 							Brands
 						</Link>
-						<Link className="hover:text-cyan-700" to={href("/")}>
+						<Link className="hover:text-teal" to={href("/")}>
 							Delivery
 						</Link>
 					</div>
-					<div className="hidden gap-2 text-cyan-600 sm:flex">
+					<div className="hidden gap-2 text-teal sm:flex">
 						<a
 							href="/"
-							className="flex items-center hover:text-cyan-900"
+							className="flex items-center hover:text-navy-darkest"
 							title="X"
 						>
 							<svg
@@ -54,7 +54,7 @@ export const Top = () => {
 						</a>
 						<a
 							href="/"
-							className="flex items-center hover:text-cyan-900"
+							className="flex items-center hover:text-navy-darkest"
 							title="facebook"
 						>
 							<svg
@@ -75,7 +75,7 @@ export const Top = () => {
 						</a>
 						<a
 							href="/"
-							className="flex items-center hover:text-cyan-900"
+							className="flex items-center hover:text-navy-darkest"
 							title="Linkedin"
 						>
 							<svg
@@ -98,7 +98,7 @@ export const Top = () => {
 						</a>
 						<a
 							href="/"
-							className="flex items-center hover:text-cyan-900"
+							className="flex items-center hover:text-navy-darkest"
 							title="Instagram"
 						>
 							<svg

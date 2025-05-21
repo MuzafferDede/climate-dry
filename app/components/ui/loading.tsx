@@ -5,7 +5,7 @@ import { cn } from "~/lib/utils";
 export const Loading = ({ className, ...props }: SVGProps<SVGSVGElement>) => {
 	return (
 		<ArrowPathIcon
-			className={cn("h-4 w-4 animate-spin text-white", className)}
+			className={cn("h-4 w-4 animate-spin text-teal", className)}
 			{...props}
 		/>
 	);

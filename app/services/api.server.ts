@@ -8,7 +8,6 @@ interface FetcherInit extends RequestInit {
 	data?: unknown;
 }
 
-// 🧠 Main utility – accepts the `request` object and returns a scoped fetcher
 export async function fetcher(request: Request) {
 	const customer = await getCustomer(request);
 
@@ -16,13 +15,21 @@ export async function fetcher(request: Request) {
 		endpoint: string,
 		{ data, method = "GET", ...init }: FetcherInit = {},
 	): Promise<T> {
-		const headers: HeadersInit = {
+		const isAbsoluteUrl =
+			endpoint.startsWith("http://") || endpoint.startsWith("https://");
+
+		// Start with a plain object for headers
+		const headers: Record<string, string> = {
 			"Content-Type": "application/json",
 			Accept: "application/json",
 			"X-Site-ID": SITE_ID,
-			...(customer?.token ? { Authorization: `Bearer ${customer.token}` } : {}),
-			...init.headers,
+			...(init.headers as Record<string, string>), // cast if needed
 		};
+
+		// Add Authorization header only for relative URLs and if token exists
+		if (!isAbsoluteUrl && customer?.token) {
+			headers.Authorization = `Bearer ${customer.token}`;
+		}
 
 		const config: RequestInit = {
 			method,
@@ -31,7 +38,9 @@ export async function fetcher(request: Request) {
 			...(data ? { body: JSON.stringify(data) } : {}),
 		};
 
-		const res = await fetch(`${BASE_URL}${endpoint}`, config);
+		const url = isAbsoluteUrl ? endpoint : `${BASE_URL}${endpoint}`;
+
+		const res = await fetch(url, config);
 
 		if (!res.ok) {
 			const errorData = await res.json().catch(() => ({

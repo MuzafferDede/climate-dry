@@ -19,7 +19,7 @@ import { useAppContext } from "~/contexts";
 import type { Customer } from "~/types";
 
 export const Middle = () => {
-	const data = useRouteLoaderData<{ customer: Customer }>("pages/layout");
+	const data = useRouteLoaderData<{ customer: Customer }>("root");
 
 	const customer = data?.customer;
 
@@ -28,7 +28,7 @@ export const Middle = () => {
 
 	return (
 		<div className="bg-white md:py-2">
-			<div className="container mx-auto">
+			<div className="mx-auto max-w-7xl">
 				<div
 					className="group/search flex flex-wrap items-center justify-between gap-2 p-2 md:flex-nowrap md:p-0"
 					data-show={showSearch}
@@ -53,13 +53,13 @@ export const Middle = () => {
 						<img src={logo} alt="Climate Dry" className="h-8 w-auto md:h-14" />
 					</Link>
 					<div className="group-data-[show=true]/search:fade-in group-data-[show=true]/search:slide-in-from-top relative order-3 hidden w-full animate-in group-data-[show=true]/search:block md:order-2 md:block lg:max-w-2xl">
-						<Input name="search" placeholder="Search..." />
+						<Input name="search" placeholder="Search products..." />
 						<Button
-							variant="ghost"
+							variant="plain"
 							size="icon"
-							className="absolute inset-y-px right-0 py-0"
+							className="absolute inset-y-px right-0 py-0 text-gray-light hover:text-gray-dark"
 						>
-							<MagnifyingGlassIcon className="size-5" />
+							<MagnifyingGlassIcon className="size-6" />
 						</Button>
 					</div>
 					<div className="order-2 flex justify-end gap-1 md:order-3">
@@ -69,16 +69,16 @@ export const Middle = () => {
 							onClick={() => setShowSerach((prev) => !prev)}
 							className="md:hidden"
 						>
-							<MagnifyingGlassIcon className="size-5" />
-							<XMarkIcon className="hidden size-5 group-data-[show=true]/search:block" />
+							<MagnifyingGlassIcon className="size-6" />
+							<XMarkIcon className="hidden size-6 group-data-[show=true]/search:block" />
 						</Button>
 						<div className="relative flex">
 							<Button size="icon" variant="ghost">
 								<Link to={href("/cart")}>
-									<span className="-mt-1 -mr-1 absolute top-0 right-0 z-10 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 font-bold text-white text-xs">
+									<span className="-mt-1 -mr-1 absolute top-0 right-0 z-10 flex h-5 min-w-5 items-center justify-center rounded-full bg-black font-bold text-white text-xs">
 										<span className="px-1.5">7</span>
 									</span>
-									<ShoppingCartIcon className="size-5" />
+									<ShoppingCartIcon className="size-6" />
 								</Link>
 							</Button>
 						</div>
@@ -86,12 +86,12 @@ export const Middle = () => {
 							<Menu>
 								<MenuButton as={Fragment}>
 									<Button size="icon" variant="ghost">
-										<UserCircleIcon className="size-5" />
+										<UserCircleIcon className="size-6" />
 									</Button>
 								</MenuButton>
 								<MenuItems
 									anchor="bottom end"
-									className="slide-in-from-right-10 z-20 w-48 origin-top-right animate-in rounded-xl border border-gray-200 bg-white p-1 font-semibold text-gray-700 text-sm/6 shadow-sm transition [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
+									className="slide-in-from-right-10 z-20 w-48 origin-top-right animate-in rounded-xl border border-gray-200 bg-white p-1 font-semibold text-gray-700 shadow-sm transition [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
 								>
 									{customer ? (
 										<>

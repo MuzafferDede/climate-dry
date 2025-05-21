@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Form, Link, href, redirect, useNavigation } from "react-router";
 import { z } from "zod";
 import { Button, Input, Loading } from "~/components";
+import { useToast } from "~/contexts";
 import { validator } from "~/lib/utils";
 import { guestGuard } from "~/middlewares";
 import { fetcher } from "~/services";
@@ -76,25 +78,33 @@ export default function LoginPage({
 	loaderData,
 }: Route.ComponentProps) {
 	const { registered } = loaderData;
-	const { errors, message } = actionData || {};
+	const { message, errors } = actionData || {};
 	const navigation = useNavigation();
 	const isSubmitting = navigation.state === "submitting";
 
+	const toast = useToast();
+
+	useEffect(() => {
+		if (message) {
+			toast.error(message);
+		}
+	}, [message, toast.error]);
+
 	return (
-		<div className="container mx-auto px-4 py-12">
+		<div className="mx-auto max-w-7xl px-4 py-12">
 			<div className="fade-in-90 zoom-in-90 mx-auto my-16 max-w-lg animate-in rounded-xl border border-gray-200 bg-white px-6 py-8 shadow-sm">
 				<h1 className="mb-8 text-center font-semibold text-2xl">
 					Sign in to your account
 				</h1>
 
 				{registered && (
-					<div className="mb-6 rounded-md bg-emerald-100 px-4 py-3 text-center text-emerald-800 text-sm">
+					<div className="mb-6 rounded-md bg-emerald-100 px-4 py-3 text-center text-emerald-800">
 						Registration successful! You can now sign in.
 					</div>
 				)}
 
 				{message && (
-					<div className="mb-6 rounded-md bg-rose-100 px-4 py-3 text-center text-rose-800 text-sm">
+					<div className="mb-6 rounded-md bg-rose-100 px-4 py-3 text-center text-rose-800">
 						{message}
 					</div>
 				)}
@@ -128,11 +138,11 @@ export default function LoginPage({
 					</Button>
 				</Form>
 
-				<p className="mt-8 text-center text-sm">
+				<p className="mt-8 text-center">
 					<span>Don't have an account?</span>{" "}
 					<Link
 						to={href("/register")}
-						className="font-medium text-cyan-600 underline-offset-4 hover:underline"
+						className="font-medium text-teal underline-offset-4 hover:underline"
 					>
 						Register
 					</Link>

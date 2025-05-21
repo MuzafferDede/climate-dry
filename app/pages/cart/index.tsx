@@ -10,7 +10,7 @@ export function meta() {
 
 export default function CartPage() {
 	return (
-		<div className="container mx-auto px-4 py-12">
+		<div className="mx-auto max-w-7xl px-4 py-12">
 			{/* Cart Header */}
 			<div className="mb-10 flex items-center justify-between">
 				<div className="h-10 w-48 animate-pulse rounded bg-teal-700" />

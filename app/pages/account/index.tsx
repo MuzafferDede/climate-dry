@@ -20,7 +20,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function AccountPage() {
 	return (
-		<div className="container mx-auto px-4 py-12">
+		<div className="mx-auto max-w-7xl px-4 py-12">
 			{/* Header placeholders */}
 			<header className="mb-10 flex items-center justify-between">
 				<div className="h-10 w-48 animate-pulse rounded bg-teal-700" />

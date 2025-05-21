@@ -12,8 +12,10 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { ExclamationTriangleIcon, HomeIcon } from "@heroicons/react/16/solid";
-import { Button } from "~/components";
-import { AppProvider } from "~/contexts";
+import { Button, Footer, Header } from "~/components";
+import { AppProvider, ToastProvider } from "~/contexts";
+import { ToastContainer } from "./components/ui/toast";
+import { getCustomer, navigationBuilder, subsucribe } from "./services";
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -28,6 +30,28 @@ export const links: Route.LinksFunction = () => [
 	},
 ];
 
+export const loader = async ({ request }: Route.LoaderArgs) => {
+	try {
+		const customer = await getCustomer(request);
+		const menu = navigationBuilder(request);
+
+		return { customer, menu };
+	} catch (error) {
+		throw {
+			message:
+				error instanceof Error
+					? error.message
+					: "There was an issue. Please try again.",
+		};
+	}
+};
+
+export const action = async ({ request }: Route.ActionArgs) => {
+	const data = await subsucribe(request);
+
+	return { message: data.message, error: data.error };
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
@@ -37,7 +61,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Meta />
 				<Links />
 			</head>
-			<body className="text-gray-700 antialiased has-[div[data-navigation-open=true]]:overflow-hidden">
+			<body className="text-navy-darkest text-sm antialiased has-[div[data-navigation-open=true]]:overflow-hidden">
 				{children}
 				<ScrollRestoration />
 				<Scripts />
@@ -49,7 +73,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
 	return (
 		<AppProvider>
-			<Outlet />
+			<ToastProvider>
+				<main className="relative isolate">
+					<Header />
+					<Outlet />
+					<Footer />
+					<ToastContainer />
+				</main>
+			</ToastProvider>
 		</AppProvider>
 	);
 }

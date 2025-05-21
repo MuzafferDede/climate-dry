@@ -9,7 +9,7 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { Suspense } from "react";
-import { Await, Link, useRouteLoaderData } from "react-router";
+import { Await, NavLink, useRouteLoaderData } from "react-router";
 import { Loading } from "~/components/ui";
 import { useAppContext } from "~/contexts";
 import { cn } from "~/lib/utils";
@@ -18,7 +18,7 @@ import type { NavigationItem } from "~/types";
  * Navigation component that renders desktop and mobile navigation
  */
 export const Navigation = () => {
-	const data = useRouteLoaderData("pages/layout");
+	const data = useRouteLoaderData("root");
 
 	const navigation: NavigationItem[] = data?.menu;
 
@@ -36,7 +36,7 @@ export const Navigation = () => {
 				{(nav) => (
 					<nav className="bg-white shadow-sm">
 						{/* Container */}
-						<div className="container mx-auto px-4">
+						<div className="mx-auto max-w-7xl px-4">
 							{/* Desktop Navigation */}
 							<div className="hidden md:block">
 								<PopoverGroup className="flex flex-wrap justify-start gap-5 py-3">
@@ -44,25 +44,17 @@ export const Navigation = () => {
 										const hasChildren = Boolean(item.children);
 
 										return (
-											<Popover key={item.path} className="relative">
+											<Popover key={item.slug} className="relative">
 												{({ open }) => (
 													<>
 														<PopoverButton
 															className={cn(
-																"flex cursor-pointer items-center justify-between gap-2 font-semibold outline-none transition-colors",
-																open ? "text-cyan-600" : "hover:text-cyan-600",
+																"flex cursor-pointer items-center justify-between gap-2 font-semibold outline-none transition-colors has-[span[data-active=true]]:text-teal",
+																open ? "text-teal" : "hover:text-teal",
 															)}
 														>
-															<Link
-																className={cn(
-																	!hasChildren || open
-																		? "pointer-events-auto"
-																		: "pointer-events-none",
-																)}
-																to={item.path}
-															>
-																{item.label}
-															</Link>
+															{item.name}
+
 															{hasChildren && (
 																<ChevronDownIcon
 																	className={cn(
@@ -76,41 +68,44 @@ export const Navigation = () => {
 														{hasChildren && (
 															<PopoverPanel
 																as="div"
-																className="fade-in slide-in-from-top-15 transy4 absolute inset-shadow-xs left-0 z-20 grid w-max translate-y-3 animate-in gap-2 rounded-b-lg bg-white p-3 shadow-xl"
+																className="fade-in slide-in-from-top-15 absolute inset-shadow-xs left-0 z-20 flex w-full translate-y-3 animate-in items-start gap-5 rounded-b-lg bg-white p-3 shadow-xl"
 																anchor="bottom start"
 															>
-																{item.banner && (
-																	<Link to={item.banner.url}>
-																		<img
-																			src={item.banner.image}
-																			alt={`${item.label} banner`}
-																			className="h-28 w-full rounded-lg object-cover shadow-sm"
-																			loading="lazy"
-																		/>
-																	</Link>
-																)}
-																<ul className="flex grid-cols-[1fr_auto] items-start gap-3">
+																<ul className="flex w-full items-start gap-1">
 																	{item.children?.map((child) => (
 																		<li
-																			key={child.path}
-																			className="grid w-full min-w-64 gap-1"
+																			key={child.slug}
+																			className="grid w-full gap-1"
 																		>
-																			<Link
-																				className="font-semibold text-cyan-700 transition-colors hover:text-cyan-600"
-																				to={child.path}
+																			{child.thumbnail_url && (
+																				<NavLink
+																					to={child.slug}
+																					className="h-20 w-full"
+																				>
+																					<img
+																						src={child.thumbnail_url}
+																						alt={`${child.name} banner`}
+																						className="h-full w-full rounded-lg object-cover shadow-sm"
+																						loading="lazy"
+																					/>
+																				</NavLink>
+																			)}
+																			<NavLink
+																				className="font-semibold text-teal uppercase transition-colors hover:text-navy-darkest"
+																				to={child.slug}
 																			>
-																				{child.label}
-																			</Link>
+																				{child.name}
+																			</NavLink>
 																			{child.children && (
-																				<ul className="grid w-full gap-1 font-semibold text-sm">
+																				<ul className="grid w-full gap-1">
 																					{child.children.map((grandChild) => (
-																						<li key={grandChild.path}>
-																							<Link
-																								className="transition-colors hover:text-cyan-600"
-																								to={grandChild.path}
+																						<li key={grandChild.slug}>
+																							<NavLink
+																								className="transition-colors hover:text-teal"
+																								to={grandChild.slug}
 																							>
-																								{grandChild.label}
-																							</Link>
+																								{grandChild.name}
+																							</NavLink>
 																						</li>
 																					))}
 																				</ul>
@@ -144,7 +139,7 @@ export const Navigation = () => {
 								</button>
 								<div className="relative z-20 space-y-1 px-2 pt-2 pb-3">
 									{nav.map((item) => (
-										<div key={item.path} className="border-gray-200 border-b">
+										<div key={item.slug} className="border-gray-200 border-b">
 											{item.children ? (
 												<Disclosure as="div">
 													{({ open }) => (
@@ -152,19 +147,10 @@ export const Navigation = () => {
 															<DisclosureButton
 																className={cn(
 																	"flex w-full items-center justify-between py-3 text-left font-medium",
-																	open ? "text-cyan-600" : "text-gray-900",
+																	open ? "text-teal" : "text-gray-900",
 																)}
 															>
-																<Link
-																	className={cn(
-																		open
-																			? "pointer-events-auto"
-																			: "pointer-events-none",
-																	)}
-																	to={item.path}
-																>
-																	{item.label}
-																</Link>
+																{item.name}
 																<ChevronDownIcon
 																	className={cn(
 																		"h-5 w-5 transition-transform",
@@ -175,7 +161,7 @@ export const Navigation = () => {
 															<DisclosurePanel className="fade-in slide-in-from-top-10 animate-in pb-2 pl-4">
 																<ul className="space-y-2">
 																	{item.children?.map((child) => (
-																		<li key={child.path}>
+																		<li key={child.slug}>
 																			{child.children ? (
 																				<Disclosure>
 																					{({ open }) => (
@@ -184,20 +170,20 @@ export const Navigation = () => {
 																								className={cn(
 																									"flex w-full items-center justify-between py-2 text-left font-medium",
 																									open
-																										? "text-cyan-600"
+																										? "text-teal"
 																										: "text-gray-800",
 																								)}
 																							>
-																								<Link
+																								<NavLink
 																									className={cn(
 																										open
 																											? "pointer-events-auto"
 																											: "pointer-events-none",
 																									)}
-																									to={child.path}
+																									to={child.slug}
 																								>
-																									{child.label}
-																								</Link>
+																									{child.name}
+																								</NavLink>
 																								<ChevronDownIcon
 																									className={cn(
 																										"h-4 w-4 transition-transform",
@@ -209,13 +195,13 @@ export const Navigation = () => {
 																								<ul className="space-y-1">
 																									{child.children?.map(
 																										(grandChild) => (
-																											<li key={grandChild.path}>
-																												<Link
-																													to={grandChild.path}
-																													className="block py-1 text-gray-700 hover:text-cyan-600"
+																											<li key={grandChild.slug}>
+																												<NavLink
+																													to={grandChild.slug}
+																													className="block py-1 text-gray-700 hover:text-teal"
 																												>
-																													{grandChild.label}
-																												</Link>
+																													{grandChild.name}
+																												</NavLink>
 																											</li>
 																										),
 																									)}
@@ -225,12 +211,12 @@ export const Navigation = () => {
 																					)}
 																				</Disclosure>
 																			) : (
-																				<Link
-																					to={child.path}
-																					className="block py-2 font-medium text-gray-800 hover:text-cyan-600"
+																				<NavLink
+																					to={child.slug}
+																					className="block py-2 font-medium text-gray-800 hover:text-teal"
 																				>
-																					{child.label}
-																				</Link>
+																					{child.name}
+																				</NavLink>
 																			)}
 																		</li>
 																	))}
@@ -240,12 +226,12 @@ export const Navigation = () => {
 													)}
 												</Disclosure>
 											) : (
-												<Link
-													to={item.path}
-													className="block py-3 font-medium text-gray-900 hover:text-cyan-600"
+												<NavLink
+													to={item.slug}
+													className="block py-3 font-medium text-gray-900 hover:text-teal"
 												>
-													{item.label}
-												</Link>
+													{item.name}
+												</NavLink>
 											)}
 										</div>
 									))}
