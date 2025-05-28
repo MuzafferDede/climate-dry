@@ -1,0 +1,86 @@
+import {
+	CheckIcon,
+	ExclamationTriangleIcon,
+	InformationCircleIcon,
+	XMarkIcon,
+} from "@heroicons/react/16/solid";
+import { useEffect, useState } from "react";
+import type { Toast, ToastType } from "~/types";
+import { cn } from "~/utils";
+import { Button } from "./button";
+
+interface Props {
+	toast?: Toast;
+}
+
+export const TOAST_STYLES: Record<
+	ToastType,
+	{
+		title: string;
+		colorClass: string;
+		icon: React.JSX.Element;
+	}
+> = {
+	success: {
+		title: "Success",
+		colorClass: "bg-green",
+		icon: <CheckIcon className="h-6 w-6 text-white" />,
+	},
+	error: {
+		title: "Error",
+		colorClass: "bg-red",
+		icon: <ExclamationTriangleIcon className="h-6 w-6 text-white" />,
+	},
+	info: {
+		title: "Info",
+		colorClass: "bg-teal",
+		icon: <InformationCircleIcon className="h-6 w-6 text-white" />,
+	},
+};
+
+export function ToastContainer({ toast }: Props) {
+	const [visible, setVisible] = useState(Boolean(toast));
+
+	useEffect(() => {
+		setVisible(Boolean(toast));
+		if (!toast) return;
+
+		const timer = setTimeout(() => setVisible(false), 5000);
+		return () => clearTimeout(timer);
+	}, [toast]);
+
+	if (!toast || !visible) return null;
+
+	const { title, colorClass, icon } = TOAST_STYLES[toast.type];
+
+	return (
+		<div
+			role="alert"
+			aria-live="polite"
+			className={cn(
+				"fixed top-4 right-4 left-4 z-50 rounded-lg shadow-lg transition-opacity md:left-auto md:min-w-sm",
+				"slide-in-from-right fade-in zoom-in-5 animate-in text-white",
+				colorClass,
+			)}
+		>
+			<div className="relative flex items-start gap-3 p-4">
+				<div className="shrink-0">{icon}</div>
+				<div className="flex-1 space-y-1">
+					<h2 className="font-bold text-base">{title}</h2>
+					{toast.message && (
+						<p className="font-bold text-sm">{toast.message}</p>
+					)}
+				</div>
+				<Button
+					type="button"
+					variant="ghost"
+					size="none"
+					className="absolute top-2 right-2 rounded p-1 hover:bg-white/20"
+					onClick={() => setVisible(false)}
+					aria-label="Dismiss"
+					icon={<XMarkIcon className="h-5 w-5 text-white" />}
+				/>
+			</div>
+		</div>
+	);
+}

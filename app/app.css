@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-	--font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif,
+	--font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
 	--color-green: #8CC63F;
@@ -17,8 +17,21 @@
 	--color-red: #CC1A40;
 	--color-navy-darkest: #161C2A;
 	--color-teal: #0095AF;
+	--color-blue-lighter: #DAE1E5;
+	--animate-marquee: marquee 15s linear infinite;
+
+	@keyframes marquee {
+		0% {
+			transform: translateX(100vw);
+		}
+		100% {
+			transform: translateX(-100%);
+		}
+	}
 }
 
-@utility no-scrollbar {
-  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+@utility scrollbar-hidden {
+    &::-webkit-scrollbar {
+      display: none;
+    }
 }

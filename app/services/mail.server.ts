@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { validator } from "~/lib/utils";
+import { validator } from "~/utils";
 import { fetcher } from "./api.server";
 
 // Schema for validating the email input
@@ -18,11 +18,11 @@ export const subsucribe = async (request: Request) => {
 
 		// If validation fails, return an error response
 		if (validated.errors) {
-			return { error: validated.errors.email };
+			throw { error: validated.errors.email };
 		}
 		const api = await fetcher(request);
 
-		const response = await api.post(
+		const response = await api.post<z.infer<typeof subscribeSchema>>(
 			"https://jsonplaceholder.typicode.com/posts",
 			validated.data,
 		);
@@ -31,8 +31,14 @@ export const subsucribe = async (request: Request) => {
 
 		return {
 			message: "You have successfully subscribed to our newsletter.",
+			email: response.email,
 		};
 	} catch (error) {
-		return { error };
+		const message =
+			error instanceof Error
+				? error.message
+				: "Something went wrong. Please try again.";
+
+		return { error: message };
 	}
 };

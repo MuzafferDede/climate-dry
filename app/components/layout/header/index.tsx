@@ -1,5 +1,6 @@
+import { Bottom } from "./bottom";
 import { Middle } from "./middle";
-import { Navigation } from "./navigation";
+import { MainNavigation } from "./navigation";
 import { Top } from "./top";
 
 export const Header = () => {
@@ -8,8 +9,9 @@ export const Header = () => {
 			<Top />
 			<header className="sticky top-0 isolate z-10 w-full bg-white shadow">
 				<Middle />
-				<Navigation />
+				<MainNavigation />
 			</header>
+			<Bottom />
 		</>
 	);
 };

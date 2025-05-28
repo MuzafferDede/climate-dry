@@ -26,9 +26,14 @@ export const Top = () => {
 					requirements and environment. Get in touch with us today to discuss
 					your project.
 				</p>
-				<Button className="mt-auto gap-2 outline">
+				<Button
+					variant="outline"
+					className="text-white hover:bg-white hover:text-teal"
+					icon={
+						<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
+					}
+				>
 					<span>Contact us</span>
-					<ArrowRightIcon className="-mr-2 size-6 rounded-full border border-white p-1" />
 				</Button>
 			</div>
 		</div>

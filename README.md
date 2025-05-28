@@ -64,7 +64,7 @@ Your application will be available at `http://localhost:5173`.
 │   ├── assets/           # Static assets and icons
 │   ├── components/       # Reusable UI components
 │   ├── contexts/         # React contexts (auth, etc.)
-│   ├── pages/            # Page components and routes
+│   ├── routes/            # Page components and routes
 │   ├── services/         # API and service integrations
 │   └── utils/            # Utility functions
 ├── public/               # Public static files

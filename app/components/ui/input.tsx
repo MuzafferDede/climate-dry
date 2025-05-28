@@ -5,12 +5,12 @@ import {
 	Label,
 } from "@headlessui/react";
 import type { InputHTMLAttributes } from "react";
-import { cn } from "~/lib/utils";
+import { cn } from "~/utils";
 
 type InputProps = {
 	label?: string;
 	description?: string;
-	error?: string;
+	error?: string | boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = ({
@@ -26,14 +26,10 @@ export const Input = ({
 	...props
 }: InputProps) => {
 	return (
-		<div
-			className={cn("group/input w-full space-y-1.5 font-semibold", className)}
-		>
+		<div className={cn("group/input w-full space-y-1.5 font-semibold")}>
 			<Field>
 				{label && (
-					<Label
-						className={cn("mb-1 block font-semibold", error && "text-red-500")}
-					>
+					<Label className={cn("mb-1 block", error && "text-red")}>
 						{label}
 					</Label>
 				)}
@@ -51,14 +47,14 @@ export const Input = ({
 					onChange={onChange}
 					placeholder={placeholder}
 					className={cn(
-						"w-full rounded-full bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-2 outline-gray-light transition focus:outline-teal",
-						error &&
-							"border-red-500 focus:border-red-500 focus:ring-red-500/50",
+						"w-full rounded-full border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal",
+						error && "border-red",
+						className,
 					)}
 					{...props}
 				/>
 
-				{error && <p className="mt-1 text-red-500">{error}</p>}
+				{error && <p className="mt-1 text-red">{error}</p>}
 			</Field>
 		</div>
 	);

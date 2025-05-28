@@ -12,15 +12,15 @@ import { Suspense } from "react";
 import { Await, NavLink, useRouteLoaderData } from "react-router";
 import { Loading } from "~/components/ui";
 import { useAppContext } from "~/contexts";
-import { cn } from "~/lib/utils";
-import type { NavigationItem } from "~/types";
+import type { Navigation } from "~/types";
+import { cn } from "~/utils";
 /**
  * Navigation component that renders desktop and mobile navigation
  */
-export const Navigation = () => {
+export const MainNavigation = () => {
 	const data = useRouteLoaderData("root");
 
-	const navigation: NavigationItem[] = data?.menu;
+	const navigation: Navigation[] = data?.menu;
 
 	const { state, updateState } = useAppContext();
 
@@ -34,7 +34,7 @@ export const Navigation = () => {
 		>
 			<Await resolve={navigation}>
 				{(nav) => (
-					<nav className="bg-white shadow-sm">
+					<nav className="relative z-200 bg-white text-base shadow-sm">
 						{/* Container */}
 						<div className="mx-auto max-w-7xl px-4">
 							{/* Desktop Navigation */}
@@ -49,7 +49,7 @@ export const Navigation = () => {
 													<>
 														<PopoverButton
 															className={cn(
-																"flex cursor-pointer items-center justify-between gap-2 font-semibold outline-none transition-colors has-[span[data-active=true]]:text-teal",
+																"flex cursor-pointer items-center justify-between gap-2 font-medium outline-none transition-colors has-[span[data-active=true]]:text-teal",
 																open ? "text-teal" : "hover:text-teal",
 															)}
 														>
@@ -91,7 +91,7 @@ export const Navigation = () => {
 																				</NavLink>
 																			)}
 																			<NavLink
-																				className="font-semibold text-teal uppercase transition-colors hover:text-navy-darkest"
+																				className="font-bold text-teal uppercase transition-colors hover:text-navy-darkest"
 																				to={child.slug}
 																			>
 																				{child.name}
@@ -126,13 +126,13 @@ export const Navigation = () => {
 							{/* Mobile Navigation (Accordion) */}
 							<div
 								data-navigation-open={state.isNavigationOpen}
-								className=" slide-in-from-left fixed inset-x-0 top-20 bottom-0 hidden overflow-auto scroll-smooth border-0 bg-white transition-all duration-300 ease-in-out data-[navigation-open=true]:block data-[navigation-open=true]:animate-in md:hidden data-[navigation-open=true]:md:hidden"
+								className="slide-in-from-right fixed top-0 right-0 bottom-0 left-12 isolate z-100 hidden overflow-auto scroll-smooth border-0 bg-white shadow-lg transition-all duration-300 ease-in-out data-[navigation-open=true]:block data-[navigation-open=true]:animate-in md:hidden data-[navigation-open=true]:md:hidden"
 							>
 								<button
 									onClick={() =>
 										updateState({ isNavigationOpen: !state.isNavigationOpen })
 									}
-									className="fixed inset-0"
+									className="fixed inset-y-0 top-20 left-0 z-10 w-12 backdrop-blur-md"
 									type="button"
 								>
 									<span className="sr-only">Close</span>

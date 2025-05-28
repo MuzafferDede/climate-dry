@@ -1,44 +1,56 @@
 import { mainNavigation } from "~/static";
-import type { HeroBannerItem, HeroCategoryItem, NavigationItem } from "~/types";
+import type { Brand, FeaturedCategory, HeroBanner, Navigation } from "~/types";
 import { fetcher } from "./api.server";
 
-export const navigationBuilder = async (
-	request: Request,
-): Promise<NavigationItem[]> => {
+export const getNavigation = async (request: Request) => {
 	try {
 		const api = await fetcher(request);
-		const categories: NavigationItem[] = await api.get("/site/navigation");
+		const categories: Navigation[] = await api.get("/site/navigation");
 
 		return [
 			{ slug: "/", name: "Our Products", children: categories },
 			...mainNavigation,
 		];
 	} catch (error) {
-		console.error("Error fetching categories:", error);
-		return [...mainNavigation];
+		const message = "Error fetching navigation";
+		console.log(message, error);
+
+		return mainNavigation;
 	}
 };
 
-export const heroCategoryBuilder = async (
-	request: Request,
-): Promise<HeroCategoryItem[]> => {
+export const getFeaturedCategories = async (request: Request) => {
 	try {
 		const api = await fetcher(request);
-		return await api.get("/site/hero-categories");
+		return await api.get<FeaturedCategory[]>("/site/featured-categories");
 	} catch (error) {
-		console.error("Error fetching categories:", error);
+		const message = "Error fetching featured categories";
+		console.error(message, error);
+
 		return [];
 	}
 };
 
-export const heroBannerBuilder = async (
-	request: Request,
-): Promise<HeroBannerItem[]> => {
+export const getBanners = async (request: Request) => {
 	try {
 		const api = await fetcher(request);
-		return await api.get("/site/hero-banners");
+		return await api.get<HeroBanner[]>("/site/hero-banners");
 	} catch (error) {
-		console.error("Error fetching banners:", error);
+		const message = "Error fetching banners";
+		console.error(message, error);
+
+		return [];
+	}
+};
+
+export const getBrands = async (request: Request) => {
+	try {
+		const api = await fetcher(request);
+		return await api.get<Brand[]>("/site/brands");
+	} catch (error) {
+		const message = "Error fetching brands";
+		console.error(message, error);
+
 		return [];
 	}
 };

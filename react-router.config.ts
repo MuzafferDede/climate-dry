@@ -7,7 +7,7 @@ export default {
 	ssr: true,
 	// Enable middleware
 	future: {
-		// unstable_middleware: true,
+		unstable_middleware: true,
 	},
 	presets: [vercelPreset()],
 } satisfies Config;

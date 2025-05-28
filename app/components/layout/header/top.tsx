@@ -2,9 +2,9 @@ import { Link, href } from "react-router";
 
 export const Top = () => {
 	return (
-		<div className="relative z-30 border-gray-lightest border-b">
+		<div className="relative z-10 border-gray-lightest border-b">
 			<div className="mx-auto flex max-w-7xl items-center justify-center p-2 sm:justify-between">
-				<div className="flex gap-2 font-semibold uppercase">
+				<div className="flex gap-2 font-bold uppercase">
 					<h2>
 						Call <span className="hidden sm:inline">our team</span> for expert
 						advice:
@@ -17,7 +17,7 @@ export const Top = () => {
 					</a>
 				</div>
 				<div className="flex items-center gap-4">
-					<div className="hidden gap-2 font-semibold text-xs md:flex">
+					<div className="hidden gap-6 font-bold text-xs md:flex">
 						<Link className="hover:text-teal" to={href("/")}>
 							About Us
 						</Link>

@@ -1,5 +1,5 @@
 import { createCookieSessionStorage } from "react-router";
-import type { Customer } from "~/types";
+import type { Customer, Toast } from "~/types";
 
 type SessionData = {
 	customer: Customer;
@@ -7,6 +7,7 @@ type SessionData = {
 
 type SessionFlashData = {
 	error: string;
+	toast?: Toast;
 };
 
 const { getSession, commitSession, destroySession } =

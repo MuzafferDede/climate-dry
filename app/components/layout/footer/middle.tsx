@@ -1,14 +1,12 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form, Link, useActionData } from "react-router";
 import tglLogo from "~/assets/TGL-logo.svg";
-import logo from "~/assets/logo.svg";
-import { Button, Input } from "~/components/ui";
-import { useToast } from "~/contexts";
+import { Button, Icon, Input } from "~/components/ui";
 import { footerHelperLinks, footerProductLinks } from "~/static";
 
 const SectionTitle = ({ label }: { label: string }) => {
-	return <h3 className="font-semibold text-teal uppercase">{label}</h3>;
+	return <h3 className="font-bold text-teal uppercase">{label}</h3>;
 };
 
 const paymentLogos = [
@@ -20,25 +18,19 @@ const paymentLogos = [
 ];
 
 export const Middle = () => {
-	const toast = useToast();
-	const { message, error } = useActionData() || {};
+	const { message } = useActionData() || {};
 	const [email, setEmail] = useState("");
-
-	useEffect(() => {
-		if (message) {
-			toast.success(message);
-		}
-		if (error) {
-			toast.error(error);
-		}
-	}, [message, error, toast.success, toast.error]);
+	const { email: success } = useActionData() || {};
 
 	return (
 		<div className="grid gap-8 gap-y-16 p-4 py-10 lg:mt-10 lg:grid-cols-2">
 			<div className="grid gap-4 gap-y-16 lg:grid-cols-2">
 				<div className="flex flex-col gap-4">
 					<Link to="/">
-						<img src={logo} alt="Climate Dry" className="h-8 w-auto md:h-14" />
+						<Icon
+							name="logo-animated"
+							className="aspect-60/13 w-full max-w-64"
+						/>
 					</Link>
 					<div className="flex flex-col gap-2.5">
 						<SectionTitle label="Humidity Control Specialists" />
@@ -57,31 +49,38 @@ export const Middle = () => {
 							updates and special offers:
 						</p>
 						<div className="relative">
-							<Form method="post">
-								<Input
-									disabled={message}
-									type="email"
-									name="email"
-									placeholder="Email address"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-									required
-								/>
-								<Button
-									type="submit"
-									variant="plain"
-									size="icon"
-									className="absolute inset-y-px right-0 py-0 text-gray hover:text-gray-dark"
-									disabled={!email || message}
-								>
-									<ArrowRightIcon className="size-6" />
-								</Button>
-							</Form>
+							{success ? (
+								<div className="fade-in zoom-in-10 animate-in rounded-lg bg-green px-3 py-2 font-bold text-sm text-white">
+									You have successfully subscribed to our newsletter.
+								</div>
+							) : (
+								<Form method="post">
+									<Input
+										disabled={message}
+										type="email"
+										name="email"
+										autoComplete="email"
+										placeholder="Email address"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+										className="border-white"
+										required
+									/>
+									<Button
+										type="submit"
+										variant="none"
+										size="none"
+										className="absolute inset-y-0 right-0 size-10 justify-center text-gray hover:text-teal"
+										disabled={!email || message}
+										icon={<ArrowRightIcon className="size-5" />}
+									/>
+								</Form>
+							)}
 						</div>
 					</div>
 				</div>
 				<div className="flex flex-col gap-2.5">
-					<h3 className="font-semibold text-teal uppercase">
+					<h3 className="font-bold text-teal uppercase">
 						BROUGHT YO YOU BY TRADE GEAR
 					</h3>
 					<div className="flex flex-col gap-6 md:flex-row">
@@ -119,10 +118,7 @@ export const Middle = () => {
 					<ul className="flex flex-col gap-0.5 text-white">
 						{footerProductLinks.map((product) => (
 							<li key={product.label}>
-								<Link
-									to={product.path}
-									className="font-semibold hover:text-teal"
-								>
+								<Link to={product.path} className="font-bold hover:text-teal">
 									{product.label}
 								</Link>
 							</li>
@@ -134,10 +130,7 @@ export const Middle = () => {
 					<ul className="flex flex-col gap-0.5 text-white">
 						{footerHelperLinks.map((helpLink) => (
 							<li key={helpLink.label}>
-								<Link
-									to={helpLink.path}
-									className="font-semibold hover:text-teal"
-								>
+								<Link to={helpLink.path} className="font-bold hover:text-teal">
 									{helpLink.label}
 								</Link>
 							</li>

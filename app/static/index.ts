@@ -1,1 +1,1 @@
-export * from "./static-routes";
+export * from "./items";

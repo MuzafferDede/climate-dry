@@ -3,7 +3,7 @@ import { footerLogos, sisterLogos } from "~/static";
 export const Bottom = () => {
 	return (
 		<div className="flex flex-wrap items-end gap-4 divide-y divide-white border-white border-t px-5 py-6 lg:flex-nowrap lg:justify-center lg:divide-x lg:divide-y-0 lg:px-0">
-			<div className="mt-5 flex w-full flex-wrap items-end justify-center lg:flex-nowrap lg:justify-between">
+			<div className="mt-5 flex w-full flex-wrap items-end justify-between lg:flex-nowrap">
 				{footerLogos.map((logo) => (
 					<a
 						href={logo.path}

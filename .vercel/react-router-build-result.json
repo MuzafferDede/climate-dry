@@ -1,0 +1,182 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/home/index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/login": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/register": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/forgot-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/reset-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/account/index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/auth/logout": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/cart/index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "app/root.tsx",
+        "config": {}
+      },
+      "routes/home/index": {
+        "id": "routes/home/index",
+        "parentId": "root",
+        "file": "app/routes/home/index.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/login": {
+        "id": "routes/auth/login",
+        "parentId": "root",
+        "file": "app/routes/auth/login.tsx",
+        "path": "login",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/register": {
+        "id": "routes/auth/register",
+        "parentId": "root",
+        "file": "app/routes/auth/register.tsx",
+        "path": "register",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/forgot-password": {
+        "id": "routes/auth/forgot-password",
+        "parentId": "root",
+        "file": "app/routes/auth/forgot-password.tsx",
+        "path": "forgot-password",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/reset-password": {
+        "id": "routes/auth/reset-password",
+        "parentId": "root",
+        "file": "app/routes/auth/reset-password.tsx",
+        "path": "reset-password",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/account/index": {
+        "id": "routes/account/index",
+        "parentId": "root",
+        "file": "app/routes/account/index.tsx",
+        "path": "account",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/auth/logout": {
+        "id": "routes/auth/logout",
+        "parentId": "root",
+        "file": "app/routes/auth/logout.tsx",
+        "path": "logout",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/cart/index": {
+        "id": "routes/cart/index",
+        "parentId": "root",
+        "file": "app/routes/cart/index.tsx",
+        "path": "cart",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "/Users/muzafferdede/Desktop/Code/climate-dry/app",
+    "basename": "/",
+    "buildDirectory": "/Users/muzafferdede/Desktop/Code/climate-dry/build",
+    "future": {
+      "unstable_middleware": false,
+      "unstable_optimizeDeps": false,
+      "unstable_splitRouteModules": false,
+      "unstable_subResourceIntegrity": false,
+      "unstable_viteEnvironmentApi": false
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "root.tsx"
+      },
+      "routes/home/index": {
+        "id": "routes/home/index",
+        "parentId": "root",
+        "file": "routes/home/index.tsx",
+        "index": true
+      },
+      "routes/auth/login": {
+        "id": "routes/auth/login",
+        "parentId": "root",
+        "file": "routes/auth/login.tsx",
+        "path": "login"
+      },
+      "routes/auth/register": {
+        "id": "routes/auth/register",
+        "parentId": "root",
+        "file": "routes/auth/register.tsx",
+        "path": "register"
+      },
+      "routes/auth/forgot-password": {
+        "id": "routes/auth/forgot-password",
+        "parentId": "root",
+        "file": "routes/auth/forgot-password.tsx",
+        "path": "forgot-password"
+      },
+      "routes/auth/reset-password": {
+        "id": "routes/auth/reset-password",
+        "parentId": "root",
+        "file": "routes/auth/reset-password.tsx",
+        "path": "reset-password"
+      },
+      "routes/account/index": {
+        "id": "routes/account/index",
+        "parentId": "root",
+        "file": "routes/account/index.tsx",
+        "path": "account"
+      },
+      "routes/auth/logout": {
+        "id": "routes/auth/logout",
+        "parentId": "root",
+        "file": "routes/auth/logout.tsx",
+        "path": "logout"
+      },
+      "routes/cart/index": {
+        "id": "routes/cart/index",
+        "parentId": "root",
+        "file": "routes/cart/index.tsx",
+        "path": "cart"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}
