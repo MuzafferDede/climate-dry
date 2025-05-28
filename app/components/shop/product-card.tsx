@@ -76,7 +76,7 @@ export const ProductCard = ({
 										<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
 									}
 								>
-									<span>But Now</span>
+									<span>Buy Now</span>
 								</Button>
 							</Link>
 							<Link to={slug}>
