@@ -1,0 +1,51 @@
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { Link } from "react-router";
+import { Button, ProductCard, SectionHeader } from "~/components";
+import type { FeaturedCategory } from "~/types";
+
+export const FeaturedCategories = ({
+	categories,
+}: { categories: FeaturedCategory[] }) => {
+	return (
+		<div className="space-y-8 px-5 py-16">
+			<SectionHeader
+				category="Our Top Humidity Reducers"
+				title="Dehumidifiers"
+			/>
+			<TabGroup className="isolate mx-auto max-w-7xl">
+				<TabList className="scrollbar-hidden mx-auto flex max-w-min snap-x snap-mandatory justify-items-center overflow-auto pb-px">
+					{categories.map((category) => (
+						<Tab
+							className=" z-10 translate-y-px cursor-pointer snap-center whitespace-nowrap border-gray-lighter border-b px-3 py-2.5 text-base outline-none transition-all duration-300 data-selected:border-black data-selected:text-teal lg:text-lg"
+							key={category.name}
+						>
+							{category.name}
+						</Tab>
+					))}
+				</TabList>
+				<TabPanels className="py-8">
+					{categories.map((category) => (
+						<TabPanel
+							key={category.name}
+							className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+						>
+							{category?.products?.map((product) => (
+								<ProductCard {...product} key={product.name} />
+							))}
+						</TabPanel>
+					))}
+				</TabPanels>
+				<div className="text-center">
+					<Button
+						as={Link}
+						variant="outline"
+						className="hover:text-teal"
+						to="/"
+					>
+						Shop All
+					</Button>
+				</div>
+			</TabGroup>
+		</div>
+	);
+};

@@ -64,6 +64,7 @@ export const Posts: React.FC = () => {
 							src={mainPost.banner}
 							alt={mainPost.title}
 							className="h-80 w-full object-cover"
+							loading="lazy"
 						/>
 						<div className="space-y-4 p-6">
 							<h4 className="font-bold text-3xl">{mainPost.title}</h4>
@@ -114,6 +115,7 @@ export const Posts: React.FC = () => {
 										src={post.banner}
 										alt={post.title}
 										className="size-30 rounded-full object-cover"
+										loading="lazy"
 									/>
 								</div>
 							</AnimateOnScroll>

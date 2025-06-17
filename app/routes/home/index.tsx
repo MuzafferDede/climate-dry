@@ -1,8 +1,18 @@
-import { getBanners, getBrands } from "~/services";
+import { data } from "react-router";
+import {
+	addToCart,
+	commitSession,
+	getBanners,
+	getBrands,
+	getFeaturedCategories,
+	getSession,
+	putToast,
+} from "~/services";
+import { ToastType } from "~/types";
 import type { Route } from "./+types";
 import { Banners } from "./banners";
 import { Brands } from "./brands";
-import { HumidityReducers } from "./humidity-reducers";
+import { FeaturedCategories } from "./featured-categories";
 import { Info } from "./info";
 import { Marquee } from "./marquee";
 import { Posts } from "./posts";
@@ -23,18 +33,62 @@ export function meta() {
 export async function loader({ request }: Route.LoaderArgs) {
 	const banners = await getBanners(request);
 	const brands = await getBrands(request);
+	const featuredCategories = await getFeaturedCategories(request);
 
-	return { banners, brands };
+	return { banners, brands, featuredCategories };
 }
 
+export async function action({ request }: Route.ActionArgs) {
+	const session = await getSession(request.headers.get("Cookie"));
+
+	try {
+		const result = await addToCart(request);
+
+		putToast(session, {
+			message: `${result.variant.product.name} added.`,
+			type: ToastType.Success,
+			action: {
+				label:"View Cart",
+				path: "/cart"
+			}
+		});
+
+		return data(
+			{
+				result,
+			},
+			{
+				headers: {
+					"Set-Cookie": await commitSession(session),
+				},
+			},
+		);
+	} catch (error) {
+		putToast(session, {
+			message: error instanceof Error ? error.message : String(error),
+			type: ToastType.Error,
+		});
+
+		return data(
+			{
+				error: error instanceof Error ? error.message : String(error),
+			},
+			{
+				headers: {
+					"Set-Cookie": await commitSession(session),
+				},
+			},
+		);
+	}
+}
 export default function Home({ loaderData }: Route.ComponentProps) {
-	const { banners, brands } = loaderData;
+	const { banners, brands, featuredCategories } = loaderData;
 
 	return (
 		<div className="relative w-full overflow-hidden">
 			<Marquee />
 			{banners && <Banners banners={banners} />}
-			<HumidityReducers />
+			<FeaturedCategories categories={featuredCategories} />
 			<Support />
 			<Solutions />
 			<ShopByCategory />

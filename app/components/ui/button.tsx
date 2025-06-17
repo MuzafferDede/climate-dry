@@ -1,6 +1,7 @@
 import { type VariantProps, cva } from "class-variance-authority";
 import type * as React from "react";
 import { cn } from "~/utils";
+import { Loading } from "./loading";
 
 // --- cva config ---
 const buttonVariants = cva(
@@ -16,7 +17,7 @@ const buttonVariants = cva(
 					"bg-navy-darkest text-white hover:bg-gray-lightest hover:text-navy-darkest",
 				ghost:
 					"bg-transparent text-navy-darkest hover:bg-gray-lightest hover:text-teal",
-				destructive: "bg-red text-white hover:bg-white hover:text-white",
+				destructive: "bg-red text-white hover:bg-navy-darkest hover:text-white",
 				link: "hover:text-teal hover:underline",
 				plain: "text-navy-darkest hover:text-teal",
 			},
@@ -80,6 +81,8 @@ function Button<T extends React.ElementType = "button">({
 }: ButtonProps<T>) {
 	const Component = as || "button";
 
+	const computedIcon = loading ? <Loading className="size-6 p-1" /> : icon;
+
 	return (
 		<Component
 			className={cn(
@@ -89,7 +92,7 @@ function Button<T extends React.ElementType = "button">({
 			{...props}
 		>
 			{children}
-			{icon && <span>{icon}</span>}
+			{computedIcon && <span>{computedIcon}</span>}
 		</Component>
 	);
 }

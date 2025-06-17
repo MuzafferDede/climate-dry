@@ -27,6 +27,7 @@ export const Brands = ({ brands }: { brands: Brand[] }) => {
 								className="h-auto w-full"
 								src={brand.logo_url}
 								alt={brand.name}
+								loading="lazy"
 							/>
 						</Link>
 					))}

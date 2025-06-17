@@ -58,6 +58,7 @@ export const ShopByCategory = () => {
 									className="h-auto w-full max-w-52 origin-bottom-right object-contain transition-all delay-100 duration-300 ease-in-out group-hover:scale-115"
 									src={category.image}
 									alt={category.name}
+									loading="lazy"
 								/>
 							</div>
 						</AnimateOnScroll>

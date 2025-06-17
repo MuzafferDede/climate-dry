@@ -48,7 +48,12 @@ export const WhyChooseUs = () => {
 						key={card.title}
 						className="mx-auto flex max-w-xs flex-col items-center justify-start gap-8 text-center"
 					>
-						<img className="w-30" src={card.icon} alt={card.title} />
+						<img
+							className="w-30"
+							src={card.icon}
+							alt={card.title}
+							loading="lazy"
+						/>
 						<div className="flex flex-col gap-2">
 							<h3 className="font-bold text-lg">{card.title}</h3>
 							<p className="text-xs">{card.description}</p>

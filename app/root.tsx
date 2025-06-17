@@ -29,6 +29,7 @@ import { AppProvider } from "~/contexts";
 import { useInViewport } from "~/hooks";
 import {
 	commitSession,
+	getCart,
 	getCustomer,
 	getNavigation,
 	getSession,
@@ -56,11 +57,13 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		const session = await getSession(request.headers.get("Cookie"));
 		const customer = await getCustomer(request);
 		const menu = await getNavigation(request);
-
+		const cart = await getCart(request);
 		const toast = await popToast(session);
 
+		session.set("guestId", cart.guest_id);
+
 		return data(
-			{ customer, menu, toast },
+			{ customer, menu, toast, cart },
 			{
 				headers: {
 					"Set-Cookie": await commitSession(session),
@@ -124,19 +127,21 @@ export default function App({ loaderData }: Route.ComponentProps) {
 					ref={ref}
 					className="pointer-events-none absolute inset-x-0 top-0 px-0"
 				/>
+				<Header />
+				<div className="isolote relative z-20">
+					<Outlet />
+				</div>
+				<WhyChooseUs />
+				<Footer />
+				<ToastContainer toast={toast} />
 				<Link
 					data-state={inView ? "hide" : "show"}
 					to="/#main"
-					className="fade-in zoom-in zoom-out !fill-mode-forwards fixed right-4 bottom-4 z-20 flex items-center justify-center border border-white bg-green text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
+					className="fade-in zoom-in zoom-out fixed right-4 bottom-4 z-30 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
 				>
 					<ChevronUpIcon className="size-10" />
 					<span className="sr-only">go to top</span>
 				</Link>
-				<Header />
-				<Outlet />
-				<WhyChooseUs />
-				<Footer />
-				<ToastContainer toast={toast} />
 			</main>
 		</AppProvider>
 	);

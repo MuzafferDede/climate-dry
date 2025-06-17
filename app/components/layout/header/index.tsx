@@ -7,7 +7,7 @@ export const Header = () => {
 	return (
 		<>
 			<Top />
-			<header className="sticky top-0 isolate z-10 w-full bg-white shadow">
+			<header className="sticky top-0 isolate z-30 w-full bg-white shadow">
 				<Middle />
 				<MainNavigation />
 			</header>

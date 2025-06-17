@@ -1,5 +1,6 @@
 // utils/fetcher.ts
 import { getCustomer } from "./customer.server";
+import { getSession } from "./session.server";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 const SITE_ID = import.meta.env.VITE_SITE_ID || "1";
@@ -10,6 +11,7 @@ interface FetcherInit extends RequestInit {
 
 export async function fetcher(request: Request) {
 	const customer = await getCustomer(request);
+	const session = await getSession(request.headers.get("Cookie"));
 
 	async function call<T = unknown>(
 		endpoint: string,
@@ -23,6 +25,7 @@ export async function fetcher(request: Request) {
 			"Content-Type": "application/json",
 			Accept: "application/json",
 			"X-Site-ID": SITE_ID,
+			"X-GUEST-ID": session.get("guestId") ?? "",
 			...(init.headers as Record<string, string>), // cast if needed
 		};
 

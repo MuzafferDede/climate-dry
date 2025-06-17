@@ -15,12 +15,13 @@ import { Link, href, useRouteLoaderData } from "react-router";
 import { Fragment } from "react/jsx-runtime";
 import { Button, Icon, Input } from "~/components";
 import { useAppContext } from "~/contexts";
-import type { Customer } from "~/types";
+import type { Cart, Customer } from "~/types";
 
 export const Middle = () => {
-	const data = useRouteLoaderData<{ customer: Customer }>("root");
+	const data = useRouteLoaderData<{ customer: Customer; cart: Cart }>("root");
 
 	const customer = data?.customer;
+	const cart = data?.cart;
 
 	const [showSearch, setShowSerach] = useState(false);
 	const { state, updateState } = useAppContext();
@@ -81,8 +82,8 @@ export const Middle = () => {
 						</Button>
 						<div className="relative flex">
 							<Link to={href("/cart")} className="relative">
-								<span className="-mt-1 -mr-1 absolute top-0 right-0 z-10 flex h-5 min-w-5 items-center justify-center rounded-full bg-black font-bold text-white text-xs">
-									<span className="px-1.5">7</span>
+								<span className="-mt-1 -mr-1 absolute top-0 right-0 z-10 flex h-5 min-w-5 items-center justify-center rounded-full bg-teal font-bold text-white text-xs">
+									<span className="px-1.5">{cart?.items?.length || 0}</span>
 								</span>
 								<Button
 									size="icon"

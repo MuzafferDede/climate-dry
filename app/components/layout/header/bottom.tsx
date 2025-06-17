@@ -21,7 +21,12 @@ export const Bottom = () => {
 							to={tool.path}
 							className="flex w-full shrink-0 snap-center flex-col items-center justify-center gap-2 bg-gray-lightest p-6 transition-all hover:scale-98 hover:bg-blue-lighter hover:shadow-2xl md:shrink"
 						>
-							<img className="size-6" src={tool.icon} alt={tool.label} />
+							<img
+								className="size-6"
+								src={tool.icon}
+								alt={tool.label}
+								loading="lazy"
+							/>
 							<div className="flex flex-col items-center justify-center">
 								<h2 className="text-base">{tool.label}</h2>
 								<p className="text-xs">{tool.description}</p>

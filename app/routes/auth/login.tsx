@@ -21,12 +21,6 @@ const loginSchema = z.object({
 	password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-// Response shape from your backend
-interface LoginResponse {
-	message: string;
-	data: Customer;
-}
-
 export async function action({ request }: ActionFunctionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 	const formData = await request.formData();
@@ -52,13 +46,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
 	try {
 		const api = await fetcher(request);
-		const response = await api.post<LoginResponse>(
+		const response = await api.post<Customer>(
 			"/customer/login",
 			validated.data,
 		);
 
 		// ✅ Login success
-		session.set("customer", response.data);
+		session.set("customer", response);
 		putToast(session, {
 			message: "Login successful!",
 			type: ToastType.Success,

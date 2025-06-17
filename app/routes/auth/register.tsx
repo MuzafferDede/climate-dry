@@ -35,10 +35,8 @@ const registerSchema = z
 	});
 
 interface RegisterResponse {
-	data: {
-		id: number;
-		email: string;
-	};
+	id: number;
+	email: string;
 }
 
 export async function action({ request }: ActionFunctionArgs) {

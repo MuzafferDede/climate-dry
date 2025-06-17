@@ -1,8 +1,8 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
+import { AnimateOnScroll, Button, Image } from "~/components";
 import { useCarousel } from "~/hooks";
 import type { HeroBanner } from "~/types";
-import { AnimateOnScroll, Button } from "../../components/ui";
 
 export const Banners = ({ banners }: { banners: HeroBanner[] }) => {
 	const { containerRef } = useCarousel({
@@ -43,8 +43,8 @@ export const Banners = ({ banners }: { banners: HeroBanner[] }) => {
 							</Button>
 						</div>
 					</div>
-					<div className="h-full overflow-hidden">
-						<img
+					<div className="flex h-full items-center overflow-hidden">
+						<Image
 							src={banner.banner_url}
 							alt={banner.title}
 							className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:rotate-2 group-hover:scale-115"

@@ -25,7 +25,12 @@ export const Service: React.FC<ServiceProps> = ({
 				<h2 className="flex flex-col gap-1 font-bold text-xl md:text-3xl">
 					{logo && (
 						<div>
-							<img className="h-auto w-auto" src={logo} alt={title} />
+							<img
+								className="h-auto w-auto"
+								src={logo}
+								alt={title}
+								loading="lazy"
+							/>
 						</div>
 					)}
 					<span>{title}</span>
@@ -54,6 +59,7 @@ export const Service: React.FC<ServiceProps> = ({
 					className="aspect-square h-full w-full object-cover transition-transform duration-300 group-hover:rotate-2 group-hover:scale-105"
 					src={image}
 					alt={title}
+					loading="lazy"
 				/>
 			</div>
 		</div>

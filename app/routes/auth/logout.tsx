@@ -20,12 +20,15 @@ export async function loader({ request }: Route.LoaderArgs) {
 			},
 		});
 	} catch (error) {
-		return {
-			message:
-				error instanceof Error
-					? error.message
-					: "Login failed. Please try again.",
-		};
+		const session = await getSession(request.headers.get("Cookie"));
+
+		putToast(session, { message: "Logout failed!", type: ToastType.Error });
+
+		return redirect("/login", {
+			headers: {
+				"Set-Cookie": await destroySession(session),
+			},
+		});
 	}
 }
 

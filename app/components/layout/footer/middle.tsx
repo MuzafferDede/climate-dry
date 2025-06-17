@@ -107,7 +107,13 @@ export const Middle = () => {
 					<SectionTitle label="Secure Online Payments" />
 					<div className="grid grid-cols-5">
 						{paymentLogos.map((logo) => (
-							<img className="h-auto w-full" src={logo} key={logo} alt={logo} />
+							<img
+								className="h-auto w-full"
+								src={logo}
+								key={logo}
+								alt={logo}
+								loading="lazy"
+							/>
 						))}
 					</div>
 				</div>

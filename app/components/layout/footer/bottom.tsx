@@ -10,7 +10,12 @@ export const Bottom = () => {
 						className="flex w-26 max-w-full flex-col"
 						key={logo.label}
 					>
-						<img className="w-full" src={logo.logo} alt={logo.label} />
+						<img
+							className="w-full"
+							src={logo.logo}
+							alt={logo.label}
+							loading="lazy"
+						/>
 					</a>
 				))}
 			</div>
@@ -22,7 +27,12 @@ export const Bottom = () => {
 						className="flex w-26 max-w-full flex-col"
 						key={logo.label}
 					>
-						<img className="w-full" src={logo.logo} alt={logo.label} />
+						<img
+							className="w-full"
+							src={logo.logo}
+							alt={logo.label}
+							loading="lazy"
+						/>
 					</a>
 				</div>
 			))}

@@ -5,6 +5,7 @@ import {
 	XMarkIcon,
 } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import type { Toast, ToastType } from "~/types";
 import { cn } from "~/utils";
 import { Button } from "./button";
@@ -69,6 +70,15 @@ export function ToastContainer({ toast }: Props) {
 					<h2 className="font-bold text-base">{title}</h2>
 					{toast.message && (
 						<p className="font-bold text-sm">{toast.message}</p>
+					)}
+					{toast.action && (
+						<Link
+							to={toast.action.path}
+							className="mt-2 inline-block rounded bg-black/20 px-3 py-1 text-sm font-medium text-white hover:bg-black/30"
+							onClick={() => setVisible(false)}
+						>
+							{toast.action.label}
+						</Link>
 					)}
 				</div>
 				<Button

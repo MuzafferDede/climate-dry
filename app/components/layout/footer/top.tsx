@@ -16,6 +16,7 @@ export const Top = () => {
 					className="h-full w-full object-cover"
 					src={source.desktop}
 					alt="Contact Us"
+					loading="lazy"
 				/>
 			</picture>
 			<div className="flex w-full flex-col items-start justify-start gap-4 p-5 lg:max-w-lg lg:p-7">

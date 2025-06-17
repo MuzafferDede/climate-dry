@@ -3,6 +3,7 @@ import type { Customer, Toast } from "~/types";
 
 type SessionData = {
 	customer: Customer;
+	guestId: string;
 };
 
 type SessionFlashData = {
@@ -21,7 +22,7 @@ const { getSession, commitSession, destroySession } =
 			// Note that this method is NOT recommended as `new Date` creates only one date on each server deployment, not a dynamic date in the future!
 			// expires: new Date(Date.now() + 60_000),
 			httpOnly: true,
-			maxAge: 60,
+			maxAge: 6000,
 			path: "/",
 			sameSite: "lax",
 			secrets: [import.meta.env.VITE_SECRET],
