@@ -24,7 +24,7 @@ export const TOAST_STYLES: Record<
 > = {
 	success: {
 		title: "Success",
-		colorClass: "bg-green",
+		colorClass: "bg-teal",
 		icon: <CheckIcon className="h-6 w-6 text-white" />,
 	},
 	error: {
@@ -34,7 +34,7 @@ export const TOAST_STYLES: Record<
 	},
 	info: {
 		title: "Info",
-		colorClass: "bg-teal",
+		colorClass: "bg-gray",
 		icon: <InformationCircleIcon className="h-6 w-6 text-white" />,
 	},
 };
@@ -74,7 +74,7 @@ export function ToastContainer({ toast }: Props) {
 					{toast.action && (
 						<Link
 							to={toast.action.path}
-							className="mt-2 inline-block rounded bg-black/20 px-3 py-1 text-sm font-medium text-white hover:bg-black/30"
+							className="mt-2 inline-block rounded bg-black/20 px-3 py-1 font-medium text-sm text-white hover:bg-black/30"
 							onClick={() => setVisible(false)}
 						>
 							{toast.action.label}

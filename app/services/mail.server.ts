@@ -27,8 +27,6 @@ export const subsucribe = async (request: Request) => {
 			validated.data,
 		);
 
-		console.log(response);
-
 		return {
 			message: "You have successfully subscribed to our newsletter.",
 			email: response.email,

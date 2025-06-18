@@ -13,7 +13,7 @@ export const getNavigation = async (request: Request) => {
 		];
 	} catch (error) {
 		const message = "Error fetching navigation";
-		console.log(message, error);
+		console.error(message, error);
 
 		return mainNavigation;
 	}

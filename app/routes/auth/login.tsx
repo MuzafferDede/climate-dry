@@ -50,9 +50,16 @@ export async function action({ request }: ActionFunctionArgs) {
 			"/customer/login",
 			validated.data,
 		);
+		const { first_name, last_name, id, email, token } = response;
 
 		// ✅ Login success
-		session.set("customer", response);
+		session.set("customer", {
+			first_name,
+			last_name,
+			id,
+			email,
+			token,
+		});
 		putToast(session, {
 			message: "Login successful!",
 			type: ToastType.Success,
