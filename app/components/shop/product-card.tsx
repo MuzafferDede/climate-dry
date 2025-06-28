@@ -87,7 +87,8 @@ export const ProductCard = ({
 							dangerouslySetInnerHTML={{ __html: introduction }}
 						/>
 					</div>
-					<div className="flex w-full @xl:max-w-56 grow flex-col justify-end gap-2">
+
+					<div className="flex w-full @xl:max-w-56 grow flex-col @xl:justify-start justify-end gap-2">
 						<div className="flex flex-col">
 							<div className="flex items-end gap-1 font-bold">
 								<span className="text-xl">
@@ -120,7 +121,7 @@ export const ProductCard = ({
 						</div>
 						<StockStatus inStock={inStock} />
 
-						<div className="flex flex-col gap-2">
+						<div className="mt-auto flex flex-col gap-2">
 							<Form
 								method="post"
 								onSubmit={(e) =>
