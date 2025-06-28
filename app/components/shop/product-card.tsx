@@ -87,7 +87,7 @@ export const ProductCard = ({
 							dangerouslySetInnerHTML={{ __html: introduction }}
 						/>
 					</div>
-					<div className="flex @xl:max-w-56 grow flex-col justify-end gap-2">
+					<div className="flex w-full @xl:max-w-56 grow flex-col justify-end gap-2">
 						<div className="flex flex-col">
 							<div className="flex items-end gap-1 font-bold">
 								<span className="text-xl">
