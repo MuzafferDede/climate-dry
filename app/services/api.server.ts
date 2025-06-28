@@ -3,7 +3,7 @@ import { getCustomer } from "./customer.server";
 import { getSession } from "./session.server";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
-const SITE_ID = import.meta.env.VITE_SITE_ID || "1";
+const SITE_CODE = import.meta.env.VITE_SITE_CODE || "1";
 
 interface FetcherInit extends RequestInit {
 	data?: unknown;
@@ -24,7 +24,7 @@ export async function fetcher(request: Request) {
 		const headers: Record<string, string> = {
 			"Content-Type": "application/json",
 			Accept: "application/json",
-			"X-Site-ID": SITE_ID,
+			"X-Site-Code": SITE_CODE,
 			"X-GUEST-ID": session.get("guestId") ?? "",
 			...(init.headers as Record<string, string>), // cast if needed
 		};

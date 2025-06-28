@@ -2,8 +2,8 @@ import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { Button } from "~/components/ui";
 
 const source = {
-	desktop: "images/layout/get-in-touch/contact-us@2x.png",
-	mobile: "images/layout/get-in-touch/contact-us.png",
+	desktop: "/images/layout/get-in-touch/contact-us@2x.png",
+	mobile: "/images/layout/get-in-touch/contact-us.png",
 };
 
 export const Top = () => {

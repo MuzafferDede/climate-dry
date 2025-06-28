@@ -24,6 +24,13 @@ export const MainNavigation = () => {
 
 	const { state, updateState } = useAppContext();
 
+	const closeNavitaion = (close?: () => void) => {
+		updateState({ isNavigationOpen: false });
+		if (close) {
+			close();
+		}
+	};
+
 	return (
 		<Suspense
 			fallback={
@@ -45,7 +52,7 @@ export const MainNavigation = () => {
 
 										return (
 											<Popover key={item.slug} className="relative">
-												{({ open }) => (
+												{({ open, close }) => (
 													<>
 														<PopoverButton
 															className={cn(
@@ -79,8 +86,9 @@ export const MainNavigation = () => {
 																		>
 																			{child.thumbnail_url && (
 																				<NavLink
-																					to={child.slug}
+																					to={`/product-category/${child.slug}`}
 																					className="h-20 w-full"
+																					onClick={() => closeNavitaion(close)}
 																				>
 																					<img
 																						src={child.thumbnail_url}
@@ -92,7 +100,8 @@ export const MainNavigation = () => {
 																			)}
 																			<NavLink
 																				className="font-bold text-teal uppercase transition-colors hover:text-navy-darkest"
-																				to={child.slug}
+																				to={`/product-category/${child.slug}`}
+																				onClick={() => closeNavitaion(close)}
 																			>
 																				{child.name}
 																			</NavLink>
@@ -102,7 +111,10 @@ export const MainNavigation = () => {
 																						<li key={grandChild.slug}>
 																							<NavLink
 																								className="transition-colors hover:text-teal"
-																								to={grandChild.slug}
+																								to={`/product-category/${grandChild.slug}`}
+																								onClick={() =>
+																									closeNavitaion(close)
+																								}
 																							>
 																								{grandChild.name}
 																							</NavLink>
@@ -180,7 +192,10 @@ export const MainNavigation = () => {
 																											? "pointer-events-auto"
 																											: "pointer-events-none",
 																									)}
-																									to={child.slug}
+																									to={`/product-category/${child.slug}`}
+																									onClick={() =>
+																										closeNavitaion()
+																									}
 																								>
 																									{child.name}
 																								</NavLink>
@@ -197,7 +212,10 @@ export const MainNavigation = () => {
 																										(grandChild) => (
 																											<li key={grandChild.slug}>
 																												<NavLink
-																													to={grandChild.slug}
+																													to={`/product-category/${grandChild.slug}`}
+																													onClick={() =>
+																														closeNavitaion()
+																													}
 																													className="block py-1 text-gray-700 hover:text-teal"
 																												>
 																													{grandChild.name}
@@ -212,7 +230,8 @@ export const MainNavigation = () => {
 																				</Disclosure>
 																			) : (
 																				<NavLink
-																					to={child.slug}
+																					to={`/product-category/${child.slug}`}
+																					onClick={() => closeNavitaion()}
 																					className="block py-2 font-medium text-gray-800 hover:text-teal"
 																				>
 																					{child.name}
@@ -227,7 +246,8 @@ export const MainNavigation = () => {
 												</Disclosure>
 											) : (
 												<NavLink
-													to={item.slug}
+													to={`/product-category/${item.slug}`}
+													onClick={() => closeNavitaion()}
 													className="block py-3 font-medium text-gray-900 hover:text-teal"
 												>
 													{item.name}

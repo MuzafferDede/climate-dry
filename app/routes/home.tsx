@@ -1,24 +1,27 @@
 import { data } from "react-router";
 import {
+	Banners,
+	Brands,
+	FeaturedCategories,
+	Info,
+	Marquee,
+	Posts,
+	ShopByCategory,
+	Solutions,
+	Support,
+} from "~/components";
+import {
 	addToCart,
 	commitSession,
 	getBanners,
 	getBrands,
 	getFeaturedCategories,
 	getSession,
+	getShopByCategories,
 	putToast,
 } from "~/services";
 import { ToastType } from "~/types";
-import type { Route } from "./+types";
-import { Banners } from "./banners";
-import { Brands } from "./brands";
-import { FeaturedCategories } from "./featured-categories";
-import { Info } from "./info";
-import { Marquee } from "./marquee";
-import { Posts } from "./posts";
-import { ShopByCategory } from "./shop-by-category";
-import { Solutions } from "./solutions";
-import { Support } from "./support";
+import type { Route } from "./+types/home";
 
 export function meta() {
 	return [
@@ -34,8 +37,9 @@ export async function loader({ request }: Route.LoaderArgs) {
 	const banners = await getBanners(request);
 	const brands = await getBrands(request);
 	const featuredCategories = await getFeaturedCategories(request);
+	const shopByCategories = await getShopByCategories(request);
 
-	return { banners, brands, featuredCategories };
+	return { banners, brands, featuredCategories, shopByCategories };
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -48,9 +52,9 @@ export async function action({ request }: Route.ActionArgs) {
 			message: `${result.variant.product.name} added.`,
 			type: ToastType.Success,
 			action: {
-				label:"View Cart",
-				path: "/cart"
-			}
+				label: "View Cart",
+				path: "/cart",
+			},
 		});
 
 		return data(
@@ -81,17 +85,18 @@ export async function action({ request }: Route.ActionArgs) {
 		);
 	}
 }
+
 export default function Home({ loaderData }: Route.ComponentProps) {
-	const { banners, brands, featuredCategories } = loaderData;
+	const { banners, brands, featuredCategories, shopByCategories } = loaderData;
 
 	return (
 		<div className="relative w-full overflow-hidden">
 			<Marquee />
 			{banners && <Banners banners={banners} />}
-			<FeaturedCategories categories={featuredCategories} />
+			<FeaturedCategories categories={featuredCategories.data} />
 			<Support />
 			<Solutions />
-			<ShopByCategory />
+			<ShopByCategory categories={shopByCategories.data} />
 			{brands && <Brands brands={brands} />}
 			<Info />
 			<Posts />

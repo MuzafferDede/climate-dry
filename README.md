@@ -41,7 +41,7 @@ Create a `.env` file in the root directory:
 
 ```bash
 VITE_API_BASE_URL=http://localhost/api // API base URL
-VITE_SITE_ID=1 // Site ID for the application
+VITE_SITE_CODE=CD // Site CODE for the application
 VITE_SECRET="cd-secret" // Secret key 
 ```
 

@@ -1,21 +1,21 @@
 import { useLocation } from "react-router";
-import { AnimateOnScroll, SectionHeader } from "../ui";
+import { AnimateOnScroll, SectionHeader } from "~/components";
 
 const CARDS = [
 	{
-		icon: "images/layout/why-choose-us/quality.png",
+		icon: "/images/layout/why-choose-us/quality.png",
 		title: "Superb Quality",
 		description:
 			"We've only partnered with the best brands, handpicking the best products needed for your humidity control project",
 	},
 	{
-		icon: "images/layout/why-choose-us/expert.png",
+		icon: "/images/layout/why-choose-us/expert.png",
 		title: "Expert Technical Advice",
 		description:
 			"Our technical team are only a phone call away to help with any questions you may have",
 	},
 	{
-		icon: "images/layout/why-choose-us/price-match.png",
+		icon: "/images/layout/why-choose-us/price-match.png",
 		title: "Price Match Guarantee",
 		description:
 			"We're confident we offer the best value for money you will find and along with our warranty offers you won't need to go anywhere else.",

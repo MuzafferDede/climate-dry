@@ -1,9 +1,19 @@
-import { ArrowRightIcon } from "@heroicons/react/16/solid";
+import {
+	ArrowRightIcon,
+	BanknotesIcon,
+	TruckIcon,
+} from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
-import { Form, Link, useActionData, useNavigation } from "react-router";
+import {
+	Form,
+	NavLink,
+	href,
+	useActionData,
+	useNavigation,
+} from "react-router";
+import { AnimateOnScroll, Button, Image, Loading, Modal } from "~/components";
 import type { Product } from "~/types";
 import { calculateSave, cn, currency } from "~/utils";
-import { AnimateOnScroll, Button, Image, Loading, Modal } from "../ui";
 import { Rating } from "./rating";
 import { StockStatus } from "./stock-status";
 
@@ -16,8 +26,10 @@ export const ProductCard = ({
 	reviews = 0,
 	slug,
 	discount,
+	most_popular,
 	default_variant,
 	variants,
+	introduction,
 }: Product) => {
 	const actionData = useActionData();
 	const [open, setOpen] = useState(false);
@@ -42,28 +54,40 @@ export const ProductCard = ({
 	return (
 		<AnimateOnScroll
 			threshold={0.1}
-			className="boder relative isolate rounded-lg bg-white p-6 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl"
+			className="@container boder relative isolate rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl"
 		>
-			{discount && (
-				<span className="absolute top-0 left-4 bg-red px-2 py-1 text-white text-xs">
-					Sale
-				</span>
-			)}
-			<div className="flex h-full flex-col gap-1">
-				<Image
-					src={images[0].url}
-					alt={name}
-					className="h-64 w-full rounded-lg shadow-md"
-				/>
-				<div className="flex flex-1 flex-col justify-between gap-4">
+			<div className="absolute top-0 left-4 z-10 flex items-center px-4">
+				{most_popular && (
+					<span className="bg-teal px-2 py-1 text-white text-xs">
+						Most Popular
+					</span>
+				)}
+				{discount && (
+					<span className=" bg-red px-2 py-1 text-white text-xs">Sale</span>
+				)}
+			</div>
+			<div className="flex h-full flex-row @max-xl:flex-col @xl:gap-4 gap-1">
+				<NavLink to={href("/product/:slug", { slug })}>
+					<Image
+						src={images[0].url}
+						alt={name}
+						className="@max-xl:h-full h-full @max-xl:w-full w-72 rounded-lg shadow-md"
+					/>
+				</NavLink>
+				<div className="flex w-full grow flex-row @max-xl:flex-col justify-between gap-4">
 					<div className="flex flex-col gap-2">
 						<Rating rating={rating} reviewCount={reviews} />
 						<div>
 							<h3 className="font-bold text-teal uppercase">{brand.name}</h3>
 							<h2 className="min-h-10">{name}</h2>
 						</div>
+						<div
+							className="prose-sm @max-xl:hidden prose-li:list-disc prose-li:text-xs"
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+							dangerouslySetInnerHTML={{ __html: introduction }}
+						/>
 					</div>
-					<div className="flex flex-col gap-2">
+					<div className="flex @xl:max-w-56 grow flex-col justify-end gap-2">
 						<div className="flex flex-col">
 							<div className="flex items-end gap-1 font-bold">
 								<span className="text-xl">
@@ -81,6 +105,18 @@ export const ProductCard = ({
 								)}
 								%
 							</p>
+							<div className="mt-2 flex @max-xl:hidden flex-col gap-2 rounded-lg bg-gray-lightest px-4 py-3">
+								<div className="flex items-center gap-3 text-navy-darkest text-xxs">
+									<BanknotesIcon className="size-4" />
+									<span>Pay in 3 interest-free payments</span>
+								</div>
+								{Boolean(default_variant.premium_shipping_cost) && (
+									<div className="flex items-center gap-3 text-navy-darkest text-xxs">
+										<TruckIcon className="size-4" />
+										<span>Rapid Delivery</span>
+									</div>
+								)}
+							</div>
 						</div>
 						<StockStatus inStock={inStock} />
 
@@ -111,17 +147,17 @@ export const ProductCard = ({
 									</span>
 								</Button>
 							</Form>
-							<Link to={slug}>
-								<Button
-									variant="secondary"
-									className="w-full"
-									icon={
-										<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
-									}
-								>
-									<span>View Product</span>
-								</Button>
-							</Link>
+							<Button
+								as={NavLink}
+								to={href("/product/:slug", { slug })}
+								variant="secondary"
+								className="w-full"
+								icon={
+									<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
+								}
+							>
+								<span>View Product</span>
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -143,7 +179,7 @@ export const ProductCard = ({
 									disabled={!variant.in_stock}
 									onClick={() => setSubmittingVariantId(variant.id)}
 									className={cn(
-										"group relative w-full cursor-pointer overflow-hidden rounded-lg border border-gray-200 p-4 text-left shadow-sm transition-all",
+										"group er relative w-full cursor-po cursor-pointer overflow-hidden rounded-lg border border-gray-200 p-4 text-left shadow-sm transition-all",
 										variant.in_stock
 											? "hover:border-teal-500 hover:bg-teal-50"
 											: "cursor-not-allowed opacity-50",

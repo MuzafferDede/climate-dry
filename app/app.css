@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -19,6 +20,8 @@
 	--color-teal: #0095AF;
 	--color-blue-lighter: #DAE1E5;
 	--animate-marquee: marquee 15s linear infinite;
+
+	--text-xxs: 0.625rem;
 
 	@keyframes marquee {
 		0% {

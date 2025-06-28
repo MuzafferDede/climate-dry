@@ -10,11 +10,11 @@ const SectionTitle = ({ label }: { label: string }) => {
 };
 
 const paymentLogos = [
-	"images/layout/payments/visa.png",
-	"images/layout/payments/mc.png",
-	"images/layout/payments/pp-payinthree.png",
-	"images/layout/payments/paybybank.png",
-	"images/layout/payments/bacs.png",
+	"/images/layout/payments/visa.png",
+	"/images/layout/payments/mc.png",
+	"/images/layout/payments/pp-payinthree.png",
+	"/images/layout/payments/paybybank.png",
+	"/images/layout/payments/bacs.png",
 ];
 
 export const Middle = () => {

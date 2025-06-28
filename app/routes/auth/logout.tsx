@@ -24,6 +24,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 		putToast(session, { message: "Logout failed!", type: ToastType.Error });
 
+		console.error(error);
+
 		return redirect("/login", {
 			headers: {
 				"Set-Cookie": await destroySession(session),

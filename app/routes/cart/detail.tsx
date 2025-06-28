@@ -18,7 +18,7 @@ import {
 } from "~/services";
 import { type Cart, ToastType } from "~/types";
 import { currency } from "~/utils";
-import type { Route } from "../cart/+types";
+import type { Route } from "./+types/detail";
 
 export function meta() {
 	return [
@@ -140,7 +140,7 @@ export default function () {
 			<div className="flex flex-col gap-8 lg:flex-row">
 				{/* Cart Items List */}
 				<div className="w-full lg:w-2/3">
-					<div className="rounded-xl bg-white p-4 shadow-sm md:p-6">
+					<div className="rounded-xl bg-white p-4 shadow-gray-lighter shadow-sm ring-1 ring-gray-lighter md:p-6">
 						<h2 className="mb-6 font-bold text-gray-900 text-xl">Cart Items</h2>
 						{items.length === 0 ? (
 							<div className="py-12 text-center">
@@ -297,7 +297,7 @@ export default function () {
 				{/* Cart Summary */}
 				{items.length > 0 && (
 					<div className="w-full lg:w-1/3">
-						<div className="sticky top-8 rounded-xl bg-white p-6 shadow-sm">
+						<div className="sticky top-32 rounded-xl bg-white p-6 shadow-sm">
 							<h2 className="mb-6 font-bold text-gray-900 text-xl">
 								Cart Summary
 							</h2>

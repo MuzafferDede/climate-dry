@@ -27,13 +27,17 @@ interface AnimateProps extends React.HTMLAttributes<HTMLDivElement> {
 export const AnimateOnScroll = ({
 	children,
 	type = "fadeInUp",
-	threshold = 0.5,
-	rootMargin = "0px",
+	threshold = 0.4,
+	rootMargin = "-50px",
 	delayMs = 10,
 	className,
 	...props
 }: AnimateProps) => {
-	const { ref, inView } = useInViewport({ threshold, rootMargin, delayMs });
+	const { ref, inView } = useInViewport({
+		threshold,
+		rootMargin,
+		delayMs,
+	});
 
 	return (
 		<div

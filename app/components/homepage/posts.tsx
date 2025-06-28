@@ -16,28 +16,28 @@ const POSTS: Post[] = [
 			"Case Study: Water Damage Restoration with Minimal Disturbance at Care Home",
 		introduction:
 			"Discover how extensive water damage was dealt with in the least disruptive, efficient and effective way...",
-		banner: "images/temp/6810bf128ccda8.50485683.webp",
+		banner: "/images/temp/6810bf128ccda8.50485683.webp",
 		path: "/",
 	},
 	{
 		title: "Which type of dehumidifier in 2024",
 		introduction:
 			"Check out our recommendations for the latest in Dehumidifier technology and the difference between desiccant, refrigerant and condenser dehumidifiers.",
-		banner: "images/temp/6810bf128ccda8.50485683.webp",
+		banner: "/images/temp/6810bf128ccda8.50485683.webp",
 		path: "/dehumidifier-types",
 	},
 	{
 		title: "Improve Your Health and Home with a Dehumidifier",
 		introduction:
 			"Maintaining optimal humidity using dehumidifiers and hygrometers keeps environments healthy.",
-		banner: "images/temp/6810bf128ccda8.50485683.webp",
+		banner: "/images/temp/6810bf128ccda8.50485683.webp",
 		path: "/health-home-dehumidifier",
 	},
 	{
 		title: "An Essential Guide: Dealing With Leaks & Floods",
 		introduction:
 			"The cheapest and best solution for dealing with leaks and floods at home or in the workspace, featuring Dantherm's",
-		banner: "images/temp/6810bf128ccda8.50485683.webp",
+		banner: "/images/temp/6810bf128ccda8.50485683.webp",
 		path: "/leaks-floods-guide",
 	},
 ];

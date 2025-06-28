@@ -43,37 +43,37 @@ export const footerHelperLinks: FooterLink[] = [
 
 export const footerLogos: (FooterLink & { logo: string; sister?: boolean })[] =
 	[
-		{ label: "LMP", path: "/", logo: "images/logos/LMP.webp" },
-		{ label: "NHS", path: "/", logo: "images/logos/NHS.webp" },
-		{ label: "CD", path: "/", logo: "images/logos/CD.webp" },
-		{ label: "zebra", path: "/", logo: "images/logos/zebra.webp" },
-		{ label: "OL", path: "/", logo: "images/logos/OL.webp" },
-		{ label: "LS", path: "/", logo: "images/logos/LS.webp" },
-		{ label: "OS", path: "/", logo: "images/logos/OS.webp" },
-		{ label: "PPS", path: "/", logo: "images/logos/PPS.webp" },
-		{ label: "NSS", path: "/", logo: "images/logos/NSS.webp" },
+		{ label: "LMP", path: "/", logo: "/images/logos/LMP.webp" },
+		{ label: "NHS", path: "/", logo: "/images/logos/NHS.webp" },
+		{ label: "CD", path: "/", logo: "/images/logos/CD.webp" },
+		{ label: "zebra", path: "/", logo: "/images/logos/zebra.webp" },
+		{ label: "OL", path: "/", logo: "/images/logos/OL.webp" },
+		{ label: "LS", path: "/", logo: "/images/logos/LS.webp" },
+		{ label: "OS", path: "/", logo: "/images/logos/OS.webp" },
+		{ label: "PPS", path: "/", logo: "/images/logos/PPS.webp" },
+		{ label: "NSS", path: "/", logo: "/images/logos/NSS.webp" },
 	];
 
 export const sisterLogos: (FooterLink & { logo: string; sister?: boolean })[] =
-	[{ label: "NTH", path: "/", logo: "images/logos/NTH.webp" }];
+	[{ label: "NTH", path: "/", logo: "/images/logos/NTH.webp" }];
 
 export const headerTools = [
 	{
 		label: "Drying Calculator",
 		description: "Work out the correct product for what you need",
-		icon: "images/icons/calculator.webp",
+		icon: "/images/icons/calculator.webp",
 		path: "/",
 	},
 	{
 		label: "Water Damage Restoration",
 		description: "Restore your property to its pre-damage condition",
-		icon: "images/icons/water-damage.webp",
+		icon: "/images/icons/water-damage.webp",
 		path: "/",
 	},
 	{
 		label: "Solutions Centre",
 		description: "Restore your property to its pre-damage condition",
-		icon: "images/icons/solutions-centre.webp",
+		icon: "/images/icons/solutions-centre.webp",
 		path: "/",
 	},
 ];

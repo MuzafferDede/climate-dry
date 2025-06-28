@@ -28,7 +28,7 @@ export type Variant = {
 			value: string;
 		},
 	];
-};
+} & ShippingMethods;
 
 export type Product = {
 	id: number;
@@ -49,12 +49,26 @@ export type Product = {
 	slug: string;
 	default_variant: Variant;
 	variants: Variant[];
+	introduction: string;
+	description: string;
+	most_popular: boolean;
 };
 
-export type FeaturedCategory = {
+export type ProductCategory = {
 	name: string;
 	slug: string;
-	products: Product[];
+	description: string;
+	introduction: string;
+	banner_url: string;
+	banner_link: string;
+	thumbnail_url: string;
+	is_featured: boolean;
+	products?: Product[];
+	parent?: ProductCategory;
+	children?: ProductCategory[];
+	meta_keywords: string[];
+	meta_description: string;
+	meta_title: string;
 };
 
 export type HeroBanner = {
@@ -130,4 +144,36 @@ export type Cart = {
 		value: number;
 	};
 	items: CartItem[];
+};
+
+export type ApiMeta = {
+	current_page: number;
+	from: number;
+	last_page: number;
+	links: Array<{
+		url: string | null;
+		label: string;
+		active: boolean;
+	}>;
+	path: string;
+	per_page: number;
+	to: number;
+	total: number;
+};
+
+export type ApiLinks = {
+	first?: string;
+	last?: string;
+	prev?: string | null;
+	next?: string | null;
+};
+
+export type ApiListResponse<T> = {
+	data: T[];
+	meta?: ApiMeta;
+	links?: ApiLinks;
+};
+
+export type ApiResponse<T> = {
+	data: T;
 };

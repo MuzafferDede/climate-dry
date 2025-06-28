@@ -1,4 +1,3 @@
-import {} from "react";
 import { Link } from "react-router";
 import { useCarousel } from "~/hooks";
 import { headerTools } from "~/static";

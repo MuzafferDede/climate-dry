@@ -8,6 +8,7 @@ import {
 	data,
 	isRouteErrorResponse,
 	useNavigate,
+	useNavigation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -17,11 +18,11 @@ import {
 	ExclamationTriangleIcon,
 	HomeIcon,
 } from "@heroicons/react/16/solid";
-import {} from "react";
 import {
 	Button,
 	Footer,
 	Header,
+	Loading,
 	ToastContainer,
 	WhyChooseUs,
 } from "~/components";
@@ -51,6 +52,10 @@ export const links: Route.LinksFunction = () => [
 		href: "https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap",
 	},
 ];
+
+export const handle = {
+	breadcrumb: () => ({ label: "Home", path: "/" }),
+};
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
 	try {
@@ -120,6 +125,9 @@ export default function App({ loaderData }: Route.ComponentProps) {
 	const { toast } = loaderData;
 	const { ref, inView } = useInViewport({ rootMargin: "100px" });
 
+	const navigation = useNavigation();
+	const isLoading = navigation.state === "loading";
+
 	return (
 		<AppProvider>
 			<main className="relative isolate" id="main">
@@ -142,6 +150,11 @@ export default function App({ loaderData }: Route.ComponentProps) {
 					<ChevronUpIcon className="size-10" />
 					<span className="sr-only">go to top</span>
 				</Link>
+				{isLoading && (
+					<div className="fixed right-0 bottom-0 z-50 m-4 flex animate-bounce items-center justify-center rounded-full bg-teal p-4 shadow-md">
+						<Loading className="text-white" />
+					</div>
+				)}
 			</main>
 		</AppProvider>
 	);

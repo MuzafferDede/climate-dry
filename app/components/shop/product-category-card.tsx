@@ -1,0 +1,37 @@
+import { NavLink, href } from "react-router";
+import { AnimateOnScroll, Image } from "~/components";
+import type { ProductCategory } from "~/types";
+
+export const ProductCategoryCard = ({
+	category,
+}: { category: ProductCategory }) => {
+	return (
+		<NavLink
+			to={href("/product-category/:slug", { slug: category.slug })}
+			key={category.slug}
+			className="block"
+		>
+			<AnimateOnScroll className="group relative flex h-full flex-row justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl lg:flex-col">
+				<div className="flex h-full flex-col space-y-2 px-4 py-5">
+					<h3 className="font-bold text-2xl">{category.name}</h3>
+					<div className="flex min-h-20 flex-1 flex-col justify-between">
+						<div
+							className="mb-4 line-clamp-4"
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+							dangerouslySetInnerHTML={{ __html: category.introduction }}
+						/>
+						<p className="font-bold">See all {category.name}</p>
+					</div>
+				</div>
+				<div className="mt-auto ml-auto">
+					<Image
+						className="h-auto w-full max-w-52 origin-bottom-right object-contain transition-all delay-100 duration-300 ease-in-out group-hover:scale-115"
+						src={category.thumbnail_url}
+						alt={category.name}
+						loading="lazy"
+					/>
+				</div>
+			</AnimateOnScroll>
+		</NavLink>
+	);
+};

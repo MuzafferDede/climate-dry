@@ -1,11 +1,11 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { Link } from "react-router";
 import { Button, ProductCard, SectionHeader } from "~/components";
-import type { FeaturedCategory } from "~/types";
+import type { ProductCategory } from "~/types";
 
 export const FeaturedCategories = ({
 	categories,
-}: { categories: FeaturedCategory[] }) => {
+}: { categories: ProductCategory[] }) => {
 	return (
 		<div className="space-y-8 px-5 py-16">
 			<SectionHeader

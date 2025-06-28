@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 export const useInViewport = ({
 	threshold = 0.1,
 	rootMargin = "0px",
-	delayMs = 200,
+	delayMs = 10,
 }: {
 	threshold?: number;
 	rootMargin?: string;
@@ -12,6 +12,7 @@ export const useInViewport = ({
 	const ref = useRef<HTMLDivElement>(null);
 	const [inView, setInView] = useState(false);
 	const timeoutRef = useRef<number>(0);
+	const lastValueRef = useRef<boolean>(false);
 
 	useEffect(() => {
 		const element = ref.current;
@@ -20,8 +21,16 @@ export const useInViewport = ({
 		const observer = new IntersectionObserver(
 			([entry]) => {
 				clearTimeout(timeoutRef.current);
+
+				// Delay to debounce rapid in/out events near viewport edge
 				timeoutRef.current = window.setTimeout(() => {
-					setInView(entry.isIntersecting);
+					const isVisible = entry.isIntersecting;
+
+					// Only update state if value changed
+					if (lastValueRef.current !== isVisible) {
+						lastValueRef.current = isVisible;
+						setInView(isVisible);
+					}
 				}, delayMs);
 			},
 			{ threshold, rootMargin },
