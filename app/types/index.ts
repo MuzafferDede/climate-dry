@@ -15,6 +15,19 @@ export type Navigation = {
 	children?: Navigation[];
 };
 
+export type BlogPost = {
+	id: number;
+	title: string;
+	slug: string;
+	image_url: string;
+	introduction: string;
+	description: string;
+	meta_title?: string;
+	meta_description?: string;
+	meta_keywords?: string[];
+	created_at: string;
+};
+
 export type Variant = {
 	id: number;
 	sku: string;

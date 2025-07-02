@@ -8,6 +8,8 @@ export default [
 	route("reset-password", "routes/auth/reset-password.tsx"),
 	route("account", "routes/account/detail.tsx"),
 	route("logout", "routes/auth/logout.tsx"),
+	route("info-hub", "routes/blog-posts/index.tsx"),
+	route("info-hub/article/:slug", "routes/blog-posts/detail.tsx"),
 	route("cart", "routes/cart/detail.tsx"),
 	route("checkout", "routes/checkout/page.tsx"),
 	route("product-category/:slug", "routes/product-category/list.tsx"),
