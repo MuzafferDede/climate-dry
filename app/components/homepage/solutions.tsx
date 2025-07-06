@@ -231,7 +231,7 @@ export const Solutions = () => {
 								<ListboxOption
 									key={solution.name}
 									value={index}
-									className="cursor-pointer px-4 py-2 hover:bg-gray-200"
+									className="cursor-pointer px-4 py-2 hover:bg-gray-lighter"
 								>
 									{solution.name}
 								</ListboxOption>
@@ -290,12 +290,7 @@ export const Solutions = () => {
 					</TabPanels>
 				</TabGroup>
 				<div className="text-center">
-					<Button
-						as={Link}
-						variant="outline"
-						className="hover:text-teal"
-						to="/"
-					>
+					<Button as={Link} variant="outline" to="/">
 						Visit the solutions centre
 					</Button>
 				</div>

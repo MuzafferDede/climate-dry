@@ -98,7 +98,7 @@ export const Posts: React.FC = () => {
 										>
 											{post.title}
 										</Link>
-										<p className="text-gray-600 text-xs">{post.introduction}</p>
+										<p className="text-gray text-xs">{post.introduction}</p>
 									</div>
 									<Button
 										to={post.path}
@@ -124,12 +124,7 @@ export const Posts: React.FC = () => {
 				</div>
 
 				<div className="text-center">
-					<Button
-						as={Link}
-						variant="outline"
-						className="hover:text-teal"
-						to="/"
-					>
+					<Button as={Link} variant="outline" to="/">
 						Visit the advice hub
 					</Button>
 				</div>

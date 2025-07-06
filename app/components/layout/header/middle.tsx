@@ -88,7 +88,6 @@ export const Middle = () => {
 								<Button
 									size="icon"
 									variant="ghost"
-									animation="zoom"
 									icon={<ShoppingCartIcon className="size-6" />}
 								/>
 							</Link>
@@ -99,13 +98,12 @@ export const Middle = () => {
 									<Button
 										size="icon"
 										variant="ghost"
-										animation="zoom"
 										icon={<UserCircleIcon className="size-6" />}
 									/>
 								</MenuButton>
 								<MenuItems
 									anchor="bottom end"
-									className="slide-in-from-right-10 z-20 w-48 origin-top-right animate-in rounded-xl border border-gray-200 bg-white p-1 font-bold text-gray-700 shadow-sm transition [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
+									className="slide-in-from-right-10 z-20 w-48 origin-top-right animate-in rounded-xl border border-gray-lighter bg-white p-1 font-bold text-gray-dark shadow-sm transition [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
 								>
 									{customer ? (
 										<>

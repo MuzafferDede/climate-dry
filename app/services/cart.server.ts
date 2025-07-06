@@ -10,11 +10,18 @@ export async function addToCart(request: Request) {
 	const formData = await request.formData();
 	const id = formData.get("id");
 	const quantity = formData.get("quantity") || 1;
+	// Get all selected extras as an array of numbers
+	const extras = formData
+		.getAll("extras[]")
+		.map((v) => Number(v))
+		.filter(Boolean);
 
 	const api = await fetcher(request);
+
 	return await api.post<CartItem>("/cart", {
 		variant_id: id,
 		quantity: Number(quantity),
+		extras,
 	});
 }
 

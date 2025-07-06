@@ -92,7 +92,7 @@ export async function action({ request }: Route.ActionArgs) {
 		const result = await addToCart(request);
 
 		putToast(session, {
-			message: `${result.variant.product.name} added.`,
+			message: `${result.variant.product.name} added to cart.`,
 			type: ToastType.Success,
 			action: {
 				label: "View Cart",
@@ -167,7 +167,9 @@ export default function ProductCategoryPage({
 			<div className="mx-auto max-w-7xl space-y-8">
 				<Breadcrumb />
 				<div className="space-y-2">
-					<h1 className="font-bold text-4xl text-gray-900">{category.name}</h1>
+					<h1 className="font-bold text-4xl text-navy-darkest">
+						{category.name}
+					</h1>
 					{category.introduction && (
 						<div
 							className="prose prose-img:mx-auto prose-figcaption:hidden max-w-none prose-img:max-w-full"
@@ -194,9 +196,13 @@ export default function ProductCategoryPage({
 					<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
 						<aside className="lg:col-span-1">
 							<div className="space-y-6">
-								<h3 className="font-medium text-gray-900 text-lg">Filters</h3>
+								<h3 className="font-medium text-lg text-navy-darkest">
+									Filters
+								</h3>
 								{/* TODO: Add filters component */}
-								<p className="text-gray-500 text-sm">Filters coming soon...</p>
+								<p className="text-gray-light text-sm">
+									Filters coming soon...
+								</p>
 							</div>
 						</aside>
 						<main className="lg:col-span-3">

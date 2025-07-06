@@ -49,7 +49,7 @@ export async function action({ request }: Route.ActionArgs) {
 		const result = await addToCart(request);
 
 		putToast(session, {
-			message: `${result.variant.product.name} added.`,
+			message: `${result.variant.product.name} added to cart.`,
 			type: ToastType.Success,
 			action: {
 				label: "View Cart",

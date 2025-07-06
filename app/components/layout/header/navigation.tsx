@@ -52,27 +52,26 @@ export const MainNavigation = () => {
 
 										return (
 											<Popover key={item.slug} className="relative">
-												{({ open, close }) => (
-													<>
-														<PopoverButton
-															className={cn(
-																"flex cursor-pointer items-center justify-between gap-2 font-medium outline-none transition-colors has-[span[data-active=true]]:text-teal",
-																open ? "text-teal" : "hover:text-teal",
-															)}
-														>
-															{item.name}
+												{({ open, close }) =>
+													hasChildren ? (
+														<>
+															<PopoverButton
+																className={cn(
+																	"flex cursor-pointer items-center justify-between gap-2 font-medium outline-none transition-colors",
+																	open ? "text-teal" : "hover:text-teal",
+																)}
+															>
+																{item.name}
 
-															{hasChildren && (
-																<ChevronDownIcon
-																	className={cn(
-																		"h-5 w-5 transition-transform",
-																		open ? "rotate-180" : "",
-																	)}
-																/>
-															)}
-														</PopoverButton>
-
-														{hasChildren && (
+																{hasChildren && (
+																	<ChevronDownIcon
+																		className={cn(
+																			"h-5 w-5 transition-transform",
+																			open ? "rotate-180" : "",
+																		)}
+																	/>
+																)}
+															</PopoverButton>
 															<PopoverPanel
 																as="div"
 																className="fade-in slide-in-from-top-15 absolute inset-shadow-xs left-0 z-20 flex w-full translate-y-3 animate-in items-start gap-5 rounded-b-lg bg-white p-3 shadow-xl"
@@ -87,7 +86,12 @@ export const MainNavigation = () => {
 																			{child.thumbnail_url && (
 																				<NavLink
 																					to={`/product-category/${child.slug}`}
-																					className="h-20 w-full"
+																					className={({ isActive }) =>
+																						cn(
+																							"h-20 w-full",
+																							isActive && "font-bold text-teal",
+																						)
+																					}
 																					onClick={() => closeNavitaion(close)}
 																				>
 																					<img
@@ -99,7 +103,12 @@ export const MainNavigation = () => {
 																				</NavLink>
 																			)}
 																			<NavLink
-																				className="font-bold text-teal uppercase transition-colors hover:text-navy-darkest"
+																				className={({ isActive }) =>
+																					cn(
+																						"font-bold text-teal uppercase transition-colors hover:text-navy-darkest",
+																						isActive && "font-bold text-teal",
+																					)
+																				}
 																				to={`/product-category/${child.slug}`}
 																				onClick={() => closeNavitaion(close)}
 																			>
@@ -110,7 +119,13 @@ export const MainNavigation = () => {
 																					{child.children.map((grandChild) => (
 																						<li key={grandChild.slug}>
 																							<NavLink
-																								className="transition-colors hover:text-teal"
+																								className={({ isActive }) =>
+																									cn(
+																										"transition-colors hover:text-teal",
+																										isActive &&
+																											"font-bold text-teal",
+																									)
+																								}
 																								to={`/product-category/${grandChild.slug}`}
 																								onClick={() =>
 																									closeNavitaion(close)
@@ -126,9 +141,21 @@ export const MainNavigation = () => {
 																	))}
 																</ul>
 															</PopoverPanel>
-														)}
-													</>
-												)}
+														</>
+													) : (
+														<NavLink
+															to={item.slug}
+															className={({ isActive }) =>
+																cn(
+																	"flex cursor-pointer items-center justify-between gap-2 font-medium outline-none transition-colors",
+																	isActive && "text-teal",
+																)
+															}
+														>
+															{item.name}
+														</NavLink>
+													)
+												}
 											</Popover>
 										);
 									})}
@@ -151,7 +178,10 @@ export const MainNavigation = () => {
 								</button>
 								<div className="relative z-20 space-y-1 px-2 pt-2 pb-3">
 									{nav.map((item) => (
-										<div key={item.slug} className="border-gray-200 border-b">
+										<div
+											key={item.slug}
+											className="border-gray-lighter border-b"
+										>
 											{item.children ? (
 												<Disclosure as="div">
 													{({ open }) => (
@@ -159,7 +189,7 @@ export const MainNavigation = () => {
 															<DisclosureButton
 																className={cn(
 																	"flex w-full items-center justify-between py-3 text-left font-medium",
-																	open ? "text-teal" : "text-gray-900",
+																	open ? "text-teal" : "text-navy-darkest",
 																)}
 															>
 																{item.name}
@@ -183,15 +213,19 @@ export const MainNavigation = () => {
 																									"flex w-full items-center justify-between py-2 text-left font-medium",
 																									open
 																										? "text-teal"
-																										: "text-gray-800",
+																										: "text-navy-darkest",
 																								)}
 																							>
 																								<NavLink
-																									className={cn(
-																										open
-																											? "pointer-events-auto"
-																											: "pointer-events-none",
-																									)}
+																									className={({ isActive }) =>
+																										cn(
+																											open
+																												? "pointer-events-auto"
+																												: "pointer-events-none",
+																											isActive &&
+																												"font-bold text-teal",
+																										)
+																									}
 																									to={`/product-category/${child.slug}`}
 																									onClick={() =>
 																										closeNavitaion()
@@ -216,7 +250,15 @@ export const MainNavigation = () => {
 																													onClick={() =>
 																														closeNavitaion()
 																													}
-																													className="block py-1 text-gray-700 hover:text-teal"
+																													className={({
+																														isActive,
+																													}) =>
+																														cn(
+																															"block py-1 text-gray-dark hover:text-teal",
+																															isActive &&
+																																"text-teal",
+																														)
+																													}
 																												>
 																													{grandChild.name}
 																												</NavLink>
@@ -232,7 +274,12 @@ export const MainNavigation = () => {
 																				<NavLink
 																					to={`/product-category/${child.slug}`}
 																					onClick={() => closeNavitaion()}
-																					className="block py-2 font-medium text-gray-800 hover:text-teal"
+																					className={({ isActive }) =>
+																						cn(
+																							"block py-2 font-medium text-navy-darkest hover:text-teal",
+																							isActive && "font-bold text-teal",
+																						)
+																					}
 																				>
 																					{child.name}
 																				</NavLink>
@@ -246,9 +293,14 @@ export const MainNavigation = () => {
 												</Disclosure>
 											) : (
 												<NavLink
-													to={`/product-category/${item.slug}`}
+													to={item.slug}
 													onClick={() => closeNavitaion()}
-													className="block py-3 font-medium text-gray-900 hover:text-teal"
+													className={({ isActive }) =>
+														cn(
+															"block py-3 font-medium text-navy-darkest hover:text-teal",
+															isActive && "font-bold text-teal",
+														)
+													}
 												>
 													{item.name}
 												</NavLink>

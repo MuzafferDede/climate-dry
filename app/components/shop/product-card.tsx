@@ -1,8 +1,4 @@
-import {
-	ArrowRightIcon,
-	BanknotesIcon,
-	TruckIcon,
-} from "@heroicons/react/16/solid";
+import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import {
 	Form,
@@ -14,6 +10,7 @@ import {
 import { AnimateOnScroll, Button, Image, Loading, Modal } from "~/components";
 import type { Product } from "~/types";
 import { calculateSave, cn, currency } from "~/utils";
+import { PaymentAndShipping } from "../ui/payment-and-shipping";
 import { Rating } from "./rating";
 import { StockStatus } from "./stock-status";
 
@@ -53,8 +50,9 @@ export const ProductCard = ({
 
 	return (
 		<AnimateOnScroll
-			threshold={0.1}
+			threshold={0.4}
 			className="@container boder relative isolate rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl"
+			type="fadeInUp"
 		>
 			<div className="absolute top-0 left-4 z-10 flex items-center px-4">
 				{most_popular && (
@@ -79,7 +77,7 @@ export const ProductCard = ({
 						<Rating rating={rating} reviewCount={reviews} />
 						<div>
 							<h3 className="font-bold text-teal uppercase">{brand.name}</h3>
-							<h2 className="min-h-10">{name}</h2>
+							<h2 className="min-h-10 capitalize">{name}</h2>
 						</div>
 						<div
 							className="prose-sm @max-xl:hidden prose-li:list-disc prose-li:text-xs"
@@ -106,18 +104,11 @@ export const ProductCard = ({
 								)}
 								%
 							</p>
-							<div className="mt-2 flex @max-xl:hidden flex-col gap-2 rounded-lg bg-gray-lightest px-4 py-3">
-								<div className="flex items-center gap-3 text-navy-darkest text-xxs">
-									<BanknotesIcon className="size-4" />
-									<span>Pay in 3 interest-free payments</span>
-								</div>
-								{Boolean(default_variant.premium_shipping_cost) && (
-									<div className="flex items-center gap-3 text-navy-darkest text-xxs">
-										<TruckIcon className="size-4" />
-										<span>Rapid Delivery</span>
-									</div>
-								)}
-							</div>
+							<PaymentAndShipping
+								freeShipping={Boolean(default_variant.free_shipping)}
+								premiumShipping={Boolean(default_variant.premium_shipping_cost)}
+								className="mt-2 @max-xl:hidden"
+							/>
 						</div>
 						<StockStatus inStock={inStock} />
 
@@ -128,6 +119,7 @@ export const ProductCard = ({
 									(hasVariants || !inStock) && e.preventDefault()
 								}
 							>
+								<input type="hidden" name="quantity" id="quantity" value={1} />
 								<Button
 									name="id"
 									disabled={!inStock}
@@ -180,9 +172,9 @@ export const ProductCard = ({
 									disabled={!variant.in_stock}
 									onClick={() => setSubmittingVariantId(variant.id)}
 									className={cn(
-										"group er relative w-full cursor-po cursor-pointer overflow-hidden rounded-lg border border-gray-200 p-4 text-left shadow-sm transition-all",
+										"group er relative w-full cursor-po cursor-pointer overflow-hidden rounded-lg border border-gray-lighter p-4 text-left shadow-sm transition-all",
 										variant.in_stock
-											? "hover:border-teal-500 hover:bg-teal-50"
+											? "hover:border-teal hover:bg-teal/10"
 											: "cursor-not-allowed opacity-50",
 									)}
 								>
@@ -193,32 +185,30 @@ export const ProductCard = ({
 									)}
 									<div className="flex items-start justify-between gap-4">
 										<div className="flex-1 space-y-2">
-											<p className="font-semibold text-gray-900 text-sm">
-												{variant.sku}
+											<p className="font-semibold text-navy-darkest text-sm capitalize">
+												{variant.name} - {variant.sku}
 											</p>
-
-											<div className="flex flex-wrap gap-x-4 gap-y-1 text-gray-600 text-sm">
+											<div className="flex flex-wrap gap-x-4 gap-y-1 text-gray text-sm">
 												{variant.attributes.map((attr) => (
 													<p key={attr.id}>
-														<span className="font-medium">{attr.name}:</span>{" "}
+														<span className="font-medium capitalize">
+															{attr.name}:
+														</span>{" "}
 														<span>{attr.value}</span>
 													</p>
 												))}
 											</div>
-
 											<div className="flex items-center gap-2">
-												<p className="font-bold text-base text-teal-600">
+												<p className="font-bold text-base text-teal">
 													{currency(variant.price)}
 												</p>
 												{variant.retail_price > variant.price && (
-													<p className="text-gray-400 text-sm line-through">
+													<p className="text-gray-light text-sm line-through">
 														{currency(variant.retail_price)}
 													</p>
 												)}
 											</div>
 										</div>
-
-										{/* Placeholder for StockStatus or icon */}
 										<div className="mt-1 shrink-0">
 											<StockStatus inStock={variant.in_stock} />
 										</div>

@@ -1,104 +1,223 @@
-export type Customer = {
-	id: string;
-	first_name: string;
-	last_name: string;
-	email: string;
-	token: string;
+// ============================================================================
+// API TYPES
+// ============================================================================
+
+export type ApiLinks = {
+	first?: string;
+	last?: string;
+	next?: string | null;
+	prev?: string | null;
 };
 
-export type Navigation = {
-	name: string;
-	slug: string;
-	banner_link?: string;
-	banner_url?: string;
-	thumbnail_url?: string;
-	children?: Navigation[];
+export type ApiMeta = {
+	current_page: number;
+	from: number;
+	last_page: number;
+	links: Array<{
+		active: boolean;
+		label: string;
+		url: string | null;
+	}>;
+	path: string;
+	per_page: number;
+	to: number;
+	total: number;
 };
 
-export type BlogPost = {
-	id: number;
-	title: string;
-	slug: string;
-	image_url: string;
-	introduction: string;
-	description: string;
+export type ApiResponse<T> = {
+	data: T;
+};
+
+export type ApiListResponse<T> = {
+	data: T[];
+	links?: ApiLinks;
+	meta?: ApiMeta;
+};
+
+// ============================================================================
+// META INFO TYPE
+// ============================================================================
+
+export type MetaInfo = {
 	meta_title?: string;
 	meta_description?: string;
 	meta_keywords?: string[];
-	created_at: string;
+};
+
+// ============================================================================
+// PRODUCT TYPES
+// ============================================================================
+
+export type ShippingMethods = {
+	free_shipping: boolean;
+	premium_shipping_cost: number;
+	standard_shipping_cost: number;
+};
+
+export type ProductImage = {
+	id: number;
+	url: string;
+	order: number;
 };
 
 export type Variant = {
+	attributes: Array<{
+		id: number;
+		name: string;
+		value: string;
+	}>;
 	id: number;
-	sku: string;
-	retail_price: number;
-	price: number;
 	in_stock: boolean;
-	attributes: [
-		{
-			id: number;
-			name: string;
-			value: string;
-		},
-	];
+	name: string;
+	price: number;
+	retail_price: number;
+	sku: string;
+	product: Product;
 } & ShippingMethods;
 
-export type Product = {
-	id: number;
-	brand: {
-		name: string;
-		logo_url: string;
-	};
-	images: [{ url: string }];
+export type ProductCategory = {
+	banner_link: string;
+	banner_url: string;
+	children?: ProductCategory[];
+	description: string;
+	introduction: string;
+	is_featured: boolean;
 	name: string;
-	rating: number;
-	reviews: number;
+	parent?: ProductCategory;
+	products?: Product[];
+	slug: string;
+	thumbnail_url: string;
+} & MetaInfo;
+
+export type Product = {
+	brand: {
+		logo_url: string;
+		name: string;
+	};
+	category: ProductCategory;
+	default_variant: Variant;
+	description: string;
 	discount?: {
 		id: number;
 		name: string;
 		type: string;
 		value: number;
 	};
-	slug: string;
-	default_variant: Variant;
-	variants: Variant[];
+	extra_products?: Product[];
+	features: Array<{ key: string; value: string }>;
+	id: number;
+	images: ProductImage[];
+	included_items: string[];
 	introduction: string;
-	description: string;
+	key_features: string;
 	most_popular: boolean;
-};
-
-export type ProductCategory = {
 	name: string;
+	rating: number;
+	related_products?: Product[];
+	reviews: number;
 	slug: string;
-	description: string;
-	introduction: string;
-	banner_url: string;
-	banner_link: string;
-	thumbnail_url: string;
-	is_featured: boolean;
-	products?: Product[];
-	parent?: ProductCategory;
-	children?: ProductCategory[];
-	meta_keywords: string[];
-	meta_description: string;
-	meta_title: string;
+	specifications: Array<{ key: string; value: string }>;
+	tax_amount: number;
+	upsell_products?: Product[];
+	variants: Variant[];
+	videos: Array<{ url: string }>;
+	warranty_period: number;
+} & MetaInfo;
+
+// ============================================================================
+// CART & SHIPPING TYPES
+// ============================================================================
+
+export type CartTotals = {
+	subtotal?: number;
+	pre_tax_subtotal: number;
+	shipping_total: number;
+	tax_amount: number;
+	discount_amount: number;
+	total: number;
 };
 
-export type HeroBanner = {
-	title: string;
-	description: string;
-	url: string;
-	button_text: string;
-	banner_url: string;
+export type CartItem = {
+	id: number;
+	quantity: number;
+	shipping_method: string;
+	shipping_methods: ShippingMethods;
+	totals: CartTotals;
+	variant: Variant;
 };
+
+export type Cart = {
+	customer: Customer;
+	discount: null | {
+		id: number;
+		name: string;
+		type: string;
+		value: number;
+	};
+	guest_id: string;
+	id: number;
+	items: CartItem[];
+	totals: CartTotals;
+};
+
+// ============================================================================
+// CUSTOMER & USER TYPES
+// ============================================================================
+
+export type Customer = {
+	email: string;
+	first_name: string;
+	id: string;
+	last_name: string;
+	token: string;
+};
+
+// ============================================================================
+// BLOG TYPES
+// ============================================================================
+
+export type BlogPost = {
+	created_at: string;
+	description: string;
+	id: number;
+	image_url: string;
+	introduction: string;
+	slug: string;
+	title: string;
+} & MetaInfo;
+
+// ============================================================================
+// UI & NAVIGATION TYPES
+// ============================================================================
 
 export type Brand = {
+	logo_url: string;
 	name: string;
 	slug: string;
-	logo_url: string;
 };
 
 export type FooterLink = { label: string; path: string };
+
+export type HeroBanner = {
+	banner_url: string;
+	button_text: string;
+	description: string;
+	title: string;
+	url: string;
+};
+
+export type Navigation = {
+	banner_link?: string;
+	banner_url?: string;
+	children?: Navigation[];
+	name: string;
+	slug: string;
+	thumbnail_url?: string;
+};
+
+// ============================================================================
+// NOTIFICATION TYPES
+// ============================================================================
 
 export enum ToastType {
 	Success = "success",
@@ -107,86 +226,10 @@ export enum ToastType {
 }
 
 export type Toast = {
-	message?: string;
-	type: ToastType;
 	action?: {
 		label: string;
 		path: string;
 	};
-};
-
-export type CartTotals = {
-	subtotal: number;
-	tax_amount: number;
-	discount_amount: number;
-	total: number;
-};
-
-export type ShippingMethods = {
-	free_shipping: boolean;
-	standard_shipping_cost: number;
-	premium_shipping_cost: number;
-};
-
-export type CartItem = {
-	id: number;
-	quantity: number;
-	shipping_methods: ShippingMethods;
-	shipping_method: string;
-	variant: {
-		sku: string;
-		product: Product;
-		attributes: Array<{
-			id: number;
-			name: string;
-			value: string;
-		}>;
-	};
-	totals: CartTotals;
-};
-
-export type Cart = {
-	id: number;
-	guest_id: string;
-	customer: Customer;
-	totals: CartTotals;
-	discount: null | {
-		id: number;
-		name: string;
-		type: string;
-		value: number;
-	};
-	items: CartItem[];
-};
-
-export type ApiMeta = {
-	current_page: number;
-	from: number;
-	last_page: number;
-	links: Array<{
-		url: string | null;
-		label: string;
-		active: boolean;
-	}>;
-	path: string;
-	per_page: number;
-	to: number;
-	total: number;
-};
-
-export type ApiLinks = {
-	first?: string;
-	last?: string;
-	prev?: string | null;
-	next?: string | null;
-};
-
-export type ApiListResponse<T> = {
-	data: T[];
-	meta?: ApiMeta;
-	links?: ApiLinks;
-};
-
-export type ApiResponse<T> = {
-	data: T;
+	message?: string;
+	type: ToastType;
 };

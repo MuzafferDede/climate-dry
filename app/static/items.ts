@@ -6,7 +6,7 @@ export const mainNavigation: Navigation[] = [
 		name: "New Arrivals",
 	},
 	{
-		slug: "/advice-hub",
+		slug: "/info-hub",
 		name: "Advice Hub",
 	},
 	{

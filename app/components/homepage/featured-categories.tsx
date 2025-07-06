@@ -36,12 +36,7 @@ export const FeaturedCategories = ({
 					))}
 				</TabPanels>
 				<div className="text-center">
-					<Button
-						as={Link}
-						variant="outline"
-						className="hover:text-teal"
-						to="/"
-					>
+					<Button as={Link} variant="outline" to="/">
 						Shop All
 					</Button>
 				</div>

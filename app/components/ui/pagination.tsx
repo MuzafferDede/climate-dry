@@ -45,7 +45,7 @@ export const Pagination = ({
 		// Disabled link (no URL)
 		if (!link.url) {
 			return (
-				<span key={link.label} className="px-3 py-1 text-gray-400">
+				<span key={link.label} className="px-3 py-1 text-gray-light">
 					{renderLinkContent(link.label)}
 				</span>
 			);
@@ -69,7 +69,7 @@ export const Pagination = ({
 			<NavLink
 				key={link.label}
 				to={`?${pagParams.toString()}`}
-				className="rounded bg-white px-3 py-1 text-gray-700 hover:bg-gray-100"
+				className="rounded bg-white px-3 py-1 text-gray-dark hover:bg-gray-lighter"
 			>
 				{renderLinkContent(link.label)}
 			</NavLink>
@@ -84,7 +84,7 @@ export const Pagination = ({
 				<select
 					id="per_page"
 					name="per_page"
-					className="rounded-lg border border-gray-200 px-3 py-0.5 text-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+					className="rounded-lg border border-gray-lighter px-3 py-0.5 text-sm focus:border-gray-light focus:outline-none focus:ring-1 focus:ring-gray-light"
 					onChange={handlePerPageChange}
 					value={searchParams.get("per_page") || defaultPerPage.toString()}
 				>

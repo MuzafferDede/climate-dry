@@ -26,13 +26,15 @@ export const Modal: React.FC<ModalProps> = ({
 					<div className="flex max-h-[80vh] flex-col">
 						{/* Header */}
 						{title && (
-							<div className="flex items-center justify-between border-gray-200 border-b px-6 py-4">
-								<h3 className="font-semibold text-gray-900 text-lg">{title}</h3>
+							<div className="flex items-center justify-between border-gray-lighter border-b px-6 py-4">
+								<h3 className="font-semibold text-lg text-navy-darkest">
+									{title}
+								</h3>
 								{onClose && (
 									<button
 										type="button"
 										onClick={onClose}
-										className="text-gray-500 hover:text-gray-700"
+										className="text-gray-light hover:text-gray-dark"
 									>
 										<XMarkIcon className="h-6 w-6" />
 									</button>

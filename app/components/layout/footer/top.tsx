@@ -29,7 +29,7 @@ export const Top = () => {
 				</p>
 				<Button
 					variant="outline"
-					className="text-white hover:bg-white hover:text-teal"
+					className="text-white"
 					icon={
 						<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
 					}

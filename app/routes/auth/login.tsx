@@ -107,7 +107,7 @@ export default function LoginPage({ actionData }: Route.ComponentProps) {
 
 	return (
 		<div className="mx-auto max-w-7xl px-4 py-12">
-			<div className="fade-in-90 zoom-in-90 mx-auto my-16 max-w-lg animate-in rounded-xl border border-gray-200 bg-white px-6 py-8 shadow-sm">
+			<div className="fade-in-90 zoom-in-90 mx-auto my-16 max-w-lg animate-in rounded-xl border border-gray-lighter bg-white px-6 py-8 shadow-sm">
 				<h1 className="mb-8 text-center font-bold text-2xl">
 					Sign in to your account
 				</h1>

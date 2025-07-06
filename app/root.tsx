@@ -65,6 +65,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		const cart = await getCart(request);
 		const toast = await popToast(session);
 
+		console.dir(cart, { depth: 10 });
+
 		session.set("guestId", cart.guest_id);
 
 		return data(
@@ -180,16 +182,16 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	}
 
 	return (
-		<main className="isolate flex min-h-screen animate-fade-in items-center justify-center bg-gray-50 p-6">
-			<div className="fade-in zoom-in w-full max-w-md animate-in rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+		<main className="isolate flex min-h-screen animate-fade-in items-center justify-center bg-gray-lightest p-6">
+			<div className="fade-in zoom-in w-full max-w-md animate-in rounded-lg border border-gray-lighter bg-white p-6 shadow-sm">
 				<div className="mb-6 flex animate-pulse justify-center">
-					<div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
-						<ExclamationTriangleIcon className="h-7 w-7 text-red" />
+					<div className="flex h-14 w-14 items-center justify-center rounded-full bg-red">
+						<ExclamationTriangleIcon className="h-7 w-7 text-white" />
 					</div>
 				</div>
 
 				<h1 className="mb-2 text-center font-bold text-2xl">{message}</h1>
-				<p className="mb-6 text-center text-gray-600">{details}</p>
+				<p className="mb-6 text-center text-gray">{details}</p>
 
 				<div className="flex flex-col-reverse justify-center gap-3 sm:flex-row">
 					<Button
@@ -213,7 +215,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
 				{stack && (
 					<div className="mt-6">
-						<details className="rounded-md bg-gray-100 p-4 text-xs">
+						<details className="rounded-md bg-gray-lightest p-4 text-xs">
 							<summary className="cursor-pointer font-bold">
 								Show error stack
 							</summary>

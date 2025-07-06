@@ -26,7 +26,7 @@ export async function getCategoryProducts(
 
 	const query = queryBuilder({
 		"filter[category]": category,
-		include: "brand,discount",
+		include: "brand,discount,variants",
 		page: url.searchParams.get("page") || 1,
 		per_page: url.searchParams.get("per_page") || 20,
 		sort: url.searchParams.get("sort") || "price-low",
@@ -39,4 +39,11 @@ export async function getCategoryProducts(
 	);
 
 	return response;
+}
+
+export async function getProduct(request: Request, slug: string | undefined) {
+	const api = await fetcher(request);
+	return await api.get<ApiResponse<Product>>(
+		`/products/${slug}?include=brand,discount,category,relatedProducts,extras,variants`,
+	);
 }

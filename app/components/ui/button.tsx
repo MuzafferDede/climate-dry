@@ -10,14 +10,14 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				none: "",
-				default: "hover:white bg-teal text-white hover:bg-navy-darkest",
+				default: "bg-teal text-white hover:bg-teal/70 hover:text-white",
 				outline:
-					"border border-current text-navy-darkest hover:text-gray-lighter",
+					"border border-current text-navy-darkest hover:bg-navy-darkest/70 hover:text-white",
 				secondary:
-					"bg-navy-darkest text-white hover:bg-gray-lightest hover:text-navy-darkest",
+					"bg-navy-darkest text-white hover:bg-navy-darkest/70 hover:text-white",
 				ghost:
 					"bg-transparent text-navy-darkest hover:bg-gray-lightest hover:text-teal",
-				destructive: "bg-red text-white hover:bg-navy-darkest hover:text-white",
+				destructive: "bg-red text-white hover:bg-red/70 hover:text-white",
 				link: "hover:text-teal hover:underline",
 				plain: "text-navy-darkest hover:text-teal",
 			},

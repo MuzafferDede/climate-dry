@@ -30,8 +30,10 @@ export const Image = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 				alt={alt}
 				onLoad={() => setLoaded(true)}
 				className={cn(
-					"fade-in slide-in-from-bottom h-full w-full animate-in object-cover",
-					{ "opacity-0": !loaded },
+					"fade-in h-full w-full animate-in object-cover duration-500",
+					{
+						"opacity-0": !loaded,
+					},
 				)}
 			/>
 		</div>
