@@ -1,3 +1,4 @@
+import { AnimateOnScroll, PageNavigation } from "~/components";
 import { getBlogPostBySlug } from "~/services";
 import type { Route } from "./+types/detail";
 
@@ -13,11 +14,25 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 	};
 }
 
-export default function BlogDetailPage({ loaderData }: Route.ComponentProps) {
+export default function BlogDetailPage({
+	loaderData,
+	params,
+}: Route.ComponentProps) {
 	const { post } = loaderData;
+	const titles = params?.category
+		? {
+				h2: "Tried and Tested Solutions",
+				h3: "Case studies",
+			}
+		: { h2: "Expert Articles", h3: "Advice & Article" };
 
 	return (
-		<article className="mx-auto max-w-4xl space-y-4 p-6">
+		<article className="mx-auto max-w-7xl space-y-4 p-6">
+			<PageNavigation />
+			<AnimateOnScroll className="flex flex-col items-center justify-center gap-1 text-center">
+				<h2 className="font-bold text-teal uppercase">{titles?.h2}</h2>
+				<h3 className="text-5xl">{titles?.h3}</h3>
+			</AnimateOnScroll>
 			<h1 className="font-bold text-4xl text-gray-darkest">{post.title}</h1>
 			<img
 				src={post.image_url}

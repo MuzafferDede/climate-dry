@@ -1,9 +1,11 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { Form, Link, useActionData } from "react-router";
+import { Form, Link, useActionData, useRouteLoaderData } from "react-router";
 import tglLogo from "~/assets/TGL-logo.svg";
 import { Button, Icon, Input } from "~/components/ui";
-import { footerHelperLinks, footerProductLinks } from "~/static";
+//import { footerHelperLinks, footerProductLinks } from "~/static";
+import { footerProductLinks } from "~/static";
+import type { Page } from "~/types";
 
 const SectionTitle = ({ label }: { label: string }) => {
 	return <h3 className="font-bold text-teal uppercase">{label}</h3>;
@@ -21,6 +23,9 @@ export const Middle = () => {
 	const { message } = useActionData() || {};
 	const [email, setEmail] = useState("");
 	const { email: success } = useActionData() || {};
+
+	const data = useRouteLoaderData("root");
+	const pages: Page[] = data?.pages;
 
 	return (
 		<div className="grid gap-8 gap-y-16 p-4 py-10 lg:mt-10 lg:grid-cols-2">
@@ -134,10 +139,13 @@ export const Middle = () => {
 				<div className="flex flex-col gap-2.5">
 					<SectionTitle label="Help & Info" />
 					<ul className="flex flex-col gap-0.5 text-white">
-						{footerHelperLinks.map((helpLink) => (
-							<li key={helpLink.label}>
-								<Link to={helpLink.path} className="font-bold hover:text-teal">
-									{helpLink.label}
+						{pages.map((helpLink) => (
+							<li key={helpLink.name}>
+								<Link
+									to={`/pages/${helpLink.slug}`}
+									className="font-bold hover:text-teal"
+								>
+									{helpLink.name}
 								</Link>
 							</li>
 						))}

@@ -1,4 +1,4 @@
-import type { FooterLink, Navigation } from "~/types";
+import type { AdviceLink, FooterLink, Navigation } from "~/types";
 
 export const mainNavigation: Navigation[] = [
 	{
@@ -15,6 +15,18 @@ export const mainNavigation: Navigation[] = [
 	},
 ];
 
+export const adviceHubNav: AdviceLink[] = [
+	{ label: "Advice & Articles", path: "/info-hub" },
+	{ label: "Case Studies", path: "/info-hub/case-studies" },
+	{ label: "Drying Calculator", path: "/drying-calculator" },
+	{
+		label: "Evaporative Cooling Calculator",
+		path: "/evaporative-cooling-calculator",
+	},
+	{ label: "Help & Info", path: "/pages/all" },
+	{ label: "Solutions Centre", path: "/solutions-centre" },
+];
+
 export const footerProductLinks: FooterLink[] = [
 	{ label: "Dehumidifiers", path: "/" },
 	{ label: "Domestic Dehumidifiers", path: "/" },
@@ -28,6 +40,9 @@ export const footerProductLinks: FooterLink[] = [
 	{ label: "Bundle Deals", path: "/" },
 ];
 
+/*
+dmclean 7th July 2025
+temp removed so we can have dynamic page links, I think after testic static links will be best though 
 export const footerHelperLinks: FooterLink[] = [
 	{ label: "Bestsellers", path: "/" },
 	{ label: "Advice Hub", path: "/" },
@@ -40,6 +55,7 @@ export const footerHelperLinks: FooterLink[] = [
 	{ label: "Contact Us", path: "/" },
 	{ label: "About Us", path: "/" },
 ];
+*/
 
 export const footerLogos: (FooterLink & { logo: string; sister?: boolean })[] =
 	[

@@ -213,11 +213,14 @@ export const Solutions = () => {
 				>
 					<Listbox
 						className="mx-auto lg:hidden"
-						as={AnimateOnScroll}
+						as="div"
 						value={selectedIndex}
 						onChange={setSelectedIndex}
 					>
-						<ListboxButton className="relative w-xs rounded border bg-white p-4 text-left font-semibold">
+						<ListboxButton
+							as={AnimateOnScroll}
+							className="relative w-xs rounded border bg-white p-4 text-left font-semibold"
+						>
 							<span>{SOLUTIONS[selectedIndex].name}</span>
 							<span className="absolute inset-y-0 right-2 flex items-center justify-center">
 								<ChevronDownIcon className="size-6" />
@@ -240,11 +243,7 @@ export const Solutions = () => {
 					</Listbox>
 					<TabList className="hidden grid-cols-2 gap-x-4 self-start lg:grid">
 						{SOLUTIONS.map((solution) => (
-							<AnimateOnScroll
-								key={solution.name}
-								type="fadeInLeft"
-								threshold={0}
-							>
+							<AnimateOnScroll key={solution.name} type="fadeInLeft">
 								<Tab className="w-full cursor-pointer border-white border-b py-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal">
 									{solution.name}
 								</Tab>

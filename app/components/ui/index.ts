@@ -6,6 +6,7 @@ export * from "./image";
 export * from "./input";
 export * from "./loading";
 export * from "./modal";
+export * from "./page-navigation";
 export * from "./pagination";
 export * from "./payment-and-shipping";
 export * from "./section-header";

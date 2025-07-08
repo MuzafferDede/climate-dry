@@ -33,6 +33,7 @@ import {
 	getCart,
 	getCustomer,
 	getNavigation,
+	getPages,
 	getSession,
 	popToast,
 	putToast,
@@ -62,15 +63,14 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		const session = await getSession(request.headers.get("Cookie"));
 		const customer = await getCustomer(request);
 		const menu = await getNavigation(request);
+		const pages = await getPages(request);
 		const cart = await getCart(request);
 		const toast = await popToast(session);
-
-		console.dir(cart, { depth: 10 });
 
 		session.set("guestId", cart.guest_id);
 
 		return data(
-			{ customer, menu, toast, cart },
+			{ customer, menu, pages: pages.data, toast, cart },
 			{
 				headers: {
 					"Set-Cookie": await commitSession(session),

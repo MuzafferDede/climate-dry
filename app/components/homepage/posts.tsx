@@ -55,32 +55,30 @@ export const Posts: React.FC = () => {
 				{/* Content */}
 				<div className="mx-auto flex max-w-7xl flex-col gap-10 lg:flex-row">
 					{/* Main Post */}
-					<AnimateOnScroll
-						threshold={0.1}
-						type="fadeInLeft"
-						className="overflow-hidden rounded bg-white shadow lg:w-2/3"
-					>
-						<img
-							src={mainPost.banner}
-							alt={mainPost.title}
-							className="h-80 w-full object-cover"
-							loading="lazy"
-						/>
-						<div className="space-y-4 p-6">
-							<h4 className="font-bold text-3xl">{mainPost.title}</h4>
-							<p className="text-xs">{mainPost.introduction}</p>
-							<Button
-								to={mainPost.path}
-								as={Link}
-								variant="secondary"
-								icon={
-									<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
-								}
-							>
-								<span>Read more</span>
-							</Button>
-						</div>
-					</AnimateOnScroll>
+					<div className="overflow-hidden rounded bg-white shadow lg:w-2/3">
+						<AnimateOnScroll type="fadeInLeft">
+							<img
+								src={mainPost.banner}
+								alt={mainPost.title}
+								className="h-80 w-full object-cover"
+								loading="lazy"
+							/>
+							<div className="space-y-4 p-6">
+								<h4 className="font-bold text-3xl">{mainPost.title}</h4>
+								<p className="text-xs">{mainPost.introduction}</p>
+								<Button
+									to={mainPost.path}
+									as={Link}
+									variant="secondary"
+									icon={
+										<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
+									}
+								>
+									<span>Read more</span>
+								</Button>
+							</div>
+						</AnimateOnScroll>
+					</div>
 
 					{/* Side Posts */}
 					<div className="space-y-6 lg:w-1/3">

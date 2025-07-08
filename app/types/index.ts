@@ -1,4 +1,12 @@
 // ============================================================================
+// Link TYPES
+// ============================================================================
+export type AdviceLink = {
+	path: string;
+	label: string;
+};
+
+// ============================================================================
 // API TYPES
 // ============================================================================
 
@@ -58,6 +66,17 @@ export type ProductImage = {
 	id: number;
 	url: string;
 	order: number;
+};
+
+export type Page = {
+	id: number;
+	name: string;
+	slug: string;
+	description: string;
+	meta_title?: string;
+	meta_description?: string;
+	meta_keywords?: string[];
+	created_at: string;
 };
 
 export type Variant = {

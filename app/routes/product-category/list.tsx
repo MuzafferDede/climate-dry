@@ -50,7 +50,7 @@ export const meta = ({ data }: Route.MetaArgs) => {
 		},
 		{
 			name: "keywords",
-			content: category.meta_keywords.join(","),
+			content: [category.meta_keywords || []].join(","),
 		},
 	];
 };
