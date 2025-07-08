@@ -13,7 +13,7 @@ export const PageNavigation = () => {
 					className={({ isActive }) =>
 						cn(
 							"h-22 content-center rounded-lg bg-gray-lightest p-2 text-center font-bold text-sm uppercase hover:text-tea hover:text-teal",
-							isActive && "bg-teal font-bold text-white",
+							isActive && "bg-teal font-bold text-white hover:text-white",
 						)
 					}
 				>
