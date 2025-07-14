@@ -141,6 +141,7 @@ export default function ProductPage({
 	const [quantity, setQuantity] = useState(1);
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [selectedExtras, setSelectedExtras] = useState<number[]>([]);
+
 	const inStock = product.variants.some((v: Variant) => v.in_stock);
 	const loading = navigation.state === "submitting";
 	const hasVariants = product.variants.length > 1;
@@ -397,34 +398,34 @@ export default function ProductPage({
 									<p className="mb-2 font-semibold text-navy-darkest/70 text-sm">
 										Optional Extras
 									</p>
-									<div className="flex flex-col gap-1">
+									<div className="flex flex-col items-start gap-1">
 										{product.extra_products.map((extra) => {
 											const extraInStock = extra.default_variant?.in_stock;
 											const checked = selectedExtras.includes(extra.id);
 											return (
 												<label
 													key={extra.id}
-													className={`flex items-center gap-2 text-sm ${extraInStock ? "cursor-pointer text-navy-darkest" : "cursor-not-allowed text-gray-400 opacity-70"}`}
+													className={`flex items-start gap-2 text-sm ${extraInStock ? "cursor-pointer text-navy-darkest" : "cursor-not-allowed text-gray-light opacity-70"}`}
 												>
 													<input
 														type="checkbox"
-														className="form-checkbox h-4 w-4 accent-teal"
+														className="my-0.5 h-4 w-4 accent-teal"
 														checked={checked}
-														onChange={() =>
+														onChange={() => {
 															setSelectedExtras((prev) =>
 																prev.includes(extra.id)
 																	? prev.filter((id) => id !== extra.id)
 																	: [...prev, extra.id],
-															)
-														}
+															);
+														}}
 														name="extras[]"
 														value={extra.id}
 														disabled={!extraInStock}
 													/>
-													<span className="inline-flex flex-1 items-center gap-1 capitalize">
+													<span className="inline-flex flex-1 items-start gap-1 capitalize">
 														<span>{extra.name}</span>
 														{extraInStock && extra.default_variant?.price ? (
-															<span className="text-teal">
+															<span className="shrink-0 text-teal">
 																(+ {currency(extra.default_variant?.price)})
 															</span>
 														) : null}
@@ -437,7 +438,7 @@ export default function ProductPage({
 															href={`/product/${extra.slug}`}
 															target="_blank"
 															rel="noopener noreferrer"
-															className="ml-1 inline-flex items-center text-gray-400 transition-colors hover:text-teal"
+															className="ml-1 inline-flex items-center text-gray-light transition-colors hover:text-teal"
 															aria-label={`View ${extra.name} details`}
 															tabIndex={extraInStock ? 0 : -1}
 															title="View product detail"
@@ -463,6 +464,10 @@ export default function ProductPage({
 									}
 								}}
 							>
+								{/* Hidden extras input for form submission */}
+								{selectedExtras.map((id) => (
+									<input key={id} type="hidden" name="extras[]" value={id} />
+								))}
 								<div className="flex w-full items-center gap-2">
 									<div className="flex items-center rounded-lg border border-gray-lighter bg-white shadow-sm">
 										<Button

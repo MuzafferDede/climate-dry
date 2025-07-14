@@ -172,6 +172,7 @@ export type Cart = {
 		name: string;
 		type: string;
 		value: number;
+		code: string;
 	};
 	guest_id: string;
 	id: number;
@@ -251,4 +252,63 @@ export type Toast = {
 	};
 	message?: string;
 	type: ToastType;
+};
+
+// ============================================================================
+// STRIPE PAYMENT INTENT TYPE
+// ============================================================================
+
+export type StripePaymentIntent = {
+	id: string;
+	object: "payment_intent";
+	amount: number;
+	amount_capturable: number;
+	amount_details: {
+		tip: unknown[];
+	};
+	amount_received: number;
+	application: string | null;
+	application_fee_amount: number | null;
+	automatic_payment_methods: unknown | null;
+	canceled_at: number | null;
+	cancellation_reason: string | null;
+	capture_method: string;
+	client_secret: string;
+	confirmation_method: string;
+	created: number;
+	currency: string;
+	customer: string | null;
+	description: string | null;
+	last_payment_error: unknown | null;
+	latest_charge: string | null;
+	livemode: boolean;
+	metadata: Record<string, string> | unknown[];
+	next_action: unknown | null;
+	on_behalf_of: string | null;
+	payment_method: string | null;
+	payment_method_configuration_details: unknown | null;
+	payment_method_options: {
+		card?: {
+			installments: unknown | null;
+			mandate_options: unknown | null;
+			network: string | null;
+			request_three_d_secure: string;
+		};
+		paypal?: {
+			preferred_locale: string | null;
+			reference: string | null;
+		};
+	};
+	payment_method_types: string[];
+	processing: unknown | null;
+	receipt_email: string | null;
+	review: string | null;
+	setup_future_usage: string | null;
+	shipping: unknown | null;
+	source: string | null;
+	statement_descriptor: string | null;
+	statement_descriptor_suffix: string | null;
+	status: string;
+	transfer_data: unknown | null;
+	transfer_group: string | null;
 };

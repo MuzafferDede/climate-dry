@@ -22,7 +22,7 @@ export const Modal: React.FC<ModalProps> = ({
 
 			{/* Modal wrapper */}
 			<div className="fixed inset-0 flex items-center justify-center p-4">
-				<DialogPanel className="slide-in-from-top-10 w-fit max-w-3xl animate-in rounded-lg bg-white shadow-xl">
+				<DialogPanel className="slide-in-from-top-10 w-full max-w-2xl animate-in rounded-lg bg-white shadow-xl">
 					<div className="flex max-h-[80vh] flex-col">
 						{/* Header */}
 						{title && (
@@ -34,7 +34,7 @@ export const Modal: React.FC<ModalProps> = ({
 									<button
 										type="button"
 										onClick={onClose}
-										className="text-gray-light hover:text-gray-dark"
+										className="text-gray hover:text-gray-dark"
 									>
 										<XMarkIcon className="h-6 w-6" />
 									</button>

@@ -29,7 +29,9 @@ export const Input = ({
 		<div className={cn("group/input w-full space-y-1.5 font-semibold")}>
 			<Field>
 				{label && (
-					<Label className={cn("mb-1 block", error && "text-red")}>
+					<Label
+						className={cn("mb-1 block text-gray-dark", error && "text-red")}
+					>
 						{label}
 					</Label>
 				)}
@@ -47,7 +49,7 @@ export const Input = ({
 					onChange={onChange}
 					placeholder={placeholder}
 					className={cn(
-						"w-full rounded-full border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal",
+						"w-full rounded-full border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal disabled:bg-gray-lighter",
 						error && "border-red",
 						className,
 					)}

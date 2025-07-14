@@ -93,11 +93,15 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 		<div className="relative w-full overflow-hidden">
 			<Marquee />
 			{banners && <Banners banners={banners} />}
-			<FeaturedCategories categories={featuredCategories.data} />
+			{featuredCategories.data.length > 0 && (
+				<FeaturedCategories categories={featuredCategories.data} />
+			)}
 			<Support />
 			<Solutions />
-			<ShopByCategory categories={shopByCategories.data} />
-			{brands && <Brands brands={brands} />}
+			{shopByCategories.data.length > 0 && (
+				<ShopByCategory categories={shopByCategories.data} />
+			)}
+			{brands.length < 0 && <Brands brands={brands} />}
 			<Info />
 			<Posts />
 		</div>
