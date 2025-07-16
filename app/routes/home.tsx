@@ -19,6 +19,7 @@ import {
 	getSession,
 	getShopByCategories,
 	putToast,
+	getSolutions,
 } from "~/services";
 import { ToastType } from "~/types";
 import type { Route } from "./+types/home";
@@ -38,8 +39,9 @@ export async function loader({ request }: Route.LoaderArgs) {
 	const brands = await getBrands(request);
 	const featuredCategories = await getFeaturedCategories(request);
 	const shopByCategories = await getShopByCategories(request);
+	const solutions = await getSolutions(request);
 
-	return { banners, brands, featuredCategories, shopByCategories };
+	return { banners, brands, featuredCategories, shopByCategories,solutions };
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -87,7 +89,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-	const { banners, brands, featuredCategories, shopByCategories } = loaderData;
+	const { banners, brands, featuredCategories, shopByCategories,solutions } = loaderData;
 
 	return (
 		<div className="relative w-full overflow-hidden">
@@ -97,7 +99,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 				<FeaturedCategories categories={featuredCategories.data} />
 			)}
 			<Support />
-			<Solutions />
+			{solutions && <Solutions solutions={solutions.data} />}
 			{shopByCategories.data.length > 0 && (
 				<ShopByCategory categories={shopByCategories.data} />
 			)}

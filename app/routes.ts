@@ -18,4 +18,5 @@ export default [
 	route("pages/:slug?", "routes/pages/detail.tsx"),
 	route("product-category/:slug", "routes/product-category/list.tsx"),
 	route("product/:slug", "routes/product/detail.tsx"),
+	route("solution/:slug?", "routes/solution/detail.tsx"),
 ] satisfies RouteConfig;

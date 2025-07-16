@@ -24,7 +24,7 @@ export const adviceHubNav: AdviceLink[] = [
 		path: "/evaporative-cooling-calculator",
 	},
 	{ label: "Help & Info", path: "/pages/all" },
-	{ label: "Solutions Centre", path: "/solutions-centre" },
+	{ label: "Solutions Centre", path: "/solution/agriculture" },
 ];
 
 export const footerProductLinks: FooterLink[] = [
@@ -90,6 +90,6 @@ export const headerTools = [
 		label: "Solutions Centre",
 		description: "Restore your property to its pre-damage condition",
 		icon: "/images/icons/solutions-centre.webp",
-		path: "/",
+		path: "/solution/agriculture/",
 	},
 ];

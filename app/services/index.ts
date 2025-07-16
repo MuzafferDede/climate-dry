@@ -5,6 +5,7 @@ export * from "./cart.server";
 export * from "./customer.server";
 export * from "./mail.server";
 export * from "./page.server";
+export * from "./solution.server";
 export * from "./payment.server";
 export * from "./product.server";
 export * from "./session.server";

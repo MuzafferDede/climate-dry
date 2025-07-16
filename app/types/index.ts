@@ -143,6 +143,21 @@ export type Product = {
 	warranty_period: number;
 } & MetaInfo;
 
+
+
+export type Solution = {
+	id: number;
+	name: string;
+	slug: string;
+	banner_url: string;
+	introduction: string;
+	description: string;
+	meta_title?: string;
+	meta_description?: string;
+	meta_keywords?: string[];
+	created_at: string;
+};
+
 // ============================================================================
 // CART & SHIPPING TYPES
 // ============================================================================
