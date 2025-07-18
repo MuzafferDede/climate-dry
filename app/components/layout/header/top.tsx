@@ -11,7 +11,7 @@ export const Top = () => {
 					</h2>
 					<a
 						className="text-teal hover:text-navy-darkest"
-						href="te:0808 196 9381"
+						href="tel:08081969381"
 					>
 						0808 196 9381
 					</a>
