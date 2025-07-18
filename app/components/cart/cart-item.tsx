@@ -30,7 +30,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 			<div className="flex flex-col gap-4 md:flex-row">
 				<div className="w-full flex-shrink-0 md:w-auto">
 					<Link
-						to={href("/product/:slug", { slug: item.variant.product.slug })}
+						to={href("/p/:slug", { slug: item.variant.product.slug })}
 					>
 						{item.variant.product.images?.[0]?.url ? (
 							<Image
@@ -48,7 +48,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 				<div className="w-full min-w-0 flex-1">
 					<h3 className="truncate font-bold text-base text-navy-darkest md:text-lg">
 						<Link
-							to={href("/product/:slug", { slug: item.variant.product.slug })}
+							to={href("/p/:slug", { slug: item.variant.product.slug })}
 							className="capitalize hover:text-teal"
 						>
 							<span>{item.variant.product.name}</span>

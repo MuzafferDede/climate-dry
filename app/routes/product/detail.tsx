@@ -108,11 +108,11 @@ export const handle = {
 				...ancestry,
 				{ name: product.category.name, slug: product.category.slug },
 			],
-			"/product-category",
+			"/c",
 		);
 		return [
 			...categoryCrumbs,
-			{ label: product.name, path: `/product/${product.slug}` },
+			{ label: product.name, path: `/p/${product.slug}` },
 		];
 	},
 };
@@ -435,7 +435,7 @@ export default function ProductPage({
 															</span>
 														)}
 														<a
-															href={`/product/${extra.slug}`}
+															href={`/p/${extra.slug}`}
 															target="_blank"
 															rel="noopener noreferrer"
 															className="ml-1 inline-flex items-center text-gray-light transition-colors hover:text-teal"

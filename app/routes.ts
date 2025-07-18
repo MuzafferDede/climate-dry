@@ -16,7 +16,7 @@ export default [
 	route("checkout/success", "routes/checkout/success.tsx"),
 	route("checkout/cancel", "routes/checkout/cancel.tsx"),
 	route("pages/:slug?", "routes/pages/detail.tsx"),
-	route("product-category/:slug", "routes/product-category/list.tsx"),
-	route("product/:slug", "routes/product/detail.tsx"),
+	route("c/:slug", "routes/product-category/list.tsx"),
+	route("p/:slug", "routes/product/detail.tsx"),
 	route("solution/:slug?", "routes/solution/detail.tsx"),
 ] satisfies RouteConfig;

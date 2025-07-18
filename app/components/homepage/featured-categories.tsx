@@ -27,19 +27,23 @@ export const FeaturedCategories = ({
 					{categories.map((category) => (
 						<TabPanel
 							key={category.name}
-							className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
 						>
-							{category?.products?.map((product) => (
-								<ProductCard {...product} key={product.name} />
-							))}
+							<div 
+								className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+							>
+								{category?.products?.map((product) => (
+									<ProductCard {...product} key={product.name} />
+								))}
+							</div>
+							<div className="text-center pt-8">
+								<Button as={Link} to={`/c/${category.slug}`} variant="outline" >
+									Shop All
+								</Button>
+							</div>
+						
 						</TabPanel>
 					))}
 				</TabPanels>
-				<div className="text-center">
-					<Button as={Link} variant="outline" to="/">
-						Shop All
-					</Button>
-				</div>
 			</TabGroup>
 		</div>
 	);

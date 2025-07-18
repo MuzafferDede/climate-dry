@@ -65,7 +65,7 @@ export const ProductCard = ({
 				)}
 			</div>
 			<div className="flex h-full flex-row @max-xl:flex-col @xl:gap-4 gap-1">
-				<NavLink to={href("/product/:slug", { slug })}>
+				<NavLink to={href("/p/:slug", { slug })}>
 					<Image
 						src={images[0].url}
 						alt={name}
@@ -142,7 +142,7 @@ export const ProductCard = ({
 							</Form>
 							<Button
 								as={NavLink}
-								to={href("/product/:slug", { slug })}
+								to={href("/p/:slug", { slug })}
 								variant="secondary"
 								className="w-full"
 								icon={

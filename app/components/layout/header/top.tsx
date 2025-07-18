@@ -18,19 +18,20 @@ export const Top = () => {
 				</div>
 				<div className="flex items-center gap-4">
 					<div className="hidden gap-6 font-bold text-xs md:flex">
-						<Link className="hover:text-teal" to={href("/")}>
+						<Link className="hover:text-teal" to={href("/pages/about-us/")}>
 							About Us
 						</Link>
-						<Link className="hover:text-teal" to={href("/")}>
+						<Link className="hover:text-teal" to={href("/brands/")}>
 							Brands
 						</Link>
-						<Link className="hover:text-teal" to={href("/")}>
+						<Link className="hover:text-teal" to={href("/pages/rapid-delivery/")}>
 							Delivery
 						</Link>
 					</div>
 					<div className="hidden gap-2 text-teal sm:flex">
 						<a
-							href="/"
+							href="https://x.com/ClimateDryUK"
+							target="_blank" 
 							className="flex items-center hover:text-navy-darkest"
 							title="X"
 						>
@@ -53,7 +54,8 @@ export const Top = () => {
 							</svg>
 						</a>
 						<a
-							href="/"
+							href="https://www.facebook.com/profile.php?id=61556781155293"
+							target="_blank" 
 							className="flex items-center hover:text-navy-darkest"
 							title="facebook"
 						>
@@ -74,7 +76,8 @@ export const Top = () => {
 							</svg>
 						</a>
 						<a
-							href="/"
+							href="https://www.linkedin.com/company/climate-dry"
+							target="_blank" 
 							className="flex items-center hover:text-navy-darkest"
 							title="Linkedin"
 						>
@@ -97,7 +100,8 @@ export const Top = () => {
 							</svg>
 						</a>
 						<a
-							href="/"
+							href="https://www.instagram.com/climatedryuk/"
+							target="_blank" 
 							className="flex items-center hover:text-navy-darkest"
 							title="Instagram"
 						>

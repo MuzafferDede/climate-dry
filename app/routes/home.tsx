@@ -93,18 +93,35 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className="relative w-full overflow-hidden">
+			{/* Thin blue banner text */}
 			<Marquee />
+			
+			{/* Large sliding banner */}
 			{banners && <Banners banners={banners} />}
+			
+			{/* featuredCategories */}
 			{featuredCategories.data.length > 0 && (
 				<FeaturedCategories categories={featuredCategories.data} />
 			)}
+
+			{/* Two support images */}
 			<Support />
+
+			{/* Solutions feature */}
 			{solutions && <Solutions solutions={solutions.data} />}
+
+			{/* 4 shopByCategories icons */}
 			{shopByCategories.data.length > 0 && (
 				<ShopByCategory categories={shopByCategories.data} />
 			)}
+			
+			{/* Trusted partners icons */}
 			{brands.length < 0 && <Brands brands={brands} />}
+
+			{/* Two info images */}
 			<Info />
+
+			{/* Blog posts section */}
 			<Posts />
 		</div>
 	);

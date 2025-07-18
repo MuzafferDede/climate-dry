@@ -2,7 +2,7 @@ import type { AdviceLink, FooterLink, Navigation } from "~/types";
 
 export const mainNavigation: Navigation[] = [
 	{
-		slug: "/new-arrivals",
+		slug: "/c/new-arrivals",
 		name: "New Arrivals",
 	},
 	{
@@ -10,7 +10,7 @@ export const mainNavigation: Navigation[] = [
 		name: "Advice Hub",
 	},
 	{
-		slug: "/sale",
+		slug: "/c/sale",
 		name: "Sale",
 	},
 ];
@@ -78,13 +78,13 @@ export const headerTools = [
 		label: "Drying Calculator",
 		description: "Work out the correct product for what you need",
 		icon: "/images/icons/calculator.webp",
-		path: "/",
+		path: "/drying-calculator/",
 	},
 	{
 		label: "Water Damage Restoration",
 		description: "Restore your property to its pre-damage condition",
 		icon: "/images/icons/water-damage.webp",
-		path: "/",
+		path: "/water-damage-restoration/",
 	},
 	{
 		label: "Solutions Centre",

@@ -24,7 +24,7 @@ export const Search = () => {
 			<Combobox
 				onChange={(product: Product) => {
 					if (product) {
-						navigate(href("/product/:slug", { slug: product.slug }));
+						navigate(href("/p/:slug", { slug: product.slug }));
 					}
 				}}
 			>

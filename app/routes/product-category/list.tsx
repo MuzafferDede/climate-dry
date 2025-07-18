@@ -33,7 +33,7 @@ export const handle = {
 	}) => {
 		const { ancestry, category } = data;
 		const allItems = [...ancestry, category];
-		return generateBreadcrumb(allItems, "/product-category");
+		return generateBreadcrumb(allItems, "/c");
 	},
 };
 

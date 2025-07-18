@@ -85,7 +85,7 @@ export const MainNavigation = () => {
 																		>
 																			{child.thumbnail_url && (
 																				<NavLink
-																					to={`/product-category/${child.slug}`}
+																					to={`/c/${child.slug}`}
 																					className={({ isActive }) =>
 																						cn(
 																							"h-20 w-full",
@@ -109,7 +109,7 @@ export const MainNavigation = () => {
 																						isActive && "font-bold text-teal",
 																					)
 																				}
-																				to={`/product-category/${child.slug}`}
+																				to={`/c/${child.slug}`}
 																				onClick={() => closeNavitaion(close)}
 																			>
 																				{child.name}
@@ -126,7 +126,7 @@ export const MainNavigation = () => {
 																											"font-bold text-teal",
 																									)
 																								}
-																								to={`/product-category/${grandChild.slug}`}
+																								to={`/c/${grandChild.slug}`}
 																								onClick={() =>
 																									closeNavitaion(close)
 																								}
@@ -226,7 +226,7 @@ export const MainNavigation = () => {
 																												"font-bold text-teal",
 																										)
 																									}
-																									to={`/product-category/${child.slug}`}
+																									to={`/c/${child.slug}`}
 																									onClick={() =>
 																										closeNavitaion()
 																									}
@@ -246,7 +246,7 @@ export const MainNavigation = () => {
 																										(grandChild) => (
 																											<li key={grandChild.slug}>
 																												<NavLink
-																													to={`/product-category/${grandChild.slug}`}
+																													to={`/c/${grandChild.slug}`}
 																													onClick={() =>
 																														closeNavitaion()
 																													}
@@ -272,7 +272,7 @@ export const MainNavigation = () => {
 																				</Disclosure>
 																			) : (
 																				<NavLink
-																					to={`/product-category/${child.slug}`}
+																					to={`/c/${child.slug}`}
 																					onClick={() => closeNavitaion()}
 																					className={({ isActive }) =>
 																						cn(

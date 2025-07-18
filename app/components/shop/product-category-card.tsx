@@ -7,7 +7,7 @@ export const ProductCategoryCard = ({
 }: { category: ProductCategory }) => {
 	return (
 		<NavLink
-			to={href("/product-category/:slug", { slug: category.slug })}
+			to={href("/c/:slug", { slug: category.slug })}
 			key={category.slug}
 			className="block"
 		>
