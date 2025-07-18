@@ -13,9 +13,10 @@ import {
 import { useState } from "react";
 import { Link, href, useRouteLoaderData } from "react-router";
 import { Fragment } from "react/jsx-runtime";
-import { Button, Icon, Input } from "~/components";
+import { Button, Icon } from "~/components";
 import { useAppContext } from "~/contexts";
 import type { Cart, Customer } from "~/types";
+import { Search } from "./search";
 
 export const Middle = () => {
 	const data = useRouteLoaderData<{ customer: Customer; cart: Cart }>("root");
@@ -27,7 +28,7 @@ export const Middle = () => {
 	const { state, updateState } = useAppContext();
 
 	return (
-		<div className="bg-white md:py-2">
+		<div className="relative z-300 bg-white md:py-2">
 			<div className="mx-auto max-w-7xl">
 				<div
 					className="group/search flex flex-wrap items-center justify-between gap-2 p-2 md:flex-nowrap md:py-0"
@@ -56,20 +57,7 @@ export const Middle = () => {
 							className="fade-in-10 slide-in-from-top aspect-60/13 w-full max-w-40 animate-in md:max-w-64 "
 						/>
 					</Link>
-					<div className="group-data-[show=true]/search:fade-in group-data-[show=true]/search:slide-in-from-top relative order-3 hidden w-full animate-in transition-all group-data-[show=true]/search:block md:order-2 md:block md:has-[input:focus]:scale-102 lg:max-w-2xl">
-						<Input
-							autoComplete="off"
-							name="search"
-							placeholder="Search products..."
-							className="border-teal transition-all focus:shadow-sm focus:shadow-teal"
-						/>
-						<Button
-							variant="plain"
-							size="icon"
-							className="absolute inset-y-0 right-0"
-							icon={<MagnifyingGlassIcon className="size-6" />}
-						/>
-					</div>
+					<Search />
 					<div className="order-2 flex justify-end gap-1 md:order-3">
 						<Button
 							variant="plain"

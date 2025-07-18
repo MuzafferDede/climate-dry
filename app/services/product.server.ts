@@ -47,3 +47,17 @@ export async function getProduct(request: Request, slug: string | undefined) {
 		`/products/${slug}?include=brand,discount,category,relatedProducts,extras,variants`,
 	);
 }
+
+export async function getProducts(request: Request) {
+	const url = new URL(request.url);
+	const q = url.searchParams.get("q");
+
+	const query = queryBuilder({
+		...(q ? { "filter[q]": q } : {}),
+		include: "brand",
+	});
+
+	if (!q) return;
+	const api = await fetcher(request);
+	return await api.get<ApiListResponse<Product>>(`/products?${query}`);
+}

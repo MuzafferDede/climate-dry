@@ -56,7 +56,9 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 					</h3>
 					<p className="flex gap-2 text-gray-dark text-sm">
 						<span className="font-semibold text-teal">{item.variant.name}</span>
-						<span className="text-gray">{item.variant.sku}</span>
+					</p>
+					<p className="flex gap-2 text-gray-dark text-sm">
+						<span className="text-gray">SKU: {item.variant.sku}</span>
 					</p>
 					{item.variant.attributes && item.variant.attributes.length > 0 && (
 						<div className="mt-2 font-medium text-gray-dark text-xs">
