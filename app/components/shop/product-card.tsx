@@ -76,7 +76,7 @@ export const ProductCard = ({
 					<div className="flex flex-col gap-2">
 						<Rating rating={rating} reviewCount={reviews} />
 						<div>
-							<h3 className="font-bold text-teal uppercase">{brand.name}</h3>
+							<h3 className="font-bold text-teal uppercase">{brand?.name?? 'No Brand'}</h3>
 							<h2 className="min-h-10 capitalize">{name}</h2>
 						</div>
 						<div

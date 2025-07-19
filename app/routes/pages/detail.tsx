@@ -35,6 +35,14 @@ export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 		<div className="space-y-8 px-5 py-8">
 			<div className="mx-auto max-w-7xl">
 				<Breadcrumb />
+				<div className="space-y-2">
+					<h2 className="font-bold text-4xl text-gray-darkest">Help & Info</h2>
+				</div>
+				<div className="prose prose-img:mx-auto prose-figcaption:hidden max-w-none prose-img:max-w-full">
+					<p>
+						The boring but necessary information you need to know about what we offer at Climate Dry
+					</p>
+				</div>
 				<PageNavigation />
 
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">

@@ -23,7 +23,7 @@ export const adviceHubNav: AdviceLink[] = [
 		label: "Evaporative Cooling Calculator",
 		path: "/evaporative-cooling-calculator",
 	},
-	{ label: "Help & Info", path: "/pages/all" },
+	{ label: "Help & Info", path: "/pages/price-match" },
 	{ label: "Solutions Centre", path: "/solution/agriculture" },
 ];
 

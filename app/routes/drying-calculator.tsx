@@ -199,7 +199,18 @@ export default function DryingCalculatorPage() {
 						</p>
 					</div>
 				)}
+
+
 			</div>
+
+			        <div className="mx-auto mt-8 max-w-5xl space-y-10 rounded-lg bg-white p-8">
+                        <p 
+                        className="text-xxs text-center">
+							Calculation based on approximate maximum moisture load and is subject to internal conditions within the space. Real world results may vary depending on factors including but not limited to; severity and source of moisture infiltration, quality/type of building construction, temperature, location and unit settings. Results provided are strictly deemed as guidance, and real world performance, functionality and suitability of units within a space cannot be guaranteed
+                        </p>
+                    </div>
+
+
 		</div>
 	);
 }
