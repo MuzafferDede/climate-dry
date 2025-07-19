@@ -116,7 +116,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			)}
 			
 			{/* Trusted partners icons */}
-			{brands.length < 0 && <Brands brands={brands} />}
+			{brands.length > 0 && <Brands brands={brands} />}
 
 			{/* Two info images */}
 			<Info />
