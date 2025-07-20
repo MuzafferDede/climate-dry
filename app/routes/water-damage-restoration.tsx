@@ -1,14 +1,16 @@
-import { useState } from "react";
 import {
 	Breadcrumb,
 	Button,
-	Input,
-	PageNavigation,
-	SectionHeader,
     SectionHeaderMulti,
-	Select,
 } from "~/components/ui";
 import { Link } from "react-router";
+import type { MetaFunction } from "react-router";
+
+
+export const meta: MetaFunction = () => [
+	{ title: "Water Damage Restoration" },
+	{ name: "description", content: "Different levels of water damage require different types of restoration. Our guide helps determine what equipment is needed to solve your water damage issues." },
+];
 
 export const handle = {
 	breadcrumb: () => [

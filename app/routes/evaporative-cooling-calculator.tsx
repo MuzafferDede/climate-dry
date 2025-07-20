@@ -5,9 +5,15 @@ import {
 	Input,
 	PageNavigation,
 	SectionHeader,
-	Select,
 } from "~/components/ui";
 
+import type { MetaFunction } from "react-router";
+
+
+export const meta: MetaFunction = () => [
+	{ title: "Evaporative Cooling Calculator" },
+	{ name: "description", content: "Calculate your evaporative cooling needs using our evaporative cooling calculator. Accurately calculate your cooling space and equipment needed with our handy guide." },
+];
 
 
 export const handle = {

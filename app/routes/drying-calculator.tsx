@@ -8,6 +8,14 @@ import {
 	Select,
 } from "~/components/ui";
 
+import type { MetaFunction } from "react-router";
+
+
+export const meta: MetaFunction = () => [
+	{ title: "Drying Calculator" },
+	{ name: "description", content: "Calculate your drying needs using our drying calculator. Perfect for use with dehumidifiers and other drying equipment." },
+];
+
 const temperatureOptions = [
 	{ label: "-20°C", value: "-20" },
 	{ label: "-10°C", value: "-10" },
