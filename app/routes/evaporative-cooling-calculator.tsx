@@ -13,7 +13,7 @@ import {
 export const handle = {
 	breadcrumb: () => [
 		{ label: "Advice Hub", path: "/info-hub" },
-		{ label: "Drying Calculator", path: "/evaporative-cooling-calculator" },
+		{ label: "Evaporative Cooling Calculator", path: "/evaporative-cooling-calculator/" },
 	],
 };
 export default function DryingCalculatorPage() {

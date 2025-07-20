@@ -18,10 +18,10 @@ export const mainNavigation: Navigation[] = [
 export const adviceHubNav: AdviceLink[] = [
 	{ label: "Advice & Articles", path: "/info-hub" },
 	{ label: "Case Studies", path: "/info-hub/case-studies" },
-	{ label: "Drying Calculator", path: "/drying-calculator" },
+	{ label: "Drying Calculator", path: "/drying-calculator/" },
 	{
 		label: "Evaporative Cooling Calculator",
-		path: "/evaporative-cooling-calculator",
+		path: "/evaporative-cooling-calculator/",
 	},
 	{ label: "Help & Info", path: "/pages/price-match" },
 	{ label: "Solutions Centre", path: "/solution/agriculture" },

@@ -10,6 +10,7 @@ export * from "./page-navigation";
 export * from "./pagination";
 export * from "./payment-and-shipping";
 export * from "./section-header";
+export * from "./section-header-multi";
 export * from "./select";
 export * from "./service";
 export * from "./table";

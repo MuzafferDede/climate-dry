@@ -33,7 +33,7 @@ const targetHumidityOptions = [
 export const handle = {
 	breadcrumb: () => [
 		{ label: "Advice Hub", path: "/info-hub" },
-		{ label: "Drying Calculator", path: "/drying-calculator" },
+		{ label: "Drying Calculator", path: "/drying-calculator/" },
 	],
 };
 

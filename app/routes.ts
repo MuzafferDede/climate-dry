@@ -12,8 +12,10 @@ export default [
 	route("info-hub/:category", "routes/blog-posts/list.tsx"),
 	route("info-hub/article/:slug", "routes/blog-posts/detail.tsx"),
 	route("cart", "routes/cart/detail.tsx"),
-	route("drying-calculator", "routes/drying-calculator.tsx"),
-	route("evaporative-cooling-calculator", "routes/evaporative-cooling-calculator.tsx"),
+	route("drying-calculator/", "routes/drying-calculator.tsx"),
+	route("evaporative-cooling-calculator/", "routes/evaporative-cooling-calculator.tsx"),
+	route("water-damage-restoration/", "routes/water-damage-restoration.tsx"),
+	
 	route("checkout/success", "routes/checkout/success.tsx"),
 	route("checkout/cancel", "routes/checkout/cancel.tsx"),
 	route("pages/:slug?", "routes/pages/detail.tsx"),
