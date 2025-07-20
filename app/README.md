@@ -54,3 +54,5 @@ export type Solution = {
 ## Troubleshooting
 You may see highlighted errors once you have created and edited the files. If so run dev with the below command to view the website and they should disappear;
 npm run dev
+
+If merge to main fails then go into vercel and deployments and create a new one
