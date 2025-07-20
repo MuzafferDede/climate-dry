@@ -3,11 +3,13 @@ import {
 	type LoaderFunctionArgs,
 	NavLink,
 	data,
+	useLocation,
 	useSearchParams,
 } from "react-router";
 import {
 	Breadcrumb,
 	Button,
+	FilterComponents,
 	Pagination,
 	ProductCard,
 	ProductCategoryCard,
@@ -64,6 +66,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 	const category = categoryResponse.data;
 	const products = productsResponse.data;
 
+	const filters = productsResponse.filters;
+
 	const pagination =
 		products.length > 0 && productsResponse.meta?.links
 			? productsResponse.meta.links
@@ -82,6 +86,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 		ancestry,
 		products,
 		pagination,
+		filters,
 	};
 }
 
@@ -158,9 +163,22 @@ const SortBy = [
 export default function ProductCategoryPage({
 	loaderData,
 }: Route.ComponentProps) {
-	const { category, products, pagination } = loaderData;
+	const { category, products, pagination, filters } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const cardView = searchParams.get("view") === "card";
+
+	const handleFilter = (field: string, value: string | number | boolean) => {
+		const newParams = new URLSearchParams(searchParams);
+
+		newParams.set(field, String(value));
+		setSearchParams(newParams);
+	};
+
+	const location = useLocation();
+
+	const reset = () => {
+		window.location.href = location.pathname;
+	};
 
 	return (
 		<div className="space-y-8 px-5 py-8">
@@ -191,64 +209,101 @@ export default function ProductCategoryPage({
 				)}
 			</div>
 
-			{products?.length > 0 && (
-				<div className="relative isolate bg-gray-lightest">
-					<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-						<aside className="lg:col-span-1">
-							<div className="space-y-6">
+			<div className="relative isolate">
+				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
+					<aside className="lg:col-span-1">
+						<div className="sticky top-40 space-y-6">
+							<div className="flex justify-between gap-2">
 								<h3 className="font-medium text-lg text-navy-darkest">
 									Filters
 								</h3>
-								{/* TODO: Add filters component */}
-								<p className="text-gray-light text-sm">
-									Filters coming soon...
-								</p>
-							</div>
-						</aside>
-						<main className="lg:col-span-3">
-							<div className="mb-4 flex items-center justify-end gap-4">
-								<div className="flex items-center gap-1">
-									<label
-										htmlFor="sort"
-										className="block whitespace-nowrap text-gray text-xs"
-									>
-										Sory By:
-									</label>
-									<Select
-										id="sort"
-										name="sort"
-										value={searchParams.get("sort") || "price-low"}
-										options={SortBy}
-										onChange={(val: string) => {
-											const newParams = new URLSearchParams(searchParams);
-											newParams.set("sort", val);
-											setSearchParams(newParams);
-										}}
-										className="w-40"
-									/>
-								</div>
 								<Button
-									as={NavLink}
-									to={(() => {
-										const newParams = new URLSearchParams(searchParams);
-										newParams.set("view", cardView ? "grid" : "card");
-										return `?${newParams.toString()}`;
-									})()}
-									variant="secondary"
-									size="icon"
-									aria-label={
-										cardView ? "Switch to grid view" : "Switch to card view"
-									}
-									icon={
-										cardView ? (
-											<Squares2X2Icon className="h-5 w-5" />
-										) : (
-											<ListBulletIcon className="h-5 w-5" />
-										)
-									}
+									type="button"
+									size="none"
+									variant="plain"
+									className="text-teal hover:text-navy-darkest"
+									onClick={reset}
+								>
+									Reset Filters
+								</Button>
+							</div>
+							<div className="grid gap-4">
+								<div className="grid gap-2">
+									<label className="flex gap-2">
+										<input
+											type="checkbox"
+											className="my-0.5 h-4 w-4 accent-teal"
+											onChange={(e) =>
+												handleFilter("filter[in_stock]", e.target.checked)
+											}
+										/>
+										<span>In Stock</span>
+									</label>
+									<label className="flex gap-2">
+										<input
+											type="checkbox"
+											className="my-0.5 h-4 w-4 accent-teal"
+											onChange={(e) =>
+												handleFilter("filter[on_sale]", e.target.checked)
+											}
+										/>
+										<span>On Sale</span>
+									</label>
+								</div>
+
+								{/*Dyanmic Filters*/}
+								{filters && (
+									<FilterComponents
+										filters={filters}
+										searchParams={searchParams}
+										setSearchParams={setSearchParams}
+									/>
+								)}
+							</div>
+						</div>
+					</aside>
+
+					<main className="lg:col-span-3">
+						<div className="mb-4 flex items-center justify-end gap-4">
+							<div className="flex items-center gap-1">
+								<label
+									htmlFor="sort"
+									className="block whitespace-nowrap text-gray text-xs"
+								>
+									Sory By:
+								</label>
+								<Select
+									id="sort"
+									name="sort"
+									value={searchParams.get("sort") || "price-low"}
+									options={SortBy}
+									onChange={(value) => handleFilter("sort", value)}
+									className="w-40"
 								/>
 							</div>
+							<Button
+								as={NavLink}
+								to={(() => {
+									const newParams = new URLSearchParams(searchParams);
+									newParams.set("view", cardView ? "grid" : "card");
+									return `?${newParams.toString()}`;
+								})()}
+								variant="secondary"
+								size="icon"
+								aria-label={
+									cardView ? "Switch to grid view" : "Switch to card view"
+								}
+								icon={
+									cardView ? (
+										<Squares2X2Icon className="h-5 w-5" />
+									) : (
+										<ListBulletIcon className="h-5 w-5" />
+									)
+								}
+							/>
+						</div>
 
+						{products?.length > 0 ? (
 							<div
 								className={cn(
 									"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",
@@ -259,10 +314,17 @@ export default function ProductCategoryPage({
 									<ProductCard {...product} key={product.id} />
 								))}
 							</div>
-						</main>
-					</div>
+						) : (
+							<div className="flex flex-col items-center justify-center gap-1 rounded-xl border border-gray-light bg-white p-4 font-semibold text-gray shadow">
+								<p>
+									We couldn’t find any products matching your search. Try
+									adjusting your filters or using different keywords.
+								</p>
+							</div>
+						)}
+					</main>
 				</div>
-			)}
+			</div>
 			{pagination && <Pagination links={pagination} />}
 			{category.description && (
 				<div className="mx-auto max-w-7xl scroll-mt-40" id="description">

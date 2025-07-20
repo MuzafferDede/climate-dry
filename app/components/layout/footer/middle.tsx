@@ -40,9 +40,19 @@ export const Middle = () => {
 					<div className="flex flex-col gap-2.5">
 						<SectionTitle label="Humidity Control Specialists" />
 						<div className="text-white">
-							<p>Tel: <a href="tel:08081969381">0808 196 9381</a></p>
-							<p><a href="/pages/rapid-delivery/" title="Nationwide Delivery">Nationwide Delivery</a></p>
-							<p><a href="/pages/contact-us/" id="Call_Back2" >Request Call Back</a></p>
+							<p>
+								Tel: <a href="tel:08081969381">0808 196 9381</a>
+							</p>
+							<p>
+								<a href="/pages/rapid-delivery/" title="Nationwide Delivery">
+									Nationwide Delivery
+								</a>
+							</p>
+							<p>
+								<a href="/pages/contact-us/" id="Call_Back2">
+									Request Call Back
+								</a>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -154,8 +164,13 @@ export const Middle = () => {
 				<div className="flex flex-col gap-2.5">
 					<SectionTitle label="Follow Us" />
 					<div className="flex items-start gap-2 text-white">
-						<a href="https://x.com/ClimateDryUK" className="flex items-center hover:text-teal" title="X"
-						target="_blank" >
+						<a
+							href="https://x.com/ClimateDryUK"
+							className="flex items-center hover:text-teal"
+							title="X"
+							target="_blank"
+							rel="noreferrer"
+						>
 							<svg
 								className="h-5 w-5"
 								xmlns="http://www.w3.org/2000/svg"
@@ -176,9 +191,10 @@ export const Middle = () => {
 						</a>
 						<a
 							href="https://www.facebook.com/profile.php?id=61556781155293"
-							target="_blank" 
+							target="_blank"
 							className="flex items-center hover:text-teal"
 							title="facebook"
+							rel="noreferrer"
 						>
 							<svg
 								className="h-5 w-5"
@@ -197,10 +213,11 @@ export const Middle = () => {
 							</svg>
 						</a>
 						<a
-							href="https://www.linkedin.com/company/climate-dry" 
-							target="_blank" 
+							href="https://www.linkedin.com/company/climate-dry"
+							target="_blank"
 							className="flex items-center hover:text-teal"
 							title="Linkedin"
+							rel="noreferrer"
 						>
 							<svg
 								className="h-5 w-5"
@@ -222,9 +239,10 @@ export const Middle = () => {
 						</a>
 						<a
 							href="https://www.instagram.com/climatedryuk/"
-							target="_blank" 
+							target="_blank"
 							className="flex items-center hover:text-teal"
 							title="Instagram"
+							rel="noreferrer"
 						>
 							<svg
 								className="h-5 w-5"

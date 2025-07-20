@@ -309,7 +309,7 @@ export default function ProductPage({
 						<div className="flex w-full grow flex-col gap-2">
 							<div>
 								<h3 className="font-bold text-sm text-teal uppercase sm:text-base">
-									{product.brand?.name?? 'No Brand'}
+									{product.brand?.name ?? "No Brand"}
 								</h3>
 								<h1 className="font-bold text-2xl capitalize leading-tight sm:text-3xl">
 									{product.name}

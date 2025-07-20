@@ -40,6 +40,7 @@ export type ApiListResponse<T> = {
 	data: T[];
 	links?: ApiLinks;
 	meta?: ApiMeta;
+	filters?: Filters;
 };
 
 // ============================================================================
@@ -142,8 +143,6 @@ export type Product = {
 	videos: Array<{ url: string }>;
 	warranty_period: number;
 } & MetaInfo;
-
-
 
 export type Solution = {
 	id: number;
@@ -327,3 +326,44 @@ export type StripePaymentIntent = {
 	transfer_data: unknown | null;
 	transfer_group: string | null;
 };
+
+// ============================================================================
+// FILTERS TYPE (Discriminated Union)
+// ============================================================================
+
+type BaseFilter = {
+	name: string;
+	title: string;
+};
+
+type SliderOptions = {
+	min: number;
+	max: number;
+	prefix?: string;
+	suffix?: string;
+};
+
+type CheckboxOption = {
+	id: number;
+	name: string;
+	value: string | number[];
+	count: number;
+};
+
+export type SliderFilter = BaseFilter & {
+	type: "slider";
+	options: SliderOptions;
+};
+
+export type CheckboxFilter = BaseFilter & {
+	type: "checkbox";
+	options: CheckboxOption[];
+};
+
+export type MultiCheckboxFilter = BaseFilter & {
+	type: "multi-checkbox";
+	options: CheckboxOption[];
+};
+
+export type Filter = SliderFilter | CheckboxFilter | MultiCheckboxFilter;
+export type Filters = Filter[];

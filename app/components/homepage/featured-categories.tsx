@@ -25,22 +25,17 @@ export const FeaturedCategories = ({
 				</TabList>
 				<TabPanels className="py-8">
 					{categories.map((category) => (
-						<TabPanel
-							key={category.name}
-						>
-							<div 
-								className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-							>
+						<TabPanel key={category.name}>
+							<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 								{category?.products?.map((product) => (
 									<ProductCard {...product} key={product.name} />
 								))}
 							</div>
-							<div className="text-center pt-8">
-								<Button as={Link} to={`/c/${category.slug}`} variant="outline" >
+							<div className="pt-8 text-center">
+								<Button as={Link} to={`/c/${category.slug}`} variant="outline">
 									Shop All
 								</Button>
 							</div>
-						
 						</TabPanel>
 					))}
 				</TabPanels>

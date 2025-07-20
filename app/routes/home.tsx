@@ -18,8 +18,8 @@ import {
 	getFeaturedCategories,
 	getSession,
 	getShopByCategories,
-	putToast,
 	getSolutions,
+	putToast,
 } from "~/services";
 import { ToastType } from "~/types";
 import type { Route } from "./+types/home";
@@ -41,7 +41,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 	const shopByCategories = await getShopByCategories(request);
 	const solutions = await getSolutions(request);
 
-	return { banners, brands, featuredCategories, shopByCategories,solutions };
+	return { banners, brands, featuredCategories, shopByCategories, solutions };
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -89,16 +89,17 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-	const { banners, brands, featuredCategories, shopByCategories,solutions } = loaderData;
+	const { banners, brands, featuredCategories, shopByCategories, solutions } =
+		loaderData;
 
 	return (
 		<div className="relative w-full overflow-hidden">
 			{/* Thin blue banner text */}
 			<Marquee />
-			
+
 			{/* Large sliding banner */}
 			{banners && <Banners banners={banners} />}
-			
+
 			{/* featuredCategories */}
 			{featuredCategories.data.length > 0 && (
 				<FeaturedCategories categories={featuredCategories.data} />
@@ -108,13 +109,13 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			<Support />
 
 			{/* Solutions feature */}
-			{solutions && <Solutions solutions={solutions.data} />}
+			{solutions.data.length > 0 && <Solutions solutions={solutions.data} />}
 
 			{/* 4 shopByCategories icons */}
 			{shopByCategories.data.length > 0 && (
 				<ShopByCategory categories={shopByCategories.data} />
 			)}
-			
+
 			{/* Trusted partners icons */}
 			{brands.length > 0 && <Brands brands={brands} />}
 

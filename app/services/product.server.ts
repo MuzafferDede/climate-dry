@@ -24,12 +24,20 @@ export async function getCategoryProducts(
 ) {
 	const url = new URL(request.url);
 
+	const defaults = {
+		page: "1",
+		per_page: "20",
+		sort: "price-low",
+	};
+
+	const params = Object.fromEntries(url.searchParams.entries());
+
+	const mergedParams = { ...defaults, ...params };
+
 	const query = queryBuilder({
 		"filter[category]": category,
 		include: "brand,discount,variants",
-		page: url.searchParams.get("page") || 1,
-		per_page: url.searchParams.get("per_page") || 20,
-		sort: url.searchParams.get("sort") || "price-low",
+		...mergedParams,
 	});
 
 	const api = await fetcher(request);

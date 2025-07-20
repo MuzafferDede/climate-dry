@@ -29,9 +29,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 			{/* Product Info Row */}
 			<div className="flex flex-col gap-4 md:flex-row">
 				<div className="w-full flex-shrink-0 md:w-auto">
-					<Link
-						to={href("/p/:slug", { slug: item.variant.product.slug })}
-					>
+					<Link to={href("/p/:slug", { slug: item.variant.product.slug })}>
 						{item.variant.product.images?.[0]?.url ? (
 							<Image
 								src={item.variant.product.images[0].url}

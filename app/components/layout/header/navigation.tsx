@@ -41,7 +41,7 @@ export const MainNavigation = () => {
 		>
 			<Await resolve={navigation}>
 				{(nav) => (
-					<nav className="relative z-200 bg-white text-base shadow-sm">
+					<nav className="relative z-300 bg-white text-base shadow-sm md:z-200">
 						{/* Container */}
 						<div className="mx-auto max-w-7xl px-4">
 							{/* Desktop Navigation */}
@@ -165,7 +165,7 @@ export const MainNavigation = () => {
 							{/* Mobile Navigation (Accordion) */}
 							<div
 								data-navigation-open={state.isNavigationOpen}
-								className="slide-in-from-right fixed top-0 right-0 bottom-0 left-12 isolate z-100 hidden overflow-auto scroll-smooth border-0 bg-white shadow-lg transition-all duration-300 ease-in-out data-[navigation-open=true]:block data-[navigation-open=true]:animate-in md:hidden data-[navigation-open=true]:md:hidden"
+								className="slide-in-from-right fixed top-0 right-0 bottom-0 left-12 isolate z-200 hidden overflow-auto scroll-smooth border-0 bg-white shadow-lg transition-all duration-300 ease-in-out data-[navigation-open=true]:block data-[navigation-open=true]:animate-in md:hidden data-[navigation-open=true]:md:hidden"
 							>
 								<button
 									onClick={() =>

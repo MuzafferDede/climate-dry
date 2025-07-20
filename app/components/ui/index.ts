@@ -13,5 +13,6 @@ export * from "./section-header";
 export * from "./section-header-multi";
 export * from "./select";
 export * from "./service";
+export * from "./slider";
 export * from "./table";
 export * from "./toast-container";

@@ -51,7 +51,7 @@ export const ProductCard = ({
 	return (
 		<AnimateOnScroll
 			threshold={0.4}
-			className="@container boder relative isolate rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl"
+			className="@container boder relative isolate h-full rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl"
 			type="fadeInUp"
 		>
 			<div className="absolute top-0 left-4 z-10 flex items-center px-4">
@@ -76,7 +76,9 @@ export const ProductCard = ({
 					<div className="flex flex-col gap-2">
 						<Rating rating={rating} reviewCount={reviews} />
 						<div>
-							<h3 className="font-bold text-teal uppercase">{brand?.name?? 'No Brand'}</h3>
+							<h3 className="font-bold text-teal uppercase">
+								{brand?.name ?? "No Brand"}
+							</h3>
 							<h2 className="min-h-10 capitalize">{name}</h2>
 						</div>
 						<div

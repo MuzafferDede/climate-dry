@@ -40,7 +40,8 @@ export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 				</div>
 				<div className="prose prose-img:mx-auto prose-figcaption:hidden max-w-none prose-img:max-w-full">
 					<p>
-						The boring but necessary information you need to know about what we offer at Climate Dry
+						The boring but necessary information you need to know about what we
+						offer at Climate Dry
 					</p>
 				</div>
 				<PageNavigation />

@@ -3,7 +3,7 @@ import { getCustomer } from "./customer.server";
 import { getSession } from "./session.server";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
-const SITE_CODE = import.meta.env.VITE_SITE_CODE || "1";
+const SITE_CODE = import.meta.env.VITE_SITE_CODE || "CD";
 
 interface FetcherInit extends RequestInit {
 	data?: unknown;

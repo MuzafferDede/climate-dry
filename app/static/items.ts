@@ -27,7 +27,6 @@ export const adviceHubNav: AdviceLink[] = [
 	{ label: "Solutions Centre", path: "/solution/agriculture" },
 ];
 
-
 export const footerProductLinks: FooterLink[] = [
 	{ label: "Dehumidifiers", path: "/c/dehumidifiers/" },
 	{ label: "Domestic Dehumidifiers", path: "/c/home-dehumidifiers/" },
@@ -60,19 +59,61 @@ export const footerHelperLinks: FooterLink[] = [
 
 export const footerLogos: (FooterLink & { logo: string; sister?: boolean })[] =
 	[
-		{ label: "LMP", path: "https://www.linemarkerpaint.co.uk/", logo: "/images/logos/LMP.webp" },
-		{ label: "NHS", path: "https://www.nationalheatershops.co.uk/", logo: "/images/logos/NHS.webp" },
-		{ label: "CD", path: "https://www.climatedry.co.uk/", logo: "/images/logos/CD.webp" },
-		{ label: "zebra", path: "https://www.zebralinemarking.co.uk/", logo: "/images/logos/zebra.webp" },
-		{ label: "OL", path: "https://www.outdoor-lighting.co.uk/", logo: "/images/logos/OL.webp" },
-		{ label: "LS", path: "https://liteshop.co.uk/", logo: "/images/logos/LS.webp" },
-		{ label: "OS", path: "https://outdoor-style.co.uk/", logo: "/images/logos/OS.webp" },
-		{ label: "PPS", path: "https://www.professionalpaintsupplies.co.uk/", logo: "/images/logos/PPS.webp" },
-		{ label: "NSS", path: "https://www.nationalsitesupplies.co.uk/", logo: "/images/logos/NSS.webp" },
+		{
+			label: "LMP",
+			path: "https://www.linemarkerpaint.co.uk/",
+			logo: "/images/logos/LMP.webp",
+		},
+		{
+			label: "NHS",
+			path: "https://www.nationalheatershops.co.uk/",
+			logo: "/images/logos/NHS.webp",
+		},
+		{
+			label: "CD",
+			path: "https://www.climatedry.co.uk/",
+			logo: "/images/logos/CD.webp",
+		},
+		{
+			label: "zebra",
+			path: "https://www.zebralinemarking.co.uk/",
+			logo: "/images/logos/zebra.webp",
+		},
+		{
+			label: "OL",
+			path: "https://www.outdoor-lighting.co.uk/",
+			logo: "/images/logos/OL.webp",
+		},
+		{
+			label: "LS",
+			path: "https://liteshop.co.uk/",
+			logo: "/images/logos/LS.webp",
+		},
+		{
+			label: "OS",
+			path: "https://outdoor-style.co.uk/",
+			logo: "/images/logos/OS.webp",
+		},
+		{
+			label: "PPS",
+			path: "https://www.professionalpaintsupplies.co.uk/",
+			logo: "/images/logos/PPS.webp",
+		},
+		{
+			label: "NSS",
+			path: "https://www.nationalsitesupplies.co.uk/",
+			logo: "/images/logos/NSS.webp",
+		},
 	];
 
 export const sisterLogos: (FooterLink & { logo: string; sister?: boolean })[] =
-	[{ label: "NTH", path: "https://www.nationaltoolhireshops.co.uk/", logo: "/images/logos/NTH.webp" }];
+	[
+		{
+			label: "NTH",
+			path: "https://www.nationaltoolhireshops.co.uk/",
+			logo: "/images/logos/NTH.webp",
+		},
+	];
 
 export const headerTools = [
 	{

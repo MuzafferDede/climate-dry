@@ -24,16 +24,20 @@ export const Top = () => {
 						<Link className="hover:text-teal" to={href("/brands/")}>
 							Brands
 						</Link>
-						<Link className="hover:text-teal" to={href("/pages/rapid-delivery/")}>
+						<Link
+							className="hover:text-teal"
+							to={href("/pages/rapid-delivery/")}
+						>
 							Delivery
 						</Link>
 					</div>
 					<div className="hidden gap-2 text-teal sm:flex">
 						<a
 							href="https://x.com/ClimateDryUK"
-							target="_blank" 
+							target="_blank"
 							className="flex items-center hover:text-navy-darkest"
 							title="X"
+							rel="noreferrer"
 						>
 							<svg
 								className="h-4 w-4"
@@ -55,9 +59,10 @@ export const Top = () => {
 						</a>
 						<a
 							href="https://www.facebook.com/profile.php?id=61556781155293"
-							target="_blank" 
+							target="_blank"
 							className="flex items-center hover:text-navy-darkest"
 							title="facebook"
+							rel="noreferrer"
 						>
 							<svg
 								className="h-4 w-4"
@@ -77,9 +82,10 @@ export const Top = () => {
 						</a>
 						<a
 							href="https://www.linkedin.com/company/climate-dry"
-							target="_blank" 
+							target="_blank"
 							className="flex items-center hover:text-navy-darkest"
 							title="Linkedin"
+							rel="noreferrer"
 						>
 							<svg
 								className="h-4 w-4"
@@ -101,9 +107,10 @@ export const Top = () => {
 						</a>
 						<a
 							href="https://www.instagram.com/climatedryuk/"
-							target="_blank" 
+							target="_blank"
 							className="flex items-center hover:text-navy-darkest"
 							title="Instagram"
+							rel="noreferrer"
 						>
 							<svg
 								className="h-4 w-4"

@@ -21,7 +21,7 @@ export const Brands = ({ brands }: { brands: Brand[] }) => {
 						<Link
 							to={brand.slug}
 							key={brand.slug}
-							className="w-44 shrink-0 snap-center overflow-hidden rounded-lg bg-white shadow shadow-navy-darkest transition-all hover:scale-105 hover:shadow-lg"
+							className="w-44 shrink-0 snap-center overflow-hidden rounded-lg bg-white transition-all hover:scale-105 hover:shadow-lg"
 						>
 							<img
 								className="h-auto w-full"

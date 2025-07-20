@@ -22,6 +22,7 @@ const CARDS = [
 	},
 ];
 
+
 const HIDDEN_AT = ["/login", "/register", "/evaporative-cooling-calculator","/drying-calculator/","/water-damage-restoration/"];
 const HIDDEN_PREFIXES = ["/pages/"];
 
@@ -29,8 +30,10 @@ export const WhyChooseUs = () => {
 	const location = useLocation();
 	const { pathname } = location;
 
-	if (HIDDEN_AT.includes(pathname) ||
-		HIDDEN_PREFIXES.some(prefix => pathname.startsWith(prefix))) {
+	if (
+		HIDDEN_AT.includes(pathname) ||
+		HIDDEN_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+	) {
 		return null;
 	}
 	return (

@@ -1,4 +1,4 @@
-import type { ApiResponse,ApiListResponse, Solution } from "~/types";
+import type { ApiListResponse, ApiResponse, Solution } from "~/types";
 import { fetcher } from "./api.server";
 
 export async function getSolution(request: Request, slug?: string) {
