@@ -366,7 +366,7 @@ export default function ProductPage({
 										{currency(product.default_variant.retail_price)}
 									</span>
 								</div>
-								{product.discount && (
+								{product.default_variant.retail_price > product.default_variant.price && (
 									<p className="font-bold text-red">
 										save{" "}
 										{calculateSave(
@@ -398,7 +398,7 @@ export default function ProductPage({
 									<p className="mb-2 font-semibold text-navy-darkest/70 text-sm">
 										Optional Extras
 									</p>
-									<div className="flex flex-col items-start gap-1">
+									<div className="flex flex-col items-start gap-1 ">
 										{product.extra_products.map((extra) => {
 											const extraInStock = extra.default_variant?.in_stock;
 											const checked = selectedExtras.includes(extra.id);
@@ -422,7 +422,7 @@ export default function ProductPage({
 														value={extra.id}
 														disabled={!extraInStock}
 													/>
-													<span className="inline-flex flex-1 items-start gap-1 capitalize">
+													<span className="inline-flex flex-1 items-start gap-1 capitalize text-xs/5">
 														<span>{extra.name}</span>
 														{extraInStock && extra.default_variant?.price ? (
 															<span className="shrink-0 text-teal">
@@ -618,9 +618,19 @@ export default function ProductPage({
 											Specifications
 										</Tab>
 									)}
+								{product.specifications_text &&(
+										<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+											Specifications
+										</Tab>
+									)}
 								{product.features && product.features.length > 0 && (
 									<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 										Features
+									</Tab>
+								)}
+								{product.key_features && (
+									<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										Key Features
 									</Tab>
 								)}
 							</TabList>
@@ -663,6 +673,21 @@ export default function ProductPage({
 											</Table>
 										</TabPanel>
 									)}
+									
+
+								{product.specifications_text && (
+									<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+										<h2 className="mb-4 font-bold text-2xl text-navy-darkest">
+											Specifications
+										</h2>
+										<div
+											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+											dangerouslySetInnerHTML={{ __html: product.specifications_text }}
+										/>
+									</TabPanel>
+								)}								
+
 								{product.features && product.features.length > 0 && (
 									<TabPanel className="fade-in slide-in-from-top-5 animate-in">
 										<h2 className="mb-4 font-bold text-2xl text-navy-darkest">
@@ -688,6 +713,18 @@ export default function ProductPage({
 										</Table>
 									</TabPanel>
 								)}
+								{product.key_features && (
+									<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+										<h2 className="mb-4 font-bold text-2xl text-navy-darkest">
+											Features
+										</h2>
+										<div
+											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+											dangerouslySetInnerHTML={{ __html: product.key_features }}
+										/>
+									</TabPanel>
+								)}								
 							</TabPanels>
 						</TabGroup>
 					</div>

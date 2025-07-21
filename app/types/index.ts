@@ -136,6 +136,7 @@ export type Product = {
 	related_products?: Product[];
 	reviews: number;
 	slug: string;
+	specifications_text: string;
 	specifications: Array<{ key: string; value: string }>;
 	tax_amount: number;
 	upsell_products?: Product[];

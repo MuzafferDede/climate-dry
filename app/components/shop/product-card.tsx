@@ -98,14 +98,16 @@ export const ProductCard = ({
 									{currency(default_variant.retail_price)}
 								</span>
 							</div>
-							<p className="font-bold text-red">
-								save{" "}
-								{calculateSave(
-									default_variant.price,
-									default_variant.retail_price,
-								)}
-								%
-							</p>
+							{default_variant.retail_price > default_variant.price && (
+								<p className="font-bold text-red">
+									save{" "}
+									{calculateSave(
+										default_variant.price,
+										default_variant.retail_price,
+									)}
+									%
+								</p>
+							)}
 							<PaymentAndShipping
 								freeShipping={Boolean(default_variant.free_shipping)}
 								premiumShipping={Boolean(default_variant.premium_shipping_cost)}
