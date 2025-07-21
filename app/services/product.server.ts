@@ -48,6 +48,28 @@ export async function getCategoryProducts(
 
 	return response;
 }
+export async function getBrandProducts(
+	request: Request,
+	brand: string | undefined,
+) {
+	const url = new URL(request.url);
+
+	const query = queryBuilder({
+		"filter[brand]": brand,
+		include: "brand,discount,variants",
+		page: url.searchParams.get("page") || 1,
+		per_page: url.searchParams.get("per_page") || 20,
+		sort: url.searchParams.get("sort") || "price-low",
+	});
+
+	const api = await fetcher(request);
+
+	const response = await api.get<ApiListResponse<Product>>(
+		`/products?${query}`,
+	);
+
+	return response;
+}
 
 export async function getProduct(request: Request, slug: string | undefined) {
 	const api = await fetcher(request);

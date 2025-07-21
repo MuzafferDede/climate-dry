@@ -1,6 +1,7 @@
 export { fetcher } from "./api.server";
 export * from "./app.server";
 export * from "./blog.server";
+export * from "./brand.server";
 export * from "./cart.server";
 export * from "./customer.server";
 export * from "./mail.server";

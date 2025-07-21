@@ -270,7 +270,7 @@ export default function ProductCategoryPage({
 									htmlFor="sort"
 									className="block whitespace-nowrap text-gray text-xs"
 								>
-									Sory By:
+									Sort By:
 								</label>
 								<Select
 									id="sort"

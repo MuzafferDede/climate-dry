@@ -19,7 +19,7 @@ export const Brands = ({ brands }: { brands: Brand[] }) => {
 				>
 					{brands.map((brand) => (
 						<Link
-							to={brand.slug}
+							to={`/brand/${brand.slug}`}
 							key={brand.slug}
 							className="w-44 shrink-0 snap-center overflow-hidden rounded-lg bg-white transition-all hover:scale-105 hover:shadow-lg"
 						>

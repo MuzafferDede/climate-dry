@@ -228,7 +228,10 @@ export type Brand = {
 	logo_url: string;
 	name: string;
 	slug: string;
-};
+	introduction: string;
+	description: string;
+	created_at: string;
+} & MetaInfo;
 
 export type FooterLink = { label: string; path: string };
 
