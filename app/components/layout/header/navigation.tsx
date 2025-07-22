@@ -115,8 +115,38 @@ export const MainNavigation = () => {
 																				{child.name}
 																			</NavLink>
 																			{child.children && (
+																				<div>
 																				<ul className="grid w-full gap-1">
-																					{child.children.map((grandChild) => (
+																					{child.children
+																					.filter(
+																					(grandChild) =>
+																						![
+																						'Basement Dehumidifiers',
+																						'Cellar Dehumidifiers',
+																						'Classic Car Dehumidifiers',
+																						'Construction Dehumidifiers',
+																						'Drying Room Dehumidifiers',
+																						'Factory Dehumidifiers',
+																						'Garage Dehumidifiers',
+																						'Laundry Dehumidifiers',
+																						'Loft Dehumidifiers',
+																						'Storage Dehumidifiers',
+																						'Warehouse Dehumidifiers',
+																						'Water Damage Dehumidifiers',
+																						'Workshop Dehumidifiers',
+																						//'Portable Dehumidifiers',
+																						'Small Dehumidifiers',
+																						'Low Grain Dehumidifiers',
+																						//'Desiccant Dehumidifiers',
+																							//'Refrigerant Dehumidifiers',
+																							//'Wall Mounted Dehumidifiers',
+																							'Boat Dehumidifiers',
+																						].includes(grandChild.name)
+																					)
+																					.slice(0, child.slug === 'heaters' ? 3 : undefined)
+																					.slice(0, child.slug === 'ventilation' ? 4 : undefined)
+																					
+																					.map((grandChild) => (
 																						<li key={grandChild.slug}>
 																							<NavLink
 																								className={({ isActive }) =>
@@ -135,10 +165,35 @@ export const MainNavigation = () => {
 																							</NavLink>
 																						</li>
 																					))}
+																					
 																				</ul>
+																				{child.slug=='dehumidifiers' && (
+																				<div>
+																					<p className="pt-4 font-bold text-teal uppercase transition-colors hover:text-navy-darkest">Find your solution</p>
+																					<ul>
+																						<li><a href="/c/basement-dehumidifiers/" data-gtm="Dehumidifiers &gt; Basement Dehumidifiers" title="Basement Dehumidifiers">Basement</a></li>
+																						<li><a href="/c/boat-dehumidifiers/" data-gtm="Dehumidifiers &gt; Boat Dehumidifiers" title="Boat Dehumidifiers">Boat</a></li>
+																						<li><a href="/c/cellar-dehumidifiers/" data-gtm="Dehumidifiers &gt; Cellar Dehumidifiers" title="Cellar Dehumidifiers">Cellar</a></li>
+																						<li><a href="/c/classic-car-dehumidifiers/" data-gtm="Dehumidifiers &gt; Classic Car Dehumidifiers" title="Classic Car Dehumidifiers">Classic Car</a></li>
+																						<li><a href="/c/construction-dehumidifiers/" data-gtm="Dehumidifiers &gt; Construction Dehumidifiers" title="Construction Dehumidifiers">Construction</a></li>
+																						<li><a href="/c/drying-room-dehumidifiers/" data-gtm="Dehumidifiers &gt; Drying Room Dehumidifiers" title="Drying Room Dehumidifiers">Drying Room</a></li>
+																						<li><a href="/c/factory-dehumidifiers/" data-gtm="Dehumidifiers &gt; Factory Dehumidifiers" title="Factory Dehumidifiers">Factory</a></li>
+																						<li><a href="/c/small-dehumidifiers/" data-gtm="Dehumidifiers &gt; Small Dehumidifiers" title="Small Dehumidifiers">Small Spaces</a></li>
+																						<li><a href="/c/garage-dehumidifiers/" data-gtm="Dehumidifiers &gt; Garage Dehumidifiers" title="Garage Dehumidifiers">Garage</a></li>
+																							<li><a href="/c/laundry-dehumidifiers/" data-gtm="Dehumidifiers &gt; Laundry Dehumidifiers" title="Laundry Dehumidifiers">Laundry</a></li>
+																							<li><a href="/c/loft-dehumidifiers/" data-gtm="Dehumidifiers &gt; Loft Dehumidifiers" title="Loft Dehumidifiers">Loft</a></li>
+																							<li><a href="/c/storage-dehumidifiers/" data-gtm="Dehumidifiers &gt; Storage Dehumidifiers" title="Storage Dehumidifiers">Storage</a></li>
+																							<li><a href="/c/warehouse-dehumidifiers/" data-gtm="Dehumidifiers &gt; Warehouse Dehumidifiers" title="Warehouse Dehumidifiers">Warehouse</a></li>
+																							<li><a href="/c/water-damage-dehumidifiers/" data-gtm="Dehumidifiers &gt; Water Damage Dehumidifiers" title="Water Damage Dehumidifiers">Water Damage</a></li>
+																							<li><a href="/c/workshop-dehumidifiers/" data-gtm="Dehumidifiers &gt; Workshop Dehumidifiers" title="Workshop Dehumidifiers">Workshop</a></li>																					</ul>
+																				</div>
+																				)}
+																			</div>
 																			)}
 																		</li>
 																	))}
+																	
+
 																</ul>
 															</PopoverPanel>
 														</>
