@@ -9,6 +9,7 @@ export * from "./modal";
 export * from "./page-navigation";
 export * from "./pagination";
 export * from "./payment-and-shipping";
+export * from "./responsive-sidebar";
 export * from "./section-header";
 export * from "./section-header-multi";
 export * from "./select";

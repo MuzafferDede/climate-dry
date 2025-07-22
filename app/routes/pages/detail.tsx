@@ -1,9 +1,9 @@
-import { NavLink, useRouteLoaderData } from "react-router";
+import { useRouteLoaderData } from "react-router";
 import { PageNavigation } from "~/components";
 import { Breadcrumb } from "~/components/ui/breadcrumb";
+import { ResponsiveSidebar } from "~/components/ui/";
 import { getPage } from "~/services";
 import type { Page } from "~/types";
-import { cn } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const meta = ({ data }: Route.MetaArgs) => [
@@ -24,6 +24,9 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 		page: response.data,
 	};
 }
+
+
+
 
 export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 	const { page } = loaderData;
@@ -47,30 +50,8 @@ export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 				<PageNavigation />
 
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-					<aside className="lg:col-span-1">
-						<div className="space-y-6">
-							<div
-								className=" grid-cols-1 gap-x-4 self-start lg:grid"
-								role="tablist"
-								aria-orientation="horizontal"
-							>
-								{pages.map((link) => (
-									<NavLink
-										key={link.slug}
-										className={({ isActive }) =>
-											cn(
-												"w-full cursor-pointer border-black border-t py-2.5 ps-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
-												isActive && "bg-gray-lightest font-bold text-teal",
-											)
-										}
-										to={`/pages/${link.slug}`}
-									>
-										{link.name}
-									</NavLink>
-								))}
-							</div>
-						</div>
-					</aside>
+					<ResponsiveSidebar pages={pages} segment='pages' />
+					
 					<main className="lg:col-span-3">
 						<div className="mb-4 gap-4">
 							<div

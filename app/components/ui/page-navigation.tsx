@@ -4,7 +4,7 @@ import { cn } from "~/utils";
 
 export const PageNavigation = () => {
 	return (
-		<div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 py-8 lg:grid-cols-6">
+		<div className="mx-auto grid max-w-7xl grid-cols-3 gap-4 py-8 lg:grid-cols-6">
 			{adviceHubNav.map(({ label, path }) => (
 				<NavLink
 					end

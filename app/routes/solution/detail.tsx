@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { Breadcrumb } from "~/components/ui/breadcrumb";
+import { ResponsiveSidebar } from "~/components/ui/";
 import { getSolution, getSolutions } from "~/services";
 import type { Solution } from "~/types";
 import { cn } from "~/utils";
@@ -48,30 +49,9 @@ export default function SolutionDetailPage({
 				</p>
 				<p className="pb-4 font-light text-lg">Select your need from below.</p>
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-					<aside className="lg:col-span-1">
-						<div className="space-y-6">
-							<div
-								className=" grid-cols-1 gap-x-4 self-start lg:grid"
-								role="tablist"
-								aria-orientation="horizontal"
-							>
-								{solutionsNav.map((link) => (
-									<NavLink
-										key={link.slug}
-										className={({ isActive }) =>
-											cn(
-												"w-full cursor-pointer border-black border-t py-2.5 ps-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
-												isActive && "bg-gray-lightest font-bold text-teal",
-											)
-										}
-										to={`/solution/${link.slug}`}
-									>
-										{link.name}
-									</NavLink>
-								))}
-							</div>
-						</div>
-					</aside>
+					
+					<ResponsiveSidebar pages={solutionsNav} segment='solution' />
+
 					<main className="lg:col-span-3">
 						<div className="mb-4 gap-4">
 							<div className="prose max-w-none">
