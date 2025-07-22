@@ -66,13 +66,11 @@ export const ProductCard = ({
 			</div>
 			<div className="flex h-full flex-row @max-xl:flex-col @xl:gap-4 gap-1">
 				<NavLink to={href("/p/:slug", { slug })}>
-					{images && (
-						<Image
-							src={images[0].url}
-							alt={name}
-							className="@max-xl:h-full h-full @max-xl:w-full w-72 rounded-lg shadow-md"
-						/>
-					)}
+					<Image
+						src={images?.[0]?.url ?? 'https://fls-9f649510-70dd-40c4-a4b9-572dc5dbe23e.laravel.cloud/productcategory/59/thumbnail/temp.jpg'}
+						alt={name}
+						className="@max-xl:h-full h-full @max-xl:w-full w-72 rounded-lg shadow-md"
+					/>
 				</NavLink>
 				<div className="flex w-full grow flex-row @max-xl:flex-col justify-between gap-4">
 					<div className="flex flex-col gap-2">
