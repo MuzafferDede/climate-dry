@@ -15,6 +15,16 @@ export async function getBlogPosts(
 	return await api.get<ApiListResponse<BlogPost>>(`/blog-posts?${query}`);
 }
 
+export async function getFeaturedBlogPosts(request: Request) {
+	const api = await fetcher(request);
+
+	const query = queryBuilder({
+		"filter[featured]": 1,
+	});
+
+	return await api.get<ApiListResponse<BlogPost>>(`/blog-posts?${query}&post_limit=4`);
+}
+
 export async function getBlogPostBySlug(request: Request, slug: string) {
 	const api = await fetcher(request);
 	return await api.get<ApiResponse<BlogPost>>(`/blog-posts/${slug}`);

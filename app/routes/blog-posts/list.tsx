@@ -6,6 +6,7 @@ import type { BlogPost } from "~/types";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import {
 	AnimateOnScroll,
+	BlogIntroText,
 	Breadcrumb,
 	Button,
 	PageNavigation,
@@ -47,7 +48,7 @@ export default function BlogPostListPage({
 				h2: "Tried and Tested Solutions",
 				h3: "Case studies",
 			}
-		: { h2: "Expert Articles", h3: "Advice & Article" };
+		: { h1: "Expert Articles", h3: "Advice & Article" };
 
 	if (!Array.isArray(posts)) {
 		return <div className="text-red">Error: Posts failed to load.</div>;
@@ -59,21 +60,11 @@ export default function BlogPostListPage({
 				<div className="mb-4 md:col-span-2">
 					<Breadcrumb />
 				</div>
-				<div className="space-y-2">
-					<h1 className="font-bold text-4xl text-gray-darkest">Advice Hub</h1>
-				</div>
-				<div className="prose prose-img:mx-auto prose-figcaption:hidden max-w-none prose-img:max-w-full">
-					<p>
-						All our collective industry experts have got together to provide you
-						with all you need to know about drying out and keeping dry those
-						things precious to you. Read our articles or delve into our
-						solutions centre to soak up the knowledge.
-					</p>
-				</div>
+				<BlogIntroText />
 				<PageNavigation />
 				<AnimateOnScroll className="flex flex-col items-center justify-center gap-1 text-center">
-					<h2 className="font-bold text-teal uppercase">{titles?.h2}</h2>
-					<h3 className="text-5xl">{titles?.h3}</h3>
+					<h1 className="font-bold text-teal uppercase">{titles?.h1}</h1>
+					<p className="text-5xl">{titles?.h3}</p>
 				</AnimateOnScroll>
 				<div className="grid gap-6 py-4 lg:grid-cols-2">
 					{posts.map((post) => (

@@ -1,6 +1,22 @@
-import { AnimateOnScroll, PageNavigation } from "~/components";
-import { getBlogPostBySlug } from "~/services";
+import { 
+	AnimateOnScroll,
+	BlogIntroText,
+	Breadcrumb,
+	FeaturedPosts,
+	PageNavigation,
+ } from "~/components";
+import { getBlogPostBySlug,getFeaturedBlogPosts } from "~/services";
 import type { Route } from "./+types/detail";
+import { type BlogPost } from "~/types";
+
+
+export const handle = {
+	breadcrumb: (data: { post: BlogPost }) => [
+		{ label: "Advice Hub", path: "/info-hub" },
+		{ label: data.post.title, path: `/info-hub/article/${data.post.slug}` },
+	],
+};
+
 
 export const meta = ({ data }: Route.MetaArgs) => [
 	{ title: data.post.title },
@@ -9,16 +25,18 @@ export const meta = ({ data }: Route.MetaArgs) => [
 
 export async function loader({ request, params }: Route.LoaderArgs) {
 	const response = await getBlogPostBySlug(request, params.slug);
-	return {
-		post: response.data,
-	};
+	const post = response.data;
+	const featuredBlogPosts = await getFeaturedBlogPosts(request);
+	
+	return {post,featuredBlogPosts};
 }
 
 export default function BlogDetailPage({
 	loaderData,
 	params,
 }: Route.ComponentProps) {
-	const { post } = loaderData;
+	const { post, featuredBlogPosts } =
+		loaderData;
 	const titles = params?.category
 		? {
 				h2: "Tried and Tested Solutions",
@@ -27,13 +45,18 @@ export default function BlogDetailPage({
 		: { h2: "Expert Articles", h3: "Advice & Article" };
 
 	return (
+		<div>
 		<article className="mx-auto max-w-7xl space-y-4 p-6">
+			<div className="mb-4 md:col-span-2">
+				<Breadcrumb />
+			</div>
+			<BlogIntroText />
 			<PageNavigation />
 			<AnimateOnScroll className="flex flex-col items-center justify-center gap-1 text-center">
 				<h2 className="font-bold text-teal uppercase">{titles?.h2}</h2>
-				<h3 className="text-5xl">{titles?.h3}</h3>
+				<p className="text-5xl">{titles?.h3}</p>
 			</AnimateOnScroll>
-			<h1 className="font-bold text-4xl text-gray-darkest">{post.title}</h1>
+			<h1 className="font-bold text-4xl text-gray-darkest py-6">{post.title}</h1>
 			<img
 				src={post.image_url}
 				alt={post.title}
@@ -45,6 +68,13 @@ export default function BlogDetailPage({
 				// biome-ignore lint/security/noDangerouslySetInnerHtml: safe backend HTML
 				dangerouslySetInnerHTML={{ __html: post.description }}
 			/>
+
+			
 		</article>
+		
+			{/* Featured posts */}
+			{featuredBlogPosts.data && <FeaturedPosts posts={featuredBlogPosts.data} from="article" />}
+		
+	</div>
 	);
 }

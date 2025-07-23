@@ -5,7 +5,7 @@ import {
 	FeaturedCategories,
 	Info,
 	Marquee,
-	Posts,
+	FeaturedPosts,
 	ShopByCategory,
 	Solutions,
 	Support,
@@ -15,6 +15,7 @@ import {
 	commitSession,
 	getBanners,
 	getBrands,
+	getFeaturedBlogPosts,
 	getFeaturedCategories,
 	getSession,
 	getShopByCategories,
@@ -37,11 +38,12 @@ export function meta() {
 export async function loader({ request }: Route.LoaderArgs) {
 	const banners = await getBanners(request);
 	const brands = await getBrands(request);
+	const featuredBlogPosts = await 	getFeaturedBlogPosts(request);
 	const featuredCategories = await getFeaturedCategories(request);
 	const shopByCategories = await getShopByCategories(request);
 	const solutions = await getSolutions(request);
 
-	return { banners, brands, featuredCategories, shopByCategories, solutions };
+	return { banners, brands, featuredBlogPosts, featuredCategories, shopByCategories, solutions };
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -89,7 +91,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-	const { banners, brands, featuredCategories, shopByCategories, solutions } =
+	const { banners, brands, featuredBlogPosts, featuredCategories, shopByCategories, solutions } =
 		loaderData;
 
 	return (
@@ -122,8 +124,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			{/* Two info images */}
 			<Info />
 
-			{/* Blog posts section */}
-			<Posts />
+			{/* Featured posts */}
+			{featuredBlogPosts.data && <FeaturedPosts posts={featuredBlogPosts.data} from="home" />}
 		</div>
 	);
 }

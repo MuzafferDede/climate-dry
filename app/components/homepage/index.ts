@@ -3,7 +3,6 @@ export * from "./brands";
 export * from "./featured-categories";
 export * from "./info";
 export * from "./marquee";
-export * from "./posts";
 export * from "./shop-by-category";
 export * from "./solutions";
 export * from "./support";
