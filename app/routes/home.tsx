@@ -125,7 +125,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			<Info />
 
 			{/* Featured posts */}
-			{featuredBlogPosts.data && <FeaturedPosts posts={featuredBlogPosts.data} from="home" />}
+			{featuredBlogPosts.data.length > 0 && <FeaturedPosts posts={featuredBlogPosts.data} from="home" />}
 		</div>
 	);
 }

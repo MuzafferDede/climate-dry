@@ -73,7 +73,7 @@ export default function BlogDetailPage({
 		</article>
 		
 			{/* Featured posts */}
-			{featuredBlogPosts.data && <FeaturedPosts posts={featuredBlogPosts.data} from="article" />}
+			{featuredBlogPosts.data.length > 0 && <FeaturedPosts posts={featuredBlogPosts.data} from="article" />}
 		
 	</div>
 	);
