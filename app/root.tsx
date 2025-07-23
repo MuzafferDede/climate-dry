@@ -111,7 +111,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export function Layout({ children }: { children: React.ReactNode }) {
 	const location = useLocation();
 	
-	const canonicalUrl = `https://climate-dry.vercel.app/${location.pathname}`;
+	const canonicalUrl = `https://climate-dry.vercel.app${location.pathname}`;
 
 	return (
 		<html lang="en" className="scroll-smooth">
