@@ -9,7 +9,9 @@ import {
 	isRouteErrorResponse,
 	useNavigate,
 	useNavigation,
+	useLocation,
 } from "react-router";
+
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -107,6 +109,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+	const location = useLocation();
+	
+	const canonicalUrl = `https://climate-dry.vercel.app/${location.pathname}`;
+
 	return (
 		<html lang="en" className="scroll-smooth">
 			<head>
@@ -114,6 +120,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<Meta />
 				<Links />
+				<link rel="canonical" href={canonicalUrl} />
 			</head>
 			<body className="scroll-smooth text-navy-darkest text-sm antialiased has-[div[data-navigation-open=true]]:overflow-hidden">
 				{children}
