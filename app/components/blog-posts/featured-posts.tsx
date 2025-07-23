@@ -28,7 +28,7 @@ export const FeaturedPosts = ({
 					<div className="overflow-hidden rounded bg-white shadow lg:w-2/3">
 						<AnimateOnScroll type="fadeInLeft">
                             <img
-								src={mainPost.image_url}
+								src={mainPost?.image_url ?? ""}
 								alt={mainPost.title}
 								className="h-80 w-full object-cover"
 								loading="lazy"
@@ -80,7 +80,7 @@ export const FeaturedPosts = ({
 								</div>
 								<div className="shrink-0">
 									<img
-										src={post.image_url}
+                                        src={post?.image_url ?? ""}
 										alt={post.title}
 										className="size-30 rounded-full object-cover"
 										loading="lazy"
