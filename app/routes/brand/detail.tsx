@@ -15,8 +15,8 @@ import {
 import {
 	addToCart,
 	commitSession,
-	getBrandProducts,
 	getBrand,
+	getBrandProducts,
 	getSession,
 	putToast,
 } from "~/services";
@@ -25,10 +25,10 @@ import { cn } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const handle = {
-    breadcrumb: (data: { brand: Brand }) => [
-        { label: "Our Brands", path: "/brands" },
-        { label: data.brand.name, path: `/brand/${data.brand.slug}` },
-    ],
+	breadcrumb: (data: { brand: Brand }) => [
+		{ label: "Our Brands", path: "/brands" },
+		{ label: data.brand.name, path: `/brand/${data.brand.slug}` },
+	],
 };
 
 export const meta = ({ data }: { data: { brand: Brand } }) => {
@@ -183,7 +183,7 @@ export default function BrandPage({
 										onChange={(val: string) => {
 											const newParams = new URLSearchParams(searchParams);
 											newParams.set("sort", val);
-											setSearchParams(newParams);
+											setSearchParams(newParams, { preventScrollReset: true });
 										}}
 										className="w-40"
 									/>

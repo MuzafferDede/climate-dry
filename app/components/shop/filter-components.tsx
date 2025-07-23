@@ -43,7 +43,7 @@ export function FilterComponents({
             }
         }
 
-        setSearchParams(newParams);
+        setSearchParams(newParams, { preventScrollReset: true });
     };
 
     const renderFilter = (filter: Filters[number]) => {

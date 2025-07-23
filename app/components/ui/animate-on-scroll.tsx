@@ -38,7 +38,7 @@ export const AnimateOnScroll = ({
 	});
 
 	return (
-		<div ref={ref} className=" w-full">
+		<div ref={ref} className="w-full">
 			<div
 				data-state={inView ? "show" : "hide"}
 				className={cn(

@@ -38,7 +38,7 @@ export const Pagination = ({
 	const handlePerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newParams = new URLSearchParams(searchParams);
 		newParams.set(e.target.id, e.target.value);
-		setSearchParams(newParams);
+		setSearchParams(newParams, { preventScrollReset: true });
 	};
 
 	const renderPaginationLink = (link: PaginationLink) => {
@@ -69,6 +69,7 @@ export const Pagination = ({
 			<NavLink
 				key={link.label}
 				to={`?${pagParams.toString()}`}
+				preventScrollReset
 				className="rounded bg-white px-3 py-1 text-gray-dark hover:bg-gray-lighter"
 			>
 				{renderLinkContent(link.label)}

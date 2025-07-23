@@ -9,7 +9,7 @@ export const ProductCategoryCard = ({
 		<NavLink
 			to={href("/c/:slug", { slug: category.slug })}
 			key={category.slug}
-			className="block"
+			className="block [&>div]:h-full"
 		>
 			<AnimateOnScroll className="group relative flex h-full flex-row justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl lg:flex-col">
 				<div className="flex h-full flex-col space-y-2 px-4 py-5">

@@ -171,7 +171,7 @@ export default function ProductCategoryPage({
 		const newParams = new URLSearchParams(searchParams);
 
 		newParams.set(field, String(value));
-		setSearchParams(newParams);
+		setSearchParams(newParams, { preventScrollReset: true });
 	};
 
 	const location = useLocation();
