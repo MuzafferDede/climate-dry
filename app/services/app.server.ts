@@ -43,10 +43,8 @@ export const getShopByCategories = async (request: Request) => {
 	try {
 		const api = await fetcher(request);
 		return await api.get<ApiListResponse<ProductCategory>>(
-			"/product-categories?filter[id]=2,50,49,6&per_page=4&sort=created_at",
+			"/product-categories?filter[slug]=commercial-dehumidifiers,domestic-dehumidifiers,industrial-dehumidifiers&per_page=4&sort=created_at",
 		);
-			//too loose "/product-categories?filter[slug]=dehumidifiers,industrial-fans,floor-dryers,bundles&per_page=4&sort=created_at",
-		// return await api.get<ProductCategory[]>("/site/shop-by-categories?slugs=a,b,c");
 	} catch (error) {
 		const message = "Error fetching featured categories";
 		console.error(message, error);

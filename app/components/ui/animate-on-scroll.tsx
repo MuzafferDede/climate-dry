@@ -38,11 +38,11 @@ export const AnimateOnScroll = ({
 	});
 
 	return (
-		<div ref={ref} className="w-full">
+		<div ref={ref} className="h-full w-full">
 			<div
 				data-state={inView ? "show" : "hide"}
 				className={cn(
-					"fill-mode-forwards duration-300 data-[state=hide]:animate-out data-[state=show]:animate-in",
+					"h-full fill-mode-forwards duration-300 data-[state=hide]:animate-out data-[state=show]:animate-in",
 					animationPresets[type],
 					className,
 				)}

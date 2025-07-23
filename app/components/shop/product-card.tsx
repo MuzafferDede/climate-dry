@@ -69,7 +69,7 @@ export const ProductCard = ({
 					<Image
 						src={images?.[0]?.url ?? 'https://fls-9f649510-70dd-40c4-a4b9-572dc5dbe23e.laravel.cloud/productcategory/59/thumbnail/temp.jpg'}
 						alt={name}
-						className="@max-xl:h-full h-full @max-xl:w-full w-72 rounded-lg shadow-md"
+						className="aspect-square @max-xl:h-full h-full @max-xl:w-full w-72 rounded-lg shadow-md"
 					/>
 				</NavLink>
 				<div className="flex w-full grow flex-row @max-xl:flex-col justify-between gap-4">

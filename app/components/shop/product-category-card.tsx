@@ -25,7 +25,7 @@ export const ProductCategoryCard = ({
 				</div>
 				<div className="mt-auto ml-auto">
 					<Image
-						className="h-auto w-full max-w-52 origin-bottom-right object-contain transition-all delay-100 duration-300 ease-in-out group-hover:scale-115"
+						className="aspect-square h-auto w-full max-w-52 origin-bottom-right object-contain transition-all delay-100 duration-300 ease-in-out group-hover:scale-115"
 						src={category.thumbnail_url}
 						alt={category.name}
 						loading="lazy"
