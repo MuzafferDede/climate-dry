@@ -633,6 +633,14 @@ export default function ProductPage({
 										Key Features
 									</Tab>
 								)}
+
+								{product.included_items && product.included_items.length > 0 && (
+									<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										Whats in the Box
+									</Tab>
+								)}
+
+								
 							</TabList>
 							<TabPanels>
 								{product.description && (
@@ -724,7 +732,23 @@ export default function ProductPage({
 											dangerouslySetInnerHTML={{ __html: product.key_features }}
 										/>
 									</TabPanel>
-								)}								
+								)}	
+
+								{product.included_items && product.included_items.length > 0 && (
+									<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+										<h2 className="mb-4 font-bold text-2xl text-navy-darkest">
+											Whats in the Box
+										</h2>
+										<ul>
+												{product.included_items.map((included, idx) => (
+													<li>{included}</li>
+												))}
+										</ul>
+									</TabPanel>
+								)}
+
+
+
 							</TabPanels>
 						</TabGroup>
 					</div>
