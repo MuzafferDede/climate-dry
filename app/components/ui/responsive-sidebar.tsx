@@ -40,6 +40,37 @@ export  function ResponsiveSidebar({ pages , segment}: { pages: { slug: string; 
               {link.name}
             </NavLink>
           ))}
+          {segment =='pages' &&
+          (
+             <NavLink
+              key='accessories'
+              to={`/c/accessories`}
+              className={({ isActive }) =>
+                cn(
+                  "w-full cursor-pointer border-t border-black py-2.5 px-3 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
+                  isActive && "bg-gray-lightest font-bold text-teal",
+                )
+              }
+            >
+              Accessories and Parts
+            </NavLink>           
+          )}
+          {segment =='pages' &&
+          (
+             <NavLink
+              key='brands'
+              to={`/brands`}
+              className={({ isActive }) =>
+                cn(
+                  "w-full cursor-pointer border-t border-black py-2.5 px-3 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
+                  isActive && "bg-gray-lightest font-bold text-teal",
+                )
+              }
+            >
+              Brands
+            </NavLink>           
+          )}
+
         </div>
       </div>
     </aside>
