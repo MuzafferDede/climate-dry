@@ -83,7 +83,7 @@ export const MainNavigation = () => {
 																			key={child.slug}
 																			className="grid w-full gap-1"
 																		>
-																			{child.thumbnail_url && (
+																			{child.banner_url && (
 																				<NavLink
 																					to={`/c/${child.slug}`}
 																					className={({ isActive }) =>
@@ -95,7 +95,7 @@ export const MainNavigation = () => {
 																					onClick={() => closeNavitaion(close)}
 																				>
 																					<img
-																						src={child.thumbnail_url}
+																						src={child.banner_url}
 																						alt={`${child.name} banner`}
 																						className="h-full w-full rounded-lg object-cover shadow-sm"
 																						loading="lazy"
@@ -114,6 +114,7 @@ export const MainNavigation = () => {
 																			>
 																				{child.name}
 																			</NavLink>
+																			{/*  Temporary nav, this will fetch solutions assoc categories */}
 																			{child.children && (
 																				<div>
 																					<ul className="grid w-full gap-1">
