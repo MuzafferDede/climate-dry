@@ -22,9 +22,14 @@ const CARDS = [
 	},
 ];
 
-
-const HIDDEN_AT = ["/login", "/register", "/evaporative-cooling-calculator","/drying-calculator/","/water-damage-restoration/"];
-const HIDDEN_PREFIXES = ["/pages/","/c/"];
+const HIDDEN_AT = [
+	"/login",
+	"/register",
+	"/evaporative-cooling-calculator",
+	"/drying-calculator/",
+	"/water-damage-restoration/",
+];
+const HIDDEN_PREFIXES = ["/pages/", "/c/"];
 
 export const WhyChooseUs = () => {
 	const location = useLocation();

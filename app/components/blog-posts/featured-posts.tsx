@@ -1,12 +1,12 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
 import { AnimateOnScroll, Button, SectionHeaderMulti } from "~/components";
-import { type BlogPost } from "~/types";
-
+import type { BlogPost } from "~/types";
 
 export const FeaturedPosts = ({
-    posts, from
-}: { posts: BlogPost[],from: string }) => {
+	posts,
+	from,
+}: { posts: BlogPost[]; from: string }) => {
 	const mainPost = posts[0];
 	const sidePosts = posts.slice(1);
 
@@ -14,20 +14,28 @@ export const FeaturedPosts = ({
 		<div className="bg-gray-lightest">
 			<div className="mx-auto my-10 max-w-6xl space-y-16 px-5 py-10">
 				{/* Header */}
-                {from == "home" ?(
-                        <SectionHeaderMulti category="Expert Advice" category_tag="p" title="Advice hub"  title_tag="h2" />
-                    ):
-                    (
-                        <SectionHeaderMulti category="Expert Articles" category_tag="h2" title="More Articles"  title_tag="p" />
-                    )
-                }
+				{from === "home" ? (
+					<SectionHeaderMulti
+						category="Expert Advice"
+						category_tag="p"
+						title="Advice hub"
+						title_tag="h2"
+					/>
+				) : (
+					<SectionHeaderMulti
+						category="Expert Articles"
+						category_tag="h2"
+						title="More Articles"
+						title_tag="p"
+					/>
+				)}
 
 				{/* Content */}
 				<div className="mx-auto flex max-w-7xl flex-col gap-10 lg:flex-row">
 					{/* Main Post */}
 					<div className="overflow-hidden rounded bg-white shadow lg:w-2/3">
 						<AnimateOnScroll type="fadeInLeft">
-                            <img
+							<img
 								src={mainPost?.image_url ?? ""}
 								alt={mainPost.title}
 								className="h-80 w-full object-cover"
@@ -47,14 +55,14 @@ export const FeaturedPosts = ({
 									<span>Read more</span>
 								</Button>
 							</div>
-                        </AnimateOnScroll>
+						</AnimateOnScroll>
 					</div>
 
 					{/* Side Posts */}
 					<div className="space-y-6 lg:w-1/3">
 						{sidePosts.map((post) => (
 							<AnimateOnScroll
-                                type="fadeInRight" 
+								type="fadeInRight"
 								key={post.title}
 								className="flex items-start gap-4"
 							>
@@ -80,7 +88,7 @@ export const FeaturedPosts = ({
 								</div>
 								<div className="shrink-0">
 									<img
-                                        src={post?.image_url ?? ""}
+										src={post?.image_url ?? ""}
 										alt={post.title}
 										className="size-30 rounded-full object-cover"
 										loading="lazy"

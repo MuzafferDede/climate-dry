@@ -10,14 +10,28 @@
       }
     },
     "routeIdToServerBundleId": {
-      "routes/home/index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/auth/login": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/auth/register": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/auth/forgot-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/auth/reset-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/account/index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/account/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/auth/logout": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/cart/index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+      "blog": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/blog-posts/list": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/blog-posts/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/cart/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/drying-calculator": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/evaporative-cooling-calculator": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/water-damage-restoration": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/checkout/success": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/checkout/cancel": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/brand/list": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/brand/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/pages/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/product-category/list": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/product/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/solution/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
     },
     "routes": {
       "root": {
@@ -26,10 +40,10 @@
         "file": "app/root.tsx",
         "config": {}
       },
-      "routes/home/index": {
-        "id": "routes/home/index",
+      "routes/home": {
+        "id": "routes/home",
         "parentId": "root",
-        "file": "app/routes/home/index.tsx",
+        "file": "app/routes/home.tsx",
         "index": true,
         "config": {
           "runtime": "nodejs"
@@ -71,10 +85,10 @@
           "runtime": "nodejs"
         }
       },
-      "routes/account/index": {
-        "id": "routes/account/index",
+      "routes/account/detail": {
+        "id": "routes/account/detail",
         "parentId": "root",
-        "file": "app/routes/account/index.tsx",
+        "file": "app/routes/account/detail.tsx",
         "path": "account",
         "config": {
           "runtime": "nodejs"
@@ -89,11 +103,137 @@
           "runtime": "nodejs"
         }
       },
-      "routes/cart/index": {
-        "id": "routes/cart/index",
+      "blog": {
+        "id": "blog",
         "parentId": "root",
-        "file": "app/routes/cart/index.tsx",
+        "file": "app/routes/blog-posts/list.tsx",
+        "path": "info-hub",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/blog-posts/list": {
+        "id": "routes/blog-posts/list",
+        "parentId": "root",
+        "file": "app/routes/blog-posts/list.tsx",
+        "path": "info-hub/:category",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/blog-posts/detail": {
+        "id": "routes/blog-posts/detail",
+        "parentId": "root",
+        "file": "app/routes/blog-posts/detail.tsx",
+        "path": "info-hub/article/:slug",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/cart/detail": {
+        "id": "routes/cart/detail",
+        "parentId": "root",
+        "file": "app/routes/cart/detail.tsx",
         "path": "cart",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/drying-calculator": {
+        "id": "routes/drying-calculator",
+        "parentId": "root",
+        "file": "app/routes/drying-calculator.tsx",
+        "path": "drying-calculator/",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/evaporative-cooling-calculator": {
+        "id": "routes/evaporative-cooling-calculator",
+        "parentId": "root",
+        "file": "app/routes/evaporative-cooling-calculator.tsx",
+        "path": "evaporative-cooling-calculator/",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/water-damage-restoration": {
+        "id": "routes/water-damage-restoration",
+        "parentId": "root",
+        "file": "app/routes/water-damage-restoration.tsx",
+        "path": "water-damage-restoration/",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/checkout/success": {
+        "id": "routes/checkout/success",
+        "parentId": "root",
+        "file": "app/routes/checkout/success.tsx",
+        "path": "checkout/success",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/checkout/cancel": {
+        "id": "routes/checkout/cancel",
+        "parentId": "root",
+        "file": "app/routes/checkout/cancel.tsx",
+        "path": "checkout/cancel",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/brand/list": {
+        "id": "routes/brand/list",
+        "parentId": "root",
+        "file": "app/routes/brand/list.tsx",
+        "path": "brands",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/brand/detail": {
+        "id": "routes/brand/detail",
+        "parentId": "root",
+        "file": "app/routes/brand/detail.tsx",
+        "path": "brand/:slug",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/pages/detail": {
+        "id": "routes/pages/detail",
+        "parentId": "root",
+        "file": "app/routes/pages/detail.tsx",
+        "path": "pages/:slug?",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/product-category/list": {
+        "id": "routes/product-category/list",
+        "parentId": "root",
+        "file": "app/routes/product-category/list.tsx",
+        "path": "c/:slug",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/product/detail": {
+        "id": "routes/product/detail",
+        "parentId": "root",
+        "file": "app/routes/product/detail.tsx",
+        "path": "p/:slug",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/solution/detail": {
+        "id": "routes/solution/detail",
+        "parentId": "root",
+        "file": "app/routes/solution/detail.tsx",
+        "path": "solution/:slug?",
         "config": {
           "runtime": "nodejs"
         }
@@ -105,7 +245,7 @@
     "basename": "/",
     "buildDirectory": "/Users/muzafferdede/Desktop/Code/climate-dry/build",
     "future": {
-      "unstable_middleware": false,
+      "unstable_middleware": true,
       "unstable_optimizeDeps": false,
       "unstable_splitRouteModules": false,
       "unstable_subResourceIntegrity": false,
@@ -117,10 +257,10 @@
         "id": "root",
         "file": "root.tsx"
       },
-      "routes/home/index": {
-        "id": "routes/home/index",
+      "routes/home": {
+        "id": "routes/home",
         "parentId": "root",
-        "file": "routes/home/index.tsx",
+        "file": "routes/home.tsx",
         "index": true
       },
       "routes/auth/login": {
@@ -147,10 +287,10 @@
         "file": "routes/auth/reset-password.tsx",
         "path": "reset-password"
       },
-      "routes/account/index": {
-        "id": "routes/account/index",
+      "routes/account/detail": {
+        "id": "routes/account/detail",
         "parentId": "root",
-        "file": "routes/account/index.tsx",
+        "file": "routes/account/detail.tsx",
         "path": "account"
       },
       "routes/auth/logout": {
@@ -159,11 +299,95 @@
         "file": "routes/auth/logout.tsx",
         "path": "logout"
       },
-      "routes/cart/index": {
-        "id": "routes/cart/index",
+      "blog": {
+        "id": "blog",
         "parentId": "root",
-        "file": "routes/cart/index.tsx",
+        "file": "routes/blog-posts/list.tsx",
+        "path": "info-hub"
+      },
+      "routes/blog-posts/list": {
+        "id": "routes/blog-posts/list",
+        "parentId": "root",
+        "file": "routes/blog-posts/list.tsx",
+        "path": "info-hub/:category"
+      },
+      "routes/blog-posts/detail": {
+        "id": "routes/blog-posts/detail",
+        "parentId": "root",
+        "file": "routes/blog-posts/detail.tsx",
+        "path": "info-hub/article/:slug"
+      },
+      "routes/cart/detail": {
+        "id": "routes/cart/detail",
+        "parentId": "root",
+        "file": "routes/cart/detail.tsx",
         "path": "cart"
+      },
+      "routes/drying-calculator": {
+        "id": "routes/drying-calculator",
+        "parentId": "root",
+        "file": "routes/drying-calculator.tsx",
+        "path": "drying-calculator/"
+      },
+      "routes/evaporative-cooling-calculator": {
+        "id": "routes/evaporative-cooling-calculator",
+        "parentId": "root",
+        "file": "routes/evaporative-cooling-calculator.tsx",
+        "path": "evaporative-cooling-calculator/"
+      },
+      "routes/water-damage-restoration": {
+        "id": "routes/water-damage-restoration",
+        "parentId": "root",
+        "file": "routes/water-damage-restoration.tsx",
+        "path": "water-damage-restoration/"
+      },
+      "routes/checkout/success": {
+        "id": "routes/checkout/success",
+        "parentId": "root",
+        "file": "routes/checkout/success.tsx",
+        "path": "checkout/success"
+      },
+      "routes/checkout/cancel": {
+        "id": "routes/checkout/cancel",
+        "parentId": "root",
+        "file": "routes/checkout/cancel.tsx",
+        "path": "checkout/cancel"
+      },
+      "routes/brand/list": {
+        "id": "routes/brand/list",
+        "parentId": "root",
+        "file": "routes/brand/list.tsx",
+        "path": "brands"
+      },
+      "routes/brand/detail": {
+        "id": "routes/brand/detail",
+        "parentId": "root",
+        "file": "routes/brand/detail.tsx",
+        "path": "brand/:slug"
+      },
+      "routes/pages/detail": {
+        "id": "routes/pages/detail",
+        "parentId": "root",
+        "file": "routes/pages/detail.tsx",
+        "path": "pages/:slug?"
+      },
+      "routes/product-category/list": {
+        "id": "routes/product-category/list",
+        "parentId": "root",
+        "file": "routes/product-category/list.tsx",
+        "path": "c/:slug"
+      },
+      "routes/product/detail": {
+        "id": "routes/product/detail",
+        "parentId": "root",
+        "file": "routes/product/detail.tsx",
+        "path": "p/:slug"
+      },
+      "routes/solution/detail": {
+        "id": "routes/solution/detail",
+        "parentId": "root",
+        "file": "routes/solution/detail.tsx",
+        "path": "solution/:slug?"
       }
     },
     "routeDiscovery": {

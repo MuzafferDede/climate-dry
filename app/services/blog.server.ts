@@ -22,7 +22,9 @@ export async function getFeaturedBlogPosts(request: Request) {
 		"filter[featured]": 1,
 	});
 
-	return await api.get<ApiListResponse<BlogPost>>(`/blog-posts?${query}&post_limit=4`);
+	return await api.get<ApiListResponse<BlogPost>>(
+		`/blog-posts?${query}&post_limit=4`,
+	);
 }
 
 export async function getBlogPostBySlug(request: Request, slug: string) {

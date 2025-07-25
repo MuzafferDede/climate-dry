@@ -7,11 +7,10 @@ import {
 	ScrollRestoration,
 	data,
 	isRouteErrorResponse,
+	useLocation,
 	useNavigate,
 	useNavigation,
-	useLocation,
 } from "react-router";
-
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -110,7 +109,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	const location = useLocation();
-	
+
 	const canonicalUrl = `https://climate-dry.vercel.app${location.pathname}`;
 
 	return (
@@ -128,6 +127,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Scripts />
 
 				<script
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
 					dangerouslySetInnerHTML={{
 						__html: `
 					var __lc = {};
@@ -142,8 +142,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 						`,
 					}}
 				/>
-
-
 			</body>
 		</html>
 	);

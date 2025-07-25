@@ -14,7 +14,10 @@ export default [
 	route("cart", "routes/cart/detail.tsx"),
 
 	route("drying-calculator/", "routes/drying-calculator.tsx"),
-	route("evaporative-cooling-calculator/", "routes/evaporative-cooling-calculator.tsx"),
+	route(
+		"evaporative-cooling-calculator/",
+		"routes/evaporative-cooling-calculator.tsx",
+	),
 	route("water-damage-restoration/", "routes/water-damage-restoration.tsx"),
 
 	route("checkout/success", "routes/checkout/success.tsx"),

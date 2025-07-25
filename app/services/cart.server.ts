@@ -6,8 +6,7 @@ export async function getCart(request: Request) {
 	return await api.get<Cart>("/cart");
 }
 
-export async function addToCart(request: Request) {
-	const formData = await request.formData();
+export async function addToCart(request: Request, formData: FormData) {
 	const id = formData.get("id");
 	const quantity = formData.get("quantity") || 1;
 	// Get all selected extras as an array of numbers

@@ -7,19 +7,24 @@ import {
 	SectionHeader,
 } from "~/components/ui";
 
-
 import type { MetaFunction } from "react-router";
-
 
 export const meta: MetaFunction = () => [
 	{ title: "Evaporative Cooling Calculator" },
-	{ name: "description", content: "Calculate your evaporative cooling needs using our evaporative cooling calculator. Accurately calculate your cooling space and equipment needed with our handy guide." },
+	{
+		name: "description",
+		content:
+			"Calculate your evaporative cooling needs using our evaporative cooling calculator. Accurately calculate your cooling space and equipment needed with our handy guide.",
+	},
 ];
 
 export const handle = {
 	breadcrumb: () => [
 		{ label: "Advice Hub", path: "/info-hub" },
-		{ label: "Evaporative Cooling Calculator", path: "/evaporative-cooling-calculator/" },
+		{
+			label: "Evaporative Cooling Calculator",
+			path: "/evaporative-cooling-calculator/",
+		},
 	],
 };
 export default function DryingCalculatorPage() {
@@ -174,9 +179,9 @@ export default function DryingCalculatorPage() {
 					className="table-bordered w-full table-auto border-collapse"
 					id="evaporative-cooling-table"
 				>
-					<colgroup width="80"></colgroup>
-					<colgroup width="107"></colgroup>
-					<colgroup span="17" width="80"></colgroup>
+					<colgroup width="80" />
+					<colgroup width="107" />
+					<colgroup span="17" width="80" />
 					<tbody>
 						<tr>
 							<td className="border px-4 py-2" height="19" colspan="19">
@@ -220,13 +225,9 @@ export default function DryingCalculatorPage() {
 							</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2">
-								<br />
-							</td>
+							<td className="border px-4 py-2" />
 							<td className="border px-4 py-2">20</td>
-							<td className="border px-4 py-2">
-								<br />
-							</td>
+							<td className="border px-4 py-2" />
 							<td className="border px-4 py-2">9</td>
 							<td className="border px-4 py-2">9</td>
 							<td className="border px-4 py-2">11</td>
@@ -245,13 +246,9 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">19</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19">
-								<br />
-							</td>
+							<td className="border px-4 py-2" />
 							<td className="border px-4 py-2">21</td>
-							<td className="border px-4 py-2">
-								<br />
-							</td>
+							<td className="border px-4 py-2" />
 							<td className="border px-4 py-2">9</td>
 							<td className="border px-4 py-2">10</td>
 							<td className="border px-4 py-2">11</td>
@@ -270,13 +267,9 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">20</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19">
-								<br />
-							</td>
+							<td className="border px-4 py-2" />
 							<td className="border px-4 py-2">22</td>
-							<td className="border px-4 py-2">
-								<br />
-							</td>
+							<td className="border px-4 py-2" />
 							<td className="border px-4 py-2">10</td>
 							<td className="border px-4 py-2">11</td>
 							<td className="border px-4 py-2">12</td>
@@ -295,7 +288,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">21</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">23</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -393,7 +386,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">24</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">27</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -416,7 +409,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">25</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">28</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -439,7 +432,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">27</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">29</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -737,7 +730,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">39</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">43</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -760,7 +753,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">41</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">44</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -783,7 +776,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">41</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">45</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -806,7 +799,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">42</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">46</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -829,7 +822,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">43</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19"></td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">47</td>
 							<td className="border px-4 py-2">
 								<br />
@@ -852,13 +845,9 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">43</td>
 						</tr>
 						<tr className="air-temp">
-							<td className="border px-4 py-2" height="19">
-								<br />
-							</td>
+							<td className="border px-4 py-2" height="19" />
 							<td className="border px-4 py-2">48</td>
-							<td className="border px-4 py-2">
-								<br />
-							</td>
+							<td className="border px-4 py-2" />
 							<td className="border px-4 py-2">24</td>
 							<td className="border px-4 py-2">26</td>
 							<td className="border px-4 py-2">28</td>

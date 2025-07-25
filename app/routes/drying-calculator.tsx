@@ -10,10 +10,13 @@ import {
 
 import type { MetaFunction } from "react-router";
 
-
 export const meta: MetaFunction = () => [
 	{ title: "Drying Calculator" },
-	{ name: "description", content: "Calculate your drying needs using our drying calculator. Perfect for use with dehumidifiers and other drying equipment." },
+	{
+		name: "description",
+		content:
+			"Calculate your drying needs using our drying calculator. Perfect for use with dehumidifiers and other drying equipment.",
+	},
 ];
 
 const temperatureOptions = [

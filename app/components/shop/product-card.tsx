@@ -19,8 +19,7 @@ export const ProductCard = ({
 	brand,
 	images,
 	name,
-	rating = 0,
-	reviews = 0,
+	reviews,
 	slug,
 	discount,
 	most_popular,
@@ -68,14 +67,17 @@ export const ProductCard = ({
 				<div className="flex h-full flex-row @max-xl:flex-col @xl:gap-4 gap-1">
 					<NavLink to={href("/p/:slug", { slug })}>
 						<Image
-							src={images?.[0]?.url ?? 'https://fls-9f649510-70dd-40c4-a4b9-572dc5dbe23e.laravel.cloud/productcategory/59/thumbnail/temp.jpg'}
+							src={
+								images?.[0]?.url ??
+								"https://fls-9f649510-70dd-40c4-a4b9-572dc5dbe23e.laravel.cloud/productcategory/59/thumbnail/temp.jpg"
+							}
 							alt={name}
 							className="aspect-square @max-xl:h-full h-full @max-xl:w-full w-72 rounded-lg shadow-md"
 						/>
 					</NavLink>
 					<div className="flex w-full grow flex-row @max-xl:flex-col justify-between gap-4">
 						<div className="flex flex-col gap-2">
-							<Rating rating={rating} reviewCount={reviews} />
+							<Rating rating={reviews.rating} reviewCount={reviews.count} />
 							<div>
 								<h3 className="font-bold text-teal uppercase">
 									{brand?.name ?? "No Brand"}
@@ -91,14 +93,6 @@ export const ProductCard = ({
 
 						<div className="flex w-full @xl:max-w-56 grow flex-col @xl:justify-start justify-end gap-2">
 							<div className="flex flex-col">
-								<div className="flex items-end gap-1 font-bold">
-									<span className="text-xl">
-										{currency(default_variant.price)}
-									</span>
-									<span className="text-gray-light text-lg line-through">
-										{currency(default_variant.retail_price)}
-									</span>
-								</div>
 								{default_variant.retail_price > default_variant.price && (
 									<p className="font-bold text-red">
 										save{" "}
@@ -109,22 +103,37 @@ export const ProductCard = ({
 										%
 									</p>
 								)}
+								<div className="flex items-end gap-1 font-bold">
+									<span className="text-xl">
+										{currency(default_variant.price)}
+									</span>
+									<span className="text-gray-light text-lg line-through">
+										{currency(default_variant.retail_price)}
+									</span>
+								</div>
 								<PaymentAndShipping
 									freeShipping={Boolean(default_variant.free_shipping)}
-									premiumShipping={Boolean(default_variant.premium_shipping_cost)}
+									premiumShipping={Boolean(
+										default_variant.premium_shipping_cost,
+									)}
 									className="mt-2 @max-xl:hidden"
 								/>
 							</div>
 							<StockStatus inStock={inStock} />
 
-							<div className="mt-auto flex flex-col gap-2">
+							<div className="@xl:mt-auto flex flex-col gap-2">
 								<Form
 									method="post"
 									onSubmit={(e) =>
 										(hasVariants || !inStock) && e.preventDefault()
 									}
 								>
-									<input type="hidden" name="quantity" id="quantity" value={1} />
+									<input
+										type="hidden"
+										name="quantity"
+										id="quantity"
+										value={1}
+									/>
 									<Button
 										name="id"
 										disabled={!inStock}

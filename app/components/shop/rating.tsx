@@ -1,4 +1,5 @@
 import type React from "react";
+import { pluralize } from "~/utils";
 
 type StarProps = {
 	filled: boolean;
@@ -15,7 +16,7 @@ const Star: React.FC<StarProps> = ({ filled }) => (
 
 type StarRatingDisplayProps = {
 	rating: number;
-	reviewCount: number;
+	reviewCount?: number;
 };
 
 export const Rating: React.FC<StarRatingDisplayProps> = ({
@@ -31,7 +32,11 @@ export const Rating: React.FC<StarRatingDisplayProps> = ({
 					<Star key={star} filled={star <= fullStars} />
 				))}
 			</div>
-			<span className="text-xs">({reviewCount} reviews)</span>
+			{reviewCount && (
+				<span className="text-xs">
+					({reviewCount} {pluralize(reviewCount, "review")})
+				</span>
+			)}
 		</div>
 	);
 };

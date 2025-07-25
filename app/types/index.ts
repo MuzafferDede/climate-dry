@@ -132,9 +132,12 @@ export type Product = {
 	key_features: string;
 	most_popular: boolean;
 	name: string;
-	rating: number;
 	related_products?: Product[];
-	reviews: number;
+	reviews: {
+		data: [Review];
+		rating: number;
+		count: number;
+	};
 	slug: string;
 	specifications_text: string;
 	specifications: Array<{ key: string; value: string }>;
@@ -144,6 +147,17 @@ export type Product = {
 	videos: Array<{ url: string }>;
 	warranty_period: number;
 } & MetaInfo;
+
+export type Review = {
+	id: number;
+	rating: number;
+	review: string;
+	customer: {
+		id: string;
+		name: string;
+	};
+	created_at: string;
+};
 
 export type Solution = {
 	id: number;

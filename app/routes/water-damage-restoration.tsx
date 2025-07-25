@@ -1,15 +1,14 @@
-import {
-	Breadcrumb,
-	Button,
-    SectionHeaderMulti,
-} from "~/components/ui";
 import { Link } from "react-router";
 import type { MetaFunction } from "react-router";
-
+import { Breadcrumb, Button, SectionHeaderMulti } from "~/components/ui";
 
 export const meta: MetaFunction = () => [
 	{ title: "Water Damage Restoration" },
-	{ name: "description", content: "Different levels of water damage require different types of restoration. Our guide helps determine what equipment is needed to solve your water damage issues." },
+	{
+		name: "description",
+		content:
+			"Different levels of water damage require different types of restoration. Our guide helps determine what equipment is needed to solve your water damage issues.",
+	},
 ];
 
 export const handle = {
@@ -19,32 +18,35 @@ export const handle = {
 	],
 };
 
-
 const damageClasses = [
 	{
 		title: "Class 1",
-		image: "/images/layout/water-damage-restoration/CD-Water-Damage-Class1@2x.webp",
+		image:
+			"/images/layout/water-damage-restoration/CD-Water-Damage-Class1@2x.webp",
 		alt: "Water Damage Class 1",
 		description:
 			"This is the least severe of all four levels, where minimal damage has occurred. Any damage is confined to a small area, or the area was only damp for a short period of time. Class one water loss affects materials with low-permeance or low-porosity materials which as plywood, tile and concrete. Minimum moisture is absorbed by these materials, which release moisture slowly.",
 	},
 	{
 		title: "Class 2",
-		image: "/images/layout/water-damage-restoration/CD-Water-Damage-Class2@2x.webp",
+		image:
+			"/images/layout/water-damage-restoration/CD-Water-Damage-Class2@2x.webp",
 		alt: "Water Damage Class 2",
 		description:
 			"At this stage, water damage has spread beyond a confined area and affects the entire room. Escape of water is less than 24 inches, soft furnishings may be affected, and moisture may remain in structural materials. There will be a noticeable damp odour. The restoration process is likely to be more intricate.",
 	},
 	{
 		title: "Class 3",
-		image: "/images/layout/water-damage-restoration/CD-Water-Damage-Class3@2x.webp",
+		image:
+			"/images/layout/water-damage-restoration/CD-Water-Damage-Class3@2x.webp",
 		alt: "Water Damage Class 3",
 		description:
 			"This class involves significant water exposure to structural components like floors, walls, and ceilings. Class three water loss usually originates from overhead, saturating the entire room below. The restoration process will be more complex and necessitate a detailed assessment.",
 	},
 	{
 		title: "Class 4",
-		image: "/images/layout/water-damage-restoration/CD-Water-Damage-Class4@2x.webp",
+		image:
+			"/images/layout/water-damage-restoration/CD-Water-Damage-Class4@2x.webp",
 		alt: "Water Damage Class 4",
 		description:
 			"This is the most critical level of damage requiring speciality drying solutions. Expect extensive water escapes creating deep pockets of saturation in structural materials. Restoration should be undertaken by qualified damage management specialists with the appropriate expertise and professional drying equipment.",
@@ -54,36 +56,45 @@ const damageClasses = [
 const damageCategories = [
 	{
 		title: "Category 1: Clean Water",
-		image: "/images/layout/water-damage-restoration/CD-Water-Damage-Clean-Water@2x.webp",
+		image:
+			"/images/layout/water-damage-restoration/CD-Water-Damage-Clean-Water@2x.webp",
 		alt: "Category 1: Clean Water",
 		description:
 			"Clean water comes from a sanitary source, it is uncontaminated and poses no health risk if exposed to skin or consumed. Melting snow, rainwater, leaky appliance hoses and faulty toilet tanks are typical types of class one liquids.",
 	},
 	{
 		title: "Category 2: Grey Water",
-		image: "/images/layout/water-damage-restoration/CD-Water-Damage-Grey-Water@2x.webp",
+		image:
+			"/images/layout/water-damage-restoration/CD-Water-Damage-Grey-Water@2x.webp",
 		alt: "Category 2: Grey Water",
 		description:
 			"Grey water is contaminated with bacteria or pollutants that is harmful if exposed to and likely to cause illness if ingested. The source of grey water is usually from discharge or overflow of liquids from dishwasher/washing machine, toilets with urine, or stagnant water. Category 2 water damage requires significant amounts of materials and items to be removed from your home before the restoration process beings.",
 	},
 	{
 		title: "Category 3: Black Water",
-		image: "/images/layout/water-damage-restoration/CD-Water-Damage-Black-Water@2x.webp",
+		image:
+			"/images/layout/water-damage-restoration/CD-Water-Damage-Black-Water@2x.webp",
 		alt: "Category 3: Black Water",
 		description:
 			"Black water is the most severe and hazardous category of water damage. It involves water sources from sewage, seawater and grossly bacteria-ridden wastewater. Black water is typically foul-smelling and contains high levels of harmful contaminants, such as bacteria and toxins, posing a serious health risk if exposed to.",
 	},
 ];
 
-function IconWithTextGrid({ items,smallCols }: { items: typeof damageClasses | typeof damageCategories;smallCols?:boolean }) {
+function IconWithTextGrid({
+	items,
+	smallCols,
+}: {
+	items: typeof damageClasses | typeof damageCategories;
+	smallCols?: boolean;
+}) {
 	return (
-		<div 
-				className={`grid grid-cols-1 md:grid-cols-2  gap-8 ${
-					smallCols ? "lg:grid-cols-3" : "lg:grid-cols-4"
-				}`}
-			>		
-			{items.map((item, index) => (
-				<div key={index} className="text-center">
+		<div
+			className={`grid grid-cols-1 gap-8 md:grid-cols-2 ${
+				smallCols ? "lg:grid-cols-3" : "lg:grid-cols-4"
+			}`}
+		>
+			{items.map((item) => (
+				<div key={item.title} className="text-center">
 					<img
 						src={item.image}
 						alt={item.alt}
@@ -92,14 +103,13 @@ function IconWithTextGrid({ items,smallCols }: { items: typeof damageClasses | t
 						height={90}
 						loading="lazy"
 					/>
-					<p className="font-semibold mb-2">{item.title}</p>
-					<p className="text-xs text-gray-700">{item.description}</p>
+					<p className="mb-2 font-semibold">{item.title}</p>
+					<p className="text-gray-700 text-xs">{item.description}</p>
 				</div>
 			))}
 		</div>
 	);
 }
-
 
 function ProductSection({
 	title,
@@ -119,20 +129,20 @@ function ProductSection({
 	return (
 		<section className="py-2">
 			<div
-				className={`max-w-7xl mx-auto flex flex-col gap-6 items-center lg:items-start lg:flex-row ${
+				className={`mx-auto flex max-w-7xl flex-col items-center gap-6 lg:flex-row lg:items-start ${
 					reverse ? "lg:flex-row-reverse" : ""
 				}`}
 			>
 				<div className="flex-1 lg:w-1/2">
 					<div className="space-y-4 bg-gray-lightest p-10">
-						<h2 className="text-3xl font-semibold">{title}</h2>
-						<div className="text-gray-700 text-sm space-y-2">{description}</div>
+						<h2 className="font-semibold text-3xl">{title}</h2>
+						<div className="space-y-2 text-gray-700 text-sm">{description}</div>
 						{url && (
-						<div className="pt-6">
-							<Button as={Link} to={url} variant="outline" >
-								View Product
-							</Button>
-						</div>
+							<div className="pt-6">
+								<Button as={Link} to={url} variant="outline">
+									View Product
+								</Button>
+							</div>
 						)}
 					</div>
 				</div>
@@ -140,7 +150,7 @@ function ProductSection({
 					<img
 						src={image}
 						alt={alt}
-						className="w-full max-w-md object-cover mx-auto"
+						className="mx-auto w-full max-w-md object-cover"
 						loading="lazy"
 					/>
 				</div>
@@ -152,32 +162,58 @@ function ProductSection({
 export default function WaterDamageRestorationPage() {
 	return (
 		<div>
-
-			<div
-			className="h-[216px] bg-[url('/images/layout/water-damage-restoration/CD-WaterDamage-hero.webp')] bg-repeat bg-right"
-			/>
+			<div className="h-[216px] bg-[url('/images/layout/water-damage-restoration/CD-WaterDamage-hero.webp')] bg-right bg-repeat" />
 
 			<div className="space-y-8 px-5 py-8">
 				<div className="mx-auto max-w-7xl space-y-8">
 					<Breadcrumb />
 
 					<div className="space-y-2">
-						<h1 className="font-bold text-4xl text-navy-darkest">Water Damage Restoration</h1>
+						<h1 className="font-bold text-4xl text-navy-darkest">
+							Water Damage Restoration
+						</h1>
 						<div className="prose mx-auto prose-img:mx-auto prose-figcaption:hidden max-w-none prose-img:max-w-full">
-						<p>
-							Here at Climate Dry we aim to provide the ultimate climate control solutions and drying packages for every application. From small leaks to extensive flood damage, our packages are designed to solve all your water worries. We understand the panic that ensues following an unexpected leak or flood, and the second surge of fear that arises when approaching the complex process of water damage of restoration. We offer a comprehensive range of domestic and industrial Water Damage Restoration packages to make your life post-flood that bit easier. Our Water Damage Restoration packages and equipment are designed to cater to various needs at every stage, ensuring that your property is restored to its pre-damage condition with maximum ease and minimal disruption. Explore our expertly tailored packages below to find the right solution for you, whether you are a property owner affected by water damage searching for the answer to your prayers, or a restoration technician looking for an essential set-up to conquer any challenge.
-						</p>
+							<p>
+								Here at Climate Dry we aim to provide the ultimate climate
+								control solutions and drying packages for every application.
+								From small leaks to extensive flood damage, our packages are
+								designed to solve all your water worries. We understand the
+								panic that ensues following an unexpected leak or flood, and the
+								second surge of fear that arises when approaching the complex
+								process of water damage of restoration. We offer a comprehensive
+								range of domestic and industrial Water Damage Restoration
+								packages to make your life post-flood that bit easier. Our Water
+								Damage Restoration packages and equipment are designed to cater
+								to various needs at every stage, ensuring that your property is
+								restored to its pre-damage condition with maximum ease and
+								minimal disruption. Explore our expertly tailored packages below
+								to find the right solution for you, whether you are a property
+								owner affected by water damage searching for the answer to your
+								prayers, or a restoration technician looking for an essential
+								set-up to conquer any challenge.
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<section className="bg-gray-100 full-w mb-6">
-				<div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-center">
-					<div className="w-full lg:w-1/2 px-5 py-8 lg:px-0 lg:py-0">
-						<h2 className="text-2xl font-semibold mb-4">Water Damage</h2>
+			<section className="full-w mb-6 bg-gray-100">
+				<div className="mx-auto flex max-w-7xl flex-col items-center gap-8 lg:flex-row">
+					<div className="w-full px-5 py-8 lg:w-1/2 lg:px-0 lg:py-0">
+						<h2 className="mb-4 font-semibold text-2xl">Water Damage</h2>
 						<p className="lg:max-w-[525px]">
-							Water damage can manifest in various ways, indicating potential issues that need immediate attention. Common signs include discolouration or staining on walls, ceilings, and floors, often appearing as yellow, brown, or dark patches. Peeling or bubbling paint and wallpaper can also signal underlying moisture problems. Musty or damp odours suggest mould growth, while visible mould spores are a clear indicator. Warped or buckling floors, swollen wood, and soft spots in drywall are other common symptoms. Additionally, increased humidity levels and condensation on windows can point to underlying excess moisture in the atmosphere. Early detection and prompt action are crucial to prevent further deterioration and costly repairs.
+							Water damage can manifest in various ways, indicating potential
+							issues that need immediate attention. Common signs include
+							discolouration or staining on walls, ceilings, and floors, often
+							appearing as yellow, brown, or dark patches. Peeling or bubbling
+							paint and wallpaper can also signal underlying moisture problems.
+							Musty or damp odours suggest mould growth, while visible mould
+							spores are a clear indicator. Warped or buckling floors, swollen
+							wood, and soft spots in drywall are other common symptoms.
+							Additionally, increased humidity levels and condensation on
+							windows can point to underlying excess moisture in the atmosphere.
+							Early detection and prompt action are crucial to prevent further
+							deterioration and costly repairs.
 						</p>
 					</div>
 					<div className="w-full lg:w-1/2">
@@ -191,7 +227,6 @@ export default function WaterDamageRestorationPage() {
 				</div>
 			</section>
 
-
 			<section className="py-10">
 				<SectionHeaderMulti
 					category="Identifying water damage severity"
@@ -200,13 +235,13 @@ export default function WaterDamageRestorationPage() {
 					title_tag="h2"
 					description="There are four levels of water damage, depending on the severity of the issue and the required response."
 				/>
-					
-				<div className="max-w-screen-lg mx-auto pt-8">
+
+				<div className="mx-auto max-w-screen-lg pt-8">
 					<IconWithTextGrid items={damageClasses} />
 				</div>
 			</section>
 
-			<section className="py-10 mb-6">
+			<section className="mb-6 py-10">
 				<SectionHeaderMulti
 					category="Identifying water type"
 					category_tag="p"
@@ -214,14 +249,13 @@ export default function WaterDamageRestorationPage() {
 					title_tag="h2"
 					description="In addition to identifying the classes of water damage, it is also vital to identify the condition of liquid impacting the affected materials. In other words, how clean or dirty is the water? This is categorised into three types:"
 				/>
-					
 
-				<div className="max-w-screen-lg pt-8 mx-auto">
-					<IconWithTextGrid items={damageCategories}  smallCols={true}/>
+				<div className="mx-auto max-w-screen-lg pt-8">
+					<IconWithTextGrid items={damageCategories} smallCols={true} />
 				</div>
 			</section>
 
-			<div className="max-w-lg  mx-auto  mb-6">
+			<div className="mx-auto mb-6 max-w-lg">
 				<SectionHeaderMulti
 					category="Package Deals"
 					category_tag="p"
@@ -235,17 +269,35 @@ export default function WaterDamageRestorationPage() {
 				url="/p/dantherm-escape-of-water-mitigation-package-small/"
 				description={
 					<>
-                        <p>Introducing the ultimate solution for minor water damage, this package is perfect for homeowners and small businesses dealing with <strong>leaks or small-scale flooding</strong>. It efficiently mitigates water escapes and ensures quick and effective restoration, ideal for those seeking post-pipe leak repairs or for those without flood insurance.</p>
-                        <p>This package includes a powerful compressor dehumidifier to remove excess moisture from the air, <strong>two</strong> multifaceted radial fans to enhance air circulation and drying, and <strong>two</strong> smart app-controlled electronic sensors for real-time monitoring and alerts that are displayed instantly in-app. Together, these tools offer a comprehensive solution to manage small-scale water damage effectively and efficiently, helping you restore your home with ease. Plus, with high-end moisture monitoring devices, you can detect and avoid potential leaks in the future.</p>
+						<p>
+							Introducing the ultimate solution for minor water damage, this
+							package is perfect for homeowners and small businesses dealing
+							with <strong>leaks or small-scale flooding</strong>. It
+							efficiently mitigates water escapes and ensures quick and
+							effective restoration, ideal for those seeking post-pipe leak
+							repairs or for those without flood insurance.
+						</p>
+						<p>
+							This package includes a powerful compressor dehumidifier to remove
+							excess moisture from the air, <strong>two</strong> multifaceted
+							radial fans to enhance air circulation and drying, and{" "}
+							<strong>two</strong> smart app-controlled electronic sensors for
+							real-time monitoring and alerts that are displayed instantly
+							in-app. Together, these tools offer a comprehensive solution to
+							manage small-scale water damage effectively and efficiently,
+							helping you restore your home with ease. Plus, with high-end
+							moisture monitoring devices, you can detect and avoid potential
+							leaks in the future.
+						</p>
 
-                        <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 
-                        <ul className="list-disc pl-5 font-bold">
-                            <li>Primary Drying Solution</li>
-                            <li>Initial Assessment and Damage Report</li>
-                            <li>Moisture Mapping and Monitoring</li>
-                            <li>Professional Dehumidification</li>
-                        </ul>						
+						<ul className="list-disc pl-5 font-bold">
+							<li>Primary Drying Solution</li>
+							<li>Initial Assessment and Damage Report</li>
+							<li>Moisture Mapping and Monitoring</li>
+							<li>Professional Dehumidification</li>
+						</ul>
 					</>
 				}
 				image="/images/layout/water-damage-restoration/1-CD-Flood-Water-Mitigation-PackagesSmallPackage.webp"
@@ -258,9 +310,25 @@ export default function WaterDamageRestorationPage() {
 				url="/p/dantherm-escape-of-water-mitigation-package-medium/"
 				description={
 					<>
-						<p>Specially tailored for moderate water damage caused by flooding or water escapes, this package is perfect for <strong>homeowners facing moderate water damage</strong>, such as from a washing machine malfunction. This package includes enhanced tools and systems to efficiently dry out 2-3 rooms, offering a perfect solution for property managers and professionals alike seeking a comprehensive solution for more extensive water damage.</p>
-                        <p>An enhancement from the basic package, this bundle includes two robust compressor dehumidifiers to eliminate excess humidity from the air, four versatile radial fans to boost air circulation and accelerate drying, and two smart-app controlled electronic sensors for real-time monitoring and readings that are displayed instantly in-app. This premium array of equipment provides a comprehensive solution for efficiently managing minor water damage.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							Specially tailored for moderate water damage caused by flooding or
+							water escapes, this package is perfect for{" "}
+							<strong>homeowners facing moderate water damage</strong>, such as
+							from a washing machine malfunction. This package includes enhanced
+							tools and systems to efficiently dry out 2-3 rooms, offering a
+							perfect solution for property managers and professionals alike
+							seeking a comprehensive solution for more extensive water damage.
+						</p>
+						<p>
+							An enhancement from the basic package, this bundle includes two
+							robust compressor dehumidifiers to eliminate excess humidity from
+							the air, four versatile radial fans to boost air circulation and
+							accelerate drying, and two smart-app controlled electronic sensors
+							for real-time monitoring and readings that are displayed instantly
+							in-app. This premium array of equipment provides a comprehensive
+							solution for efficiently managing minor water damage.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
 							<li>Comprehensive Water Extraction Solution</li>
 							<li>Moisture Mapping and Monitoring</li>
@@ -271,7 +339,6 @@ export default function WaterDamageRestorationPage() {
 				}
 				image="/images/layout/water-damage-restoration/2-CD-Flood-Water-Mitigation-Packages-Medium.webp"
 				alt="Flood Water Mitigation Packages Medium"
-				
 			/>
 
 			<ProductSection
@@ -279,10 +346,27 @@ export default function WaterDamageRestorationPage() {
 				url="/p/dantherm-escape-of-water-mitigation-package-large/"
 				description={
 					<>
-						<p>Designed to restore severe water damage, this expert package provides the ultimate arsenal of tools and equipment for effectively managing and restoring affected areas. This package is ideal restoration efforts in both residential and commercial properties, ensuring rapid and thorough mitigation and moisture monitoring.</p>
-                        <p>For extensive coverage of severe water damage, our ultimate package features four heavy-duty compressor dehumidifiers to remove excess moisture from the air, eight multifaceted radial fans to enhance air circulation and accelerate drying, and two smart-app controlled electronic sensors for real-time monitoring with instant in-app readings. This top-tier collection of equipment delivers a comprehensive solution for professionals to efficiently manage heavy flooding and severe leaks with ease and efficiency.</p>
+						<p>
+							Designed to restore severe water damage, this expert package
+							provides the ultimate arsenal of tools and equipment for
+							effectively managing and restoring affected areas. This package is
+							ideal restoration efforts in both residential and commercial
+							properties, ensuring rapid and thorough mitigation and moisture
+							monitoring.
+						</p>
+						<p>
+							For extensive coverage of severe water damage, our ultimate
+							package features four heavy-duty compressor dehumidifiers to
+							remove excess moisture from the air, eight multifaceted radial
+							fans to enhance air circulation and accelerate drying, and two
+							smart-app controlled electronic sensors for real-time monitoring
+							with instant in-app readings. This top-tier collection of
+							equipment delivers a comprehensive solution for professionals to
+							efficiently manage heavy flooding and severe leaks with ease and
+							efficiency.
+						</p>
 
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
 							<li>Full-scale Water Extraction</li>
 							<li>Detailed Damage Assessment</li>
@@ -296,8 +380,7 @@ export default function WaterDamageRestorationPage() {
 				reverse
 			/>
 
-
-			<div className="max-w-lg m-10 mx-auto">
+			<div className="m-10 mx-auto max-w-lg">
 				<SectionHeaderMulti
 					category=""
 					category_tag="p"
@@ -312,9 +395,23 @@ export default function WaterDamageRestorationPage() {
 				url="/p/dantherm-water-damage-restoration-air-quality-management-starter-kit/"
 				description={
 					<>
-						<p>Perfect for a water damage restoration technician who is looking to kickstart their business. This starter kit provides the basic tools and equipment needed for insulation drying, helping to prevent mould and structural damage, as well as detecting and monitoring moisture concentrations.</p>
-                        <p>This starter kit is designed to provide efficient moisture extraction, exceptional drying results and on-the-go filtration, ventilation and air quality improvements thanks to the powerful yet lightweight devices incorporated. Also featured is several Trotec measuring instruments for air quality tracking and moisture mapping, of which can be remotely controlled via smartphone app. Perfect for busy, one-man restoration businesses.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							Perfect for a water damage restoration technician who is looking
+							to kickstart their business. This starter kit provides the basic
+							tools and equipment needed for insulation drying, helping to
+							prevent mould and structural damage, as well as detecting and
+							monitoring moisture concentrations.
+						</p>
+						<p>
+							This starter kit is designed to provide efficient moisture
+							extraction, exceptional drying results and on-the-go filtration,
+							ventilation and air quality improvements thanks to the powerful
+							yet lightweight devices incorporated. Also featured is several
+							Trotec measuring instruments for air quality tracking and moisture
+							mapping, of which can be remotely controlled via smartphone app.
+							Perfect for busy, one-man restoration businesses.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
 							<li>Incorporated 40 Individual Devices and Accessories</li>
 							<li>Entry-level Drying Equipment</li>
@@ -334,9 +431,26 @@ export default function WaterDamageRestorationPage() {
 				url="/p/dantherm-professional-water-damage-restorers-basic-insulation-drying-kit/"
 				description={
 					<>
-						<p>A step up from the Starter Kit, this package is ideal for those who require more robust equipment for efficient insulation drying. This kit is complete with premium drying systems and high-tech tools to provide basic insulation drying of walls, ceilings and insulated screed floors up to 70m².</p>
-                        <p>This basic kit features an ultra-compact condenser dryer, a manifold drying system, and a negative pressure insulation dryer. A professional thermal imaging camera detects real-time temperature changes. The world’s first manifold drying system features advanced technology for energy efficiency and sustainability. The AERCUBE drying system includes a water separator with a dirty water pump, two-stage HEPA filtration, a brushless multi-stage noise box with a turbine, and a sound silencer. All modules stack together for safe and easy transportation.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							A step up from the Starter Kit, this package is ideal for those
+							who require more robust equipment for efficient insulation drying.
+							This kit is complete with premium drying systems and high-tech
+							tools to provide basic insulation drying of walls, ceilings and
+							insulated screed floors up to 70m².
+						</p>
+						<p>
+							This basic kit features an ultra-compact condenser dryer, a
+							manifold drying system, and a negative pressure insulation dryer.
+							A professional thermal imaging camera detects real-time
+							temperature changes. The world’s first manifold drying system
+							features advanced technology for energy efficiency and
+							sustainability. The AERCUBE drying system includes a water
+							separator with a dirty water pump, two-stage HEPA filtration, a
+							brushless multi-stage noise box with a turbine, and a sound
+							silencer. All modules stack together for safe and easy
+							transportation.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
 							<li>Premium Drying Solutions and Accessories</li>
 							<li>Manifold Drying System with HEPA Filtration</li>
@@ -355,9 +469,26 @@ export default function WaterDamageRestorationPage() {
 				url="/p/dantherm-professional-water-damage-restorers-advanced-insulation-drying-kit/"
 				description={
 					<>
-						<p>The ultimate package for professional restorers, equipped with top-of-the-line tools and equipment for efficient and thorough insulation drying. This kit provides the equipment required to engage in more advanced installation for drying of insulated constructions. Enabling greater flexibility of how the drying system can be used to suit a wider scope of projects.</p>
-                        <p>Like the Basic Kit, this bundle includes the same manifold system, equipped with connection hoses and lashing straps for connecting in a tower system. The tower design allows all modules to work concurrently, saving space and ensuring optimal organisation on site. The handheld thermal imaging camera can be used anywhere on site for precise real-time readings of moisture concentration through walls and flooring. The adsorption dehumidifier included in this kit accelerates the drying process and can be placed close to the detected moisture deposits for maximum efficiency.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							The ultimate package for professional restorers, equipped with
+							top-of-the-line tools and equipment for efficient and thorough
+							insulation drying. This kit provides the equipment required to
+							engage in more advanced installation for drying of insulated
+							constructions. Enabling greater flexibility of how the drying
+							system can be used to suit a wider scope of projects.
+						</p>
+						<p>
+							Like the Basic Kit, this bundle includes the same manifold system,
+							equipped with connection hoses and lashing straps for connecting
+							in a tower system. The tower design allows all modules to work
+							concurrently, saving space and ensuring optimal organisation on
+							site. The handheld thermal imaging camera can be used anywhere on
+							site for precise real-time readings of moisture concentration
+							through walls and flooring. The adsorption dehumidifier included
+							in this kit accelerates the drying process and can be placed close
+							to the detected moisture deposits for maximum efficiency.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
 							<li>Professional-grade Drying Equipment</li>
 							<li>Manifold Drying System with HEPA Filtration</li>
@@ -371,306 +502,494 @@ export default function WaterDamageRestorationPage() {
 				alt="Professional Restorers insulation Drying Kits Advanced Kit"
 			/>
 
-
-				<div className="max-w-lg mx-auto m-10 ">
-					<SectionHeaderMulti
+			<div className="m-10 mx-auto max-w-lg ">
+				<SectionHeaderMulti
 					category=""
 					category_tag="p"
 					title="Target Drying Packages"
 					title_tag="h2"
 					description=""
-					/>
-				</div>
+				/>
+			</div>
 
-				<ProductSection
-					title="Small Package"
-					url="/p/water-damage-restoration-small-target-drying-package/"
-					description={
+			<ProductSection
+				title="Small Package"
+				url="/p/water-damage-restoration-small-target-drying-package/"
+				description={
 					<>
-						<p>Suitable for minor drying tasks, this package supplies the fundamental tools for efficient target drying, ensuring effective moisture removal. This kit is especially ideal for drying efforts in tight, confined spaces.</p>
-						<p>This package is comprised of high-quality, non-destructive drying equipment, including a professional dehumidifier, a multifaceted radial fan and a portable infrared heating panel to achieve rapid drying and optimal performance in small, targeted areas.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							Suitable for minor drying tasks, this package supplies the
+							fundamental tools for efficient target drying, ensuring effective
+							moisture removal. This kit is especially ideal for drying efforts
+							in tight, confined spaces.
+						</p>
+						<p>
+							This package is comprised of high-quality, non-destructive drying
+							equipment, including a professional dehumidifier, a multifaceted
+							radial fan and a portable infrared heating panel to achieve rapid
+							drying and optimal performance in small, targeted areas.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
-						<li>Compact Drying Equipment</li>
-						<li>Energy-Efficient Infrared Drying Panel</li>
-						<li>Professional Dehumidifier</li>
-						<li>Efficient air movers</li>
+							<li>Compact Drying Equipment</li>
+							<li>Energy-Efficient Infrared Drying Panel</li>
+							<li>Professional Dehumidifier</li>
+							<li>Efficient air movers</li>
 						</ul>
 					</>
-					}
-					image="/images/layout/water-damage-restoration/7-CD-Target-Drying-small.webp"
-					alt="Target Drying Small Package"
-					reverse
-				/>
+				}
+				image="/images/layout/water-damage-restoration/7-CD-Target-Drying-small.webp"
+				alt="Target Drying Small Package"
+				reverse
+			/>
 
-				<ProductSection
-					title="Large Package"
-					url="/p/water-damage-restoration-large-target-drying-package/"
-					description={
+			<ProductSection
+				title="Large Package"
+				url="/p/water-damage-restoration-large-target-drying-package/"
+				description={
 					<>
-						<p>For extensive moisture issues requiring focused drying, this package is the ultimate solution. This all-inclusive kit is designed to handle severe water damage in confined spaces, ensuring your property is restored quickly and thoroughly.</p>
-						<p>This package is tailored for those who need a reliable, efficient and powerful solution to tackle significant water damage in hard-to-reach places with ease and precision. Featuring two energy-efficient infrared heating panels, two multifaceted radial fans and a professional powerful dehumidifier, along with essential accessories, this kit delivers rapid drying and top-tier performance in focused applications.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							For extensive moisture issues requiring focused drying, this
+							package is the ultimate solution. This all-inclusive kit is
+							designed to handle severe water damage in confined spaces,
+							ensuring your property is restored quickly and thoroughly.
+						</p>
+						<p>
+							This package is tailored for those who need a reliable, efficient
+							and powerful solution to tackle significant water damage in
+							hard-to-reach places with ease and precision. Featuring two
+							energy-efficient infrared heating panels, two multifaceted radial
+							fans and a professional powerful dehumidifier, along with
+							essential accessories, this kit delivers rapid drying and top-tier
+							performance in focused applications.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
-						<li>First-rate Focused Drying Equipment</li>
-						<li>High-performance Air Movers</li>
-						<li>Energy-Efficient Infrared Drying Panels</li>
-						<li>Professional Dehumidifier</li>
+							<li>First-rate Focused Drying Equipment</li>
+							<li>High-performance Air Movers</li>
+							<li>Energy-Efficient Infrared Drying Panels</li>
+							<li>Professional Dehumidifier</li>
 						</ul>
 					</>
-					}
-					image="/images/layout/water-damage-restoration/8-CD-Target-Drying-large.webp"
-					alt="Target Drying Large Package"
-				/>
+				}
+				image="/images/layout/water-damage-restoration/8-CD-Target-Drying-large.webp"
+				alt="Target Drying Large Package"
+			/>
 
-				<ProductSection
-					title="Wall Cavity Package"
-					url="/p/water-damage-restoration-wall-cavity-drying-package/"
-					description={
+			<ProductSection
+				title="Wall Cavity Package"
+				url="/p/water-damage-restoration-wall-cavity-drying-package/"
+				description={
 					<>
-						 <p>Specially designed for restoring water damage in wall cavities, this package ensures thorough drying in hard-to-reach areas, preventing mould growth and long-term structural damage. This comprehensive wall cavity drying package is versatile, dependable and easily portable – ideal for any water damage emergency.</p>
-                        <p>Featuring in the package is the AERCUBE® manifold system, a modular and flexible drying system that can applied using the vacuum method for targeted cavity drying. The manifold system works in conjunction with the professional dehumidifier included in the package to dry and thoroughly filter the air inside the cavities. The clean, dry air is then circulated inside the wall, removing remaining moisture deposits and preventing it from re-entering the walls.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							Specially designed for restoring water damage in wall cavities,
+							this package ensures thorough drying in hard-to-reach areas,
+							preventing mould growth and long-term structural damage. This
+							comprehensive wall cavity drying package is versatile, dependable
+							and easily portable – ideal for any water damage emergency.
+						</p>
+						<p>
+							Featuring in the package is the AERCUBE® manifold system, a
+							modular and flexible drying system that can applied using the
+							vacuum method for targeted cavity drying. The manifold system
+							works in conjunction with the professional dehumidifier included
+							in the package to dry and thoroughly filter the air inside the
+							cavities. The clean, dry air is then circulated inside the wall,
+							removing remaining moisture deposits and preventing it from
+							re-entering the walls.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
-						<li>Efficient Cavity Drying Equipment</li>
-						<li>Vacuum Drying Method</li>
-						<li>High-efficiency Dehumidifier</li>
-						<li>HEPA 99.95% Filtration</li>
+							<li>Efficient Cavity Drying Equipment</li>
+							<li>Vacuum Drying Method</li>
+							<li>High-efficiency Dehumidifier</li>
+							<li>HEPA 99.95% Filtration</li>
 						</ul>
 					</>
-					}
-					image="/images/layout/water-damage-restoration/9-CD-wall-cavity-package.webp"
-					alt="Wall Cavity Package"
-					reverse
-				/>
+				}
+				image="/images/layout/water-damage-restoration/9-CD-wall-cavity-package.webp"
+				alt="Wall Cavity Package"
+				reverse
+			/>
 
-				<div className="max-w-lg mx-auto m-10 ">
-					<SectionHeaderMulti
+			<div className="m-10 mx-auto max-w-lg ">
+				<SectionHeaderMulti
 					category=""
 					category_tag="p"
 					title="Renovation and Restoration Works - Air Quality Management"
 					title_tag="h2"
 					description=""
-					/>
-				</div>
+				/>
+			</div>
 
-				<ProductSection
-					title="Starter Package"
-					url="/p/dantherm-water-damage-restoration-air-quality-management-starter-kit/"
-					description={
+			<ProductSection
+				title="Starter Package"
+				url="/p/dantherm-water-damage-restoration-air-quality-management-starter-kit/"
+				description={
 					<>
-<p>This entry-level package is your ultimate solution for efficient moisture control and air quality management. The comprehensive kit is designed to improve indoor air quality during and after restoration works, ensuring a safe and healthy environment.</p>
-                        <p>This starter kit features a high-quality air scrubber equipped with a 2-stage HEPA filtration system, plus a state-of-the-art measuring device, allowing precise tracking of humidity and moisture levels. Perfect for both professionals and beginners, it offers a cost-effective solution to maintain a healthy environment post-renovation. Elevate your restoration projects with this essential, all-in-one kit.</p>
-						<h3 className="font-bold text-teal uppercase pt-6">Features</h3>
+						<p>
+							This entry-level package is your ultimate solution for efficient
+							moisture control and air quality management. The comprehensive kit
+							is designed to improve indoor air quality during and after
+							restoration works, ensuring a safe and healthy environment.
+						</p>
+						<p>
+							This starter kit features a high-quality air scrubber equipped
+							with a 2-stage HEPA filtration system, plus a state-of-the-art
+							measuring device, allowing precise tracking of humidity and
+							moisture levels. Perfect for both professionals and beginners, it
+							offers a cost-effective solution to maintain a healthy environment
+							post-renovation. Elevate your restoration projects with this
+							essential, all-in-one kit.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
 						<ul className="list-disc pl-5 font-bold">
-						<li>High-Powered Air Scrubber</li>
-						<li>HEPA 99.95% Pre and Main Filtration</li>
-						<li>Air Quality Monitoring Device</li>
-						<li>Accredited 2-Day Water Damage Restoration Course</li>
+							<li>High-Powered Air Scrubber</li>
+							<li>HEPA 99.95% Pre and Main Filtration</li>
+							<li>Air Quality Monitoring Device</li>
+							<li>Accredited 2-Day Water Damage Restoration Course</li>
 						</ul>
 					</>
-					}
-					image="/images/layout/water-damage-restoration/10-CD-Renovation-Restoration-starter.webp"
-					alt="Renovation Restoration Starter Package"
+				}
+				image="/images/layout/water-damage-restoration/10-CD-Renovation-Restoration-starter.webp"
+				alt="Renovation Restoration Starter Package"
+			/>
+
+			<ProductSection
+				title="Professional Package"
+				url="/p/water-damage-restoration-professional-air-quality-management-kit/"
+				description={
+					<>
+						<p>
+							Introducing this comprehensive solution for superior moisture
+							control and air quality management. This advanced package features
+							a powerful air scrubber, a precise particle counter, and a robust
+							wall containment system, ensuring thorough drying and air
+							purification in a sealed-off area.
+						</p>
+						<p>
+							The high-efficiency air mover equipped with 2-stage filtration
+							system provides rapid drying and air cleansing, while the advanced
+							mobile monitoring tool tracks humidity and moisture levels
+							accurately. Designed for versatility, durability and ease of use,
+							this professional-grade package delivers rapid, reliable results,
+							ensuring a healthy, safe environment post-renovation. This package
+							is especially ideal for restoration experts looking to enhance
+							their capabilities with an all-inclusive, premium package.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>High-capacity Air Purifier</li>
+							<li>Advanced HEPA filtration System</li>
+							<li>Continuous Air Quality Monitoring</li>
+							<li>Seal-tight Containment Wall</li>
+							<li>Accredited 2-Day Water Damage Restoration</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/11-CD-Renovation-Restoration-professional.webp"
+				alt="Renovation Restoration Professional Kit"
+				reverse
+			/>
+
+			<ProductSection
+				title="Mould Mitigation Package"
+				url="/p/dantherm-mould-mitigation-package/"
+				description={
+					<>
+						<p>
+							Identify, remove and prevent the recurrence of mould in
+							residential or commercial properties with our specialised package.
+							This all-in-one mould mitigation remedy kit includes a powerful
+							air scrubber, a precise particle measuring device, and a robust
+							wall containment system to ensure effective containment during the
+							purification process. The ozone generator with regeneration
+							function and accompanying ozone meter deliver thorough mould
+							elimination and monitoring.
+						</p>
+						<p>
+							This comprehensive package provides a safe source of speedy
+							sanitisation within an airtight containment zone, offering an
+							ideal solution for eliminating mould growth, germs and
+							odour-carrying molecules in even the hardest-to-reach places.
+							Using a chemical-free disinfection process, this mould mitigation
+							package is one of the safest and most efficient of its kind. By
+							addressing both the current mould issue and its underlying causes,
+							this mitigation kit provides a long-lasting solution for ensuring
+							a healthy indoor environment.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>Expert Sanitisation Device</li>
+							<li>Professional-grade Mould Detection</li>
+							<li>Airtight Containment System</li>
+							<li>Preventative Treatment Solutions</li>
+							<li>Chemical-Free Disinfection Process</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/12-CD-mould-mitigation-package.webp"
+				alt="Mould mitigation package"
+			/>
+
+			<div className="m-10 mx-auto max-w-lg ">
+				<SectionHeaderMulti
+					category=""
+					category_tag="p"
+					title="Professional Leak Detection"
+					title_tag="h2"
+					description=""
 				/>
-				
-	  
+			</div>
 
- <ProductSection
-        title="Professional Package"
-        url="/p/water-damage-restoration-professional-air-quality-management-kit/"
-        description={
-          <>
-            <p>Introducing this comprehensive solution for superior moisture control and air quality management. This advanced package features a powerful air scrubber, a precise particle counter, and a robust wall containment system, ensuring thorough drying and air purification in a sealed-off area.</p>
-            <p>The high-efficiency air mover equipped with 2-stage filtration system provides rapid drying and air cleansing, while the advanced mobile monitoring tool tracks humidity and moisture levels accurately. Designed for versatility, durability and ease of use, this professional-grade package delivers rapid, reliable results, ensuring a healthy, safe environment post-renovation. This package is especially ideal for restoration experts looking to enhance their capabilities with an all-inclusive, premium package.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>High-capacity Air Purifier</li>
-              <li>Advanced HEPA filtration System</li>
-              <li>Continuous Air Quality Monitoring</li>
-              <li>Seal-tight Containment Wall</li>
-              <li>Accredited 2-Day Water Damage Restoration</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/11-CD-Renovation-Restoration-professional.webp"
-        alt="Renovation Restoration Professional Kit"
-		reverse 
-      />
+			<ProductSection
+				title="Starter Package"
+				url="/p/professional-leak-detection-starter-kit/"
+				description={
+					<>
+						<p>
+							Detect and prevent potential leaks and floods with this specialist
+							leak detection package, comprised of state-of-the-art
+							investigative tools and devices. This comprehensive solution is
+							designed to identify and address leaks before they escalate into
+							costly problems. Perfect for homeowners and professionals alike,
+							this starter package ensures peace of mind with advanced leak
+							detection technology and premium equipment.
+						</p>
+						<p>
+							Our starter package includes a range of essential tools: a
+							torchlight for clear visibility, tracer dye for pinpointing leaks,
+							a sound locator for hidden leaks, a thermal imaging camera for
+							detecting moisture, and a moisture indicator for extra
+							confirmation. Additionally, multiple heat and moisture measuring
+							devices provide accurate readings to ensure thorough inspections
+							and effective mitigation.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>Expert Sanitisation Device</li>
+							<li>Professional-grade Mould Detection</li>
+							<li>Airtight Containment System</li>
+							<li>Preventative Treatment Solutions</li>
+							<li>Chemical-Free Disinfection Process</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/13-CD-professional-leak-detection-starter.webp"
+				alt="Professional Leak Detection Starter Kit"
+				reverse
+			/>
 
-      <ProductSection
-        title="Mould Mitigation Package"
-        url="/p/dantherm-mould-mitigation-package/"
-        description={
-          <>
-            <p>Identify, remove and prevent the recurrence of mould in residential or commercial properties with our specialised package. This all-in-one mould mitigation remedy kit includes a powerful air scrubber, a precise particle measuring device, and a robust wall containment system to ensure effective containment during the purification process. The ozone generator with regeneration function and accompanying ozone meter deliver thorough mould elimination and monitoring.</p>
-            <p>This comprehensive package provides a safe source of speedy sanitisation within an airtight containment zone, offering an ideal solution for eliminating mould growth, germs and odour-carrying molecules in even the hardest-to-reach places. Using a chemical-free disinfection process, this mould mitigation package is one of the safest and most efficient of its kind. By addressing both the current mould issue and its underlying causes, this mitigation kit provides a long-lasting solution for ensuring a healthy indoor environment.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>Expert Sanitisation Device</li>
-              <li>Professional-grade Mould Detection</li>
-              <li>Airtight Containment System</li>
-              <li>Preventative Treatment Solutions</li>
-              <li>Chemical-Free Disinfection Process</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/12-CD-mould-mitigation-package.webp"
-        alt="Mould mitigation package"
-      />
+			<ProductSection
+				title="Advanced Package"
+				url="/p/dantherm-professional-leak-detection-advanced-kit/"
+				description={
+					<>
+						<p>
+							For those seeking a more sophisticated leak detection solution,
+							the Advanced Package offers the most precise and reliable tools
+							and equipment for professional leak detection and full water
+							damage assessment. Stay ahead of potential problems with
+							innovatory technology developed to provide the highest accuracy
+							and efficiency.
+						</p>
+						<p>
+							Our advanced package features a selection of high-end measuring
+							devices, designed to track, monitor and detect humidity, air
+							velocity, temperature, moisture and more, providing a
+							comprehensive assessment to enable thorough climate control. Also
+							included is a combination detector with ground microphone, a hand
+							sensor, and a thermal imaging camera for precise leak detection.
+							Plus, an industrial videoscope permits visual access to
+							hard-to-reach areas for investigations into cavities and other
+							tight spaces. Equip yourself with this premium package to ensure
+							thorough inspections for accurate leak detection for effective
+							water damage restoration.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>High-sensitivity Leak Detection Equipment</li>
+							<li>Complete Climate Assessment Kit</li>
+							<li>Professional Thermal Imaging Camera</li>
+							<li>Accredited 2-Day Water Damage Restoration Course</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/14-CD-professional-leak-detection-advanced.webp"
+				alt="Professional Leak Detection Advanced Kit"
+			/>
 
-      <div className="max-w-lg mx-auto m-10 ">
-        <SectionHeaderMulti
-          category=""
-          category_tag="p"
-          title="Professional Leak Detection"
-          title_tag="h2"
-          description=""
-        />
-      </div>
+			<ProductSection
+				title="Expert Package"
+				url="/p/dantherm-professional-leak-detection-expert-kit/"
+				description={
+					<>
+						<p>
+							The ultimate package for professionals, providing leading-edge
+							detection devices designed to identify and mitigate leaks with
+							precision, efficiency, and reliability. Perfect for professionals
+							seeking to upgrade their equipment, this comprehensive package
+							ensures that you can detect leaks rapidly to minimise damage and
+							provide peace of mind to your clients, all whilst saving costs.
+						</p>
+						<p>
+							This package includes a combination detector equipped with a
+							ground microphone for pinpoint accuracy, a hydrogen leak detector
+							for locating even the smallest leaks, and a flat roof leak
+							detector for comprehensive roof inspections. Additionally, it
+							features an industrial videoscope for detailed internal
+							inspections and a thermal imaging camera to identify hidden or
+							trapped moisture and temperature variations, ensuring thorough and
+							effective leak detection.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>State-of-the-art Leak Detection Equipment</li>
+							<li>Advanced Moisture Mapping Systems</li>
+							<li>Flat Roof Detection System</li>
+							<li>Professional Thermal Imaging Camera</li>
+							<li>Accredited 2-Day Water Damage Restoration Course</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/15-CD-professional-leak-detection-expert.webp"
+				alt="Professional leak detection expert"
+				reverse
+			/>
 
-      <ProductSection
-        title="Starter Package"
-        url="/p/professional-leak-detection-starter-kit/"
-        description={
-          <>
-            <p>Detect and prevent potential leaks and floods with this specialist leak detection package, comprised of state-of-the-art investigative tools and devices. This comprehensive solution is designed to identify and address leaks before they escalate into costly problems. Perfect for homeowners and professionals alike, this starter package ensures peace of mind with advanced leak detection technology and premium equipment.</p>
-            <p>Our starter package includes a range of essential tools: a torchlight for clear visibility, tracer dye for pinpointing leaks, a sound locator for hidden leaks, a thermal imaging camera for detecting moisture, and a moisture indicator for extra confirmation. Additionally, multiple heat and moisture measuring devices provide accurate readings to ensure thorough inspections and effective mitigation.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>Expert Sanitisation Device</li>
-              <li>Professional-grade Mould Detection</li>
-              <li>Airtight Containment System</li>
-              <li>Preventative Treatment Solutions</li>
-              <li>Chemical-Free Disinfection Process</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/13-CD-professional-leak-detection-starter.webp"
-        alt="Professional Leak Detection Starter Kit"
-		reverse
-      />
+			<div className="m-10 mx-auto max-w-lg ">
+				<SectionHeaderMulti
+					category=""
+					category_tag="p"
+					title="Simplify Remote Monitoring Kits"
+					title_tag="h2"
+					description=""
+				/>
+			</div>
 
-      <ProductSection
-        title="Advanced Package"
-        url="/p/dantherm-professional-leak-detection-advanced-kit/"
-        description={
-          <>
-            <p>For those seeking a more sophisticated leak detection solution, the Advanced Package offers the most precise and reliable tools and equipment for professional leak detection and full water damage assessment. Stay ahead of potential problems with innovatory technology developed to provide the highest accuracy and efficiency.</p>
-            <p>Our advanced package features a selection of high-end measuring devices, designed to track, monitor and detect humidity, air velocity, temperature, moisture and more, providing a comprehensive assessment to enable thorough climate control. Also included is a combination detector with ground microphone, a hand sensor, and a thermal imaging camera for precise leak detection. Plus, an industrial videoscope permits visual access to hard-to-reach areas for investigations into cavities and other tight spaces. Equip yourself with this premium package to ensure thorough inspections for accurate leak detection for effective water damage restoration.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>High-sensitivity Leak Detection Equipment</li>
-              <li>Complete Climate Assessment Kit</li>
-              <li>Professional Thermal Imaging Camera</li>
-              <li>Accredited 2-Day Water Damage Restoration Course</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/14-CD-professional-leak-detection-advanced.webp"
-        alt="Professional Leak Detection Advanced Kit"
-      />
+			<ProductSection
+				title="Basic Humidity Kit"
+				url="/p/simplify-remote-monitoring-basic-humidity-control-kit/"
+				description={
+					<>
+						<p>
+							Monitor humidity levels remotely with our Basic Kit, ideal for
+							maintaining optimal moisture conditions in your property. The
+							Simplify Remote Monitoring kit is designed to streamline humidity
+							management across various industries. With remote monitoring and a
+							cloud-based system, this user-friendly solution visualises and
+							analyses real-time data, maximising productivity, saving time and
+							costs, and helping predict and prevent potential issues.
+						</p>
+						<p>
+							The kit includes a control unit, <strong>six</strong> sensor boxes
+							with <strong>six</strong> sensor probes, a relay box, and a CC 4
+							box, along with a 24-month subscription. This comprehensive
+							package offers remote humidity monitoring through a cloud-based
+							system with a user-friendly interface. Ideal for various
+							industries, it ensures efficient and effective humidity control,
+							enhancing worksite productivity.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>Remote humidity sensors</li>
+							<li>Basic monitoring interface</li>
+							<li>Alert system for high humidity</li>
+							<li>User-friendly setup</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/16-CD-Simplify-Remote-Monitoring-Kits-Basic.webp"
+				alt="Simplify Remote Monitoring Kits - Basic"
+			/>
 
-      <ProductSection
-        title="Expert Package"
-        url="/p/dantherm-professional-leak-detection-expert-kit/"
-        description={
-          <>
-            <p>The ultimate package for professionals, providing leading-edge detection devices designed to identify and mitigate leaks with precision, efficiency, and reliability. Perfect for professionals seeking to upgrade their equipment, this comprehensive package ensures that you can detect leaks rapidly to minimise damage and provide peace of mind to your clients, all whilst saving costs.</p>
-            <p>This package includes a combination detector equipped with a ground microphone for pinpoint accuracy, a hydrogen leak detector for locating even the smallest leaks, and a flat roof leak detector for comprehensive roof inspections. Additionally, it features an industrial videoscope for detailed internal inspections and a thermal imaging camera to identify hidden or trapped moisture and temperature variations, ensuring thorough and effective leak detection.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>State-of-the-art Leak Detection Equipment</li>
-              <li>Advanced Moisture Mapping Systems</li>
-              <li>Flat Roof Detection System</li>
-              <li>Professional Thermal Imaging Camera</li>
-              <li>Accredited 2-Day Water Damage Restoration Course</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/15-CD-professional-leak-detection-expert.webp"
-        alt="Professional leak detection expert"
-		reverse
-      />
+			<ProductSection
+				title="Water Damage Restoration Kit"
+				url="/p/simplify-remote-monitoring-water-damage-restoration/"
+				description={
+					<>
+						<p>
+							This remote monitoring solution is engineered to provide
+							comprehensive climate monitoring for water damage restoration
+							projects, ensuring real-time oversight of moisture levels.
+							Utilising remote monitoring and a cloud-based system, this
+							user-friendly kit visualizes and analyses real-time data,
+							enhancing productivity, reducing costs, and helping predict and
+							prevent potential issues.
+						</p>
+						<p>
+							This kit includes a control unit, six sensor boxes with six sensor
+							probes, a relay box, and a CC 4 box, six resistive probes, along
+							with a 24-month subscription. It offers remote climate monitoring
+							through a cloud-based system with a user-friendly interface. Ideal
+							for various industries, it ensures uninterrupted monitoring and
+							non-stop observation for effective water damage restoration,
+							optimising worksite productivity.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>Advanced remote sensors</li>
+							<li>Detailed monitoring dashboard</li>
+							<li>Real-time alerts</li>
+							<li>Professional setup support</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/17-CD-Water-Damage-Restoration-kit.webp"
+				alt="Water Damage Restoration kit"
+				reverse
+			/>
 
-      <div className="max-w-lg mx-auto m-10 ">
-        <SectionHeaderMulti
-          category=""
-          category_tag="p"
-          title="Simplify Remote Monitoring Kits"
-          title_tag="h2"
-          description=""
-        />
-      </div>
+			<ProductSection
+				title="Accessory Kit"
+				url="/p/simplify-remote-monitoring-basic-humidity-control-kit/"
+				description={
+					<>
+						<p>
+							Enhance your remote monitoring system with this Simplify Accessory
+							Kit is designed to enhance and expand your climate monitoring
+							capabilities. Ideal for various industries, this comprehensive kit
+							includes additional accessories; essential sensors and probes
+							tailored to ensure accurate and reliable data collection,
+							maximising efficiency and effectiveness in managing environmental
+							conditions.
+						</p>
+						<p>
+							This kit includes <strong>six</strong> Simplify Sensor Boxes,{" "}
+							<strong>three</strong> Simplify Probes (24cm),{" "}
+							<strong>three</strong> Sensor Probes (3m), <strong>six</strong>{" "}
+							Simplify IAQ Probes, <strong>six</strong> Simplify Resistive
+							Probes, and <strong>two</strong> Simplify Relays. Together, these
+							components provide a robust solution for detailed climate
+							monitoring, offering precise data to support optimal
+							decision-making and improved environmental control.
+						</p>
+						<h3 className="pt-6 font-bold text-teal uppercase">Features</h3>
+						<ul className="list-disc pl-5 font-bold">
+							<li>Additional sensors</li>
+							<li>Extended monitoring range</li>
+							<li>Integration with existing systems</li>
+							<li>Technical support</li>
+						</ul>
+					</>
+				}
+				image="/images/layout/water-damage-restoration/CD-insulation-drying-starter-kit.webp"
+				alt="Starter Kit"
+			/>
 
-      <ProductSection
-        title="Basic Humidity Kit"
-        url="/p/simplify-remote-monitoring-basic-humidity-control-kit/"
-        description={
-          <>
-            <p>Monitor humidity levels remotely with our Basic Kit, ideal for maintaining optimal moisture conditions in your property. The Simplify Remote Monitoring kit is designed to streamline humidity management across various industries. With remote monitoring and a cloud-based system, this user-friendly solution visualises and analyses real-time data, maximising productivity, saving time and costs, and helping predict and prevent potential issues.</p>
-            <p>The kit includes a control unit, <strong>six</strong> sensor boxes with <strong>six</strong> sensor probes, a relay box, and a CC 4 box, along with a 24-month subscription. This comprehensive package offers remote humidity monitoring through a cloud-based system with a user-friendly interface. Ideal for various industries, it ensures efficient and effective humidity control, enhancing worksite productivity.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>Remote humidity sensors</li>
-              <li>Basic monitoring interface</li>
-              <li>Alert system for high humidity</li>
-              <li>User-friendly setup</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/16-CD-Simplify-Remote-Monitoring-Kits-Basic.webp"
-        alt="Simplify Remote Monitoring Kits - Basic"
-      />
-
-      <ProductSection
-        title="Water Damage Restoration Kit"
-        url="/p/simplify-remote-monitoring-water-damage-restoration/"
-        description={
-          <>
-            <p>This remote monitoring solution is engineered to provide comprehensive climate monitoring for water damage restoration projects, ensuring real-time oversight of moisture levels. Utilising remote monitoring and a cloud-based system, this user-friendly kit visualizes and analyses real-time data, enhancing productivity, reducing costs, and helping predict and prevent potential issues.</p>
-            <p>This kit includes a control unit, six sensor boxes with six sensor probes, a relay box, and a CC 4 box, six resistive probes, along with a 24-month subscription. It offers remote climate monitoring through a cloud-based system with a user-friendly interface. Ideal for various industries, it ensures uninterrupted monitoring and non-stop observation for effective water damage restoration, optimising worksite productivity.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>Advanced remote sensors</li>
-              <li>Detailed monitoring dashboard</li>
-              <li>Real-time alerts</li>
-              <li>Professional setup support</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/17-CD-Water-Damage-Restoration-kit.webp"
-        alt="Water Damage Restoration kit"
-		reverse
-      />
-
-      <ProductSection
-        title="Accessory Kit"
-        url="/p/simplify-remote-monitoring-basic-humidity-control-kit/"
-        description={
-          <>
-            <p>Enhance your remote monitoring system with this Simplify Accessory Kit is designed to enhance and expand your climate monitoring capabilities. Ideal for various industries, this comprehensive kit includes additional accessories; essential sensors and probes tailored to ensure accurate and reliable data collection, maximising efficiency and effectiveness in managing environmental conditions.</p>
-            <p>This kit includes <strong>six</strong> Simplify Sensor Boxes, <strong>three</strong> Simplify Probes (24cm), <strong>three</strong> Sensor Probes (3m), <strong>six</strong> Simplify IAQ Probes, <strong>six</strong> Simplify Resistive Probes, and <strong>two</strong> Simplify Relays. Together, these components provide a robust solution for detailed climate monitoring, offering precise data to support optimal decision-making and improved environmental control.</p>
-            <h3 className="font-bold text-teal uppercase pt-6">Features</h3>
-            <ul className="list-disc pl-5 font-bold">
-              <li>Additional sensors</li>
-              <li>Extended monitoring range</li>
-              <li>Integration with existing systems</li>
-              <li>Technical support</li>
-            </ul>
-          </>
-        }
-        image="/images/layout/water-damage-restoration/CD-insulation-drying-starter-kit.webp"
-        alt="Starter Kit"
-      />
-
-
-		<div className="mx-auto flex flex-col gap-8 text-center m-10 ">
-			<h2 className="text-5xl">Conclusion</h2>
+			<div className="m-10 mx-auto flex flex-col gap-8 text-center ">
+				<h2 className="text-5xl">Conclusion</h2>
+			</div>
+			<p className="mx-auto mb-10 max-w-5xl text-center text-lg ">
+				Effective water damage restoration is crucial to preserving the
+				integrity of your property and ensuring a healthy living environment.
+				Our range of packages is designed to address various needs, from
+				small-scale water escapes to extensive flooding, providing you with the
+				tools and support needed to restore your property efficiently. Choose
+				the package that best fits your requirements and let our professional
+				team assist you in mitigating and repairing water damage with ease and
+				expertise.
+			</p>
 		</div>
-		<p className="mx-auto text-lg max-w-5xl text-center  mb-10 ">Effective water damage restoration is crucial to preserving the integrity of your property and ensuring a healthy living environment. Our range of packages is designed to address various needs, from small-scale water escapes to extensive flooding, providing you with the tools and support needed to restore your property efficiently. Choose the package that best fits your requirements and let our professional team assist you in mitigating and repairing water damage with ease and expertise.</p>
-
-	  </div>
-
 	);
 }

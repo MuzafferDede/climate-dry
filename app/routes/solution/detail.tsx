@@ -1,9 +1,7 @@
-import { NavLink } from "react-router";
-import { Breadcrumb } from "~/components/ui/breadcrumb";
 import { ResponsiveSidebar } from "~/components/ui/";
+import { Breadcrumb } from "~/components/ui/breadcrumb";
 import { getSolution, getSolutions } from "~/services";
 import type { Solution } from "~/types";
-import { cn } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const meta = ({ data }: Route.MetaArgs) => [
@@ -49,8 +47,7 @@ export default function SolutionDetailPage({
 				</p>
 				<p className="pb-4 font-light text-lg">Select your need from below.</p>
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-					
-					<ResponsiveSidebar pages={solutionsNav} segment='solution' />
+					<ResponsiveSidebar pages={solutionsNav} segment="solution" />
 
 					<main className="lg:col-span-3">
 						<div className="mb-4 gap-4">

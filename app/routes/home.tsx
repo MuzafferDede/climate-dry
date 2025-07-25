@@ -3,9 +3,9 @@ import {
 	Banners,
 	Brands,
 	FeaturedCategories,
+	FeaturedPosts,
 	Info,
 	Marquee,
-	FeaturedPosts,
 	ShopByCategory,
 	Solutions,
 	Support,
@@ -38,12 +38,19 @@ export function meta() {
 export async function loader({ request }: Route.LoaderArgs) {
 	const banners = await getBanners(request);
 	const brands = await getBrands(request);
-	const featuredBlogPosts = await 	getFeaturedBlogPosts(request);
+	const featuredBlogPosts = await getFeaturedBlogPosts(request);
 	const featuredCategories = await getFeaturedCategories(request);
 	const shopByCategories = await getShopByCategories(request);
 	const solutions = await getSolutions(request);
 
-	return { banners, brands, featuredBlogPosts, featuredCategories, shopByCategories, solutions };
+	return {
+		banners,
+		brands,
+		featuredBlogPosts,
+		featuredCategories,
+		shopByCategories,
+		solutions,
+	};
 }
 
 export async function action({ request }: Route.ActionArgs) {
@@ -91,8 +98,14 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-	const { banners, brands, featuredBlogPosts, featuredCategories, shopByCategories, solutions } =
-		loaderData;
+	const {
+		banners,
+		brands,
+		featuredBlogPosts,
+		featuredCategories,
+		shopByCategories,
+		solutions,
+	} = loaderData;
 
 	return (
 		<div className="relative w-full overflow-hidden">
@@ -125,7 +138,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			<Info />
 
 			{/* Featured posts */}
-			{featuredBlogPosts.data.length > 0 && <FeaturedPosts posts={featuredBlogPosts.data} from="home" />}
+			{featuredBlogPosts.data.length > 0 && (
+				<FeaturedPosts posts={featuredBlogPosts.data} from="home" />
+			)}
 		</div>
 	);
 }

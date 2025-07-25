@@ -61,7 +61,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 			? productsResponse.meta.links
 			: null;
 
-
 	return {
 		brand,
 		products,
@@ -113,7 +112,6 @@ export async function action({ request }: Route.ActionArgs) {
 	}
 }
 
-
 const SortBy = [
 	{
 		label: "Best Selling",
@@ -133,9 +131,7 @@ const SortBy = [
 	},
 ];
 
-export default function BrandPage({
-	loaderData,
-}: Route.ComponentProps) {
+export default function BrandPage({ loaderData }: Route.ComponentProps) {
 	const { brand, products, pagination } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const cardView = searchParams.get("view") === "card";
@@ -145,9 +141,7 @@ export default function BrandPage({
 			<div className="mx-auto max-w-7xl space-y-8">
 				<Breadcrumb />
 				<div className="space-y-2">
-					<h1 className="font-bold text-4xl text-navy-darkest">
-						{brand.name}
-					</h1>
+					<h1 className="font-bold text-4xl text-navy-darkest">{brand.name}</h1>
 					{brand.introduction && (
 						<div
 							className="prose prose-img:mx-auto prose-figcaption:hidden max-w-none prose-img:max-w-full"
@@ -159,8 +153,6 @@ export default function BrandPage({
 						Read More
 					</Button>
 				</div>
-
-
 			</div>
 
 			{products?.length > 0 && (

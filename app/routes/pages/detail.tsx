@@ -1,7 +1,7 @@
 import { useRouteLoaderData } from "react-router";
 import { PageNavigation } from "~/components";
-import { Breadcrumb } from "~/components/ui/breadcrumb";
 import { ResponsiveSidebar } from "~/components/ui/";
+import { Breadcrumb } from "~/components/ui/breadcrumb";
 import { getPage } from "~/services";
 import type { Page } from "~/types";
 import type { Route } from "./+types/detail";
@@ -25,9 +25,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 	};
 }
 
-
-
-
 export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 	const { page } = loaderData;
 
@@ -50,8 +47,8 @@ export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 				<PageNavigation />
 
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-					<ResponsiveSidebar pages={pages} segment='pages' />
-					
+					<ResponsiveSidebar pages={pages} segment="pages" />
+
 					<main className="lg:col-span-3">
 						<div className="mb-4 gap-4">
 							<div

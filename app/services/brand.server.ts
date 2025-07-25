@@ -1,4 +1,4 @@
-import type { ApiResponse,ApiListResponse, Brand } from "~/types";
+import type { ApiListResponse, ApiResponse, Brand } from "~/types";
 import { fetcher } from "./api.server";
 
 export async function getBrand(request: Request, slug?: string) {
