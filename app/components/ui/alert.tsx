@@ -2,7 +2,7 @@ import {
 	InformationCircleIcon,
 	LightBulbIcon,
 	XCircleIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/16/solid";
 import { cn } from "~/utils";
 
 type AlertProps = {

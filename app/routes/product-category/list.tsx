@@ -1,4 +1,4 @@
-import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
+import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/16/solid";
 import { NavLink, data, useLocation, useSearchParams } from "react-router";
 import {
 	addToCart,

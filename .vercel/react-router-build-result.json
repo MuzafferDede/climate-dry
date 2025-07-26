@@ -28,10 +28,11 @@
       "routes/checkout/cancel": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/brand/list": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/brand/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/pages/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/page/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/product-category/list": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
       "routes/product/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/solution/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+      "routes/solution/detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/contact/contact": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
     },
     "routes": {
       "root": {
@@ -202,10 +203,10 @@
           "runtime": "nodejs"
         }
       },
-      "routes/pages/detail": {
-        "id": "routes/pages/detail",
+      "routes/page/detail": {
+        "id": "routes/page/detail",
         "parentId": "root",
-        "file": "app/routes/pages/detail.tsx",
+        "file": "app/routes/page/detail.tsx",
         "path": "pages/:slug?",
         "config": {
           "runtime": "nodejs"
@@ -234,6 +235,15 @@
         "parentId": "root",
         "file": "app/routes/solution/detail.tsx",
         "path": "solution/:slug?",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/contact/contact": {
+        "id": "routes/contact/contact",
+        "parentId": "root",
+        "file": "app/routes/contact/contact.tsx",
+        "path": "contact",
         "config": {
           "runtime": "nodejs"
         }
@@ -365,10 +375,10 @@
         "file": "routes/brand/detail.tsx",
         "path": "brand/:slug"
       },
-      "routes/pages/detail": {
-        "id": "routes/pages/detail",
+      "routes/page/detail": {
+        "id": "routes/page/detail",
         "parentId": "root",
-        "file": "routes/pages/detail.tsx",
+        "file": "routes/page/detail.tsx",
         "path": "pages/:slug?"
       },
       "routes/product-category/list": {
@@ -388,6 +398,12 @@
         "parentId": "root",
         "file": "routes/solution/detail.tsx",
         "path": "solution/:slug?"
+      },
+      "routes/contact/contact": {
+        "id": "routes/contact/contact",
+        "parentId": "root",
+        "file": "routes/contact/contact.tsx",
+        "path": "contact"
       }
     },
     "routeDiscovery": {

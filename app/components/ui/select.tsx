@@ -4,8 +4,7 @@ import {
 	ListboxOption,
 	ListboxOptions,
 } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/16/solid";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import type React from "react";
 
 export interface SelectOption {

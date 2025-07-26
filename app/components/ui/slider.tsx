@@ -1,5 +1,5 @@
 import * as RadixSlider from "@radix-ui/react-slider";
-import * as React from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { currency } from "~/utils";
 
 export interface SliderProps {
@@ -24,7 +24,7 @@ export interface SliderProps {
  * Slider component supporting single or double thumbs (range).
  * Uses Radix UI Slider primitive.
  */
-export const Slider = React.forwardRef<HTMLSpanElement, SliderProps>(
+export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
 	(
 		{
 			className = "",
@@ -48,11 +48,11 @@ export const Slider = React.forwardRef<HTMLSpanElement, SliderProps>(
 	) => {
 		const thumbs = (value ?? defaultValue).length;
 
-		const [internalValue, setInternalValue] = React.useState(
+		const [internalValue, setInternalValue] = useState(
 			value ?? defaultValue,
 		);
 
-		React.useEffect(() => {
+		useEffect(() => {
 			if (value !== undefined) setInternalValue(value);
 		}, [value]);
 

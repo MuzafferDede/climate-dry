@@ -1,4 +1,4 @@
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import { XCircleIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
 import { Button } from "~/components";
 

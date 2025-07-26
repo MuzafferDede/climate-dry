@@ -19,6 +19,7 @@ import {
 	ExclamationTriangleIcon,
 	HomeIcon,
 } from "@heroicons/react/16/solid";
+import type { ReactNode } from "react";
 import {
 	Button,
 	ContactUsWidget,
@@ -116,7 +117,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	);
 };
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: ReactNode }) {
 	const location = useLocation();
 
 	const canonicalUrl = `https://climate-dry.vercel.app${location.pathname}`;
