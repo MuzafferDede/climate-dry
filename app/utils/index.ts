@@ -4,3 +4,4 @@ export * from "./handle";
 export * from "./pluralize";
 export * from "./query-builder";
 export * from "./validator";
+export * from "./toast";

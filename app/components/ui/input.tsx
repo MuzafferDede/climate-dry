@@ -3,6 +3,7 @@ import {
 	Field,
 	Input as HeadlessInput,
 	Label,
+	Textarea,
 } from "@headlessui/react";
 import type { InputHTMLAttributes } from "react";
 import { cn } from "~/utils";
@@ -11,6 +12,7 @@ type InputProps = {
 	label?: string;
 	description?: string;
 	error?: string | boolean;
+	rows?: number;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = ({
@@ -23,8 +25,11 @@ export const Input = ({
 	placeholder = "",
 	type = "text",
 	className = "",
+	rows = 4,
 	...props
 }: InputProps) => {
+	const Component = type === "textarea" ? Textarea : HeadlessInput;
+
 	return (
 		<div className={cn("group/input w-full space-y-1.5 font-semibold")}>
 			<Field>
@@ -42,14 +47,16 @@ export const Input = ({
 					</Description>
 				)}
 
-				<HeadlessInput
+				<Component
 					type={type}
 					name={name}
 					value={value}
+					{...(type === "textarea" ? { rows } : {})}
+					// @ts-ignore
 					onChange={onChange}
 					placeholder={placeholder}
 					className={cn(
-						"w-full rounded-full border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal disabled:bg-gray-lighter",
+						"w-full rounded-3xl border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal disabled:bg-gray-lighter",
 						error && "border-red",
 						className,
 					)}

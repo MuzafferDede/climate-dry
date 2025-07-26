@@ -13,3 +13,7 @@ export const calculateSave = (price: number, retail: number) => {
 	if (retail <= 0 || price >= retail) return 0;
 	return Number.parseFloat((((retail - price) / retail) * 100).toFixed(0));
 };
+
+export function isNonEmptyArray<T>(value: unknown): value is T[] {
+	return Array.isArray(value) && value.length > 0;
+}

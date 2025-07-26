@@ -7,104 +7,55 @@ import {
 	redirect,
 	useNavigation,
 } from "react-router";
-import { z } from "zod";
 import { Button, Input, Loading } from "~/components";
 
+import { commitSession, getSession, register } from "~/.server";
 import { guestMiddleware } from "~/middlewares";
-import { commitSession, fetcher, getSession, putToast } from "~/services";
 import { ToastType } from "~/types";
-import { validator } from "~/utils";
+import { putToast } from "~/utils";
 import type { Route } from "./+types/register";
-
-// Zod schema for form validation
-const registerSchema = z
-	.object({
-		first_name: z.string().min(1, "First name is required"),
-		last_name: z.string().min(1, "Last name is required"),
-		email: z.string().email("Please enter a valid email"),
-		password: z.string().min(8, "Password must be at least 8 characters"),
-		password_confirmation: z.string(),
-		phone: z
-			.string()
-			.min(1, "Phone number is required")
-			.min(10, "Phone number must be at least 10 digits"),
-	})
-	.refine((data) => data.password === data.password_confirmation, {
-		message: "Passwords do not match",
-		path: ["password_confirmation"],
-	});
-
-interface RegisterResponse {
-	id: number;
-	email: string;
-}
 
 export async function action({ request }: ActionFunctionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 	const formData = await request.formData();
-	const formValues = Object.fromEntries(formData);
-	const validated = validator(formValues, registerSchema);
+	const {
+		response: customer,
+		error,
+		errors,
+	} = await register(session, formData);
 
-	if (validated.errors) {
-		putToast(session, {
-			message: "Please fix the errors below.",
-			type: ToastType.Error,
-		});
-
-		return data(
-			{
-				errors: validated.errors,
-			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	}
-
-	try {
-		const api = await fetcher(request);
-		await api.post<RegisterResponse>("/customer/register", validated.data);
-
+	if (customer) {
 		putToast(session, {
 			message: "Registration successful! You can now sign in.",
 			type: ToastType.Success,
 		});
-
 		return redirect("/login", {
 			headers: {
 				"Set-Cookie": await commitSession(session),
 			},
 		});
-	} catch (error) {
-		const message =
-			error instanceof Error
-				? error.message
-				: "Registration failed. Please try again.";
-
-		putToast(session, {
-			message,
-			type: ToastType.Error,
-		});
-
-		return data(
-			{
-				errors: null,
-			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
 	}
+
+	putToast(session, {
+		message: error || "Please fix the errors below.",
+		type: ToastType.Error,
+	});
+
+	return data(
+		{ error, errors },
+		{
+			headers: {
+				"Set-Cookie": await commitSession(session),
+			},
+		},
+	);
 }
 
 export const unstable_middleware = [guestMiddleware];
 
 export default function RegisterPage({ actionData }: Route.ComponentProps) {
-	const { errors } = actionData || {};
+	const { errors, error } = actionData || {};
+
 	const navigation = useNavigation();
 	const isSubmitting = navigation.state === "submitting";
 
@@ -143,7 +94,7 @@ export default function RegisterPage({ actionData }: Route.ComponentProps) {
 								name="email"
 								type="email"
 								placeholder="you@example.com"
-								error={errors?.email}
+								error={errors?.email || error}
 								autoComplete="email"
 								required
 							/>

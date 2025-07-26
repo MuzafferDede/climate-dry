@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
+import type { Page } from "~/types";
 import { cn } from "~/utils";
 
 export function ResponsiveSidebar({
 	pages,
 	segment,
-}: { pages: { slug: string; name: string }[]; segment: string }) {
+}: { pages: Page[]; segment: string }) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -44,32 +45,33 @@ export function ResponsiveSidebar({
 						</NavLink>
 					))}
 					{segment === "pages" && (
-						<NavLink
-							key="accessories"
-							to="/c/accessories"
-							className={({ isActive }) =>
-								cn(
-									"w-full cursor-pointer border-black border-t px-3 py-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
-									isActive && "bg-gray-lightest font-bold text-teal",
-								)
-							}
-						>
-							Accessories and Parts
-						</NavLink>
-					)}
-					{segment === "pages" && (
-						<NavLink
-							key="brands"
-							to="/brands"
-							className={({ isActive }) =>
-								cn(
-									"w-full cursor-pointer border-black border-t px-3 py-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
-									isActive && "bg-gray-lightest font-bold text-teal",
-								)
-							}
-						>
-							Brands
-						</NavLink>
+						<>
+							<NavLink
+								key="accessories"
+								to="/c/accessories"
+								className={({ isActive }) =>
+									cn(
+										"w-full cursor-pointer border-black border-t px-3 py-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
+										isActive && "bg-gray-lightest font-bold text-teal",
+									)
+								}
+							>
+								Accessories and Parts
+							</NavLink>
+
+							<NavLink
+								key="brands"
+								to="/brands"
+								className={({ isActive }) =>
+									cn(
+										"w-full cursor-pointer border-black border-t px-3 py-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal",
+										isActive && "bg-gray-lightest font-bold text-teal",
+									)
+								}
+							>
+								Brands
+							</NavLink>
+						</>
 					)}
 				</div>
 			</div>

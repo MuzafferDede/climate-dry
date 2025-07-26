@@ -23,7 +23,7 @@ export const Bottom = () => {
 							<img
 								className="size-6"
 								src={tool.icon}
-								alt={tool.label}
+								alt={tool.label || "image"}
 								loading="lazy"
 							/>
 							<div className="flex flex-col items-center justify-center">

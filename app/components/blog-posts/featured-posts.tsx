@@ -37,7 +37,7 @@ export const FeaturedPosts = ({
 						<AnimateOnScroll type="fadeInLeft">
 							<img
 								src={mainPost?.image_url ?? ""}
-								alt={mainPost.title}
+								alt={mainPost.title || "image"}
 								className="h-80 w-full object-cover"
 								loading="lazy"
 							/>
@@ -89,7 +89,7 @@ export const FeaturedPosts = ({
 								<div className="shrink-0">
 									<img
 										src={post?.image_url ?? ""}
-										alt={post.title}
+										alt={post.title || "image"}
 										className="size-30 rounded-full object-cover"
 										loading="lazy"
 									/>

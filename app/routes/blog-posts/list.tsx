@@ -1,9 +1,8 @@
 import { NavLink, href } from "react-router";
 import type { MetaFunction } from "react-router";
-import { getBlogPosts } from "~/services";
-import type { BlogPost } from "~/types";
 
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
+import { getBlogPosts, getSession } from "~/.server";
 import {
 	AnimateOnScroll,
 	BlogIntroText,
@@ -14,9 +13,9 @@ import {
 import type { Route } from "./+types/list";
 
 export const handle = {
-	breadcrumb: ({ params }: { params: { category?: string } }) => {
+	breadcrumb: ({ category }: { category: string }) => {
 		const crumbs = [{ label: "Advice Hub", path: "/info-hub" }];
-		if (params.category) {
+		if (category) {
 			crumbs.push({ label: "Case Studies", path: "/info-hub/case-studies" });
 		}
 		return crumbs;
@@ -29,28 +28,27 @@ export const meta: MetaFunction = () => [
 ];
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-	const response = await getBlogPosts(request, {
-		category: params.category,
-	});
-	return { posts: response.data, params };
+	const session = await getSession(request.headers.get("Cookie"));
+	const { category } = params;
+
+	const { response: posts } = await getBlogPosts(session, category);
+	return { posts, category };
 }
 
 export default function BlogPostListPage({
 	loaderData,
 	params,
-}: {
-	loaderData: { posts: BlogPost[]; params: { category?: string } };
-	params: { category?: string };
-}) {
+}: Route.ComponentProps) {
 	const { posts } = loaderData;
-	const titles = params?.category
+	const { category } = params;
+	const titles = category
 		? {
 				h2: "Tried and Tested Solutions",
 				h3: "Case studies",
 			}
 		: { h1: "Expert Articles", h3: "Advice & Article" };
 
-	if (!Array.isArray(posts)) {
+	if (!Array.isArray(posts.data)) {
 		return <div className="text-red">Error: Posts failed to load.</div>;
 	}
 
@@ -67,7 +65,7 @@ export default function BlogPostListPage({
 					<p className="text-5xl">{titles?.h3}</p>
 				</AnimateOnScroll>
 				<div className="grid gap-6 py-4 lg:grid-cols-2">
-					{posts.map((post) => (
+					{posts.data.map((post) => (
 						<AnimateOnScroll
 							key={post.id}
 							type="fadeInLeft"
@@ -79,7 +77,7 @@ export default function BlogPostListPage({
 							>
 								<img
 									src={post.image_url}
-									alt={post.title}
+									alt={post.title || "image"}
 									className="h-auto w-full object-cover object-center transition-all duration-300 ease-in-out group-hover:rotate-2 group-hover:scale-115"
 									loading="lazy"
 								/>

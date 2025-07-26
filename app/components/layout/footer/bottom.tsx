@@ -13,7 +13,7 @@ export const Bottom = () => {
 						<img
 							className="w-full"
 							src={logo.logo}
-							alt={logo.label}
+							alt={logo.label || "image"}
 							loading="lazy"
 						/>
 					</a>
@@ -30,7 +30,7 @@ export const Bottom = () => {
 						<img
 							className="w-full"
 							src={logo.logo}
-							alt={logo.label}
+							alt={logo.label || "image"}
 							loading="lazy"
 						/>
 					</a>

@@ -7,7 +7,7 @@ import {
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { href, useFetcher, useNavigate } from "react-router";
-import { Input } from "~/components/ui";
+import { Alert, Input } from "~/components/ui";
 import { Loading } from "~/components/ui";
 import type { loader } from "~/root";
 import type { Product } from "~/types";
@@ -71,7 +71,7 @@ export const Search = () => {
 									{product.images?.[0]?.url ? (
 										<img
 											src={product.images[0].url}
-											alt={product.name}
+											alt={product.name || "image"}
 											className="h-full w-full object-cover"
 										/>
 									) : (
@@ -100,7 +100,7 @@ export const Search = () => {
 				)}
 				{query && fetcher.state !== "loading" && products.length === 0 && (
 					<ComboboxOptions className="absolute inset-x-0 top-full z-200 mt-1 max-h-96 overflow-auto rounded-lg border border-gray-light bg-white p-5 text-center font-semibold text-gray shadow-gray shadow-xl">
-						<div>No results found</div>
+						<Alert>No results found for your search.</Alert>
 					</ComboboxOptions>
 				)}
 			</Combobox>

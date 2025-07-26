@@ -15,14 +15,15 @@ import { Link, href, useRouteLoaderData } from "react-router";
 import { Fragment } from "react/jsx-runtime";
 import { Button, Icon } from "~/components";
 import { useAppContext } from "~/contexts";
-import type { Cart, Customer } from "~/types";
+import type { loader } from "~/root";
+import type {} from "~/types";
 import { Search } from "./search";
 
 export const Middle = () => {
-	const data = useRouteLoaderData<{ customer: Customer; cart: Cart }>("root");
+	const rootData = useRouteLoaderData<typeof loader>("root");
 
-	const customer = data?.customer;
-	const cart = data?.cart;
+	const customer = rootData?.customer;
+	const cart = rootData?.cart;
 
 	const [showSearch, setShowSerach] = useState(false);
 	const { state, updateState } = useAppContext();

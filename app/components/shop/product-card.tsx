@@ -186,7 +186,7 @@ export const ProductCard = ({
 										disabled={!variant.in_stock}
 										onClick={() => setSubmittingVariantId(variant.id)}
 										className={cn(
-											"group er relative w-full cursor-po cursor-pointer overflow-hidden rounded-lg border border-gray-lighter p-4 text-left shadow-sm transition-all",
+											"group er relative w-full cursor-po cursor-pointer overflow-hidden rounded-lg border border-gray-lighter bg-stone-100 p-4 text-left shadow-sm transition-all",
 											variant.in_stock
 												? "hover:border-teal hover:bg-teal/10"
 												: "cursor-not-allowed opacity-50",
@@ -200,15 +200,22 @@ export const ProductCard = ({
 										<div className="flex items-start justify-between gap-4">
 											<div className="flex-1 space-y-2">
 												<p className="font-semibold text-navy-darkest text-sm capitalize">
-													{variant.name} - {variant.sku}
+													<span>{variant.name}</span>{" "}
+													<span className="text-gray">-</span>{" "}
+													<span className="text-teal">{variant.sku}</span>
 												</p>
 												<div className="flex flex-wrap gap-x-4 gap-y-1 text-gray text-sm">
 													{variant.attributes.map((attr) => (
-														<p key={attr.id}>
-															<span className="font-medium capitalize">
+														<p
+															key={attr.id}
+															className="flex gap-1 rounded-md bg-white px-2 py-1 shadow shadow-gray"
+														>
+															<span className="font-medium text-green capitalize">
 																{attr.name}:
-															</span>{" "}
-															<span>{attr.value}</span>
+															</span>
+															<span className="font-semibold text-navy-darkest">
+																{attr.value}
+															</span>
 														</p>
 													))}
 												</div>
@@ -217,7 +224,7 @@ export const ProductCard = ({
 														{currency(variant.price)}
 													</p>
 													{variant.retail_price > variant.price && (
-														<p className="text-gray-light text-sm line-through">
+														<p className="text-gray text-sm line-through">
 															{currency(variant.retail_price)}
 														</p>
 													)}

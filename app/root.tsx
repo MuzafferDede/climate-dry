@@ -21,6 +21,7 @@ import {
 } from "@heroicons/react/16/solid";
 import {
 	Button,
+	ContactUsWidget,
 	Footer,
 	Header,
 	Loading,
@@ -29,19 +30,16 @@ import {
 } from "~/components";
 import { AppProvider } from "~/contexts";
 import { useInViewport } from "~/hooks";
+import { commitSession, getCustomer, getSession } from "./.server";
 import {
-	commitSession,
 	getCart,
-	getCustomer,
 	getNavigation,
 	getPages,
 	getProducts,
-	getSession,
-	popToast,
-	putToast,
 	subsucribe,
-} from "./services";
+} from "./.server/services";
 import { ToastType } from "./types";
+import { popToast, putToast } from "./utils";
 
 export const links: Route.LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -61,44 +59,55 @@ export const handle = {
 };
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-	try {
-		const session = await getSession(request.headers.get("Cookie"));
-		const customer = await getCustomer(request);
-		const menu = await getNavigation(request);
-		const pages = await getPages(request);
-		const cart = await getCart(request);
-		const toast = await popToast(session);
-		const products = await getProducts(request);
-		session.set("guestId", cart.guest_id);
+	const session = await getSession(request.headers.get("Cookie"));
+	const url = new URL(request.url);
 
-		return data(
-			{ customer, menu, pages: pages.data, toast, cart, products },
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	} catch (error) {
-		throw {
-			message: error instanceof Error ? error.message : "There was an issue.",
-		};
+	const customer = getCustomer(session);
+	const toast = popToast(session);
+
+	const { response: menu, error: menuError } = await getNavigation(session);
+	const { response: pages, error: pagesError } = await getPages(session);
+	const { response: cart, error: cartError } = await getCart(session);
+	const { response: products, error: productsError } = await getProducts(
+		session,
+		url,
+	);
+
+	if (cart.guest_id) {
+		session.set("guestId", cart.guest_id);
 	}
+
+	const error = menuError || pagesError || cartError || productsError;
+
+	if (error) {
+		putToast(session, {
+			message: error,
+			type: ToastType.Error,
+		});
+	}
+
+	return data(
+		{ customer, menu, pages, toast, cart, products },
+		{
+			headers: {
+				"Set-Cookie": await commitSession(session),
+			},
+		},
+	);
 };
 
 export const action = async ({ request }: Route.ActionArgs) => {
 	const session = await getSession(request.headers.get("Cookie"));
-	const result = await subsucribe(request);
+	const formData = await request.formData();
+	const { response: result, error } = await subsucribe(session, formData);
 
-	putToast(
-		session,
-		result.error
-			? { message: result.error, type: ToastType.Error }
-			: { message: result.message, type: ToastType.Success },
-	);
+	putToast(session, {
+		message: error ?? "You have successfully subscribed to our newsletter.",
+		type: error ? ToastType.Error : ToastType.Success,
+	});
 
 	return data(
-		{ message: result.message, email: result.email },
+		{ message: result?.email },
 		{
 			headers: {
 				"Set-Cookie": await commitSession(session),
@@ -171,16 +180,17 @@ export default function App({ loaderData }: Route.ComponentProps) {
 				<Link
 					data-state={inView ? "hide" : "show"}
 					to="/#main"
-					className="fade-in zoom-in zoom-out fixed right-4 bottom-4 z-30 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
+					className="fade-in zoom-in zoom-out fixed right-4 bottom-12 z-30 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
 				>
 					<ChevronUpIcon className="size-10" />
 					<span className="sr-only">go to top</span>
 				</Link>
 				{isLoading && (
-					<div className="fixed right-0 bottom-0 z-50 m-4 flex animate-bounce items-center justify-center rounded-full bg-teal p-4 shadow-md">
-						<Loading className="text-white" />
+					<div className="fixed right-0 bottom-0 z-50 m-4 flex animate-bounce items-center justify-center gap-4 rounded-full bg-teal p-4 font-bold text-white shadow-md">
+						<Loading className="text-white" /> <span>Loading...</span>
 					</div>
 				)}
+				<ContactUsWidget />
 			</main>
 		</AppProvider>
 	);

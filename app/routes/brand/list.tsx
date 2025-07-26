@@ -1,8 +1,9 @@
 import { Link } from "react-router";
 import type { MetaFunction } from "react-router";
-import { getBrandItems, getSolutions } from "~/services";
+import { getBrands, getSession, getSolutions } from "~/.server";
 
 import { AnimateOnScroll, Breadcrumb, Solutions } from "~/components";
+import { isNonEmptyArray } from "~/utils";
 import type { Route } from "./+types/list";
 
 export const handle = {
@@ -22,15 +23,15 @@ export const meta: MetaFunction = () => [
 ];
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-	const response = await getBrandItems(request);
-	const solutions = await getSolutions(request);
-	return { brands: response.data, params, solutions };
+	const session = await getSession(request.headers.get("Cookie"));
+	const { response: brands } = await getBrands(session);
+	const { response: solutions } = await getSolutions(session);
+	return { brands, params, solutions };
 }
 
 export default function BrandListPage({ loaderData }: Route.ComponentProps) {
 	const { brands, solutions } = loaderData;
-
-	if (!Array.isArray(brands)) {
+	if (!isNonEmptyArray(brands.data)) {
 		return <div className="text-red">Error: brands failed to load.</div>;
 	}
 
@@ -46,7 +47,7 @@ export default function BrandListPage({ loaderData }: Route.ComponentProps) {
 					</div>
 					<AnimateOnScroll>
 						<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 p-8 lg:grid-cols-6">
-							{brands.map((brand) => (
+							{brands.data.map((brand) => (
 								<Link
 									to={`/brand/${brand.slug}`}
 									key={brand.slug}
@@ -55,7 +56,7 @@ export default function BrandListPage({ loaderData }: Route.ComponentProps) {
 									<img
 										className="h-auto w-full"
 										src={brand.logo_url}
-										alt={brand.name}
+										alt={brand.name || "image"}
 										loading="lazy"
 									/>
 								</Link>

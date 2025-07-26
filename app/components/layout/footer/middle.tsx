@@ -3,9 +3,9 @@ import { useState } from "react";
 import { Form, Link, useActionData, useRouteLoaderData } from "react-router";
 import tglLogo from "~/assets/TGL-logo.svg";
 import { Button, Icon, Input } from "~/components/ui";
+import type { loader } from "~/root";
 //import { footerHelperLinks, footerProductLinks } from "~/static";
 import { footerProductLinks } from "~/static";
-import type { Page } from "~/types";
 
 const SectionTitle = ({ label }: { label: string }) => {
 	return <h3 className="font-bold text-teal uppercase">{label}</h3>;
@@ -24,8 +24,9 @@ export const Middle = () => {
 	const [email, setEmail] = useState("");
 	const { email: success } = useActionData() || {};
 
-	const data = useRouteLoaderData("root");
-	const pages: Page[] = data?.pages;
+	const root = useRouteLoaderData<typeof loader>("root");
+
+	const { pages } = root || {};
 
 	return (
 		<div className="grid gap-8 gap-y-16 p-4 py-10 lg:mt-10 lg:grid-cols-2">
@@ -126,7 +127,7 @@ export const Middle = () => {
 								className="h-auto w-full"
 								src={logo}
 								key={logo}
-								alt={logo}
+								alt={logo || "image"}
 								loading="lazy"
 							/>
 						))}
@@ -146,21 +147,23 @@ export const Middle = () => {
 						))}
 					</ul>
 				</div>
-				<div className="flex flex-col gap-2.5">
-					<SectionTitle label="Help & Info" />
-					<ul className="flex flex-col gap-0.5 text-white">
-						{pages.map((helpLink) => (
-							<li key={helpLink.name}>
-								<Link
-									to={`/pages/${helpLink.slug}`}
-									className="font-bold hover:text-teal"
-								>
-									{helpLink.name}
-								</Link>
-							</li>
-						))}
-					</ul>
-				</div>
+				{pages && (
+					<div className="flex flex-col gap-2.5">
+						<SectionTitle label="Help & Info" />
+						<ul className="flex flex-col gap-0.5 text-white">
+							{pages.data.map((page) => (
+								<li key={page.name}>
+									<Link
+										to={`/pages/${page.slug}`}
+										className="font-bold hover:text-teal"
+									>
+										{page.name}
+									</Link>
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
 				<div className="flex flex-col gap-2.5">
 					<SectionTitle label="Follow Us" />
 					<div className="flex items-start gap-2 text-white">

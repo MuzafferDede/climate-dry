@@ -88,7 +88,7 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 										loading="lazy"
 										className="h-56 w-full object-cover"
 										src={solution.banner_url}
-										alt={solution.name}
+										alt={solution.name || "image"}
 									/>
 									<div className="space-y-6 p-8">
 										<h3 className="font-bold text-3xl">{solution.name}</h3>

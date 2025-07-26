@@ -47,7 +47,7 @@ export const Banners = ({ banners }: { banners: HeroBanner[] }) => {
 						<Image
 							src={banner.banner_url}
 							alt={banner.title}
-							className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:rotate-2 group-hover:scale-115"
+							className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
 						/>
 					</div>
 				</div>

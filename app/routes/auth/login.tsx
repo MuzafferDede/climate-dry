@@ -7,59 +7,28 @@ import {
 	redirect,
 	useNavigation,
 } from "react-router";
-import { z } from "zod";
+import { commitSession, getSession, login } from "~/.server";
 import { Button, Input, Loading } from "~/components";
 import { guestMiddleware } from "~/middlewares";
-import { commitSession, fetcher, getSession, putToast } from "~/services";
-import { type Customer, ToastType } from "~/types";
-import { validator } from "~/utils";
+import { ToastType } from "~/types";
+import { putToast } from "~/utils";
 import type { Route } from "./+types/login";
-
-// Schema for validating login form
-const loginSchema = z.object({
-	email: z.string().email("Please enter a valid email"),
-	password: z.string().min(8, "Password must be at least 8 characters"),
-});
 
 export async function action({ request }: ActionFunctionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 	const formData = await request.formData();
-	const formValues = Object.fromEntries(formData);
-	const validated = validator(formValues, loginSchema);
 
-	// ❌ Validation failed
-	if (validated.errors) {
-		putToast(session, {
-			message: "Please fix the errors below.",
-			type: ToastType.Error,
-		});
+	const { response: customer, error, errors } = await login(session, formData);
 
-		return data(
-			{ errors: validated.errors },
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	}
-
-	try {
-		const api = await fetcher(request);
-		const response = await api.post<Customer>(
-			"/customer/login",
-			validated.data,
-		);
-		const { first_name, last_name, id, email, token } = response;
-
-		// ✅ Login success
+	if (customer) {
 		session.set("customer", {
-			first_name,
-			last_name,
-			id,
-			email,
-			token,
+			first_name: customer.first_name,
+			last_name: customer.last_name,
+			id: customer.id,
+			email: customer.email,
+			token: customer.token,
 		});
+
 		putToast(session, {
 			message: "Login successful!",
 			type: ToastType.Success,
@@ -70,38 +39,28 @@ export async function action({ request }: ActionFunctionArgs) {
 				"Set-Cookie": await commitSession(session),
 			},
 		});
-	} catch (error) {
-		// ❌ API error
-		const message =
-			error instanceof Error
-				? error.message
-				: "Login failed. Please try again.";
-
-		putToast(session, {
-			message,
-			type: ToastType.Error,
-		});
-
-		return data(
-			{
-				errors: {
-					email: true,
-					password: true,
-				},
-			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
 	}
+
+	putToast(session, {
+		message: error,
+		type: ToastType.Error,
+	});
+
+	return data(
+		{ errors },
+		{
+			headers: {
+				"Set-Cookie": await commitSession(session),
+			},
+		},
+	);
 }
 
 export const unstable_middleware = [guestMiddleware];
 
 export default function LoginPage({ actionData }: Route.ComponentProps) {
 	const { errors } = actionData || {};
+
 	const navigation = useNavigation();
 	const isSubmitting = navigation.state === "submitting";
 

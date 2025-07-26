@@ -62,7 +62,7 @@ export const WhyChooseUs = () => {
 						<img
 							className="w-30"
 							src={card.icon}
-							alt={card.title}
+							alt={card.title || "image"}
 							loading="lazy"
 						/>
 						<div className="flex flex-col gap-2">

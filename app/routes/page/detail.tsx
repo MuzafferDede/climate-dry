@@ -1,14 +1,17 @@
 import { useRouteLoaderData } from "react-router";
-import { PageNavigation } from "~/components";
-import { ResponsiveSidebar } from "~/components/ui/";
-import { Breadcrumb } from "~/components/ui/breadcrumb";
-import { getPage } from "~/services";
+import { getPage, getSession } from "~/.server";
+import {
+	Breadcrumb,
+	ContactUsForm,
+	PageNavigation,
+	ResponsiveSidebar,
+} from "~/components";
 import type { Page } from "~/types";
 import type { Route } from "./+types/detail";
 
 export const meta = ({ data }: Route.MetaArgs) => [
 	{ title: data.page.meta_title ?? data.page.name },
-	{ name: "description", content: data.page.meta_description ?? "" },
+	{ name: "description", content: data.page.meta_description },
 ];
 
 export const handle = {
@@ -19,17 +22,19 @@ export const handle = {
 };
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-	const response = await getPage(request, params.slug);
+	const session = await getSession(request.headers.get("Cookie"));
+	const { slug } = params;
+
+	const { response: page } = await getPage(session, slug);
+
 	return {
-		page: response.data,
+		page,
 	};
 }
 
 export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 	const { page } = loaderData;
-
-	const data = useRouteLoaderData("root");
-	const pages: Page[] = data?.pages;
+	const { pages } = useRouteLoaderData("root");
 
 	return (
 		<div className="space-y-8 px-5 py-8">
@@ -47,15 +52,16 @@ export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 				<PageNavigation />
 
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-					<ResponsiveSidebar pages={pages} segment="pages" />
+					<ResponsiveSidebar pages={pages.data} segment="pages" />
 
 					<main className="lg:col-span-3">
-						<div className="mb-4 gap-4">
+						<div className="mb-4 grid gap-4">
 							<div
 								className="prose max-w-none"
 								// biome-ignore lint/security/noDangerouslySetInnerHtml: safe backend HTML
-								dangerouslySetInnerHTML={{ __html: page.description }}
+								dangerouslySetInnerHTML={{ __html: page.description ?? "" }}
 							/>
+							{page.slug === "contact-us" && <ContactUsForm />}
 						</div>
 					</main>
 				</div>

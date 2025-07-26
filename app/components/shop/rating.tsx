@@ -32,9 +32,9 @@ export const Rating: React.FC<StarRatingDisplayProps> = ({
 					<Star key={star} filled={star <= fullStars} />
 				))}
 			</div>
-			{reviewCount && (
+			{reviewCount !== undefined && (
 				<span className="text-xs">
-					({reviewCount} {pluralize(reviewCount, "review")})
+					{reviewCount} {pluralize(Number(reviewCount), "review")}
 				</span>
 			)}
 		</div>

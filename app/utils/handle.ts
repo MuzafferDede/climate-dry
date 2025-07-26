@@ -3,12 +3,6 @@ export interface BreadcrumbItem {
 	path: string;
 }
 
-export const createBreadcrumbHandle = (breadcrumbs: BreadcrumbItem[]) => {
-	return {
-		breadcrumb: () => breadcrumbs,
-	};
-};
-
 export const generateBreadcrumb = (
 	items: Array<{ name: string; slug: string }>,
 	basePath = "",

@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from "react-router";
+import { type Session, createCookieSessionStorage } from "react-router";
 import type { Customer, Toast } from "~/types";
 
 type SessionData = {
@@ -10,6 +10,8 @@ type SessionFlashData = {
 	error: string;
 	toast?: Toast;
 };
+
+export type TSession = Session<SessionData, SessionFlashData>;
 
 const { getSession, commitSession, destroySession } =
 	createCookieSessionStorage<SessionData, SessionFlashData>({

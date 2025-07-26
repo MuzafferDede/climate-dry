@@ -1,5 +1,16 @@
 import { data } from "react-router";
 import {
+	addToCart,
+	commitSession,
+	getBanners,
+	getBrands,
+	getFeaturedBlogPosts,
+	getFeaturedCategories,
+	getSession,
+	getShopByCategories,
+	getSolutions,
+} from "~/.server";
+import {
 	Banners,
 	Brands,
 	FeaturedCategories,
@@ -10,19 +21,8 @@ import {
 	Solutions,
 	Support,
 } from "~/components";
-import {
-	addToCart,
-	commitSession,
-	getBanners,
-	getBrands,
-	getFeaturedBlogPosts,
-	getFeaturedCategories,
-	getSession,
-	getShopByCategories,
-	getSolutions,
-	putToast,
-} from "~/services";
 import { ToastType } from "~/types";
+import { isNonEmptyArray, putToast } from "~/utils";
 import type { Route } from "./+types/home";
 
 export function meta() {
@@ -36,12 +36,14 @@ export function meta() {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-	const banners = await getBanners(request);
-	const brands = await getBrands(request);
-	const featuredBlogPosts = await getFeaturedBlogPosts(request);
-	const featuredCategories = await getFeaturedCategories(request);
-	const shopByCategories = await getShopByCategories(request);
-	const solutions = await getSolutions(request);
+	const session = await getSession(request.headers.get("Cookie"));
+
+	const { response: banners } = await getBanners(session);
+	const { response: brands } = await getBrands(session);
+	const { response: featuredBlogPosts } = await getFeaturedBlogPosts(session);
+	const { response: featuredCategories } = await getFeaturedCategories(session);
+	const { response: shopByCategories } = await getShopByCategories(session);
+	const { response: solutions } = await getSolutions(session);
 
 	return {
 		banners,
@@ -55,46 +57,29 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export async function action({ request }: Route.ActionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
+	const formData = await request.formData();
 
-	try {
-		const result = await addToCart(request);
+	const { response: cartItem, error } = await addToCart(session, formData);
 
-		putToast(session, {
-			message: `${result.variant.product.name} added to cart.`,
-			type: ToastType.Success,
-			action: {
-				label: "View Cart",
-				path: "/cart",
-			},
-		});
+	putToast(session, {
+		message: error ?? `${cartItem?.variant.product.name} added to cart.`,
+		type: error ? ToastType.Error : ToastType.Success,
+		action: {
+			label: "View Cart",
+			path: "/cart",
+		},
+	});
 
-		return data(
-			{
-				result,
+	return data(
+		{
+			cartItem,
+		},
+		{
+			headers: {
+				"Set-Cookie": await commitSession(session),
 			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	} catch (error) {
-		putToast(session, {
-			message: error instanceof Error ? error.message : String(error),
-			type: ToastType.Error,
-		});
-
-		return data(
-			{
-				error: error instanceof Error ? error.message : String(error),
-			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	}
+		},
+	);
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
@@ -113,10 +98,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			<Marquee />
 
 			{/* Large sliding banner */}
-			{banners && <Banners banners={banners} />}
+			{isNonEmptyArray(banners?.data) && <Banners banners={banners.data} />}
 
 			{/* featuredCategories */}
-			{featuredCategories.data.length > 0 && (
+			{isNonEmptyArray(featuredCategories?.data) && (
 				<FeaturedCategories categories={featuredCategories.data} />
 			)}
 
@@ -124,21 +109,23 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			<Support />
 
 			{/* Solutions feature */}
-			{solutions.data.length > 0 && <Solutions solutions={solutions.data} />}
+			{isNonEmptyArray(solutions?.data) && (
+				<Solutions solutions={solutions.data} />
+			)}
 
 			{/* 4 shopByCategories icons */}
-			{shopByCategories.data.length > 0 && (
+			{isNonEmptyArray(shopByCategories?.data) && (
 				<ShopByCategory categories={shopByCategories.data} />
 			)}
 
 			{/* Trusted partners icons */}
-			{brands.length > 0 && <Brands brands={brands} />}
+			{isNonEmptyArray(brands?.data) && <Brands brands={brands.data} />}
 
 			{/* Two info images */}
 			<Info />
 
 			{/* Featured posts */}
-			{featuredBlogPosts.data.length > 0 && (
+			{isNonEmptyArray(featuredBlogPosts?.data) && (
 				<FeaturedPosts posts={featuredBlogPosts.data} from="home" />
 			)}
 		</div>

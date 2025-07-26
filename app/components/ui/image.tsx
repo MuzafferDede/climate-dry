@@ -27,7 +27,7 @@ export const Image = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 				{...rest}
 				ref={imgRef}
 				src={src}
-				alt={alt}
+				alt={alt || "image"}
 				onLoad={() => setLoaded(true)}
 				className={cn(
 					"fade-in h-full w-full animate-in object-cover duration-500",

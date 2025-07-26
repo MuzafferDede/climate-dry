@@ -1,10 +1,9 @@
-import { getSession } from "./session.server";
+import type { TSession } from "./session";
 /**
  * Simple function to check if a user is authenticated and get their data
  */
-export async function getCustomer(request: Request) {
+export function getCustomer(session: TSession) {
 	// Get session token
-	const session = await getSession(request.headers.get("Cookie"));
 	const user = session.get("customer");
 
 	// No user means not authenticated

@@ -1,6 +1,6 @@
+import { getSession, getSolution, getSolutions } from "~/.server";
 import { ResponsiveSidebar } from "~/components/ui/";
 import { Breadcrumb } from "~/components/ui/breadcrumb";
-import { getSolution, getSolutions } from "~/services";
 import type { Solution } from "~/types";
 import type { Route } from "./+types/detail";
 
@@ -17,10 +17,12 @@ export const handle = {
 };
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-	const response = await getSolution(request, params.slug);
-	const solution = response.data;
+	const session = await getSession(request.headers.get("Cookie"));
+	const { slug } = params;
 
-	const solutions = await getSolutions(request);
+	const { response: solution } = await getSolution(session, slug);
+
+	const { response: solutions } = await getSolutions(session);
 
 	return { solution, solutions };
 }
@@ -29,7 +31,6 @@ export default function SolutionDetailPage({
 	loaderData,
 }: Route.ComponentProps) {
 	const { solution, solutions } = loaderData;
-	const solutionsNav: Solution[] = solutions.data ?? [];
 
 	return (
 		<div className="space-y-8 px-5 py-8">
@@ -47,7 +48,7 @@ export default function SolutionDetailPage({
 				</p>
 				<p className="pb-4 font-light text-lg">Select your need from below.</p>
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-					<ResponsiveSidebar pages={solutionsNav} segment="solution" />
+					<ResponsiveSidebar pages={solutions.data} segment="solution" />
 
 					<main className="lg:col-span-3">
 						<div className="mb-4 gap-4">
@@ -55,7 +56,7 @@ export default function SolutionDetailPage({
 								<h1>{solution.name}</h1>
 								<img
 									src={solution.banner_url}
-									alt={solution.name}
+									alt={solution.name || "image"}
 									className="h-80 w-full object-cover"
 									loading="lazy"
 								/>

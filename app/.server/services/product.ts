@@ -1,29 +1,24 @@
-import type {
-	ApiListResponse,
-	ApiResponse,
-	Product,
-	ProductCategory,
-} from "~/types";
+import type { Session } from "react-router";
+import type { ApiListResponse, Product, ProductCategory } from "~/types";
 import { queryBuilder } from "~/utils";
-import { fetcher } from "./api.server";
+import { fetcher } from "../libs";
 
 export async function getProductCategory(
-	request: Request,
+	session: Session,
 	slug: string | undefined,
 ) {
-	const api = await fetcher(request);
+	const api = fetcher(session);
 
-	return await api.get<ApiResponse<ProductCategory>>(
+	return await api.get<ProductCategory>(
 		`/product-categories/${slug}?include=parent,children`,
 	);
 }
 
 export async function getCategoryProducts(
-	request: Request,
+	session: Session,
+	url: URL,
 	category: string | undefined,
 ) {
-	const url = new URL(request.url);
-
 	const defaults = {
 		page: "1",
 		per_page: "20",
@@ -40,7 +35,7 @@ export async function getCategoryProducts(
 		...mergedParams,
 	});
 
-	const api = await fetcher(request);
+	const api = fetcher(session);
 
 	const response = await api.get<ApiListResponse<Product>>(
 		`/products?${query}`,
@@ -49,11 +44,10 @@ export async function getCategoryProducts(
 	return response;
 }
 export async function getBrandProducts(
-	request: Request,
+	session: Session,
+	url: URL,
 	brand: string | undefined,
 ) {
-	const url = new URL(request.url);
-
 	const query = queryBuilder({
 		"filter[brand]": brand,
 		include: "brand,discount,variants,approvedReviews",
@@ -62,7 +56,7 @@ export async function getBrandProducts(
 		sort: url.searchParams.get("sort") || "price-low",
 	});
 
-	const api = await fetcher(request);
+	const api = fetcher(session);
 
 	const response = await api.get<ApiListResponse<Product>>(
 		`/products?${query}`,
@@ -71,15 +65,14 @@ export async function getBrandProducts(
 	return response;
 }
 
-export async function getProduct(request: Request, slug: string | undefined) {
-	const api = await fetcher(request);
-	return await api.get<ApiResponse<Product>>(
+export async function getProduct(session: Session, slug: string | undefined) {
+	const api = fetcher(session);
+	return await api.get<Product>(
 		`/products/${slug}?include=brand,discount,category,relatedProducts,extras,variants,approvedReviews`,
 	);
 }
 
-export async function getProducts(request: Request) {
-	const url = new URL(request.url);
+export async function getProducts(session: Session, url: URL) {
 	const q = url.searchParams.get("q");
 
 	const query = queryBuilder({
@@ -87,13 +80,21 @@ export async function getProducts(request: Request) {
 		include: "brand,approvedReviews",
 	});
 
-	if (!q) return;
-	const api = await fetcher(request);
-	return await api.get<ApiListResponse<Product>>(`/products?${query}`);
+	if (!q) return {};
+
+	const api = fetcher(session);
+	const { response, error } = await api.get<ApiListResponse<Product>>(
+		`/products?${query}`,
+	);
+
+	return {
+		response,
+		error,
+	};
 }
 
-export async function addReview(request: Request, formData: FormData) {
-	const api = await fetcher(request);
+export async function addReview(session: Session, formData: FormData) {
+	const api = fetcher(session);
 	const rating = formData.get("rating");
 	const review = formData.get("review");
 	const slug = formData.get("slug");
@@ -102,7 +103,7 @@ export async function addReview(request: Request, formData: FormData) {
 		throw new Error("Missing rating or review.");
 	}
 
-	return await api.post<ApiResponse<Product["reviews"]["data"][number]>>(
+	return await api.post<Product["reviews"]["data"][number]>(
 		`/products/${slug}/reviews`,
 		{
 			rating: Number(rating),

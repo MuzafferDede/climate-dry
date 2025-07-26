@@ -1,12 +1,14 @@
 import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
+import { NavLink, data, useLocation, useSearchParams } from "react-router";
 import {
-	type LoaderFunctionArgs,
-	NavLink,
-	data,
-	useLocation,
-	useSearchParams,
-} from "react-router";
+	addToCart,
+	commitSession,
+	getCategoryProducts,
+	getProductCategory,
+	getSession,
+} from "~/.server";
 import {
+	Alert,
 	Breadcrumb,
 	Button,
 	FilterComponents,
@@ -16,16 +18,8 @@ import {
 	Select,
 	Service,
 } from "~/components";
-import {
-	addToCart,
-	commitSession,
-	getCategoryProducts,
-	getProductCategory,
-	getSession,
-	putToast,
-} from "~/services";
 import { type Product, ToastType } from "~/types";
-import { cn, generateBreadcrumb } from "~/utils";
+import { cn, generateBreadcrumb, isNonEmptyArray, putToast } from "~/utils";
 import type { Route } from "./+types/list";
 
 export const handle = {
@@ -40,9 +34,9 @@ export const handle = {
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {
-	if (!data?.category) return [];
-
 	const { category } = data;
+
+	if (!category) return [];
 
 	return [
 		{ title: category.meta_title || category.name },
@@ -57,24 +51,24 @@ export const meta = ({ data }: Route.MetaArgs) => {
 	];
 };
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: Route.LoaderArgs) {
+	const session = await getSession(request.headers.get("Cookie"));
+	const url = new URL(request.url);
 	const { slug } = params;
 
-	const categoryResponse = await getProductCategory(request, slug);
-	const productsResponse = await getCategoryProducts(request, slug);
+	const { response: category } = await getProductCategory(session, slug);
+	const { response: products } = await getCategoryProducts(session, url, slug);
 
-	const category = categoryResponse.data;
-	const products = productsResponse.data;
-
-	const filters = productsResponse.filters;
+	const filters = products.filters;
 
 	const pagination =
-		products.length > 0 && productsResponse.meta?.links
-			? productsResponse.meta.links
+		isNonEmptyArray(products) && products.meta?.links
+			? products.meta?.links
 			: null;
 
 	// Build ancestry array from parent chain
 	const ancestry: { name: string; slug: string }[] = [];
+
 	let current = category.parent;
 	while (current) {
 		ancestry.unshift({ name: current.name, slug: current.slug });
@@ -92,47 +86,30 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request }: Route.ActionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
+	const formData = await request.formData();
 
-	try {
-		const result = await addToCart(request);
+	const { response: cartItem, error } = await addToCart(session, formData);
+	putToast(session, {
+		message: error ?? `${cartItem?.variant.product.name} added to cart.`,
+		type: error ? ToastType.Error : ToastType.Success,
+		action: {
+			label: "View Cart",
+			path: "/cart",
+		},
+	});
 
-		putToast(session, {
-			message: `${result.variant.product.name} added to cart.`,
-			type: ToastType.Success,
-			action: {
-				label: "View Cart",
-				path: "/cart",
+	return data(
+		{
+			cartItem,
+		},
+		{
+			headers: {
+				"Set-Cookie": await commitSession(session),
 			},
-		});
-
-		return data(
-			{
-				result,
-			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	} catch (error) {
-		putToast(session, {
-			message: error instanceof Error ? error.message : String(error),
-			type: ToastType.Error,
-		});
-
-		return data(
-			{
-				error: error instanceof Error ? error.message : String(error),
-			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	}
+		},
+	);
 }
+
 const TechnicalService = {
 	title: "Technical Support",
 	description:
@@ -179,6 +156,8 @@ export default function ProductCategoryPage({
 	const reset = () => {
 		window.location.href = location.pathname;
 	};
+
+	if (!category) return null;
 
 	return (
 		<div className="space-y-8 px-5 py-8">
@@ -303,24 +282,22 @@ export default function ProductCategoryPage({
 							/>
 						</div>
 
-						{products?.length > 0 ? (
+						{isNonEmptyArray(products.data) ? (
 							<div
 								className={cn(
 									"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",
 									cardView && "lg:grid-cols-1",
 								)}
 							>
-								{(products ?? []).map((product: Product) => (
+								{(products.data ?? []).map((product: Product) => (
 									<ProductCard {...product} key={product.id} />
 								))}
 							</div>
 						) : (
-							<div className="flex flex-col items-center justify-center gap-1 rounded-xl border border-gray-light bg-white p-4 font-semibold text-gray shadow">
-								<p>
-									We couldn’t find any products matching your search. Try
-									adjusting your filters or using different keywords.
-								</p>
-							</div>
+							<Alert>
+								We couldn’t find any products matching your search. Try
+								adjusting your filters.
+							</Alert>
 						)}
 					</main>
 				</div>

@@ -7,7 +7,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Form, useRouteLoaderData } from "react-router";
-import type { Cart } from "~/types";
+import type { loader } from "~/root";
 import { cn } from "~/utils";
 import { CartSummary } from "../cart/cart-summary";
 import { Button, Input, Modal } from "../ui";
@@ -78,8 +78,8 @@ export const CheckoutFormWizard = ({
 	const [formData, setFormData] =
 		useState<Record<string, string>>(defaultFormData);
 
-	const cartData = useRouteLoaderData<{ cart: Cart }>("root");
-	const cart = cartData?.cart;
+	const rootData = useRouteLoaderData<typeof loader>("root");
+	const cart = rootData?.cart;
 
 	const steps = useMemo(
 		() => [

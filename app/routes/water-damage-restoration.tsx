@@ -97,7 +97,7 @@ function IconWithTextGrid({
 				<div key={item.title} className="text-center">
 					<img
 						src={item.image}
-						alt={item.alt}
+						alt={item.alt || "image"}
 						className="mx-auto mb-4"
 						width={125}
 						height={90}
@@ -149,7 +149,7 @@ function ProductSection({
 				<div className="flex-1 lg:w-1/2">
 					<img
 						src={image}
-						alt={alt}
+						alt={alt || "image"}
 						className="mx-auto w-full max-w-md object-cover"
 						loading="lazy"
 					/>

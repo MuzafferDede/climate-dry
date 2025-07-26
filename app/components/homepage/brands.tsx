@@ -23,12 +23,16 @@ export const Brands = ({ brands }: { brands: Brand[] }) => {
 							key={brand.slug}
 							className="w-44 shrink-0 snap-center overflow-hidden rounded-lg bg-white transition-all hover:scale-105 hover:shadow-lg"
 						>
-							<img
-								className="h-auto w-full"
-								src={brand.logo_url}
-								alt={brand.name}
-								loading="lazy"
-							/>
+							{brand.logo_url ? (
+								<img
+									className="h-auto w-full"
+									src={brand.logo_url}
+									alt={brand.name}
+									loading="lazy"
+								/>
+							) : (
+								<p>{brand.name}</p>
+							)}
 						</Link>
 					))}
 				</div>

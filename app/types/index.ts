@@ -32,10 +32,6 @@ export type ApiMeta = {
 	total: number;
 };
 
-export type ApiResponse<T> = {
-	data: T;
-};
-
 export type ApiListResponse<T> = {
 	data: T[];
 	links?: ApiLinks;
@@ -251,6 +247,7 @@ export type Brand = {
 export type FooterLink = { label: string; path: string };
 
 export type HeroBanner = {
+	id: number;
 	banner_url: string;
 	button_text: string;
 	description: string;

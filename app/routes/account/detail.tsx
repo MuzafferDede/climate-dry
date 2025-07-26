@@ -7,12 +7,6 @@ export function meta() {
 	];
 }
 
-export async function loader() {
-	return {
-		title: "My Account",
-	};
-}
-
 export const unstable_middleware = [authMiddleware];
 
 export default function AccountPage() {

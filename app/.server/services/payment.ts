@@ -1,13 +1,14 @@
+import type { Session } from "react-router";
 import type { StripePaymentIntent } from "~/types";
-import { fetcher } from "./api.server";
+import { fetcher } from "../libs";
 
 export async function getPaymentIntentSecret(
-	request: Request,
+	session: Session,
 	formData: FormData,
 ) {
 	const formValues = Object.fromEntries(formData);
 
-	const api = await fetcher(request);
+	const api = fetcher(session);
 
 	return await api.post<StripePaymentIntent>(
 		"/orders/create-payment-intent",

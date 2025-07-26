@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { Form, data, useRouteLoaderData } from "react-router";
 import {
+	addToCart,
+	applyDiscount,
+	commitSession,
+	getPaymentIntentSecret,
+	getSession,
+	removeCartItem,
+	updateCartItem,
+} from "~/.server";
+import {
 	Button,
 	CartItem,
 	CartSummary,
 	CheckoutFormWizard,
 	Input,
 } from "~/components";
-import {
-	applyDiscount,
-	commitSession,
-	getPaymentIntentSecret,
-	getSession,
-	putToast,
-	removeCartItem,
-	updateCartItem,
-} from "~/services";
 import { type Cart, ToastType } from "~/types";
+import { putToast } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const meta = () => [
@@ -31,68 +32,52 @@ export const meta = () => [
 	},
 ];
 
+type Actions = "add" | "delete" | "discount" | "checkout" | "update";
+
+const callables = {
+	add: addToCart,
+	delete: removeCartItem,
+	discount: applyDiscount,
+	checkout: getPaymentIntentSecret,
+	update: updateCartItem,
+};
+
 export async function action({ request }: Route.ActionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 	const formData = await request.formData();
-	const action = formData.get("_action");
+	const rawAction = formData.get("_action");
+	const action =
+		typeof rawAction === "string" && rawAction in callables
+			? (rawAction as Actions)
+			: "update";
 
-	const respond = async (
-		payload: Record<string, unknown> = { errors: null },
-		options?: { message?: string; type?: ToastType },
-	) => {
-		if (options?.message) {
-			putToast(session, {
-				message: options.message,
-				type: options.type ?? ToastType.Success,
-			});
-		}
-		return data(payload, {
+	const callable = callables[action];
+
+	const { response, error } = await callable(session, formData);
+
+	if (error) {
+		putToast(session, {
+			message: error,
+			type: ToastType.Error,
+		});
+	}
+
+	return data(
+		{ response, error },
+		{
 			headers: {
 				"Set-Cookie": await commitSession(session),
 			},
-		});
-	};
-
-	try {
-		if (action === "delete") {
-			await removeCartItem(request, formData);
-			return respond(undefined, { message: "Item removed from cart" });
-		}
-
-		if (action === "checkout") {
-			const result = await getPaymentIntentSecret(request, formData);
-			return respond({ clientSecret: result.client_secret });
-		}
-
-		if (action === "discount") {
-			try {
-				await applyDiscount(request, formData);
-				return respond(undefined, { message: "Discount code applied" });
-			} catch (error) {
-				const message =
-					error instanceof Error ? error.message : "Invalid discount code";
-				return respond(
-					{ errors: { discount: message } },
-					{ message, type: ToastType.Error },
-				);
-			}
-		}
-
-		// default: update cart item
-		await updateCartItem(request, formData);
-		return respond(undefined, { message: "Cart updated" });
-	} catch (error) {
-		const message =
-			error instanceof Error ? error.message : "An error occurred";
-		return respond(undefined, { message, type: ToastType.Error });
-	}
+		},
+	);
 }
 
 export default function ({ actionData }: Route.ComponentProps) {
 	const { cart } = useRouteLoaderData<{ cart: Cart }>("root") || {};
+	const clientSecret = (actionData as { response: { client_secret: string } })
+		?.response?.client_secret;
 
-	const clientSecret = actionData?.clientSecret ?? "";
-	const errors = actionData?.errors ?? { discount: "" };
+	const error = actionData?.error;
 
 	const items = cart?.items || [];
 
@@ -146,7 +131,7 @@ export default function ({ actionData }: Route.ComponentProps) {
 										placeholder="Enter discount code"
 										className="peer flex-1"
 										defaultValue={cart?.discount?.code}
-										error={errors?.discount}
+										error={error}
 										disabled={Boolean(cart?.totals.discount_amount)}
 										required
 									/>

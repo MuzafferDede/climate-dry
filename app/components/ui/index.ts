@@ -1,3 +1,4 @@
+export * from "./alert";
 export * from "./animate-on-scroll";
 export * from "./breadcrumb";
 export * from "./button";

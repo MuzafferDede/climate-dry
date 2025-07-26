@@ -1,10 +1,12 @@
 import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
+import { NavLink, data, useSearchParams } from "react-router";
 import {
-	type LoaderFunctionArgs,
-	NavLink,
-	data,
-	useSearchParams,
-} from "react-router";
+	addToCart,
+	commitSession,
+	getBrand,
+	getBrandProducts,
+	getSession,
+} from "~/.server";
 import {
 	Breadcrumb,
 	Button,
@@ -12,16 +14,8 @@ import {
 	ProductCard,
 	Select,
 } from "~/components";
-import {
-	addToCart,
-	commitSession,
-	getBrand,
-	getBrandProducts,
-	getSession,
-	putToast,
-} from "~/services";
 import { type Brand, type Product, ToastType } from "~/types";
-import { cn } from "~/utils";
+import { cn, isNonEmptyArray, putToast } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const handle = {
@@ -32,8 +26,9 @@ export const handle = {
 };
 
 export const meta = ({ data }: { data: { brand: Brand } }) => {
-	if (!data?.brand) return [];
 	const { brand } = data;
+	if (!brand) return [];
+
 	return [
 		{ title: brand.meta_title },
 		{
@@ -47,18 +42,18 @@ export const meta = ({ data }: { data: { brand: Brand } }) => {
 	];
 };
 
-export async function loader({ request, params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: Route.LoaderArgs) {
+	const session = await getSession(request.headers.get("Cookie"));
+	const url = new URL(request.url);
+
 	const { slug } = params;
 
-	const brandResponse = await getBrand(request, slug);
-	const productsResponse = await getBrandProducts(request, slug);
-
-	const brand = brandResponse.data;
-	const products = productsResponse.data;
+	const { response: brand } = await getBrand(session, slug);
+	const { response: products } = await getBrandProducts(session, url, slug);
 
 	const pagination =
-		products.length > 0 && productsResponse.meta?.links
-			? productsResponse.meta.links
+		products.data.length > 0 && products.meta?.links
+			? products.meta.links
 			: null;
 
 	return {
@@ -70,46 +65,27 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export async function action({ request }: Route.ActionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
+	const formData = await request.formData();
 
-	try {
-		const result = await addToCart(request);
+	const { response, error } = await addToCart(session, formData);
 
-		putToast(session, {
-			message: `${result.variant.product.name} added to cart.`,
-			type: ToastType.Success,
-			action: {
-				label: "View Cart",
-				path: "/cart",
-			},
-		});
+	putToast(session, {
+		message: error || `${response.variant.product.name} added to cart.`,
+		type: error ? ToastType.Error : ToastType.Success,
+		action: {
+			label: "View Cart",
+			path: "/cart",
+		},
+	});
 
-		return data(
-			{
-				result,
+	return data(
+		{ response },
+		{
+			headers: {
+				"Set-Cookie": await commitSession(session),
 			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	} catch (error) {
-		putToast(session, {
-			message: error instanceof Error ? error.message : String(error),
-			type: ToastType.Error,
-		});
-
-		return data(
-			{
-				error: error instanceof Error ? error.message : String(error),
-			},
-			{
-				headers: {
-					"Set-Cookie": await commitSession(session),
-				},
-			},
-		);
-	}
+		},
+	);
 }
 
 const SortBy = [
@@ -155,7 +131,7 @@ export default function BrandPage({ loaderData }: Route.ComponentProps) {
 				</div>
 			</div>
 
-			{products?.length > 0 && (
+			{isNonEmptyArray(products.data) && (
 				<div className="relative isolate bg-gray-lightest">
 					<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
 						<main className="lg:col-span-4">
@@ -208,7 +184,7 @@ export default function BrandPage({ loaderData }: Route.ComponentProps) {
 									cardView && "lg:grid-cols-1",
 								)}
 							>
-								{(products ?? []).map((product: Product) => (
+								{(products.data ?? []).map((product: Product) => (
 									<ProductCard {...product} key={product.id} />
 								))}
 							</div>

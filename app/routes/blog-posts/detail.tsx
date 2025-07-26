@@ -1,3 +1,4 @@
+import { getBlogPost, getFeaturedBlogPosts, getSession } from "~/.server";
 import {
 	AnimateOnScroll,
 	BlogIntroText,
@@ -5,8 +6,8 @@ import {
 	FeaturedPosts,
 	PageNavigation,
 } from "~/components";
-import { getBlogPostBySlug, getFeaturedBlogPosts } from "~/services";
 import type { BlogPost } from "~/types";
+import { isNonEmptyArray } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const handle = {
@@ -16,15 +17,23 @@ export const handle = {
 	],
 };
 
-export const meta = ({ data }: Route.MetaArgs) => [
-	{ title: data.post.title },
-	{ name: "description", content: data?.post.meta_description ?? "" },
-];
+export const meta = ({ data }: Route.MetaArgs) => {
+	if (data.post) {
+		return [
+			[
+				{ title: data.post.title },
+				{ name: "description", content: data.post.meta_description ?? "" },
+			],
+		];
+	}
+};
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-	const response = await getBlogPostBySlug(request, params.slug);
-	const post = response.data;
-	const featuredBlogPosts = await getFeaturedBlogPosts(request);
+	const session = await getSession(request.headers.get("Cookie"));
+	const { slug } = params;
+
+	const { response: post } = await getBlogPost(session, slug);
+	const { response: featuredBlogPosts } = await getFeaturedBlogPosts(session);
 
 	return { post, featuredBlogPosts };
 }
@@ -41,6 +50,9 @@ export default function BlogDetailPage({
 			}
 		: { h2: "Expert Articles", h3: "Advice & Article" };
 
+	if (!post) {
+		return null;
+	}
 	return (
 		<div>
 			<article className="mx-auto max-w-7xl space-y-4 p-6">
@@ -58,7 +70,7 @@ export default function BlogDetailPage({
 				</h1>
 				<img
 					src={post.image_url}
-					alt={post.title}
+					alt={post.title || "image"}
 					className="h-80 w-full object-cover"
 					loading="lazy"
 				/>
@@ -70,7 +82,7 @@ export default function BlogDetailPage({
 			</article>
 
 			{/* Featured posts */}
-			{featuredBlogPosts.data.length > 0 && (
+			{isNonEmptyArray(featuredBlogPosts.data) && (
 				<FeaturedPosts posts={featuredBlogPosts.data} from="article" />
 			)}
 		</div>
