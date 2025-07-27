@@ -39,14 +39,14 @@ export function Alert({ variant = "info", title, children }: AlertProps) {
 		<div
 			role="alert"
 			className={cn(
-				"flex items-start gap-4 rounded border-l-4 p-4 text-left font-semibold text-sm shadow",
+				"flex items-start gap-2 rounded border-l-4 p-2 text-left font-semibold text-sm shadow",
 				bg,
 				text,
 				border,
 			)}
 		>
-			<Icon className="size-10 flex-shrink-0" aria-hidden="true" />
-			<div className="py-2.5">
+			<Icon className="size-8 flex-shrink-0" aria-hidden="true" />
+			<div className="py-1.5">
 				{title && <strong className="mb-1 block font-semibold">{title}</strong>}
 				<div>{children}</div>
 			</div>

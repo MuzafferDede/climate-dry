@@ -77,11 +77,11 @@ export type Page = {
 };
 
 export type Variant = {
-	attributes: Array<{
+	attributes: {
 		id: number;
 		name: string;
 		value: string;
-	}>;
+	}[];
 	id: number;
 	in_stock: boolean;
 	name: string;

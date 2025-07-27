@@ -62,7 +62,7 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 	const filters = products.filters;
 
 	const pagination =
-		isNonEmptyArray(products) && products.meta?.links
+		isNonEmptyArray(products.data) && products.meta?.links
 			? products.meta?.links
 			: null;
 

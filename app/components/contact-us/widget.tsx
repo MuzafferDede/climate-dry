@@ -8,7 +8,7 @@ export const ContactUsWidget = () => {
 	return (
 		<div
 			className={cn(
-				"fixed right-0 bottom-0 z-50 flex w-full max-w-md items-start",
+				"fixed right-0 bottom-0 z-30 flex w-full max-w-md items-start",
 				"transition-transform duration-300 ease-in-out",
 				open ? "top-0 translate-x-0 md:top-auto" : "right-8 translate-x-full",
 			)}
@@ -23,7 +23,7 @@ export const ContactUsWidget = () => {
 			>
 				Contact Us
 			</button>
-			<div className="h-full flex-1 bg-white p-4 shadow-lg">
+			<div className="h-full flex-1 bg-white p-4 pb-24 shadow-lg">
 				<div className="flex items-start justify-between gap-4">
 					<h2 className="mb-4 font-semibold text-xl">Contact Us</h2>
 					<button

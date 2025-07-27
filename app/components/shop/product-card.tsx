@@ -1,21 +1,14 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
-import {
-	Form,
-	NavLink,
-	href,
-	useActionData,
-	useNavigation,
-} from "react-router";
-import { AnimateOnScroll, Button, Image, Loading, Modal } from "~/components";
+import { useState } from "react";
+import { Form, NavLink, href, } from "react-router";
+import { AnimateOnScroll, Button, Image, VariantSelector } from "~/components";
 import type { Product } from "~/types";
-import { calculateSave, cn, currency } from "~/utils";
+import { calculateSave, currency } from "~/utils";
 import { PaymentAndShipping } from "../ui/payment-and-shipping";
 import { Rating } from "./rating";
 import { StockStatus } from "./stock-status";
 
 export const ProductCard = ({
-	id,
 	brand,
 	images,
 	name,
@@ -27,25 +20,11 @@ export const ProductCard = ({
 	variants,
 	introduction,
 }: Product) => {
-	const actionData = useActionData();
 	const [open, setOpen] = useState(false);
-	const [submittingVariantId, setSubmittingVariantId] = useState<number | null>(
-		null,
-	);
-	const navigation = useNavigation();
-
-	const loading = navigation.state === "submitting";
 
 	const hasVariants = variants.length > 1;
 
 	const inStock = variants.some((variant) => variant.in_stock);
-
-	useEffect(() => {
-		if (actionData) {
-			setOpen(false);
-			setSubmittingVariantId(null);
-		}
-	}, [actionData]);
 
 	return (
 		<div className="[&>div]:h-full">
@@ -139,10 +118,8 @@ export const ProductCard = ({
 										disabled={!inStock}
 										type={hasVariants ? "button" : "submit"}
 										value={variants[0].id}
-										loading={loading && submittingVariantId === id}
 										onClick={() => {
 											setOpen(hasVariants);
-											setSubmittingVariantId(id);
 										}}
 										className="w-full"
 										icon={
@@ -169,76 +146,12 @@ export const ProductCard = ({
 						</div>
 					</div>
 
-					{/* Variant Modal */}
-					<Modal
+					<VariantSelector
+						variants={variants}
 						open={open}
-						onClose={() => setOpen(false)}
-						title="Choose a Variant"
-					>
-						<Form method="post">
-							<div className="space-y-4">
-								{variants.map((variant) => (
-									<button
-										name="id"
-										value={variant.id}
-										key={variant.id}
-										type="submit"
-										disabled={!variant.in_stock}
-										onClick={() => setSubmittingVariantId(variant.id)}
-										className={cn(
-											"group er relative w-full cursor-po cursor-pointer overflow-hidden rounded-lg border border-gray-lighter bg-stone-100 p-4 text-left shadow-sm transition-all",
-											variant.in_stock
-												? "hover:border-teal hover:bg-teal/10"
-												: "cursor-not-allowed opacity-50",
-										)}
-									>
-										{loading && submittingVariantId === variant.id && (
-											<div className="absolute inset-0 flex items-center justify-center bg-white">
-												<Loading />
-											</div>
-										)}
-										<div className="flex items-start justify-between gap-4">
-											<div className="flex-1 space-y-2">
-												<p className="font-semibold text-navy-darkest text-sm capitalize">
-													<span>{variant.name}</span>{" "}
-													<span className="text-gray">-</span>{" "}
-													<span className="text-teal">{variant.sku}</span>
-												</p>
-												<div className="flex flex-wrap gap-x-4 gap-y-1 text-gray text-sm">
-													{variant.attributes.map((attr) => (
-														<p
-															key={attr.id}
-															className="flex gap-1 rounded-md bg-white px-2 py-1 shadow shadow-gray"
-														>
-															<span className="font-medium text-green capitalize">
-																{attr.name}:
-															</span>
-															<span className="font-semibold text-navy-darkest">
-																{attr.value}
-															</span>
-														</p>
-													))}
-												</div>
-												<div className="flex items-center gap-2">
-													<p className="font-bold text-base text-teal">
-														{currency(variant.price)}
-													</p>
-													{variant.retail_price > variant.price && (
-														<p className="text-gray text-sm line-through">
-															{currency(variant.retail_price)}
-														</p>
-													)}
-												</div>
-											</div>
-											<div className="mt-1 shrink-0">
-												<StockStatus inStock={variant.in_stock} />
-											</div>
-										</div>
-									</button>
-								))}
-							</div>
-						</Form>
-					</Modal>
+						setOpen={setOpen}
+						quantity={1}
+					/>
 				</div>
 			</AnimateOnScroll>
 		</div>

@@ -74,7 +74,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		url,
 	);
 
-	if (cart.guest_id) {
+	if (cart?.guest_id) {
 		session.set("guestId", cart.guest_id);
 	}
 
@@ -180,8 +180,8 @@ export default function App({ loaderData }: Route.ComponentProps) {
 				<ToastContainer toast={toast} />
 				<Link
 					data-state={inView ? "hide" : "show"}
-					to="/#main"
-					className="fade-in zoom-in zoom-out fixed right-4 bottom-12 z-30 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
+					to="#main"
+					className="fade-in zoom-in zoom-out fixed right-4 bottom-12 z-40 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
 				>
 					<ChevronUpIcon className="size-10" />
 					<span className="sr-only">go to top</span>

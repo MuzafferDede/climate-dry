@@ -48,9 +48,7 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
 	) => {
 		const thumbs = (value ?? defaultValue).length;
 
-		const [internalValue, setInternalValue] = useState(
-			value ?? defaultValue,
-		);
+		const [internalValue, setInternalValue] = useState(value ?? defaultValue);
 
 		useEffect(() => {
 			if (value !== undefined) setInternalValue(value);

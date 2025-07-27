@@ -1,4 +1,8 @@
-import { BanknotesIcon, GiftTopIcon, TruckIcon } from "@heroicons/react/16/solid";
+import {
+	BanknotesIcon,
+	GiftTopIcon,
+	TruckIcon,
+} from "@heroicons/react/16/solid";
 import type React from "react";
 import { cn } from "~/utils";
 

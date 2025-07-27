@@ -12,7 +12,7 @@ import {
 	StarIcon,
 } from "@heroicons/react/16/solid";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form, data, useNavigation } from "react-router";
 import {
 	addReview,
@@ -28,8 +28,6 @@ import {
 	Button,
 	Image,
 	Input,
-	Loading,
-	Modal,
 	PaymentAndShipping,
 	ProductCard,
 	Rating,
@@ -41,6 +39,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
+	VariantSelector,
 } from "~/components";
 import { type Product, ToastType, type Variant } from "~/types";
 import {
@@ -177,9 +176,6 @@ export default function ProductPage({
 	const loading = navigation.state === "submitting";
 	const hasVariants = product.variants.length > 1;
 	const [open, setOpen] = useState(false);
-	const [submittingVariantId, setSubmittingVariantId] = useState<number | null>(
-		null,
-	);
 
 	// Combine images and videos into a single media array
 	const media = [
@@ -208,12 +204,6 @@ export default function ProductPage({
 		setActiveIndex((prev) => (prev < media.length - 1 ? prev + 1 : 0));
 	};
 
-	useEffect(() => {
-		if (!loading) {
-			setOpen(false);
-			setSubmittingVariantId(null);
-		}
-	}, [loading]);
 
 	return (
 		<div>
@@ -567,73 +557,7 @@ export default function ProductPage({
 						</div>
 					</div>
 				</div>
-				<Modal
-					open={open}
-					onClose={() => setOpen(false)}
-					title="Choose a Variant"
-				>
-					<Form method="post">
-						<input
-							type="hidden"
-							name="quantity"
-							id="quantity"
-							value={quantity}
-						/>
-						<input type="hidden" name="_action" value="addToCart" />
-						{/* Hidden extras input for form submission */}
-						{selectedExtras.map((id) => (
-							<input key={id} type="hidden" name="extras[]" value={id} />
-						))}
-						<div className="space-y-4">
-							{product.variants.map((variant) => (
-								<button
-									name="id"
-									value={variant.id}
-									key={variant.id}
-									type="submit"
-									disabled={!variant.in_stock}
-									onClick={() => setSubmittingVariantId(variant.id)}
-									className={`group relative w-full cursor-pointer overflow-hidden rounded-lg border border-gray-lighter p-4 text-left shadow-sm transition-all ${variant.in_stock ? "hover:border-teal hover:bg-teal/10" : "cursor-not-allowed opacity-50"}`}
-								>
-									{loading && submittingVariantId === variant.id && (
-										<div className="absolute inset-0 flex items-center justify-center bg-white">
-											<Loading className="h-6 w-6 text-teal" />
-										</div>
-									)}
-									<div className="flex items-start justify-between gap-4">
-										<div className="flex-1 space-y-2">
-											<p className="font-semibold text-navy-darkest text-sm">
-												<span className="capitalize">{variant.name}</span> -
-												<span className="text-teal">{variant.sku}</span>
-											</p>
-											<div className="flex flex-wrap gap-x-4 gap-y-1 text-navy-darkest/70 text-sm">
-												{variant.attributes.map((attr) => (
-													<p key={attr.id}>
-														<span className="font-medium">{attr.name}:</span>{" "}
-														<span>{attr.value}</span>
-													</p>
-												))}
-											</div>
-											<div className="flex items-center gap-2">
-												<p className="font-bold text-base text-teal">
-													{currency(variant.price)}
-												</p>
-												{variant.retail_price > variant.price && (
-													<p className="text-gray-light text-sm line-through">
-														{currency(variant.retail_price)}
-													</p>
-												)}
-											</div>
-										</div>
-										<div className="mt-1 shrink-0">
-											<StockStatus inStock={variant.in_stock} />
-										</div>
-									</div>
-								</button>
-							))}
-						</div>
-					</Form>
-				</Modal>
+				<VariantSelector variants={product.variants} open={open} setOpen={setOpen} extras={selectedExtras} quantity={quantity} />
 
 				{/* Tabs Section */}
 				{(product.description ||
@@ -641,42 +565,42 @@ export default function ProductPage({
 					(product.features && product.features.length > 0)) && (
 						<div className="mx-auto mt-10 max-w-7xl px-2 sm:px-4">
 							<TabGroup>
-								<TabList className="mb-4 flex flex-wrap gap-2 border-gray-lighter border-b">
+								<TabList className="scrollbar-hidden mb-4 flex snap-x snap-mandatory flex-nowrap gap-2 overflow-auto scroll-smooth border-gray-lighter border-b">
 									{product.description && (
-										<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 											Description
 										</Tab>
 									)}
 									{product.specifications &&
 										product.specifications.length > 0 && (
-											<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+											<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 												Specifications
 											</Tab>
 										)}
 									{product.specifications_text && (
-										<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 											Specifications
 										</Tab>
 									)}
 									{product.features && product.features.length > 0 && (
-										<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 											Features
 										</Tab>
 									)}
 									{product.key_features && (
-										<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 											Key Features
 										</Tab>
 									)}
 
 									{product.included_items &&
 										product.included_items.length > 0 && (
-											<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+											<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 												Whats in the Box
 											</Tab>
 										)}
 
-									<Tab className="border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 										Reviews ({product.reviews.count + (review ? 1 : 0)})
 									</Tab>
 								</TabList>
