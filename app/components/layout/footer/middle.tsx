@@ -97,7 +97,7 @@ export const Middle = () => {
 				</div>
 				<div className="flex flex-col gap-2.5">
 					<h3 className="font-bold text-teal uppercase">
-						BROUGHT YO YOU BY TRADE GEAR
+						BROUGHT TO YOU BY TRADE GEAR
 					</h3>
 					<div className="flex flex-col gap-6 md:flex-row">
 						<a

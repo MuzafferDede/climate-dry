@@ -64,7 +64,18 @@ export default function SolutionDetailPage({
 						</div>
 						<div className="mb-4 gap-4">
 							<div
-								className="prose max-w-none"
+								className="
+								prose max-w-none prose-figcaption:hidden
+								[&_.attachment-gallery]:flex 
+								[&_.attachment-gallery]:flex-wrap 
+								[&_.attachment-gallery]:gap-0 
+								[&_.attachment]:w-1/2 
+								[&_.attachment]:m-0 
+								[&_.attachment img]:w-full 
+								[&_.attachment img]:h-auto 
+								[&_.attachment img]:m-0 
+								[&_.attachment img]:inline-block
+							"
 								// biome-ignore lint/security/noDangerouslySetInnerHtml: safe backend HTML
 								dangerouslySetInnerHTML={{ __html: solution.description }}
 							/>
