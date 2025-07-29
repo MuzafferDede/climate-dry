@@ -125,6 +125,7 @@ export type Product = {
 	images: ProductImage[];
 	included_items: string[];
 	introduction: string;
+	main_feature_title: string;
 	key_features: string;
 	most_popular: boolean;
 	name: string;

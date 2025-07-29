@@ -25,9 +25,9 @@ export const Banners = ({ banners }: { banners: HeroBanner[] }) => {
 								type="fadeInRight"
 								className="flex flex-col gap-2"
 							>
-								<h2 className="font-bold text-3xl lg:text-5xl">
+								<h1 className="font-bold text-3xl lg:text-5xl">
 									{banner.title}
-								</h2>
+								</h1>
 								<p className="text-base lg:text-lg">{banner.description}</p>
 							</AnimateOnScroll>
 							<Button

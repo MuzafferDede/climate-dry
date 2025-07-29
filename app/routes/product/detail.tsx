@@ -326,15 +326,15 @@ export default function ProductPage({
 						{/* Left column: Brand, Name, Rating, Introduction */}
 						<div className="flex w-full grow flex-col gap-2">
 							<div>
-								<h4 className="font-bold text-sm text-teal uppercase sm:text-base">
+								<span className="font-bold text-sm text-teal uppercase sm:text-base">
 									{product.brand?.name ?? "No Brand"}
-								</h4>
+								</span>
 								<h1 className="font-bold text-2xl capitalize leading-tight sm:text-3xl">
 									{product.name}
 								</h1>
-								<h4 className="text-sm capitalize">
-									{product.default_variant.name}
-								</h4>
+								<span className="text-sm capitalize">
+									{product.main_feature_title}
+								</span>
 							</div>
 							<Rating
 								rating={product.reviews.rating}
