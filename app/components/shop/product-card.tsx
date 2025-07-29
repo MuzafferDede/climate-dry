@@ -61,7 +61,7 @@ export const ProductCard = ({
 								<p className="font-bold text-teal uppercase">
 									{brand?.name ?? "No Brand"}
 								</p>
-								<p className="min-h-10 capitalize">{name}</p>
+								<h2 className="min-h-10 capitalize">{name}</h2>
 							</div>
 							<div
 								className="prose-sm @max-xl:hidden prose-li:list-disc prose-li:text-xs"
