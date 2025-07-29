@@ -101,7 +101,7 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 									</div>
 								</div>
 								<div className="p-8">
-									<Link to={`solution/${solution.slug}`}>
+									<Link to={`/solution/${solution.slug}`}>
 										<Button
 											variant="secondary"
 											icon={
@@ -117,7 +117,7 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 					</TabPanels>
 				</TabGroup>
 				<div className="text-center">
-					<Button as={Link} to="solution/agriculture" variant="outline">
+					<Button as={Link} to="/solution/agriculture" variant="outline">
 						Visit the solutions centre
 					</Button>
 				</div>

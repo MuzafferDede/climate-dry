@@ -58,10 +58,10 @@ export const ProductCard = ({
 						<div className="flex flex-col gap-2">
 							<Rating rating={reviews.rating} reviewCount={reviews.count} />
 							<div>
-								<h2 className="font-bold text-teal uppercase">
+								<p className="font-bold text-teal uppercase">
 									{brand?.name ?? "No Brand"}
-								</h2>
-								<h3 className="min-h-10 capitalize">{name}</h3>
+								</p>
+								<p className="min-h-10 capitalize">{name}</p>
 							</div>
 							<div
 								className="prose-sm @max-xl:hidden prose-li:list-disc prose-li:text-xs"

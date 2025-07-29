@@ -20,8 +20,8 @@ export const Top = () => {
 				/>
 			</picture>
 			<div className="flex w-full flex-col items-start justify-start gap-4 p-5 lg:max-w-lg lg:p-7">
-				<h2 className="font-bold uppercase">Get In Touch</h2>
-				<h3 className="font-bold text-2xl lg:text-4xl">Talk to our team</h3>
+				<p className="font-bold uppercase">Get In Touch</p>
+				<p className="font-bold text-2xl lg:text-4xl">Talk to our team</p>
 				<p>
 					Our team are on hand to advise you on the best solution for your
 					requirements and environment. Get in touch with us today to discuss

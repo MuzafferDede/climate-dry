@@ -174,9 +174,13 @@ export default function ProductCategoryPage({
 							dangerouslySetInnerHTML={{ __html: category.introduction }}
 						/>
 					)}
-					<Button variant="plain" size="none" as="a" href="#description">
-						Read More
-					</Button>
+
+					{category.description && (
+						<Button variant="plain" size="none" as="a" href="#description">
+							Read More
+						</Button>
+					)}
+					
 				</div>
 				{category.children && category.children.length > 0 && (
 					<div className="grid h-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

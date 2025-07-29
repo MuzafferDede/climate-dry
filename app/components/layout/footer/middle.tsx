@@ -8,7 +8,7 @@ import type { loader } from "~/root";
 import { footerProductLinks } from "~/static";
 
 const SectionTitle = ({ label }: { label: string }) => {
-	return <h2 className="font-bold text-teal uppercase">{label}</h2>;
+	return <p className="font-bold text-teal uppercase">{label}</p>;
 };
 
 const paymentLogos = [
