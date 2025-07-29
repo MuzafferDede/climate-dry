@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { Button } from "~/components/ui";
+import { Link } from "react-router";
 
 const source = {
 	desktop: "/images/layout/get-in-touch/contact-us@2x.png",
@@ -28,6 +29,8 @@ export const Top = () => {
 					your project.
 				</p>
 				<Button
+					to={`/pages/contact-us/`}
+					as={Link}
 					variant="outline"
 					className="text-white"
 					icon={
