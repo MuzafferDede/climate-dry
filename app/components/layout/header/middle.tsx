@@ -70,7 +70,7 @@ export const Middle = () => {
 							<XMarkIcon className="hidden size-6 group-data-[show=true]/search:block" />
 						</Button>
 						<div className="relative flex">
-							<Link to={href("/cart")} className="relative">
+							<Link to={href("/cart")} className="relative" rel="nofollow">
 								<span className="-mt-1 -mr-1 absolute top-0 right-0 z-10 flex h-5 min-w-5 items-center justify-center rounded-full bg-teal font-bold text-white text-xs">
 									<span className="px-1.5">{cart?.items?.length || 0}</span>
 								</span>

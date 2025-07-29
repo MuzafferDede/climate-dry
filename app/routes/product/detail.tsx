@@ -204,7 +204,6 @@ export default function ProductPage({
 		setActiveIndex((prev) => (prev < media.length - 1 ? prev + 1 : 0));
 	};
 
-
 	return (
 		<div>
 			<div className="mx-auto max-w-7xl space-y-8 px-5 py-8">
@@ -327,15 +326,15 @@ export default function ProductPage({
 						{/* Left column: Brand, Name, Rating, Introduction */}
 						<div className="flex w-full grow flex-col gap-2">
 							<div>
-								<h3 className="font-bold text-sm text-teal uppercase sm:text-base">
+								<h4 className="font-bold text-sm text-teal uppercase sm:text-base">
 									{product.brand?.name ?? "No Brand"}
-								</h3>
+								</h4>
 								<h1 className="font-bold text-2xl capitalize leading-tight sm:text-3xl">
 									{product.name}
 								</h1>
-								<h2 className="text-sm capitalize">
+								<h4 className="text-sm capitalize">
 									{product.default_variant.name}
-								</h2>
+								</h4>
 							</div>
 							<Rating
 								rating={product.reviews.rating}
@@ -557,7 +556,13 @@ export default function ProductPage({
 						</div>
 					</div>
 				</div>
-				<VariantSelector variants={product.variants} open={open} setOpen={setOpen} extras={selectedExtras} quantity={quantity} />
+				<VariantSelector
+					variants={product.variants}
+					open={open}
+					setOpen={setOpen}
+					extras={selectedExtras}
+					quantity={quantity}
+				/>
 
 				{/* Tabs Section */}
 				{(product.description ||
@@ -606,7 +611,10 @@ export default function ProductPage({
 								</TabList>
 								<TabPanels>
 									{product.description && (
-										<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+										<TabPanel
+											static
+											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+										>
 											<div
 												className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
 												// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
@@ -616,7 +624,10 @@ export default function ProductPage({
 									)}
 									{product.specifications &&
 										product.specifications.length > 0 && (
-											<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+											<TabPanel
+												static
+												className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+											>
 												<Table>
 													<TableHead>
 														<TableRow>
@@ -639,7 +650,10 @@ export default function ProductPage({
 										)}
 
 									{product.specifications_text && (
-										<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+										<TabPanel
+											static
+											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+										>
 											<div
 												className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
 												// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
@@ -651,7 +665,10 @@ export default function ProductPage({
 									)}
 
 									{product.features && product.features.length > 0 && (
-										<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+										<TabPanel
+											static
+											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+										>
 											<Table>
 												<TableHead>
 													<TableRow>
@@ -673,7 +690,10 @@ export default function ProductPage({
 										</TabPanel>
 									)}
 									{product.key_features && (
-										<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+										<TabPanel
+											static
+											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+										>
 											<div
 												className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
 												// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
@@ -684,7 +704,10 @@ export default function ProductPage({
 
 									{product.included_items &&
 										product.included_items.length > 0 && (
-											<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+											<TabPanel
+												static
+												className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+											>
 												<ul>
 													{!Array.isArray(product.included_items) ? (
 														<p className="text-red">
@@ -699,7 +722,10 @@ export default function ProductPage({
 											</TabPanel>
 										)}
 
-									<TabPanel className="fade-in slide-in-from-top-5 animate-in">
+									<TabPanel
+										static
+										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+									>
 										<ul className="mb-8 grid gap-6 md:grid-cols-2">
 											{!product.reviews.data.length && !review ? (
 												<Alert variant="info">

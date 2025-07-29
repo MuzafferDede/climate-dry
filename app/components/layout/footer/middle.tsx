@@ -8,7 +8,7 @@ import type { loader } from "~/root";
 import { footerProductLinks } from "~/static";
 
 const SectionTitle = ({ label }: { label: string }) => {
-	return <h3 className="font-bold text-teal uppercase">{label}</h3>;
+	return <h2 className="font-bold text-teal uppercase">{label}</h2>;
 };
 
 const paymentLogos = [
@@ -45,12 +45,12 @@ export const Middle = () => {
 								Tel: <a href="tel:08081969381">0808 196 9381</a>
 							</p>
 							<p>
-								<a href="/pages/rapid-delivery/" title="Nationwide Delivery">
+								<a href="/pages/rapid-delivery" title="Nationwide Delivery">
 									Nationwide Delivery
 								</a>
 							</p>
 							<p>
-								<a href="/pages/contact-us/" id="Call_Back2">
+								<a href="/pages/contact-us" id="Call_Back2">
 									Request Call Back
 								</a>
 							</p>
@@ -96,9 +96,7 @@ export const Middle = () => {
 					</div>
 				</div>
 				<div className="flex flex-col gap-2.5">
-					<h3 className="font-bold text-teal uppercase">
-						BROUGHT TO YOU BY TRADE GEAR
-					</h3>
+					<SectionTitle label="Brought To You By Trade Gear" />
 					<div className="flex flex-col gap-6 md:flex-row">
 						<a
 							href="https://www.tradegearltd.co.uk"

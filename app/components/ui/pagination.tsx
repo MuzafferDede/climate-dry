@@ -63,12 +63,21 @@ export const Pagination = ({
 		// Clickable page link
 		const page = getPageFromUrl(link.url);
 		const pagParams = new URLSearchParams(searchParams);
-		pagParams.set("page", page);
+
+		// Clean up ?page=1
+		if (page === "1") {
+			pagParams.delete("page");
+		} else {
+			pagParams.set("page", page);
+		}
+
+		const queryString = pagParams.toString();
+		const to = queryString ? `?${queryString}` : "";
 
 		return (
 			<NavLink
 				key={link.label}
-				to={`?${pagParams.toString()}`}
+				to={to}
 				preventScrollReset
 				className="rounded bg-white px-3 py-1 text-gray-dark hover:bg-gray-lighter"
 			>

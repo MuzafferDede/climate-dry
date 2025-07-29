@@ -22,7 +22,7 @@ export const Service: React.FC<ServiceProps> = ({
 	return (
 		<AnimateOnScroll className="group flex bg-navy-darkest text-white">
 			<div className="relative flex w-full flex-col gap-2 p-6 pb-10">
-				<h2 className="flex flex-col gap-1 font-bold text-xl md:text-3xl">
+				<span className="flex flex-col gap-1 font-bold text-xl md:text-3xl">
 					{logo && (
 						<div>
 							<img
@@ -34,7 +34,7 @@ export const Service: React.FC<ServiceProps> = ({
 						</div>
 					)}
 					<span>{title}</span>
-				</h2>
+				</span>
 				<p className="text-xs md:text-sm">{description}</p>
 				{phone && (
 					<a

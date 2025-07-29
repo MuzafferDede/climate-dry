@@ -42,19 +42,19 @@ export const MainNavigation = () => {
 			<div className="mx-auto max-w-7xl px-4">
 				{/* Desktop Navigation */}
 				<div className="hidden md:block">
-					<PopoverGroup className="flex flex-wrap justify-start gap-5 py-3">
+					<PopoverGroup className="flex flex-wrap justify-start gap-5" as="div">
 						{navigation.map((item) => {
 							const hasChildren = Boolean(item.children);
 
 							return (
-								<Popover key={item.slug} className="relative">
-									{({ open, close }) =>
+								<Popover key={item.slug} className="group">
+									{({ close }) =>
 										hasChildren ? (
 											<>
 												<PopoverButton
 													className={cn(
-														"flex cursor-pointer items-center justify-between gap-2 font-medium outline-none transition-colors",
-														open ? "text-teal" : "hover:text-teal",
+														"group flex cursor-pointer items-center justify-between gap-2 font-medium outline-none transition-colors hover:text-teal",
+														"py-3 data-open:text-teal",
 													)}
 												>
 													{item.name}
@@ -63,15 +63,15 @@ export const MainNavigation = () => {
 														<ChevronDownIcon
 															className={cn(
 																"h-5 w-5 transition-transform",
-																open ? "rotate-180" : "",
+																"group-data-open:rotate-180",
 															)}
 														/>
 													)}
 												</PopoverButton>
 												<PopoverPanel
+													static
 													as="div"
-													className="fade-in slide-in-from-top-15 absolute inset-shadow-xs left-0 z-20 flex w-full translate-y-3 animate-in items-start gap-5 rounded-b-lg bg-white p-3 shadow-xl"
-													anchor="bottom start"
+													className="fade-in slide-in-from-top-15 absolute inset-shadow-xs left-0 z-20 hidden w-full translate-y-0 animate-in items-start gap-5 rounded-b-lg bg-white p-3 text-sm shadow-xl data-open:flex"
 												>
 													<ul className="flex w-full items-start gap-1">
 														{item.children?.map((child) => (
@@ -160,7 +160,7 @@ export const MainNavigation = () => {
 																								cn(
 																									"transition-colors hover:text-teal",
 																									isActive &&
-																										"font-bold text-teal",
+																									"font-bold text-teal",
 																								)
 																							}
 																							to={`/c/${grandChild.slug}`}
@@ -181,7 +181,7 @@ export const MainNavigation = () => {
 																				<ul>
 																					<li>
 																						<a
-																							href="/c/basement-dehumidifiers/"
+																							href="/c/basement-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Basement Dehumidifiers"
 																							title="Basement Dehumidifiers"
 																						>
@@ -190,7 +190,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/boat-dehumidifiers/"
+																							href="/c/boat-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Boat Dehumidifiers"
 																							title="Boat Dehumidifiers"
 																						>
@@ -199,7 +199,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/cellar-dehumidifiers/"
+																							href="/c/cellar-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Cellar Dehumidifiers"
 																							title="Cellar Dehumidifiers"
 																						>
@@ -208,7 +208,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/classic-car-dehumidifiers/"
+																							href="/c/classic-car-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Classic Car Dehumidifiers"
 																							title="Classic Car Dehumidifiers"
 																						>
@@ -217,7 +217,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/construction-dehumidifiers/"
+																							href="/c/construction-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Construction Dehumidifiers"
 																							title="Construction Dehumidifiers"
 																						>
@@ -226,7 +226,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/drying-room-dehumidifiers/"
+																							href="/c/drying-room-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Drying Room Dehumidifiers"
 																							title="Drying Room Dehumidifiers"
 																						>
@@ -235,7 +235,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/factory-dehumidifiers/"
+																							href="/c/factory-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Factory Dehumidifiers"
 																							title="Factory Dehumidifiers"
 																						>
@@ -244,7 +244,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/small-dehumidifiers/"
+																							href="/c/small-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Small Dehumidifiers"
 																							title="Small Dehumidifiers"
 																						>
@@ -253,7 +253,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/garage-dehumidifiers/"
+																							href="/c/garage-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Garage Dehumidifiers"
 																							title="Garage Dehumidifiers"
 																						>
@@ -262,7 +262,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/laundry-dehumidifiers/"
+																							href="/c/laundry-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Laundry Dehumidifiers"
 																							title="Laundry Dehumidifiers"
 																						>
@@ -271,7 +271,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/loft-dehumidifiers/"
+																							href="/c/loft-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Loft Dehumidifiers"
 																							title="Loft Dehumidifiers"
 																						>
@@ -280,7 +280,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/storage-dehumidifiers/"
+																							href="/c/storage-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Storage Dehumidifiers"
 																							title="Storage Dehumidifiers"
 																						>
@@ -289,7 +289,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/warehouse-dehumidifiers/"
+																							href="/c/warehouse-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Warehouse Dehumidifiers"
 																							title="Warehouse Dehumidifiers"
 																						>
@@ -298,7 +298,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/water-damage-dehumidifiers/"
+																							href="/c/water-damage-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Water Damage Dehumidifiers"
 																							title="Water Damage Dehumidifiers"
 																						>
@@ -307,7 +307,7 @@ export const MainNavigation = () => {
 																					</li>
 																					<li>
 																						<a
-																							href="/c/workshop-dehumidifiers/"
+																							href="/c/workshop-dehumidifiers"
 																							data-gtm="Dehumidifiers &gt; Workshop Dehumidifiers"
 																							title="Workshop Dehumidifiers"
 																						>
@@ -329,7 +329,7 @@ export const MainNavigation = () => {
 												to={item.slug}
 												className={({ isActive }) =>
 													cn(
-														"flex cursor-pointer items-center justify-between gap-2 font-medium outline-none transition-colors",
+														"flex cursor-pointer items-center justify-between gap-2 py-3 font-medium outline-none transition-colors",
 														isActive && "text-teal",
 													)
 												}
@@ -402,7 +402,7 @@ export const MainNavigation = () => {
 																									? "pointer-events-auto"
 																									: "pointer-events-none",
 																								isActive &&
-																									"font-bold text-teal",
+																								"font-bold text-teal",
 																							)
 																						}
 																						to={`/c/${child.slug}`}

@@ -27,7 +27,7 @@ export const Bottom = () => {
 								loading="lazy"
 							/>
 							<div className="flex flex-col items-center justify-center">
-								<h2 className="text-base">{tool.label}</h2>
+								<span className="font-semibold text-base">{tool.label}</span>
 								<p className="text-xs">{tool.description}</p>
 							</div>
 						</Link>

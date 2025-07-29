@@ -23,7 +23,7 @@ export const handle = {
 		{ label: "Advice Hub", path: "/info-hub" },
 		{
 			label: "Evaporative Cooling Calculator",
-			path: "/evaporative-cooling-calculator/",
+			path: "/evaporative-cooling-calculator",
 		},
 	],
 };

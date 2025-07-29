@@ -25,7 +25,11 @@ export const FeaturedCategories = ({
 				</TabList>
 				<TabPanels className="py-8">
 					{categories.map((category) => (
-						<TabPanel key={category.name}>
+						<TabPanel
+							key={category.name}
+							static
+							className="hidden data-selected:block"
+						>
 							<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 								{category?.products?.map((product) => (
 									<ProductCard {...product} key={product.name} />

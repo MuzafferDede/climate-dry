@@ -7,14 +7,14 @@ const SERVICES: ServiceProps[] = [
 			"Our team are on hand to advise you on the best solution for your requirements and environment. Get in touch with us today to discuss your project",
 		phone: "0808 196 6381",
 		image: "/images/layout/support/tech-help.webp",
-		link: "/pages/contact-us/",
+		link: "/pages/contact-us",
 	},
 	{
 		title: "Water Damage Restoration",
 		description:
 			"Our Water Damage Restoration packages are designed to cater to various needs at every stage, ensuring that your property is restored to its pre-damage condition.",
 		image: "/images/layout/support/water-damage-restoration.webp",
-		link: "/water-damage-restoration/",
+		link: "/water-damage-restoration",
 	},
 ];
 

@@ -144,7 +144,7 @@
         "id": "routes/drying-calculator",
         "parentId": "root",
         "file": "app/routes/drying-calculator.tsx",
-        "path": "drying-calculator/",
+        "path": "drying-calculator",
         "config": {
           "runtime": "nodejs"
         }
@@ -153,7 +153,7 @@
         "id": "routes/evaporative-cooling-calculator",
         "parentId": "root",
         "file": "app/routes/evaporative-cooling-calculator.tsx",
-        "path": "evaporative-cooling-calculator/",
+        "path": "evaporative-cooling-calculator",
         "config": {
           "runtime": "nodejs"
         }
@@ -162,7 +162,7 @@
         "id": "routes/water-damage-restoration",
         "parentId": "root",
         "file": "app/routes/water-damage-restoration.tsx",
-        "path": "water-damage-restoration/",
+        "path": "water-damage-restoration",
         "config": {
           "runtime": "nodejs"
         }
@@ -337,19 +337,19 @@
         "id": "routes/drying-calculator",
         "parentId": "root",
         "file": "routes/drying-calculator.tsx",
-        "path": "drying-calculator/"
+        "path": "drying-calculator"
       },
       "routes/evaporative-cooling-calculator": {
         "id": "routes/evaporative-cooling-calculator",
         "parentId": "root",
         "file": "routes/evaporative-cooling-calculator.tsx",
-        "path": "evaporative-cooling-calculator/"
+        "path": "evaporative-cooling-calculator"
       },
       "routes/water-damage-restoration": {
         "id": "routes/water-damage-restoration",
         "parentId": "root",
         "file": "routes/water-damage-restoration.tsx",
-        "path": "water-damage-restoration/"
+        "path": "water-damage-restoration"
       },
       "routes/checkout/success": {
         "id": "routes/checkout/success",

@@ -89,9 +89,8 @@ function IconWithTextGrid({
 }) {
 	return (
 		<div
-			className={`grid grid-cols-1 gap-8 md:grid-cols-2 ${
-				smallCols ? "lg:grid-cols-3" : "lg:grid-cols-4"
-			}`}
+			className={`grid grid-cols-1 gap-8 md:grid-cols-2 ${smallCols ? "lg:grid-cols-3" : "lg:grid-cols-4"
+				}`}
 		>
 			{items.map((item) => (
 				<div key={item.title} className="text-center">
@@ -129,9 +128,8 @@ function ProductSection({
 	return (
 		<section className="py-2">
 			<div
-				className={`mx-auto flex max-w-7xl flex-col items-center gap-6 lg:flex-row lg:items-start ${
-					reverse ? "lg:flex-row-reverse" : ""
-				}`}
+				className={`mx-auto flex max-w-7xl flex-col items-center gap-6 lg:flex-row lg:items-start ${reverse ? "lg:flex-row-reverse" : ""
+					}`}
 			>
 				<div className="flex-1 lg:w-1/2">
 					<div className="space-y-4 bg-gray-lightest p-10">
@@ -266,7 +264,7 @@ export default function WaterDamageRestorationPage() {
 			</div>
 			<ProductSection
 				title="Small Package"
-				url="/p/dantherm-escape-of-water-mitigation-package-small/"
+				url="/p/dantherm-escape-of-water-mitigation-package-small"
 				description={
 					<>
 						<p>
@@ -307,7 +305,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Medium Package"
-				url="/p/dantherm-escape-of-water-mitigation-package-medium/"
+				url="/p/dantherm-escape-of-water-mitigation-package-medium"
 				description={
 					<>
 						<p>
@@ -343,7 +341,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Large Package"
-				url="/p/dantherm-escape-of-water-mitigation-package-large/"
+				url="/p/dantherm-escape-of-water-mitigation-package-large"
 				description={
 					<>
 						<p>
@@ -392,7 +390,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Starter Kit"
-				url="/p/dantherm-water-damage-restoration-air-quality-management-starter-kit/"
+				url="/p/dantherm-water-damage-restoration-air-quality-management-starter-kit"
 				description={
 					<>
 						<p>
@@ -428,7 +426,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Basic Kit"
-				url="/p/dantherm-professional-water-damage-restorers-basic-insulation-drying-kit/"
+				url="/p/dantherm-professional-water-damage-restorers-basic-insulation-drying-kit"
 				description={
 					<>
 						<p>
@@ -466,7 +464,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Advanced Kit"
-				url="/p/dantherm-professional-water-damage-restorers-advanced-insulation-drying-kit/"
+				url="/p/dantherm-professional-water-damage-restorers-advanced-insulation-drying-kit"
 				description={
 					<>
 						<p>
@@ -514,7 +512,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Small Package"
-				url="/p/water-damage-restoration-small-target-drying-package/"
+				url="/p/water-damage-restoration-small-target-drying-package"
 				description={
 					<>
 						<p>
@@ -545,7 +543,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Large Package"
-				url="/p/water-damage-restoration-large-target-drying-package/"
+				url="/p/water-damage-restoration-large-target-drying-package"
 				description={
 					<>
 						<p>
@@ -578,7 +576,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Wall Cavity Package"
-				url="/p/water-damage-restoration-wall-cavity-drying-package/"
+				url="/p/water-damage-restoration-wall-cavity-drying-package"
 				description={
 					<>
 						<p>
@@ -624,7 +622,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Starter Package"
-				url="/p/dantherm-water-damage-restoration-air-quality-management-starter-kit/"
+				url="/p/dantherm-water-damage-restoration-air-quality-management-starter-kit"
 				description={
 					<>
 						<p>
@@ -657,7 +655,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Professional Package"
-				url="/p/water-damage-restoration-professional-air-quality-management-kit/"
+				url="/p/water-damage-restoration-professional-air-quality-management-kit"
 				description={
 					<>
 						<p>
@@ -694,7 +692,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Mould Mitigation Package"
-				url="/p/dantherm-mould-mitigation-package/"
+				url="/p/dantherm-mould-mitigation-package"
 				description={
 					<>
 						<p>
@@ -744,7 +742,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Starter Package"
-				url="/p/professional-leak-detection-starter-kit/"
+				url="/p/professional-leak-detection-starter-kit"
 				description={
 					<>
 						<p>
@@ -782,7 +780,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Advanced Package"
-				url="/p/dantherm-professional-leak-detection-advanced-kit/"
+				url="/p/dantherm-professional-leak-detection-advanced-kit"
 				description={
 					<>
 						<p>
@@ -821,7 +819,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Expert Package"
-				url="/p/dantherm-professional-leak-detection-expert-kit/"
+				url="/p/dantherm-professional-leak-detection-expert-kit"
 				description={
 					<>
 						<p>
@@ -869,7 +867,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Basic Humidity Kit"
-				url="/p/simplify-remote-monitoring-basic-humidity-control-kit/"
+				url="/p/simplify-remote-monitoring-basic-humidity-control-kit"
 				description={
 					<>
 						<p>
@@ -905,7 +903,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Water Damage Restoration Kit"
-				url="/p/simplify-remote-monitoring-water-damage-restoration/"
+				url="/p/simplify-remote-monitoring-water-damage-restoration"
 				description={
 					<>
 						<p>
@@ -942,7 +940,7 @@ export default function WaterDamageRestorationPage() {
 
 			<ProductSection
 				title="Accessory Kit"
-				url="/p/simplify-remote-monitoring-basic-humidity-control-kit/"
+				url="/p/simplify-remote-monitoring-basic-humidity-control-kit"
 				description={
 					<>
 						<p>

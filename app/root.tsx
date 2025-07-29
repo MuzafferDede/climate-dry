@@ -7,7 +7,7 @@ import {
 	ScrollRestoration,
 	data,
 	isRouteErrorResponse,
-	useLocation,
+	useLoaderData,
 	useNavigate,
 	useNavigation,
 } from "react-router";
@@ -88,7 +88,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	}
 
 	return data(
-		{ customer, menu, pages, toast, cart, products },
+		{ customer, menu, pages, toast, cart, products, url },
 		{
 			headers: {
 				"Set-Cookie": await commitSession(session),
@@ -118,9 +118,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 };
 
 export function Layout({ children }: { children: ReactNode }) {
-	const location = useLocation();
+	const { url } = useLoaderData<typeof loader>();
 
-	const canonicalUrl = `https://climate-dry.vercel.app${location.pathname}`;
+	let canonicalUrl = url.toString();
+	canonicalUrl = canonicalUrl.replace(/\/$/, "");
 
 	return (
 		<html lang="en" className="scroll-smooth">

@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { Form, NavLink, href, } from "react-router";
+import { Form, NavLink, href } from "react-router";
 import { AnimateOnScroll, Button, Image, VariantSelector } from "~/components";
 import type { Product } from "~/types";
 import { calculateSave, currency } from "~/utils";
@@ -58,10 +58,10 @@ export const ProductCard = ({
 						<div className="flex flex-col gap-2">
 							<Rating rating={reviews.rating} reviewCount={reviews.count} />
 							<div>
-								<h3 className="font-bold text-teal uppercase">
+								<h2 className="font-bold text-teal uppercase">
 									{brand?.name ?? "No Brand"}
-								</h3>
-								<h2 className="min-h-10 capitalize">{name}</h2>
+								</h2>
+								<h3 className="min-h-10 capitalize">{name}</h3>
 							</div>
 							<div
 								className="prose-sm @max-xl:hidden prose-li:list-disc prose-li:text-xs"

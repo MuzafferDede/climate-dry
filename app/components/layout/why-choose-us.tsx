@@ -26,10 +26,10 @@ const HIDDEN_AT = [
 	"/login",
 	"/register",
 	"/evaporative-cooling-calculator",
-	"/drying-calculator/",
-	"/water-damage-restoration/",
+	"/drying-calculator",
+	"/water-damage-restoration",
 ];
-const HIDDEN_PREFIXES = ["/pages/", "/c/"];
+const HIDDEN_PREFIXES = ["/pages", "/c"];
 
 export const WhyChooseUs = () => {
 	const location = useLocation();
@@ -66,7 +66,7 @@ export const WhyChooseUs = () => {
 							loading="lazy"
 						/>
 						<div className="flex flex-col gap-2">
-							<h3 className="font-bold text-lg">{card.title}</h3>
+							<h4 className="font-bold text-lg">{card.title}</h4>
 							<p className="text-xs">{card.description}</p>
 						</div>
 					</AnimateOnScroll>

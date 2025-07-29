@@ -30,6 +30,10 @@ export const meta = () => [
 		name: "keywords",
 		content: "cart, shopping cart, climate dry, checkout",
 	},
+	{
+		name: "robots",
+		content: "noindex",
+	},
 ];
 
 type Actions = "add" | "delete" | "discount" | "checkout" | "update";

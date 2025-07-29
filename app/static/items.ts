@@ -18,26 +18,26 @@ export const mainNavigation: Navigation[] = [
 export const adviceHubNav: AdviceLink[] = [
 	{ label: "Advice & Articles", path: "/info-hub" },
 	{ label: "Case Studies", path: "/info-hub/case-studies" },
-	{ label: "Drying Calculator", path: "/drying-calculator/" },
+	{ label: "Drying Calculator", path: "/drying-calculator" },
 	{
 		label: "Evaporative Cooling Calculator",
-		path: "/evaporative-cooling-calculator/",
+		path: "/evaporative-cooling-calculator",
 	},
 	{ label: "Help & Info", path: "/pages/price-match" },
 	{ label: "Solutions Centre", path: "/solution/agriculture" },
 ];
 
 export const footerProductLinks: FooterLink[] = [
-	{ label: "Dehumidifiers", path: "/c/dehumidifiers/" },
-	{ label: "Domestic Dehumidifiers", path: "/c/home-dehumidifiers/" },
-	{ label: "Commercial Dehumidifiers", path: "/c/commercial-dehumidifiers/" },
-	{ label: "Industrial Dehumidifiers", path: "/c/industrial-dehumidifiers/" },
-	{ label: "Desiccant Dehumidifiers", path: "/c/desiccant-dehumidifiers/" },
-	{ label: "Refrigerant Dehumidifiers", path: "/c/refrigerant-dehumidifiers/" },
-	{ label: "Ventilation Fans", path: "/c/ventilation/" },
-	{ label: "Space Heaters", path: "/c/heaters/" },
-	{ label: "Water Pumps", path: "/c/water-pumps/" },
-	{ label: "Bundle Deals", path: "/c/bundles/" },
+	{ label: "Dehumidifiers", path: "/c/dehumidifiers" },
+	{ label: "Domestic Dehumidifiers", path: "/c/home-dehumidifiers" },
+	{ label: "Commercial Dehumidifiers", path: "/c/commercial-dehumidifiers" },
+	{ label: "Industrial Dehumidifiers", path: "/c/industrial-dehumidifiers" },
+	{ label: "Desiccant Dehumidifiers", path: "/c/desiccant-dehumidifiers" },
+	{ label: "Refrigerant Dehumidifiers", path: "/c/refrigerant-dehumidifiers" },
+	{ label: "Ventilation Fans", path: "/c/ventilation" },
+	{ label: "Space Heaters", path: "/c/heaters" },
+	{ label: "Water Pumps", path: "/c/water-pumps" },
+	{ label: "Bundle Deals", path: "/c/bundles" },
 ];
 
 /*
@@ -61,47 +61,47 @@ export const footerLogos: (FooterLink & { logo: string; sister?: boolean })[] =
 	[
 		{
 			label: "LMP",
-			path: "https://www.linemarkerpaint.co.uk/",
+			path: "https://www.linemarkerpaint.co.uk",
 			logo: "/images/logos/LMP.webp",
 		},
 		{
 			label: "NHS",
-			path: "https://www.nationalheatershops.co.uk/",
+			path: "https://www.nationalheatershops.co.uk",
 			logo: "/images/logos/NHS.webp",
 		},
 		{
 			label: "CD",
-			path: "https://www.climatedry.co.uk/",
+			path: "https://www.climatedry.co.uk",
 			logo: "/images/logos/CD.webp",
 		},
 		{
 			label: "zebra",
-			path: "https://www.zebralinemarking.co.uk/",
+			path: "https://www.zebralinemarking.co.uk",
 			logo: "/images/logos/zebra.webp",
 		},
 		{
 			label: "OL",
-			path: "https://www.outdoor-lighting.co.uk/",
+			path: "https://www.outdoor-lighting.co.uk",
 			logo: "/images/logos/OL.webp",
 		},
 		{
 			label: "LS",
-			path: "https://liteshop.co.uk/",
+			path: "https://liteshop.co.uk",
 			logo: "/images/logos/LS.webp",
 		},
 		{
 			label: "OS",
-			path: "https://outdoor-style.co.uk/",
+			path: "https://outdoor-style.co.uk",
 			logo: "/images/logos/OS.webp",
 		},
 		{
 			label: "PPS",
-			path: "https://www.professionalpaintsupplies.co.uk/",
+			path: "https://www.professionalpaintsupplies.co.uk",
 			logo: "/images/logos/PPS.webp",
 		},
 		{
 			label: "NSS",
-			path: "https://www.nationalsitesupplies.co.uk/",
+			path: "https://www.nationalsitesupplies.co.uk",
 			logo: "/images/logos/NSS.webp",
 		},
 	];
@@ -110,7 +110,7 @@ export const sisterLogos: (FooterLink & { logo: string; sister?: boolean })[] =
 	[
 		{
 			label: "NTH",
-			path: "https://www.nationaltoolhireshops.co.uk/",
+			path: "https://www.nationaltoolhireshops.co.uk",
 			logo: "/images/logos/NTH.webp",
 		},
 	];
@@ -120,18 +120,18 @@ export const headerTools = [
 		label: "Drying Calculator",
 		description: "Work out the correct product for what you need",
 		icon: "/images/icons/calculator.webp",
-		path: "/drying-calculator/",
+		path: "/drying-calculator",
 	},
 	{
 		label: "Water Damage Restoration",
 		description: "Restore your property to its pre-damage condition",
 		icon: "/images/icons/water-damage.webp",
-		path: "/water-damage-restoration/",
+		path: "/water-damage-restoration",
 	},
 	{
 		label: "Solutions Centre",
 		description: "Restore your property to its pre-damage condition",
 		icon: "/images/icons/solutions-centre.webp",
-		path: "/solution/agriculture/",
+		path: "/solution/agriculture",
 	},
 ];

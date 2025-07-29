@@ -5,10 +5,10 @@ export const Top = () => {
 		<div className="relative z-10 border-gray-lightest border-b">
 			<div className="mx-auto flex max-w-7xl items-center justify-center p-2 sm:justify-between">
 				<div className="flex gap-2 font-bold uppercase">
-					<h2>
+					<span>
 						Call <span className="hidden sm:inline">our team</span> for expert
 						advice:
-					</h2>
+					</span>
 					<a
 						className="text-teal hover:text-navy-darkest"
 						href="tel:08081969381"
@@ -18,15 +18,18 @@ export const Top = () => {
 				</div>
 				<div className="flex items-center gap-4">
 					<div className="hidden gap-6 font-bold text-xs md:flex">
-						<Link className="hover:text-teal" to={href("/pages/about-us/")}>
+						<Link
+							className="hover:text-teal"
+							to={href("/pages/:slug?", { slug: "about-us" })}
+						>
 							About Us
 						</Link>
-						<Link className="hover:text-teal" to={href("/brands/")}>
+						<Link className="hover:text-teal" to={href("/brands")}>
 							Brands
 						</Link>
 						<Link
 							className="hover:text-teal"
-							to={href("/pages/rapid-delivery/")}
+							to={href("/pages/:slug?", { slug: "rapid-delivery" })}
 						>
 							Delivery
 						</Link>
@@ -106,7 +109,7 @@ export const Top = () => {
 							</svg>
 						</a>
 						<a
-							href="https://www.instagram.com/climatedryuk/"
+							href="https://www.instagram.com/climatedryuk"
 							target="_blank"
 							className="flex items-center hover:text-navy-darkest"
 							title="Instagram"

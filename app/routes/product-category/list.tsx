@@ -193,9 +193,9 @@ export default function ProductCategoryPage({
 					<aside className="lg:col-span-1">
 						<div className="sticky top-40 space-y-6">
 							<div className="flex justify-between gap-2">
-								<h3 className="font-medium text-lg text-navy-darkest">
+								<span className="font-medium text-lg text-navy-darkest">
 									Filters
-								</h3>
+								</span>
 								<Button
 									type="button"
 									size="none"
