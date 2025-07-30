@@ -66,26 +66,25 @@ const VariantButton = ({ variant }: VariantButtonProps) => {
 						<span className="text-teal">{variant.sku}</span>
 					</p>
 
-					<div className="flex flex-wrap gap-x-4 gap-y-1 text-gray text-sm">
+					<div className="grid w-full flex-col gap-1 rounded-lg text-gray text-sm md:grid-cols-2">
 						{variant.attributes.map((attr) => (
 							<AttributeTag key={attr.id} name={attr.name} value={attr.value} />
 						))}
 					</div>
 
-					<div className="flex items-center gap-2">
-						<p className="font-bold text-base text-teal">
-							{currency(variant.price)}
-						</p>
-						{variant.retail_price > variant.price && (
-							<p className="text-gray text-sm line-through">
-								{currency(variant.retail_price)}
+					<div className="flex items-start items-center justify-between">
+						<div className="flex items-center gap-2">
+							<p className="font-bold text-base text-teal">
+								{currency(variant.price)}
 							</p>
-						)}
+							{variant.retail_price > variant.price && (
+								<p className="text-gray text-sm line-through">
+									{currency(variant.retail_price)}
+								</p>
+							)}
+						</div>
+						<StockStatus inStock={isInStock} />
 					</div>
-				</div>
-
-				<div className="mt-1 shrink-0">
-					<StockStatus inStock={isInStock} />
 				</div>
 			</div>
 		</button>
@@ -93,8 +92,8 @@ const VariantButton = ({ variant }: VariantButtonProps) => {
 };
 
 const AttributeTag = ({ name, value }: { name: string; value: string }) => (
-	<p className="flex gap-1 rounded-md bg-white px-2 py-1 shadow shadow-gray">
-		<span className="font-medium text-green capitalize">{name}:</span>
-		<span className="font-semibold text-navy-darkest">{value}</span>
+	<p className="flex w-full gap-1 rounded-md border border-gray-light bg-white px-2 py-1">
+		<span className="font-semibold text-green uppercase">{name}:</span>
+		<span className="font-semibold text-navy-darkest/60">{value}</span>
 	</p>
 );

@@ -6,14 +6,15 @@ import {
 	PopoverButton,
 	PopoverGroup,
 	PopoverPanel,
+	useClose,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { NavLink, useRouteLoaderData } from "react-router";
 import { useAppContext } from "~/contexts";
 import type { loader } from "~/root";
-import { mainNavigation } from "~/static";
+import { mainExtras, mainNavigation } from "~/static";
 import type { Navigation } from "~/types";
-import { cn } from "~/utils";
+import { cn, isNonEmptyArray } from "~/utils";
 /**
  * Navigation component that renders desktop and mobile navigation
  */
@@ -35,6 +36,42 @@ export const MainNavigation = () => {
 		{ slug: "/", name: "Our Products", children: menu?.data },
 		...mainNavigation,
 	];
+
+	const Extras = ({ navigation }: { navigation: Navigation }) => {
+		const found = mainExtras.find((item) => item.slug === navigation?.slug);
+
+		const close = useClose();
+
+		if (!found) return null;
+
+		return (
+			<div className="flex w-full flex-1 basis-0 flex-col gap-1">
+				<span className="font-bold text-base text-teal uppercase transition-colors hover:text-navy-darkest">
+					{found.name}
+				</span>
+				<ul className="grid w-full gap-1">
+					{found.children?.map((child) => (
+						<li key={child.slug}>
+							<NavLink
+								className={({ isActive }) =>
+									cn(
+										"transition-colors hover:text-teal",
+										isActive &&
+										"font-bold text-teal",
+									)
+								}
+								to={`/c/${child.slug}`}
+								onClick={() => closeNavitaion(close)}
+							>
+								{child.name}
+							</NavLink>
+						</li>
+					))}
+				</ul>
+			</div>
+		)
+	}
+
 
 	return (
 		<nav className="relative z-300 bg-white text-base shadow-sm md:z-200">
@@ -71,13 +108,13 @@ export const MainNavigation = () => {
 												<PopoverPanel
 													static
 													as="div"
-													className="fade-in slide-in-from-top-15 absolute inset-shadow-xs left-0 z-20 hidden w-full translate-y-0 animate-in items-start gap-5 rounded-b-lg bg-white p-3 text-sm shadow-xl data-open:flex"
+													className="fade-in slide-in-from-top-15 absolute inset-shadow-xs left-0 z-20 hidden w-full translate-y-0 animate-in items-start gap-5 rounded-b-lg data-open:flex"
 												>
-													<ul className="flex w-full items-start gap-1">
+													<ul className="m-4 flex w-full flex-nowrap items-stretch divide-x divide-gray-light overflow-x-auto rounded-lg border border-gray bg-gray-lightest py-4 text-sm shadow-gray shadow-lg">
 														{item.children?.map((child) => (
 															<li
 																key={child.slug}
-																className="grid w-full gap-1"
+																className="flex min-w-fit flex-1 basis-0 flex-col gap-2 px-6"
 															>
 																{child.banner_url && (
 																	<NavLink
@@ -85,7 +122,7 @@ export const MainNavigation = () => {
 																		className={({ isActive }) =>
 																			cn(
 																				"h-20 w-full",
-																				isActive && "font-bold text-teal",
+																				isActive && "font-bold text-teal"
 																			)
 																		}
 																		onClick={() => closeNavitaion(close)}
@@ -98,230 +135,82 @@ export const MainNavigation = () => {
 																		/>
 																	</NavLink>
 																)}
-																<NavLink
-																	className={({ isActive }) =>
-																		cn(
-																			"font-bold text-teal uppercase transition-colors hover:text-navy-darkest",
-																			isActive && "font-bold text-teal",
-																		)
-																	}
-																	to={`/c/${child.slug}`}
-																	onClick={() => closeNavitaion(close)}
-																>
-																	{child.name}
-																</NavLink>
-																{/*  Temporary nav, this will fetch solutions assoc categories */}
-																{child.children && (
-																	<div>
-																		<ul className="grid w-full gap-1">
-																			{child.children
-																				.filter(
-																					(grandChild) =>
-																						![
-																							"Basement Dehumidifiers",
-																							"Cellar Dehumidifiers",
-																							"Classic Car Dehumidifiers",
-																							"Construction Dehumidifiers",
-																							"Drying Room Dehumidifiers",
-																							"Factory Dehumidifiers",
-																							"Garage Dehumidifiers",
-																							"Laundry Dehumidifiers",
-																							"Loft Dehumidifiers",
-																							"Storage Dehumidifiers",
-																							"Warehouse Dehumidifiers",
-																							"Water Damage Dehumidifiers",
-																							"Workshop Dehumidifiers",
-																							//'Portable Dehumidifiers',
-																							"Small Dehumidifiers",
-																							"Low Grain Dehumidifiers",
-																							//'Desiccant Dehumidifiers',
-																							//'Refrigerant Dehumidifiers',
-																							//'Wall Mounted Dehumidifiers',
-																							"Boat Dehumidifiers",
-																						].includes(grandChild.name),
-																				)
-																				.slice(
-																					0,
-																					child.slug === "heaters"
-																						? 3
-																						: undefined,
-																				)
-																				.slice(
-																					0,
-																					child.slug === "ventilation"
-																						? 4
-																						: undefined,
-																				)
 
-																				.map((grandChild) => (
-																					<li key={grandChild.slug}>
-																						<NavLink
-																							className={({ isActive }) =>
-																								cn(
-																									"transition-colors hover:text-teal",
-																									isActive &&
-																									"font-bold text-teal",
-																								)
-																							}
-																							to={`/c/${grandChild.slug}`}
-																							onClick={() =>
-																								closeNavitaion(close)
-																							}
-																						>
-																							{grandChild.name}
-																						</NavLink>
-																					</li>
-																				))}
-																		</ul>
-																		{child.slug === "dehumidifiers" && (
-																			<div>
-																				<p className="pt-4 font-bold text-teal uppercase transition-colors hover:text-navy-darkest">
-																					Find your solution
-																				</p>
-																				<ul>
-																					<li>
-																						<a
-																							href="/c/basement-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Basement Dehumidifiers"
-																							title="Basement Dehumidifiers"
-																						>
-																							Basement
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/boat-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Boat Dehumidifiers"
-																							title="Boat Dehumidifiers"
-																						>
-																							Boat
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/cellar-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Cellar Dehumidifiers"
-																							title="Cellar Dehumidifiers"
-																						>
-																							Cellar
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/classic-car-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Classic Car Dehumidifiers"
-																							title="Classic Car Dehumidifiers"
-																						>
-																							Classic Car
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/construction-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Construction Dehumidifiers"
-																							title="Construction Dehumidifiers"
-																						>
-																							Construction
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/drying-room-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Drying Room Dehumidifiers"
-																							title="Drying Room Dehumidifiers"
-																						>
-																							Drying Room
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/factory-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Factory Dehumidifiers"
-																							title="Factory Dehumidifiers"
-																						>
-																							Factory
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/small-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Small Dehumidifiers"
-																							title="Small Dehumidifiers"
-																						>
-																							Small Spaces
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/garage-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Garage Dehumidifiers"
-																							title="Garage Dehumidifiers"
-																						>
-																							Garage
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/laundry-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Laundry Dehumidifiers"
-																							title="Laundry Dehumidifiers"
-																						>
-																							Laundry
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/loft-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Loft Dehumidifiers"
-																							title="Loft Dehumidifiers"
-																						>
-																							Loft
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/storage-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Storage Dehumidifiers"
-																							title="Storage Dehumidifiers"
-																						>
-																							Storage
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/warehouse-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Warehouse Dehumidifiers"
-																							title="Warehouse Dehumidifiers"
-																						>
-																							Warehouse
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/water-damage-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Water Damage Dehumidifiers"
-																							title="Water Damage Dehumidifiers"
-																						>
-																							Water Damage
-																						</a>
-																					</li>
-																					<li>
-																						<a
-																							href="/c/workshop-dehumidifiers"
-																							data-gtm="Dehumidifiers &gt; Workshop Dehumidifiers"
-																							title="Workshop Dehumidifiers"
-																						>
-																							Workshop
-																						</a>
-																					</li>{" "}
-																				</ul>
-																			</div>
+																<div className="flex gap-4">
+																	<div className="flex w-full flex-1 basis-0 flex-col gap-1">
+																		<NavLink
+																			className={({ isActive }) =>
+																				cn(
+																					"font-bold text-base text-teal uppercase transition-colors hover:text-navy-darkest",
+																					isActive && "font-bold text-teal"
+																				)
+																			}
+																			to={`/c/${child.slug}`}
+																			onClick={() => closeNavitaion(close)}
+																		>
+																			{child.name}
+																		</NavLink>
+
+																		{isNonEmptyArray(child.children) && (
+
+																			<ul className="grid w-full gap-1">
+																				{child.children
+																					.filter(
+																						(grandChild) =>
+																							![
+																								"Basement Dehumidifiers",
+																								"Cellar Dehumidifiers",
+																								"Classic Car Dehumidifiers",
+																								"Construction Dehumidifiers",
+																								"Drying Room Dehumidifiers",
+																								"Factory Dehumidifiers",
+																								"Garage Dehumidifiers",
+																								"Laundry Dehumidifiers",
+																								"Loft Dehumidifiers",
+																								"Storage Dehumidifiers",
+																								"Warehouse Dehumidifiers",
+																								"Water Damage Dehumidifiers",
+																								"Workshop Dehumidifiers",
+																								"Small Dehumidifiers",
+																								"Low Grain Dehumidifiers",
+																								"Boat Dehumidifiers"
+																							].includes(grandChild.name)
+																					)
+																					.slice(
+																						0,
+																						child.slug === "heaters"
+																							? 3
+																							: child.slug === "ventilation"
+																								? 4
+																								: undefined
+																					)
+																					.map((grandChild) => (
+																						<li key={grandChild.slug}>
+																							<NavLink
+																								className={({ isActive }) =>
+																									cn(
+																										"transition-colors hover:text-teal",
+																										isActive && "font-bold text-teal"
+																									)
+																								}
+																								to={`/c/${grandChild.slug}`}
+																								onClick={() => closeNavitaion(close)}
+																							>
+																								{grandChild.name}
+																							</NavLink>
+																						</li>
+																					))}
+																			</ul>
 																		)}
 																	</div>
-																)}
+
+																	{/* Optional extras */}
+																	<Extras navigation={child} />
+																</div>
 															</li>
 														))}
 													</ul>
+
 												</PopoverPanel>
 											</>
 										) : (
@@ -361,7 +250,7 @@ export const MainNavigation = () => {
 					<div className="relative z-20 space-y-1 px-2 pt-2 pb-3">
 						{navigation.map((item) => (
 							<div key={item.slug} className="border-gray-lighter border-b">
-								{item.children ? (
+								{isNonEmptyArray(item.children) ? (
 									<Disclosure as="div">
 										{({ open }) => (
 											<>
@@ -383,7 +272,7 @@ export const MainNavigation = () => {
 													<ul className="space-y-2">
 														{item.children?.map((child) => (
 															<li key={child.slug}>
-																{child.children ? (
+																{isNonEmptyArray(child.children) ? (
 																	<Disclosure>
 																		{({ open }) => (
 																			<>

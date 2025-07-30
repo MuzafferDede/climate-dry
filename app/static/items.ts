@@ -15,6 +15,75 @@ export const mainNavigation: Navigation[] = [
 	},
 ];
 
+export const mainExtras = [
+	{
+		slug: "dehumidifiers",
+		name: "Find your solution",
+		children: [
+			{
+				slug: "basement-dehumidifiers",
+				name: "Basement",
+			},
+			{
+				slug: "boat-dehumidifiers",
+				name: "Boat",
+			},
+			{
+				slug: "cellar-dehumidifiers",
+				name: "Cellar",
+			},
+			{
+				slug: "classic-car-dehumidifiers",
+				name: "Classic Car",
+			},
+			{
+				slug: "construction-dehumidifiers",
+				name: "Construction",
+			},
+			{
+				slug: "drying-room-dehumidifiers",
+				name: "Drying Room",
+			},
+			{
+				slug: "factory-dehumidifiers",
+				name: "Factory",
+			},
+			{
+				slug: "small-dehumidifiers",
+				name: "Small Spaces",
+			},
+			{
+				slug: "garage-dehumidifiers",
+				name: "Garage",
+			},
+			{
+				slug: "laundry-dehumidifiers",
+				name: "Laundry",
+			},
+			{
+				slug: "loft-dehumidifiers",
+				name: "Loft",
+			},
+			{
+				slug: "storage-dehumidifiers",
+				name: "Storage",
+			},
+			{
+				slug: "warehouse-dehumidifiers",
+				name: "Warehouse",
+			},
+			{
+				slug: "water-damage-dehumidifiers",
+				name: "Water Damage",
+			},
+			{
+				slug: "workshop-dehumidifiers",
+				name: "Workshop",
+			},
+		],
+	},
+];
+
 export const adviceHubNav: AdviceLink[] = [
 	{ label: "Advice & Articles", path: "/info-hub" },
 	{ label: "Case Studies", path: "/info-hub/case-studies" },

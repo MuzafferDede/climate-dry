@@ -86,7 +86,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 			type: ToastType.Error,
 		});
 	}
-
 	return data(
 		{ customer, menu, pages, toast, cart, products, url },
 		{

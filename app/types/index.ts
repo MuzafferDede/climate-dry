@@ -263,6 +263,7 @@ export type Navigation = {
 	name: string;
 	slug: string;
 	thumbnail_url?: string;
+	extras?: Navigation[];
 };
 
 // ============================================================================
