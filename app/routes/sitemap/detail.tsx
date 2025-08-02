@@ -1,5 +1,5 @@
 import { href } from "react-router";
-import { Breadcrumb, Image } from "~/components";
+import { Breadcrumb } from "~/components";
 
 export const handle = {
 	breadcrumb: () => ({ label: "Sitemap", path: "/sitemap" }),
@@ -9,8 +9,6 @@ export default function SitemapPage() {
 		<div className="container mx-auto px-4 py-8">
 			<Breadcrumb />
 			<h1 className="mb-4 font-bold text-3xl">Sitemap</h1>
-			<Image src="/s3/sitebanner/1/banner/01K08Z5JMX25N1VVB2GQQ6NC37.webp" />
-
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
 				<div>
 					<h2 className="mb-2 font-semibold text-xl">Products</h2>
