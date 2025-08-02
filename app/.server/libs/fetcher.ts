@@ -2,8 +2,8 @@
 import type { Session } from "react-router";
 import { getCustomer } from "./customer";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
-const SITE_CODE = import.meta.env.VITE_SITE_CODE || "CD";
+const BACKEND_URL = process.env.BACKEND_URL || "/api";
+const SITE_CODE = process.env.SITE_CODE || "CD";
 
 // Custom init type, similar to RequestInit but with typed `data` and `method`
 type FetcherInit = Omit<RequestInit, "body" | "method" | "headers"> & {
@@ -46,7 +46,7 @@ export function fetcher(session: Session) {
 			...(data !== undefined ? { body: JSON.stringify(data) } : {}),
 		};
 
-		const url = isAbsoluteUrl ? endpoint : `${BASE_URL}${endpoint}`;
+		const url = isAbsoluteUrl ? endpoint : `${BACKEND_URL}/api${endpoint}`;
 
 		try {
 			const res = await fetch(url, config);

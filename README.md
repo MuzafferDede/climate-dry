@@ -40,9 +40,10 @@ npm install
 Create a `.env` file in the root directory:
 
 ```bash
-VITE_API_BASE_URL=http://localhost/api // API base URL
-VITE_SITE_CODE=CD // Site CODE for the application
-VITE_SECRET="cd-secret" // Secret key 
+BACKEND_URL=http://localhost/api // API base URL
+SITE_CODE=CD // Site CODE for the application
+SESSION_SECRET="cd-secret" // Secret key 
+VITE_STRIPE_PUBLISHABLE_KEY="pk_test_xyz" // Stripe publishable key
 ```
 
 This environment variable is required for API connections.

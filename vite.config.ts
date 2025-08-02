@@ -8,7 +8,7 @@ export default defineConfig(({ isSsrBuild }) => ({
 	server: {
 		proxy: {
 			"/s3": {
-				target: "http://trade-gear.test/storage",
+				target: `${process.env.BACKEND_URL}/storage`,
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/s3/, ""),
 			},
