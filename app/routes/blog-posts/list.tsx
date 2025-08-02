@@ -4,7 +4,6 @@ import type { MetaFunction } from "react-router";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { getBlogPosts, getSession } from "~/.server";
 import {
-	AnimateOnScroll,
 	BlogIntroText,
 	Breadcrumb,
 	Button,
@@ -60,15 +59,14 @@ export default function BlogPostListPage({
 				</div>
 				<BlogIntroText />
 				<PageNavigation />
-				<AnimateOnScroll className="flex flex-col items-center justify-center gap-1 text-center">
+				<div className="flex flex-col items-center justify-center gap-1 text-center">
 					<h1 className="font-bold text-teal uppercase">{titles?.h1}</h1>
 					<p className="text-5xl">{titles?.h3}</p>
-				</AnimateOnScroll>
+				</div>
 				<div className="grid gap-6 py-4 lg:grid-cols-2">
 					{posts.data.map((post) => (
-						<AnimateOnScroll
+						<div
 							key={post.id}
-							type="fadeInLeft"
 							className="group overflow-hidden rounded bg-white shadow-lg"
 						>
 							<NavLink
@@ -78,7 +76,7 @@ export default function BlogPostListPage({
 								<img
 									src={post.image_url}
 									alt={post.title || "image"}
-									className="h-auto w-full object-cover object-center transition-all duration-300 ease-in-out group-hover:rotate-2 group-hover:scale-115"
+									className="h-full w-full object-cover object-center transition-all duration-300 ease-in-out group-hover:rotate-2 group-hover:scale-115"
 									loading="lazy"
 								/>
 							</NavLink>
@@ -104,7 +102,7 @@ export default function BlogPostListPage({
 									<span>Read more</span>
 								</Button>
 							</div>
-						</AnimateOnScroll>
+						</div>
 					))}
 				</div>
 			</div>

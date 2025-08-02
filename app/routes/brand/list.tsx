@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import type { MetaFunction } from "react-router";
 import { getBrands, getSession, getSolutions } from "~/.server";
 
-import { AnimateOnScroll, Breadcrumb, Solutions } from "~/components";
+import { Breadcrumb, Solutions } from "~/components";
 import { isNonEmptyArray } from "~/utils";
 import type { Route } from "./+types/list";
 
@@ -45,7 +45,7 @@ export default function BrandListPage({ loaderData }: Route.ComponentProps) {
 					<div className="space-y-2">
 						<h1 className="font-bold text-4xl text-gray-darkest">Our Brands</h1>
 					</div>
-					<AnimateOnScroll>
+					<div className="w-full">
 						<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 p-8 lg:grid-cols-6">
 							{brands.data.map((brand) => (
 								<Link
@@ -62,7 +62,7 @@ export default function BrandListPage({ loaderData }: Route.ComponentProps) {
 								</Link>
 							))}
 						</div>
-					</AnimateOnScroll>
+					</div>
 
 					<div className="prose prose-img:mx-auto prose-figcaption:hidden max-w-none prose-img:max-w-full">
 						<p>

@@ -66,11 +66,12 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 					</Listbox>
 					<TabList className="hidden grid-cols-2 gap-x-4 self-start lg:grid">
 						{solutions.map((solution) => (
-							<AnimateOnScroll key={solution.name} type="fadeInLeft">
-								<Tab className="w-full cursor-pointer border-white border-b py-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal">
-									{solution.name}
-								</Tab>
-							</AnimateOnScroll>
+							<Tab
+								key={solution.name}
+								className="w-full cursor-pointer border-white border-b py-2.5 text-left font-semibold outline-0 hover:text-teal data-selected:text-teal"
+							>
+								{solution.name}
+							</Tab>
 						))}
 					</TabList>
 					<TabPanels

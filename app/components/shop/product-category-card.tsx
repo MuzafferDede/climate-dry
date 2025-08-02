@@ -1,5 +1,5 @@
 import { NavLink, href } from "react-router";
-import { AnimateOnScroll, Image } from "~/components";
+import { Image } from "~/components";
 import type { ProductCategory } from "~/types";
 
 export const ProductCategoryCard = ({
@@ -11,7 +11,7 @@ export const ProductCategoryCard = ({
 			key={category.slug}
 			className="block [&>div]:h-full"
 		>
-			<AnimateOnScroll className="group relative flex h-full flex-row justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl lg:flex-col">
+			<div className="group relative flex h-full flex-row justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl lg:flex-col">
 				<div className="flex h-full flex-col space-y-2 px-4 py-5">
 					<p className="font-bold text-2xl">{category.name}</p>
 					<div className="flex min-h-20 flex-1 flex-col justify-between">
@@ -31,7 +31,7 @@ export const ProductCategoryCard = ({
 						loading="lazy"
 					/>
 				</div>
-			</AnimateOnScroll>
+			</div>
 		</NavLink>
 	);
 };

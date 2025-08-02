@@ -1,6 +1,5 @@
 import { getBlogPost, getFeaturedBlogPosts, getSession } from "~/.server";
 import {
-	AnimateOnScroll,
 	BlogIntroText,
 	Breadcrumb,
 	FeaturedPosts,
@@ -61,10 +60,10 @@ export default function BlogDetailPage({
 				</div>
 				<BlogIntroText />
 				<PageNavigation />
-				<AnimateOnScroll className="flex flex-col items-center justify-center gap-1 text-center">
+				<div className="flex flex-col items-center justify-center gap-1 text-center">
 					<h2 className="font-bold text-teal uppercase">{titles?.h2}</h2>
 					<p className="text-5xl">{titles?.h3}</p>
-				</AnimateOnScroll>
+				</div>
 				<h1 className="py-6 font-bold text-4xl text-gray-darkest">
 					{post.title}
 				</h1>

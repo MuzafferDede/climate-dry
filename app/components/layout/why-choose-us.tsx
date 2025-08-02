@@ -1,5 +1,5 @@
 import { useLocation } from "react-router";
-import { AnimateOnScroll, SectionHeader } from "~/components";
+import { SectionHeader } from "~/components";
 
 const CARDS = [
 	{
@@ -55,7 +55,7 @@ export const WhyChooseUs = () => {
 			/>
 			<div className="grid grid-cols-1 gap-20 md:grid-cols-3">
 				{CARDS.map((card) => (
-					<AnimateOnScroll
+					<div
 						key={card.title}
 						className="mx-auto flex max-w-xs flex-col items-center justify-start gap-8 text-center"
 					>
@@ -69,7 +69,7 @@ export const WhyChooseUs = () => {
 							<h4 className="font-bold text-lg">{card.title}</h4>
 							<p className="text-xs">{card.description}</p>
 						</div>
-					</AnimateOnScroll>
+					</div>
 				))}
 			</div>
 		</div>

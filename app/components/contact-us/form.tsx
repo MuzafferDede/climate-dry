@@ -1,6 +1,6 @@
 import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/16/solid";
 import { useFetcher } from "react-router";
-import type { action } from "~/routes/contact/contact";
+import type { action } from "~/routes/contact/handler";
 import { Button, Input } from "../ui";
 
 export const ContactUsForm = () => {

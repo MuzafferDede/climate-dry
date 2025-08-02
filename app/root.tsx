@@ -1,5 +1,6 @@
 import {
 	Link,
+	type LinkDescriptor,
 	Links,
 	Meta,
 	Outlet,
@@ -8,6 +9,7 @@ import {
 	data,
 	isRouteErrorResponse,
 	useLoaderData,
+	useMatches,
 	useNavigate,
 	useNavigation,
 } from "react-router";
@@ -36,7 +38,6 @@ import {
 	getCart,
 	getNavigation,
 	getPages,
-	getProducts,
 	subsucribe,
 } from "./.server/services";
 import { ToastType } from "./types";
@@ -69,16 +70,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	const { response: menu, error: menuError } = await getNavigation(session);
 	const { response: pages, error: pagesError } = await getPages(session);
 	const { response: cart, error: cartError } = await getCart(session);
-	const { response: products, error: productsError } = await getProducts(
-		session,
-		url,
-	);
 
 	if (cart?.guest_id) {
 		session.set("guestId", cart.guest_id);
 	}
 
-	const error = menuError || pagesError || cartError || productsError;
+	const error = menuError || pagesError || cartError;
 
 	if (error) {
 		putToast(session, {
@@ -87,7 +84,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		});
 	}
 	return data(
-		{ customer, menu, pages, toast, cart, products, url },
+		{ customer, menu, pages, toast, cart, url },
 		{
 			headers: {
 				"Set-Cookie": await commitSession(session),
@@ -119,6 +116,13 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export function Layout({ children }: { children: ReactNode }) {
 	const { url } = useLoaderData<typeof loader>();
 
+	const links: LinkDescriptor[] = useMatches().flatMap((match) => {
+		//@ts-ignore
+		const fn = match.handle?.dynamicLinks;
+		if (typeof fn !== "function") return [];
+		return fn({ data: match.data });
+	});
+
 	let canonicalUrl = url.toString();
 	canonicalUrl = canonicalUrl.replace(/\/$/, "");
 
@@ -130,28 +134,16 @@ export function Layout({ children }: { children: ReactNode }) {
 				<Meta />
 				<Links />
 				<link rel="canonical" href={canonicalUrl} />
+				{links.map((link) => (
+					<link {...link} key={link.integrity || JSON.stringify(link)} />
+				))}
 			</head>
 			<body className="scroll-smooth text-navy-darkest text-sm antialiased has-[div[data-navigation-open=true]]:overflow-hidden">
 				{children}
 				<ScrollRestoration />
 				<Scripts />
 
-				<script
-					// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-					dangerouslySetInnerHTML={{
-						__html: `
-					var __lc = {};
-					__lc.license = 1215771;
-					__lc.skill = 41;
-
-					(function() {
-						var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
-						lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
-						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
-					})();
-						`,
-					}}
-				/>
+				<script src="/live-chat.js" />
 			</body>
 		</html>
 	);

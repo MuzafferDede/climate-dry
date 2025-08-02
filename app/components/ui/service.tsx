@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
-import { AnimateOnScroll, Button } from "~/components";
+import { Button } from "~/components";
 
 export interface ServiceProps {
 	logo?: string;
@@ -20,7 +20,7 @@ export const Service: React.FC<ServiceProps> = ({
 	link,
 }) => {
 	return (
-		<AnimateOnScroll className="group flex bg-navy-darkest text-white">
+		<div className="group flex bg-navy-darkest text-white">
 			<div className="relative flex w-full flex-col gap-2 p-6 pb-10">
 				<span className="flex flex-col gap-1 font-bold text-xl md:text-3xl">
 					{logo && (
@@ -64,6 +64,6 @@ export const Service: React.FC<ServiceProps> = ({
 					/>
 				</div>
 			)}
-		</AnimateOnScroll>
+		</div>
 	);
 };

@@ -1,25 +1,27 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { Form, NavLink, href } from "react-router";
-import { AnimateOnScroll, Button, Image, VariantSelector } from "~/components";
+import { Button, Image, VariantSelector } from "~/components";
 import type { Product } from "~/types";
-import { calculateSave, currency } from "~/utils";
+import { calculateSave, currency, structured } from "~/utils";
 import { PaymentAndShipping } from "../ui/payment-and-shipping";
 import { Rating } from "./rating";
 import { StockStatus } from "./stock-status";
 
-export const ProductCard = ({
-	brand,
-	images,
-	name,
-	reviews,
-	slug,
-	discount,
-	most_popular,
-	default_variant,
-	variants,
-	introduction,
-}: Product) => {
+export const ProductCard = (product: Product) => {
+	const {
+		brand,
+		images,
+		name,
+		reviews,
+		slug,
+		discount,
+		most_popular,
+		default_variant,
+		variants,
+		introduction,
+	} = product;
+
 	const [open, setOpen] = useState(false);
 
 	const hasVariants = variants.length > 1;
@@ -28,11 +30,7 @@ export const ProductCard = ({
 
 	return (
 		<div className="[&>div]:h-full">
-			<AnimateOnScroll
-				threshold={0.4}
-				className="@container boder relative isolate h-full rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl"
-				type="fadeInUp"
-			>
+			<div className="@container boder relative isolate h-full rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl">
 				<div className="absolute top-0 left-4 z-10 flex items-center px-4">
 					{most_popular && (
 						<span className="bg-teal px-2 py-1 text-white text-xs">
@@ -153,7 +151,14 @@ export const ProductCard = ({
 						quantity={1}
 					/>
 				</div>
-			</AnimateOnScroll>
+			</div>
+			<script
+				type="application/ld+json"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(structured(product)),
+				}}
+			/>
 		</div>
 	);
 };

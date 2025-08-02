@@ -204,3 +204,5 @@ export const headerTools = [
 		path: "/solution/agriculture",
 	},
 ];
+
+export const sitemapLinks = [{}];

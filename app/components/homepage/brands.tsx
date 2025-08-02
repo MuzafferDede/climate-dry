@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { AnimateOnScroll, SectionHeader } from "~/components";
+import { SectionHeader } from "~/components";
 import { useCarousel } from "~/hooks";
 import type { Brand } from "~/types";
 
@@ -12,7 +12,7 @@ export const Brands = ({ brands }: { brands: Brand[] }) => {
 	return (
 		<div className="space-y-8 px-5 py-16">
 			<SectionHeader category="Our Brands" title="Trusted partners" />
-			<AnimateOnScroll>
+			<div className="w-full">
 				<div
 					ref={containerRef}
 					className="scrollbar-hidden justify-center-safe flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-smooth p-8"
@@ -36,7 +36,7 @@ export const Brands = ({ brands }: { brands: Brand[] }) => {
 						</Link>
 					))}
 				</div>
-			</AnimateOnScroll>
+			</div>
 		</div>
 	);
 };

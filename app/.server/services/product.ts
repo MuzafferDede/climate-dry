@@ -14,35 +14,58 @@ export async function getProductCategory(
 	);
 }
 
-export async function getCategoryProducts(
-	session: Session,
-	url: URL,
-	category: string | undefined,
-) {
-	const defaults = {
+export async function getProductCategories(session: Session) {
+	const api = fetcher(session);
+
+	return await api.get<ApiListResponse<ProductCategory>>(
+		"/product-categories?include=parent,children",
+	);
+}
+
+export async function getProducts(session: Session, url?: URL) {
+	const searchParams = url
+		? new URLSearchParams(url.search)
+		: new URLSearchParams();
+
+	const defaults: Record<string, string> = {
 		page: "1",
 		per_page: "20",
 		sort: "price-low",
+		include: "brand,discount,variants,approvedReviews",
 	};
 
-	const params = Object.fromEntries(url.searchParams.entries());
+	const filters: Record<string, string> = {};
 
-	const mergedParams = { ...defaults, ...params };
+	const q = searchParams.get("q");
+	if (q !== null) {
+		filters["filter[q]"] = q;
+	}
 
-	const query = queryBuilder({
-		"filter[category]": category,
-		include: "brand,discount,variants,approvedReviews",
-		...mergedParams,
-	});
+	const category = searchParams.get("category");
+	if (category !== null) {
+		filters["filter[category]"] = category;
+	}
+
+	// Build queryParams, excluding `q` and `category`
+	const queryParams: Record<string, string> = {};
+	for (const [key, value] of searchParams.entries()) {
+		if (key !== "q" && key !== "category") {
+			queryParams[key] = value;
+		}
+	}
+
+	const mergedParams = {
+		...defaults,
+		...filters,
+		...queryParams,
+	};
+
+	const query = queryBuilder(mergedParams);
 
 	const api = fetcher(session);
-
-	const response = await api.get<ApiListResponse<Product>>(
-		`/products?${query}`,
-	);
-
-	return response;
+	return await api.get<ApiListResponse<Product>>(`/products?${query}`);
 }
+
 export async function getBrandProducts(
 	session: Session,
 	url: URL,
@@ -70,27 +93,6 @@ export async function getProduct(session: Session, slug: string | undefined) {
 	return await api.get<Product>(
 		`/products/${slug}?include=brand,discount,category,relatedProducts,extras,variants,approvedReviews`,
 	);
-}
-
-export async function getProducts(session: Session, url: URL) {
-	const q = url.searchParams.get("q");
-
-	const query = queryBuilder({
-		...(q ? { "filter[q]": q } : {}),
-		include: "brand,approvedReviews",
-	});
-
-	if (!q) return {};
-
-	const api = fetcher(session);
-	const { response, error } = await api.get<ApiListResponse<Product>>(
-		`/products?${query}`,
-	);
-
-	return {
-		response,
-		error,
-	};
 }
 
 export async function addReview(session: Session, formData: FormData) {

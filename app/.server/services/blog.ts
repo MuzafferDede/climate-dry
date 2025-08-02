@@ -8,14 +8,18 @@ export async function getBlogPost(session: Session, slug: string) {
 	return await api.get<BlogPost>(`/blog-posts/${slug}`);
 }
 
-export async function getBlogPosts(session: Session, category: string) {
+export async function getBlogPosts(session: Session, category?: string) {
 	const api = fetcher(session);
 
-	const query = queryBuilder({
-		"filter[categories]": category,
-	});
+	const query: Record<string, string> = {};
 
-	return await api.get<ApiListResponse<BlogPost>>(`/blog-posts?${query}`);
+	if (category) {
+		query["filter[categories]"] = category;
+	}
+
+	const queryString = queryBuilder(query);
+
+	return await api.get<ApiListResponse<BlogPost>>(`/blog-posts?${queryString}`);
 }
 
 export async function getFeaturedBlogPosts(session: Session) {

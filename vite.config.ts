@@ -5,6 +5,16 @@ import { iconsSpritesheet } from "vite-plugin-icons-spritesheet";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({ isSsrBuild }) => ({
+	server: {
+		proxy: {
+			"/s3": {
+				target:
+					"https://fls-9f649510-70dd-40c4-a4b9-572dc5dbe23e.laravel.cloud",
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/s3/, ""),
+			},
+		},
+	},
 	build: {
 		rollupOptions: isSsrBuild
 			? {

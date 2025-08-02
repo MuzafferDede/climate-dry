@@ -179,25 +179,25 @@ export default function DryingCalculatorPage() {
 					className="table-bordered w-full table-auto border-collapse"
 					id="evaporative-cooling-table"
 				>
-					<colgroup width="80" />
-					<colgroup width="107" />
-					<colgroup span="17" width="80" />
+					<colgroup className="w-20" />
+					<colgroup className="w-28" />
+					<colgroup span={17} className="w-20" />
 					<tbody>
 						<tr>
-							<td className="border px-4 py-2" height="19" colspan="19">
+							<td className="border px-4 py-2" height="19" colSpan={19}>
 								Evaporative Cooler Output Temperature Look-Up
 							</td>
 						</tr>
 						<tr>
 							<td
 								className="border px-4 py-2"
-								colspan="3"
-								rowspan="3"
+								colSpan={3}
+								rowSpan={3}
 								height="58"
 							>
 								Celcius
 							</td>
-							<td className="border px-4 py-2" colspan="16">
+							<td className="border px-4 py-2" colSpan={16}>
 								Humidity%
 							</td>
 						</tr>
@@ -220,7 +220,7 @@ export default function DryingCalculatorPage() {
 							<td className="border px-4 py-2">80</td>
 						</tr>
 						<tr>
-							<td className="border px-4 py-2" colspan="16">
+							<td className="border px-4 py-2" colSpan={16}>
 								Example: 36°C and humidity 35% results in an output of 26°C
 							</td>
 						</tr>

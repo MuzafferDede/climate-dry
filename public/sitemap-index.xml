@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <sitemap>
+        <loc>https://yourdomain.com/c/sitemap.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://yourdomain.com/p/sitemap.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://yourdomain.com/pages/sitemap.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://yourdomain.com/info-hub/sitemap.xml</loc>
+    </sitemap>
+</sitemapindex>

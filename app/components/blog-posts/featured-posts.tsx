@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { Link } from "react-router";
-import { AnimateOnScroll, Button, SectionHeaderMulti } from "~/components";
+import { Button, SectionHeaderMulti } from "~/components";
 import type { BlogPost } from "~/types";
 
 export const FeaturedPosts = ({
@@ -34,7 +34,7 @@ export const FeaturedPosts = ({
 				<div className="mx-auto flex max-w-7xl flex-col gap-10 lg:flex-row">
 					{/* Main Post */}
 					<div className="overflow-hidden rounded bg-white shadow lg:w-2/3">
-						<AnimateOnScroll type="fadeInLeft">
+						<div className="w-full">
 							<img
 								src={mainPost?.image_url ?? ""}
 								alt={mainPost.title || "image"}
@@ -55,17 +55,13 @@ export const FeaturedPosts = ({
 									<span>Read more</span>
 								</Button>
 							</div>
-						</AnimateOnScroll>
+						</div>
 					</div>
 
 					{/* Side Posts */}
 					<div className="space-y-6 lg:w-1/3">
 						{sidePosts.map((post) => (
-							<AnimateOnScroll
-								type="fadeInRight"
-								key={post.title}
-								className="flex items-start gap-4"
-							>
+							<div key={post.title} className="flex w-full items-start gap-4">
 								<div className="flex-1 space-y-6">
 									<div className="space-y-1">
 										<Link
@@ -94,7 +90,7 @@ export const FeaturedPosts = ({
 										loading="lazy"
 									/>
 								</div>
-							</AnimateOnScroll>
+							</div>
 						))}
 					</div>
 				</div>

@@ -48,6 +48,7 @@ import {
 	generateBreadcrumb,
 	pluralize,
 	putToast,
+	structured,
 } from "~/utils";
 import type { Route } from "./+types/detail";
 
@@ -281,10 +282,11 @@ export default function ProductPage({
 											type="button"
 											aria-label={`Show ${item.type} ${idx + 1}`}
 											onClick={() => setActiveIndex(idx)}
-											className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 ${activeIndex === idx
-												? "border-teal ring-2 ring-teal/20"
-												: "border-gray-lighter hover:border-gray-light"
-												}`}
+											className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+												activeIndex === idx
+													? "border-teal ring-2 ring-teal/20"
+													: "border-gray-lighter hover:border-gray-light"
+											}`}
 										>
 											{item.type === "video" ? (
 												<>
@@ -389,15 +391,15 @@ export default function ProductPage({
 								</div>
 								{product.default_variant.retail_price >
 									product.default_variant.price && (
-										<p className="font-bold text-red">
-											save{" "}
-											{calculateSave(
-												product.default_variant.price,
-												product.default_variant.retail_price,
-											)}
-											%
-										</p>
-									)}
+									<p className="font-bold text-red">
+										save{" "}
+										{calculateSave(
+											product.default_variant.price,
+											product.default_variant.retail_price,
+										)}
+										%
+									</p>
+								)}
 								<div className="flex gap-1">
 									<span>
 										{currency(
@@ -568,103 +570,62 @@ export default function ProductPage({
 				{(product.description ||
 					(product.specifications && product.specifications.length > 0) ||
 					(product.features && product.features.length > 0)) && (
-						<div className="mx-auto mt-10 max-w-7xl px-2 sm:px-4">
-							<TabGroup>
-								<TabList className="scrollbar-hidden mb-4 flex snap-x snap-mandatory flex-nowrap gap-2 overflow-auto scroll-smooth border-gray-lighter border-b">
-									{product.description && (
-										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-											Description
-										</Tab>
-									)}
-									{product.specifications &&
-										product.specifications.length > 0 && (
-											<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-												Specifications
-											</Tab>
-										)}
-									{product.specifications_text && (
+					<div className="mx-auto mt-10 max-w-7xl px-2 sm:px-4">
+						<TabGroup>
+							<TabList className="scrollbar-hidden mb-4 flex snap-x snap-mandatory flex-nowrap gap-2 overflow-auto scroll-smooth border-gray-lighter border-b">
+								{product.description && (
+									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										Description
+									</Tab>
+								)}
+								{product.specifications &&
+									product.specifications.length > 0 && (
 										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
 											Specifications
 										</Tab>
 									)}
-									{product.features && product.features.length > 0 && (
-										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-											Features
-										</Tab>
-									)}
-									{product.key_features && (
-										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-											Key Features
-										</Tab>
-									)}
-
-									{product.included_items &&
-										product.included_items.length > 0 && (
-											<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-												Whats in the Box
-											</Tab>
-										)}
-
+								{product.specifications_text && (
 									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-										Reviews ({product.reviews.count + (review ? 1 : 0)})
+										Specifications
 									</Tab>
-								</TabList>
-								<TabPanels>
-									{product.description && (
-										<TabPanel
-											static
-											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-										>
-											<div
-												className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
-												// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
-												dangerouslySetInnerHTML={{ __html: product.description }}
-											/>
-										</TabPanel>
-									)}
-									{product.specifications &&
-										product.specifications.length > 0 && (
-											<TabPanel
-												static
-												className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-											>
-												<Table>
-													<TableHead>
-														<TableRow>
-															<TableHeader>Specification</TableHeader>
-															<TableHeader>Detail</TableHeader>
-														</TableRow>
-													</TableHead>
-													<TableBody>
-														{product.specifications.map((spec, idx) => (
-															<TableRow key={spec.key || idx}>
-																<TableCellSecondary>
-																	{spec.key}
-																</TableCellSecondary>
-																<TableCell>{spec.value}</TableCell>
-															</TableRow>
-														))}
-													</TableBody>
-												</Table>
-											</TabPanel>
-										)}
+								)}
+								{product.features && product.features.length > 0 && (
+									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										Features
+									</Tab>
+								)}
+								{product.key_features && (
+									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+										Key Features
+									</Tab>
+								)}
 
-									{product.specifications_text && (
-										<TabPanel
-											static
-											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-										>
-											<div
-												className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
-												// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
-												dangerouslySetInnerHTML={{
-													__html: product.specifications_text,
-												}}
-											/>
-										</TabPanel>
+								{product.included_items &&
+									product.included_items.length > 0 && (
+										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+											Whats in the Box
+										</Tab>
 									)}
 
-									{product.features && product.features.length > 0 && (
+								<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+									Reviews ({product.reviews.count + (review ? 1 : 0)})
+								</Tab>
+							</TabList>
+							<TabPanels>
+								{product.description && (
+									<TabPanel
+										static
+										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+									>
+										<div
+											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+											dangerouslySetInnerHTML={{ __html: product.description }}
+										/>
+									</TabPanel>
+								)}
+								{product.specifications &&
+									product.specifications.length > 0 && (
 										<TabPanel
 											static
 											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
@@ -672,176 +633,218 @@ export default function ProductPage({
 											<Table>
 												<TableHead>
 													<TableRow>
-														<TableHeader>Feature</TableHeader>
+														<TableHeader>Specification</TableHeader>
 														<TableHeader>Detail</TableHeader>
 													</TableRow>
 												</TableHead>
 												<TableBody>
-													{product.features.map((feature, idx) => (
-														<TableRow key={feature.key || idx}>
+													{product.specifications.map((spec, idx) => (
+														<TableRow key={spec.key || idx}>
 															<TableCellSecondary>
-																{feature.key}
+																{spec.key}
 															</TableCellSecondary>
-															<TableCell>{feature.value}</TableCell>
+															<TableCell>{spec.value}</TableCell>
 														</TableRow>
 													))}
 												</TableBody>
 											</Table>
 										</TabPanel>
 									)}
-									{product.key_features && (
-										<TabPanel
-											static
-											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-										>
-											<div
-												className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
-												// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
-												dangerouslySetInnerHTML={{ __html: product.key_features }}
-											/>
-										</TabPanel>
-									)}
 
-									{product.included_items &&
-										product.included_items.length > 0 && (
-											<TabPanel
-												static
-												className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-											>
-												<ul>
-													{!Array.isArray(product.included_items) ? (
-														<p className="text-red">
-															Error: Items are not an array!
-														</p>
-													) : (
-														product.included_items.map((included, idx) => (
-															<li key={included || idx}>{included}</li>
-														))
-													)}
-												</ul>
-											</TabPanel>
-										)}
-
+								{product.specifications_text && (
 									<TabPanel
 										static
 										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
 									>
-										<ul className="mb-8 grid gap-6 md:grid-cols-2">
-											{!product.reviews.data.length && !review ? (
-												<Alert variant="info">
-													No reviews yet. Help others by writing the first one!
-												</Alert>
-											) : (
-												[
-													...(review ? [review] : []),
-													...(product.reviews?.data || []),
-												].map((review) => (
-													<li
-														key={review.id}
-														className="rounded-md border border-gray-light bg-white p-4 shadow-sm"
-													>
-														<div className="mb-2 flex items-center justify-between">
-															<span className="font-semibold text-gray-800">
-																{review.customer.name}
-															</span>
-															<span className="text-gray-500 text-sm">
-																{new Date(review.created_at).toLocaleDateString(
-																	undefined,
-																	{
-																		year: "numeric",
-																		month: "short",
-																		day: "numeric",
-																	},
-																)}
-															</span>
-														</div>
+										<div
+											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+											dangerouslySetInnerHTML={{
+												__html: product.specifications_text,
+											}}
+										/>
+									</TabPanel>
+								)}
 
-														<div className="mb-2">
-															<Rating rating={review.rating} />
-														</div>
+								{product.features && product.features.length > 0 && (
+									<TabPanel
+										static
+										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+									>
+										<Table>
+											<TableHead>
+												<TableRow>
+													<TableHeader>Feature</TableHeader>
+													<TableHeader>Detail</TableHeader>
+												</TableRow>
+											</TableHead>
+											<TableBody>
+												{product.features.map((feature, idx) => (
+													<TableRow key={feature.key || idx}>
+														<TableCellSecondary>
+															{feature.key}
+														</TableCellSecondary>
+														<TableCell>{feature.value}</TableCell>
+													</TableRow>
+												))}
+											</TableBody>
+										</Table>
+									</TabPanel>
+								)}
+								{product.key_features && (
+									<TabPanel
+										static
+										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+									>
+										<div
+											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+											dangerouslySetInnerHTML={{ __html: product.key_features }}
+										/>
+									</TabPanel>
+								)}
 
-														<p className="text-gray-700">{review.review}</p>
-													</li>
-												))
-											)}
-										</ul>
-										{customer &&
-											!review &&
-											!product.reviews.data.some(
-												(review) => review.customer.id === customer.id,
-											) && (
-												<div className="max-w-3xl rounded-md border border-gray-light bg-white p-4 shadow-sm">
-													<h3 className="mb-4 font-bold text-lg text-navy-darkest">
-														Add Your Review
-													</h3>
-													<Form method="post" className="space-y-4 font-semibold">
-														<input
-															type="hidden"
-															name="_action"
-															value="addReview"
-														/>
-														<input
-															type="hidden"
-															name="slug"
-															value={product.slug}
-														/>
-														<div>
-															<label
-																htmlFor="rating"
-																className="mb-2 block font-medium text-gray-dark text-sm"
-															>
-																Your Rating
-															</label>
-															<div className="flex items-center gap-1">
-																{[1, 2, 3, 4, 5].map((star) => (
-																	<StarIcon
-																		key={star}
-																		className={`h-6 w-6 cursor-pointer ${star <= reviewRating
+								{product.included_items &&
+									product.included_items.length > 0 && (
+										<TabPanel
+											static
+											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+										>
+											<ul>
+												{!Array.isArray(product.included_items) ? (
+													<p className="text-red">
+														Error: Items are not an array!
+													</p>
+												) : (
+													product.included_items.map((included, idx) => (
+														<li key={included || idx}>{included}</li>
+													))
+												)}
+											</ul>
+										</TabPanel>
+									)}
+
+								<TabPanel
+									static
+									className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+								>
+									<ul className="mb-8 grid gap-6 md:grid-cols-2">
+										{!product.reviews.data.length && !review ? (
+											<Alert variant="info">
+												No reviews yet. Help others by writing the first one!
+											</Alert>
+										) : (
+											[
+												...(review ? [review] : []),
+												...(product.reviews?.data || []),
+											].map((review) => (
+												<li
+													key={review.id}
+													className="rounded-md border border-gray-light bg-white p-4 shadow-sm"
+												>
+													<div className="mb-2 flex items-center justify-between">
+														<span className="font-semibold text-gray-800">
+															{review.customer.name}
+														</span>
+														<span className="text-gray-500 text-sm">
+															{new Date(review.created_at).toLocaleDateString(
+																undefined,
+																{
+																	year: "numeric",
+																	month: "short",
+																	day: "numeric",
+																},
+															)}
+														</span>
+													</div>
+
+													<div className="mb-2">
+														<Rating rating={review.rating} />
+													</div>
+
+													<p className="text-gray-700">{review.review}</p>
+												</li>
+											))
+										)}
+									</ul>
+									{customer &&
+										!review &&
+										!product.reviews.data.some(
+											(review) => review.customer.id === customer.id,
+										) && (
+											<div className="max-w-3xl rounded-md border border-gray-light bg-white p-4 shadow-sm">
+												<h3 className="mb-4 font-bold text-lg text-navy-darkest">
+													Add Your Review
+												</h3>
+												<Form method="post" className="space-y-4 font-semibold">
+													<input
+														type="hidden"
+														name="_action"
+														value="addReview"
+													/>
+													<input
+														type="hidden"
+														name="slug"
+														value={product.slug}
+													/>
+													<div>
+														<label
+															htmlFor="rating"
+															className="mb-2 block font-medium text-gray-dark text-sm"
+														>
+															Your Rating
+														</label>
+														<div className="flex items-center gap-1">
+															{[1, 2, 3, 4, 5].map((star) => (
+																<StarIcon
+																	key={star}
+																	className={`h-6 w-6 cursor-pointer ${
+																		star <= reviewRating
 																			? "text-yellow-400"
 																			: "text-gray-300"
-																			}`}
-																		onClick={() => setReviewRating(star)}
-																	/>
-																))}
-																<input
-																	type="hidden"
-																	name="rating"
-																	value={reviewRating}
+																	}`}
+																	onClick={() => setReviewRating(star)}
 																/>
-															</div>
-														</div>
-														<div>
-															<label
-																htmlFor="review"
-																className="mb-2 block font-medium text-gray-700 text-sm"
-															>
-																Your Review
-															</label>
-															<textarea
-																id="review"
-																name="review"
-																rows={4}
-																className="w-full rounded-lg border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal disabled:bg-gray-lighter"
-																value={reviewText}
-																onChange={(e) => setReviewText(e.target.value)}
-																required
+															))}
+															<input
+																type="hidden"
+																name="rating"
+																value={reviewRating}
 															/>
 														</div>
-														<Button
-															type="submit"
-															disabled={loading}
-															loading={loading}
+													</div>
+													<div>
+														<label
+															htmlFor="review"
+															className="mb-2 block font-medium text-gray-700 text-sm"
 														>
-															Submit Review
-														</Button>
-													</Form>
-												</div>
-											)}
-									</TabPanel>
-								</TabPanels>
-							</TabGroup>
-						</div>
-					)}
+															Your Review
+														</label>
+														<textarea
+															id="review"
+															name="review"
+															rows={4}
+															className="w-full rounded-lg border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal disabled:bg-gray-lighter"
+															value={reviewText}
+															onChange={(e) => setReviewText(e.target.value)}
+															required
+														/>
+													</div>
+													<Button
+														type="submit"
+														disabled={loading}
+														loading={loading}
+													>
+														Submit Review
+													</Button>
+												</Form>
+											</div>
+										)}
+								</TabPanel>
+							</TabPanels>
+						</TabGroup>
+					</div>
+				)}
 			</div>
 			{/* Similar Products Section */}
 			{product.related_products && product.related_products.length > 0 && (
@@ -863,6 +866,13 @@ export default function ProductPage({
 					</div>
 				</section>
 			)}
+			<script
+				type="application/ld+json"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify(structured(product)),
+				}}
+			/>
 		</div>
 	);
 }

@@ -1,10 +1,16 @@
 import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/16/solid";
-import { NavLink, data, useLocation, useSearchParams } from "react-router";
+import {
+	type LinkDescriptor,
+	NavLink,
+	data,
+	useLocation,
+	useSearchParams,
+} from "react-router";
 import {
 	addToCart,
 	commitSession,
-	getCategoryProducts,
 	getProductCategory,
+	getProducts,
 	getSession,
 } from "~/.server";
 import {
@@ -31,6 +37,28 @@ export const handle = {
 		const allItems = [...ancestry, category];
 		return generateBreadcrumb(allItems, "/c");
 	},
+	dynamicLinks: ({ data }: Route.MetaArgs) => {
+		if (!data?.products?.meta) return [];
+
+		const meta = data.products.meta;
+		const links: LinkDescriptor[] = [];
+
+		if (meta.current_page > 1) {
+			links.push({
+				rel: "prev",
+				href: `${meta.path}?page=${meta.current_page - 1}`,
+			});
+		}
+
+		if (meta.current_page < meta.last_page) {
+			links.push({
+				rel: "next",
+				href: `${meta.path}?page=${meta.current_page + 1}`,
+			});
+		}
+
+		return links;
+	},
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {
@@ -56,14 +84,16 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 	const url = new URL(request.url);
 	const { slug } = params;
 
-	const { response: category } = await getProductCategory(session, slug);
-	const { response: products } = await getCategoryProducts(session, url, slug);
+	url.searchParams.set("category", slug);
 
-	const filters = products.filters;
+	const { response: category } = await getProductCategory(session, slug);
+	const { response: products } = await getProducts(session, url);
+
+	const filters = products?.filters;
 
 	const pagination =
-		isNonEmptyArray(products.data) && products.meta?.links
-			? products.meta?.links
+		isNonEmptyArray(products?.data) && products?.meta?.links
+			? products?.meta?.links
 			: null;
 
 	// Build ancestry array from parent chain
@@ -180,7 +210,6 @@ export default function ProductCategoryPage({
 							Read More
 						</Button>
 					)}
-					
 				</div>
 				{category.children && category.children.length > 0 && (
 					<div className="grid h-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -286,14 +315,14 @@ export default function ProductCategoryPage({
 							/>
 						</div>
 
-						{isNonEmptyArray(products.data) ? (
+						{isNonEmptyArray(products?.data) ? (
 							<div
 								className={cn(
 									"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",
 									cardView && "lg:grid-cols-1",
 								)}
 							>
-								{(products.data ?? []).map((product: Product) => (
+								{(products?.data ?? []).map((product: Product) => (
 									<ProductCard {...product} key={product.id} />
 								))}
 							</div>

@@ -9,8 +9,21 @@ declare module "react-router" {
 
 const app = new Hono();
 
-// Add any additional Hono middleware here
+// ✅ Middleware to force lowercase URLs
+app.use("*", async (c, next) => {
+	const url = new URL(c.req.url);
+	const originalPath = url.pathname;
+	const lowercasePath = originalPath.toLowerCase();
 
+	if (originalPath !== lowercasePath) {
+		url.pathname = lowercasePath;
+		return c.redirect(url.toString(), 301); // Permanent redirect
+	}
+
+	await next();
+});
+
+// ✅ Remix request handler
 const handler = createRequestHandler(build);
 app.mount("/", (req) => handler(req, new Map()));
 

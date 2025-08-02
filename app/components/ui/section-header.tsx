@@ -1,5 +1,3 @@
-import { AnimateOnScroll } from "./animate-on-scroll";
-
 type SectionHeaderProps = {
 	category: string;
 	title: string;
@@ -13,14 +11,14 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
 	return (
 		<div className="mx-auto flex flex-col gap-8 text-center">
-			<AnimateOnScroll className="flex flex-col gap-1">
+			<div className="flex flex-col gap-1">
 				<h2 className="font-bold text-teal uppercase">{category}</h2>
 				<h3 className="text-5xl">{title}</h3>
-			</AnimateOnScroll>
+			</div>
 			{description && (
-				<AnimateOnScroll>
+				<div>
 					<p className="mx-auto text-lg">{description}</p>
-				</AnimateOnScroll>
+				</div>
 			)}
 		</div>
 	);
