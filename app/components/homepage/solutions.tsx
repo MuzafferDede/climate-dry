@@ -1,22 +1,17 @@
-import {
-	Listbox,
-	ListboxButton,
-	ListboxOption,
-	ListboxOptions,
-	Tab,
-	TabGroup,
-	TabList,
-	TabPanel,
-	TabPanels,
-} from "@headlessui/react";
-import { ArrowRightIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { Link } from "react-router";
-import { AnimateOnScroll, Button, SectionHeader } from "~/components";
+import { Button, SectionHeader, Select } from "~/components";
 import type { Solution } from "~/types";
 
 export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
-	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [selectedIndex, setSelectedIndex] = useState<string | number>(0);
+
+	const options = solutions.map((solution, index) => ({
+		label: solution.name,
+		value: String(index),
+	}));
 
 	return (
 		<div className="bg-gray-lightest">
@@ -31,39 +26,15 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 				</div>
 				<TabGroup
 					className="relative grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-0"
-					selectedIndex={selectedIndex}
+					selectedIndex={Number(selectedIndex)}
 					onChange={setSelectedIndex}
 				>
-					<Listbox
-						className="mx-auto lg:hidden"
-						as="div"
-						value={selectedIndex}
-						onChange={setSelectedIndex}
-					>
-						<ListboxButton
-							as={AnimateOnScroll}
-							className="relative w-xs rounded border bg-white p-4 text-left font-semibold"
-						>
-							<span>{solutions[selectedIndex].name}</span>
-							<span className="absolute inset-y-0 right-2 flex items-center justify-center">
-								<ChevronDownIcon className="size-6" />
-							</span>
-						</ListboxButton>
-						<ListboxOptions
-							anchor="bottom"
-							className="w-xs overflow-auto rounded border bg-white shadow-lg"
-						>
-							{solutions.map((solution, index) => (
-								<ListboxOption
-									key={solution.name}
-									value={index}
-									className="cursor-pointer px-4 py-2 hover:bg-gray-lighter"
-								>
-									{solution.name}
-								</ListboxOption>
-							))}
-						</ListboxOptions>
-					</Listbox>
+					<Select
+						value={String(selectedIndex)}
+						options={options}
+						onChange={(value) => setSelectedIndex(value)}
+						className="max-w-xs lg:hidden"
+					/>
 					<TabList className="hidden grid-cols-2 gap-x-4 self-start lg:grid">
 						{solutions.map((solution) => (
 							<Tab
@@ -74,11 +45,7 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 							</Tab>
 						))}
 					</TabList>
-					<TabPanels
-						as={AnimateOnScroll}
-						className="bg-white"
-						type="fadeInRight"
-					>
+					<TabPanels className="bg-white">
 						{solutions.map((solution) => (
 							<TabPanel
 								key={solution.name}

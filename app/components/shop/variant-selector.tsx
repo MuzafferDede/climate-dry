@@ -1,7 +1,8 @@
-import { Form } from "react-router";
+import { ArrowRightIcon, ShoppingCartIcon } from "@heroicons/react/16/solid";
+import { Form, NavLink, href, useMatch, useNavigation } from "react-router";
 import type { Variant } from "~/types";
-import { cn, currency } from "~/utils";
-import { Modal } from "../ui";
+import { Button, Modal } from "../ui";
+import { Price } from "./price";
 import { StockStatus } from "./stock-status";
 
 type VariantSelectorProps = {
@@ -21,16 +22,16 @@ export const VariantSelector = ({
 }: VariantSelectorProps) => {
 	return (
 		<Modal open={open} onClose={() => setOpen(false)} title="Choose a Variant">
-			<Form method="post" onSubmit={() => setOpen(false)}>
+			<Form method="post" onSubmit={() => setOpen(false)} className="space-y-4">
 				<input type="hidden" name="quantity" value={quantity} />
 				<input type="hidden" name="_action" value="addToCart" />
 				{extras.map((extra) => (
 					<input key={extra} type="hidden" name="extras[]" value={extra} />
 				))}
 
-				<div className="space-y-4">
+				<div className="space-y-6">
 					{variants.map((variant) => (
-						<VariantButton key={variant.id} variant={variant} />
+						<VariantCard key={variant.id} variant={variant} />
 					))}
 				</div>
 			</Form>
@@ -38,62 +39,75 @@ export const VariantSelector = ({
 	);
 };
 
-type VariantButtonProps = {
+type VariantCardProps = {
 	variant: Variant;
 };
 
-const VariantButton = ({ variant }: VariantButtonProps) => {
+const VariantCard = ({ variant }: VariantCardProps) => {
 	const isInStock = variant.in_stock;
+	const match = useMatch("/p/:slug");
+	const navigation = useNavigation();
+	const id = navigation?.formData?.get("id");
+
+	const loading = id !== null && id !== undefined && Number(id) === variant.id;
 
 	return (
-		<button
-			type="submit"
-			name="id"
-			value={variant.id}
-			disabled={!isInStock}
-			className={cn(
-				"group relative w-full overflow-hidden rounded-lg border bg-stone-100 p-4 text-left shadow-sm transition-all",
-				isInStock
-					? "cursor-pointer border-gray-lighter hover:border-teal hover:bg-teal/10"
-					: "cursor-not-allowed border-gray-lighter opacity-50",
-			)}
-		>
-			<div className="flex items-start justify-between gap-4">
-				<div className="flex-1 space-y-2">
-					<p className="font-semibold text-navy-darkest text-sm capitalize">
-						<span>{variant.name}</span>
-						<span className="text-gray"> - </span>
-						<span className="text-teal">{variant.sku}</span>
-					</p>
+		<div className="space-y-3 rounded-lg border border-gray-lighter bg-white p-4 shadow-sm hover:hover:border-teal/70 hover:shadow-lg">
+			<header className="flex flex-wrap items-center gap-2 font-semibold text-navy-darkest text-sm capitalize">
+				<span>{variant.name}</span>
+				<span className="text-gray">-</span>
+				<span className="text-teal">{variant.sku}</span>
+			</header>
+			<div className="flex flex-col justify-between gap-2 md:flex-row">
+				<div className="flex flex-wrap items-start gap-2">
+					{variant.attributes.map((attr) => (
+						<AttributeTag key={attr.id} name={attr.name} value={attr.value} />
+					))}
+				</div>
 
-					<div className="grid w-full flex-col gap-1 rounded-lg text-gray text-sm md:grid-cols-2">
-						{variant.attributes.map((attr) => (
-							<AttributeTag key={attr.id} name={attr.name} value={attr.value} />
-						))}
-					</div>
-
-					<div className="flex items-start items-center justify-between">
-						<div className="flex items-center gap-2">
-							<p className="font-bold text-base text-teal">
-								{currency(variant.price)}
-							</p>
-							{variant.retail_price > variant.price && (
-								<p className="text-gray text-sm line-through">
-									{currency(variant.retail_price)}
-								</p>
-							)}
-						</div>
+				<div className="flex flex-col gap-2">
+					<div className="flex flex-col gap-1">
+						<Price variant={variant} />
 						<StockStatus inStock={isInStock} />
 					</div>
 				</div>
 			</div>
-		</button>
+			<div className="flex flex-col justify-between gap-2 md:flex-row">
+				{!match && (
+					<Button
+						as={NavLink}
+						to={href("/p/:slug", { slug: variant.product.slug })}
+						variant="secondary"
+						icon={
+							<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
+						}
+					>
+						<span>Find out more</span>
+					</Button>
+				)}
+				<Button
+					title={`Add ${variant.sku} to basket`}
+					name="id"
+					value={variant.id}
+					disabled={!isInStock}
+					type="submit"
+					variant="destructive"
+					className="ml-auto w-full md:w-auto"
+					icon={
+						<ShoppingCartIcon className="size-6 rounded-full border border-current p-1" />
+					}
+					loading={loading}
+				>
+					<span>Add to Basket</span>
+				</Button>
+			</div>
+		</div>
 	);
 };
 
 const AttributeTag = ({ name, value }: { name: string; value: string }) => (
-	<p className="flex w-full gap-1 rounded-md border border-gray-light bg-white px-2 py-1">
+	<p className="flex items-center gap-1 rounded-md border border-gray-light bg-white px-2 py-1 text-sm">
 		<span className="font-semibold text-green uppercase">{name}:</span>
-		<span className="font-semibold text-navy-darkest/60">{value}</span>
+		<span className="font-medium text-navy-darkest/70">{value}</span>
 	</p>
 );

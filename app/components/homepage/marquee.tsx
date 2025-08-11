@@ -2,15 +2,16 @@ import { Link } from "react-router";
 
 export const Marquee = () => {
 	return (
-		<div className="group/margue border-white border-y-2 bg-teal p-2 text-center text-white lg:text-base">
-			<div className="group-hover/margue:paused inline-block animate-marquee whitespace-nowrap md:animate-none md:whitespace-normal">
-				Shop with peace of mind - Lowest prices around, backed up with our{" "}
+		<div className="group/marquee border-white border-y-2 bg-teal p-2 text-center text-white lg:text-base">
+			<div className="group-hover/marquee:paused inline-block animate-marquee whitespace-nowrap md:animate-none md:whitespace-normal">
+				Shop with confidence, knowing you’re buying from experts who offer only
+				top-quality brands, backed by our{" "}
 				<Link to="/pages/price-match" className="font-bold hover:underline">
-					Price Match Guarantee
+					price match guarantee
 				</Link>{" "}
-				- Best quality products, backed up with our{" "}
+				and{" "}
 				<Link to="/pages/warranty" className="font-bold hover:underline">
-					Warranty Offers
+					exceptional warranties
 				</Link>
 			</div>
 		</div>

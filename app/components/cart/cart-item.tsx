@@ -239,6 +239,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 					}}
 					className="ml-auto flex items-center border-gray-lightest border-l pl-4"
 					title="Remove item"
+					aria-label="Delete cart item"
 				>
 					<TrashIcon className="size-5 text-navy-darkest hover:text-navy-darkest/50" />
 				</button>

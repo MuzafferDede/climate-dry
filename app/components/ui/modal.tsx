@@ -35,6 +35,7 @@ export const Modal: React.FC<ModalProps> = ({
 										type="button"
 										onClick={onClose}
 										className="text-gray hover:text-gray-dark"
+										aria-label="Close modal"
 									>
 										<XMarkIcon className="h-6 w-6" />
 									</button>

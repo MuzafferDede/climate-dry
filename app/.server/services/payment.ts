@@ -1,9 +1,8 @@
-import type { Session } from "react-router";
 import type { StripePaymentIntent } from "~/types";
-import { fetcher } from "../libs";
+import { type TSession, fetcher } from "../libs";
 
 export async function getPaymentIntentSecret(
-	session: Session,
+	session: TSession,
 	formData: FormData,
 ) {
 	const formValues = Object.fromEntries(formData);

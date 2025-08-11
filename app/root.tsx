@@ -9,6 +9,7 @@ import {
 	data,
 	isRouteErrorResponse,
 	useLoaderData,
+	useMatch,
 	useMatches,
 	useNavigate,
 	useNavigation,
@@ -33,7 +34,7 @@ import {
 } from "~/components";
 import { AppProvider } from "~/contexts";
 import { useInViewport } from "~/hooks";
-import { commitSession, getCustomer, getSession } from "./.server";
+import { buildHeaders, getCustomer, getSession } from "./.server";
 import {
 	getCart,
 	getNavigation,
@@ -86,9 +87,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	return data(
 		{ customer, menu, pages, toast, cart, url },
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 };
@@ -106,21 +105,20 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	return data(
 		{ message: result?.email },
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 };
 
 export function Layout({ children }: { children: ReactNode }) {
-	const { url } = useLoaderData<typeof loader>();
+	const data = useLoaderData<typeof loader>();
+	const url = data?.url ?? "";
 
 	const links: LinkDescriptor[] = useMatches().flatMap((match) => {
 		//@ts-ignore
 		const fn = match.handle?.dynamicLinks;
 		if (typeof fn !== "function") return [];
-		return fn({ data: match.data });
+		return fn({ data: match.data, url });
 	});
 
 	let canonicalUrl = url.toString();
@@ -155,6 +153,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
 
 	const navigation = useNavigation();
 	const isLoading = navigation.state === "loading";
+	const home = useMatch("/");
 
 	return (
 		<AppProvider>
@@ -167,16 +166,16 @@ export default function App({ loaderData }: Route.ComponentProps) {
 				<div className="isolote relative z-20">
 					<Outlet />
 				</div>
-				<WhyChooseUs />
+				{!home && <WhyChooseUs />}
 				<Footer />
 				<ToastContainer toast={toast} />
 				<Link
+					aria-label="go to top"
 					data-state={inView ? "hide" : "show"}
 					to="#main"
 					className="fade-in zoom-in zoom-out fixed right-4 bottom-12 z-40 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
 				>
 					<ChevronUpIcon className="size-10" />
-					<span className="sr-only">go to top</span>
 				</Link>
 				{isLoading && (
 					<div className="fixed right-0 bottom-0 z-50 m-4 flex animate-bounce items-center justify-center gap-4 rounded-full bg-teal p-4 font-bold text-white shadow-md">
@@ -191,34 +190,42 @@ export default function App({ loaderData }: Route.ComponentProps) {
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	const navigate = useNavigate();
+	const isDev = import.meta.env.DEV;
 
-	let message = "Oops!";
-	let details = "An unexpected error occurred.";
+	let title = "Unexpected Error";
+	let description = "Something went wrong. Please try again later.";
 	let stack: string | undefined;
 
 	if (isRouteErrorResponse(error)) {
-		message =
-			error.status === 404 ? "404 - Page Not Found" : `Error ${error.status}`;
-		details =
-			error.status === 404
-				? "The requested page could not be found."
-				: error.statusText || details;
-	} else if (import.meta.env.DEV && error instanceof Error) {
-		details = error.message;
+		if (error.status === 404) {
+			title = "404 - Page Not Found";
+			description = "The page you’re looking for doesn’t exist.";
+		} else {
+			title = `Error ${error.status}`;
+			description = error.statusText || description;
+		}
+	} else if (isDev && error instanceof Error) {
+		title = "Application Error";
+		description = error.message;
 		stack = error.stack;
 	}
 
 	return (
-		<main className="isolate flex min-h-screen animate-fade-in items-center justify-center bg-gray-lightest p-6">
-			<div className="fade-in zoom-in w-full max-w-md animate-in rounded-lg border border-gray-lighter bg-white p-6 shadow-sm">
-				<div className="mb-6 flex animate-pulse justify-center">
-					<div className="flex h-14 w-14 items-center justify-center rounded-full bg-red">
-						<ExclamationTriangleIcon className="h-7 w-7 text-white" />
-					</div>
-				</div>
+		<div className="flex min-h-screen flex-col bg-gray-lightest">
+			{/* Top section */}
+			<header className="flex flex-col items-center justify-center bg-red p-8 text-white">
+				<ExclamationTriangleIcon
+					className="mb-4 h-12 w-12"
+					aria-hidden="true"
+				/>
+				<h1 className="text-center font-bold text-4xl">{title}</h1>
+			</header>
 
-				<h1 className="mb-2 text-center font-bold text-2xl">{message}</h1>
-				<p className="mb-6 text-center text-gray">{details}</p>
+			{/* Main content */}
+			<main className="flex flex-1 flex-col items-center justify-center p-6">
+				<p className="mb-8 max-w-xl text-center text-gray-700 text-lg">
+					{description}
+				</p>
 
 				<div className="flex flex-col-reverse justify-center gap-3 sm:flex-row">
 					<Button
@@ -228,7 +235,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 					>
 						Go Back
 					</Button>
-
 					<Button
 						as={Link}
 						to="/"
@@ -239,20 +245,21 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 						Home
 					</Button>
 				</div>
+			</main>
 
-				{stack && (
-					<div className="mt-6">
-						<details className="rounded-md bg-gray-lightest p-4 text-xs">
-							<summary className="cursor-pointer font-bold">
-								Show error stack
-							</summary>
-							<pre className="mt-2 overflow-auto whitespace-pre-wrap text-red">
-								{stack}
-							</pre>
-						</details>
-					</div>
-				)}
-			</div>
-		</main>
+			{/* Stack trace for dev mode */}
+			{isDev && stack && (
+				<footer className="border-gray-300 border-t bg-gray-100 p-6 text-sm">
+					<details>
+						<summary className="cursor-pointer font-semibold text-gray-800">
+							View stack trace
+						</summary>
+						<pre className="mt-2 overflow-auto whitespace-pre-wrap rounded-md bg-gray-lightest p-4 text-red-600">
+							{stack}
+						</pre>
+					</details>
+				</footer>
+			)}
+		</div>
 	);
 }

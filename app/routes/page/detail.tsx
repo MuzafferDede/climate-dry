@@ -1,5 +1,5 @@
-import { useRouteLoaderData } from "react-router";
-import { getPage, getSession } from "~/.server";
+import { redirect } from "react-router";
+import { getPages, getSession } from "~/.server";
 import {
 	Breadcrumb,
 	ContactUsForm,
@@ -9,15 +9,15 @@ import {
 import type { Page } from "~/types";
 import type { Route } from "./+types/detail";
 
-export const meta = ({ data }: Route.MetaArgs) => [
-	{ title: data.page.meta_title ?? data.page.name },
-	{ name: "description", content: data.page.meta_description },
+export const meta = ({ data: { page } }: Route.MetaArgs) => [
+	{ title: page?.meta_title ?? page?.name },
+	{ name: "description", content: page?.meta_description },
 ];
 
 export const handle = {
-	breadcrumb: (data: { page: Page }) => [
+	breadcrumb: ({ page }: { page: Page }) => [
 		{ label: "Help & Info", path: "/pages" },
-		{ label: data.page.name, path: `/pages/${data.page.slug}` },
+		{ label: page?.name, path: `/pages/${page?.slug}` },
 	],
 };
 
@@ -25,16 +25,28 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 	const { slug } = params;
 
-	const { response: page } = await getPage(session, slug);
+	const { response: pages, error } = await getPages(session);
+
+	let page = pages.data.find((page) => page.slug === slug);
+
+	if ((slug && !page && !error) || error)
+		throw new Response(error, { status: 404 });
+
+	if (!page) {
+		page = pages.data[0];
+		throw redirect(`/pages/${page.slug}`);
+	}
 
 	return {
+		pages,
 		page,
 	};
 }
 
 export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
-	const { page } = loaderData;
-	const { pages } = useRouteLoaderData("root");
+	const { page, pages } = loaderData;
+
+	if (!page) return null;
 
 	return (
 		<div className="space-y-8 px-5 py-8">
@@ -59,9 +71,9 @@ export default function PageDetailPage({ loaderData }: Route.ComponentProps) {
 							<div
 								className="prose max-w-none"
 								// biome-ignore lint/security/noDangerouslySetInnerHtml: safe backend HTML
-								dangerouslySetInnerHTML={{ __html: page.description ?? "" }}
+								dangerouslySetInnerHTML={{ __html: page?.description ?? "" }}
 							/>
-							{page.slug === "contact-us" && <ContactUsForm />}
+							{page?.slug === "contact-us" && <ContactUsForm />}
 						</div>
 					</main>
 				</div>

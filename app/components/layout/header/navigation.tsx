@@ -56,8 +56,7 @@ export const MainNavigation = () => {
 								className={({ isActive }) =>
 									cn(
 										"transition-colors hover:text-teal",
-										isActive &&
-										"font-bold text-teal",
+										isActive && "font-bold text-teal",
 									)
 								}
 								to={`/c/${child.slug}`}
@@ -69,9 +68,8 @@ export const MainNavigation = () => {
 					))}
 				</ul>
 			</div>
-		)
-	}
-
+		);
+	};
 
 	return (
 		<nav className="relative z-300 bg-white text-base shadow-sm md:z-200">
@@ -122,7 +120,7 @@ export const MainNavigation = () => {
 																		className={({ isActive }) =>
 																			cn(
 																				"h-20 w-full",
-																				isActive && "font-bold text-teal"
+																				isActive && "font-bold text-teal",
 																			)
 																		}
 																		onClick={() => closeNavitaion(close)}
@@ -142,7 +140,7 @@ export const MainNavigation = () => {
 																			className={({ isActive }) =>
 																				cn(
 																					"font-bold text-base text-teal uppercase transition-colors hover:text-navy-darkest",
-																					isActive && "font-bold text-teal"
+																					isActive && "font-bold text-teal",
 																				)
 																			}
 																			to={`/c/${child.slug}`}
@@ -152,7 +150,6 @@ export const MainNavigation = () => {
 																		</NavLink>
 
 																		{isNonEmptyArray(child.children) && (
-
 																			<ul className="grid w-full gap-1">
 																				{child.children
 																					.filter(
@@ -173,8 +170,8 @@ export const MainNavigation = () => {
 																								"Workshop Dehumidifiers",
 																								"Small Dehumidifiers",
 																								"Low Grain Dehumidifiers",
-																								"Boat Dehumidifiers"
-																							].includes(grandChild.name)
+																								"Boat Dehumidifiers",
+																							].includes(grandChild.name),
 																					)
 																					.slice(
 																						0,
@@ -182,7 +179,7 @@ export const MainNavigation = () => {
 																							? 3
 																							: child.slug === "ventilation"
 																								? 4
-																								: undefined
+																								: undefined,
 																					)
 																					.map((grandChild) => (
 																						<li key={grandChild.slug}>
@@ -190,11 +187,14 @@ export const MainNavigation = () => {
 																								className={({ isActive }) =>
 																									cn(
 																										"transition-colors hover:text-teal",
-																										isActive && "font-bold text-teal"
+																										isActive &&
+																											"font-bold text-teal",
 																									)
 																								}
 																								to={`/c/${grandChild.slug}`}
-																								onClick={() => closeNavitaion(close)}
+																								onClick={() =>
+																									closeNavitaion(close)
+																								}
 																							>
 																								{grandChild.name}
 																							</NavLink>
@@ -210,7 +210,6 @@ export const MainNavigation = () => {
 															</li>
 														))}
 													</ul>
-
 												</PopoverPanel>
 											</>
 										) : (
@@ -244,9 +243,9 @@ export const MainNavigation = () => {
 						}
 						className="fixed inset-y-0 top-20 left-0 z-10 w-12 backdrop-blur-md"
 						type="button"
-					>
-						<span className="sr-only">Close</span>
-					</button>
+						aria-label="Close"
+					/>
+
 					<div className="relative z-20 space-y-1 px-2 pt-2 pb-3">
 						{navigation.map((item) => (
 							<div key={item.slug} className="border-gray-lighter border-b">
@@ -291,7 +290,7 @@ export const MainNavigation = () => {
 																									? "pointer-events-auto"
 																									: "pointer-events-none",
 																								isActive &&
-																								"font-bold text-teal",
+																									"font-bold text-teal",
 																							)
 																						}
 																						to={`/c/${child.slug}`}

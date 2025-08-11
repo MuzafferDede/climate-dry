@@ -72,7 +72,9 @@ export const Pagination = ({
 		}
 
 		const queryString = pagParams.toString();
-		const to = queryString ? `?${queryString}` : "";
+		const hash = "#product-list"; // Your desired hash
+
+		const to = queryString ? `?${queryString}${hash}` : `${hash}`;
 
 		return (
 			<NavLink

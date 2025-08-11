@@ -89,6 +89,7 @@ export const Middle = () => {
 										className="absolute inset-y-0 right-0 size-10 justify-center text-gray hover:text-teal"
 										disabled={!email || message}
 										icon={<ArrowRightIcon className="size-5" />}
+										aria-label="Submit"
 									/>
 								</Form>
 							)}
@@ -132,10 +133,10 @@ export const Middle = () => {
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-wrap justify-between gap-y-16">
+			<div className="flex flex-wrap justify-between gap-8">
 				<div className="flex flex-col gap-2.5">
 					<SectionTitle label="Products" />
-					<ul className="flex flex-col gap-0.5 text-white">
+					<ul className="flex flex-col gap-2 text-white">
 						{footerProductLinks.map((product) => (
 							<li key={product.label}>
 								<Link to={product.path} className="font-bold hover:text-teal">
@@ -148,7 +149,7 @@ export const Middle = () => {
 				{pages && (
 					<div className="flex flex-col gap-2.5">
 						<SectionTitle label="Help & Info" />
-						<ul className="flex flex-col gap-0.5 text-white">
+						<ul className="flex flex-col gap-2 text-white">
 							{pages.data.map((page) => (
 								<li key={page.name}>
 									<Link
@@ -164,7 +165,7 @@ export const Middle = () => {
 				)}
 				<div className="flex flex-col gap-2.5">
 					<SectionTitle label="Follow Us" />
-					<div className="flex items-start gap-2 text-white">
+					<div className="flex items-start gap-4 text-white">
 						<a
 							href="https://x.com/ClimateDryUK"
 							className="flex items-center hover:text-teal"

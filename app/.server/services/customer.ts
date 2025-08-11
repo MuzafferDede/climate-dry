@@ -1,8 +1,7 @@
-import type { Session } from "react-router";
 import { z } from "zod";
 import type { Customer } from "~/types";
 import { validator } from "~/utils";
-import { fetcher } from "../libs";
+import { type TSession, fetcher } from "../libs";
 
 // Schema for validating login form
 const loginSchema = z.object({
@@ -33,7 +32,7 @@ interface RegisterResponse {
 	email: string;
 }
 
-export const register = async (session: Session, formData: FormData) => {
+export const register = async (session: TSession, formData: FormData) => {
 	const formValues = Object.fromEntries(formData);
 
 	const validated = validator(formValues, registerSchema);
@@ -57,7 +56,7 @@ export const register = async (session: Session, formData: FormData) => {
 	};
 };
 
-export const login = async (session: Session, formData: FormData) => {
+export const login = async (session: TSession, formData: FormData) => {
 	const formValues = Object.fromEntries(formData);
 
 	const validated = validator(formValues, loginSchema);
@@ -81,7 +80,7 @@ export const login = async (session: Session, formData: FormData) => {
 	};
 };
 
-export const logout = async (session: Session) => {
+export const logout = async (session: TSession) => {
 	const api = fetcher(session);
 
 	return await api.post<{ message: string }>("/customers/logout", {});

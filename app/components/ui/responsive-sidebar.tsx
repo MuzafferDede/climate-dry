@@ -32,6 +32,7 @@ export function ResponsiveSidebar({
 				>
 					{pages.map((link) => (
 						<NavLink
+							end
 							key={link.slug}
 							to={`/${segment}/${link.slug}`}
 							className={({ isActive }) =>
@@ -47,6 +48,7 @@ export function ResponsiveSidebar({
 					{segment === "pages" && (
 						<>
 							<NavLink
+								end
 								key="accessories"
 								to="/c/accessories"
 								className={({ isActive }) =>

@@ -7,7 +7,6 @@ export const PageNavigation = () => {
 		<div className="mx-auto grid max-w-7xl grid-cols-3 gap-4 py-8 lg:grid-cols-6">
 			{adviceHubNav.map(({ label, path }) => (
 				<NavLink
-					end
 					key={path}
 					to={path}
 					className={({ isActive }) =>

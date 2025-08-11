@@ -43,7 +43,7 @@ export const FeaturedPosts = ({
 							/>
 							<div className="space-y-4 p-6">
 								<h4 className="font-bold text-3xl">{mainPost.title}</h4>
-								<p className="text-xs">{mainPost.introduction}</p>
+								<p className="text-sm">{mainPost.introduction}</p>
 								<Button
 									to={`/info-hub/article/${mainPost.slug}`}
 									as={Link}
@@ -70,14 +70,14 @@ export const FeaturedPosts = ({
 										>
 											{post.title}
 										</Link>
-										<p className="text-gray text-xs">{post.introduction}</p>
+										<p className="text-gray text-sm">{post.introduction}</p>
 									</div>
 									<Button
 										to={`/info-hub/article/${post.slug}`}
 										as={Link}
 										variant="ghost"
 										size="none"
-										className="text-xs"
+										className="text-sm"
 									>
 										Read more
 									</Button>

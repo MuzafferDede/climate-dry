@@ -11,8 +11,8 @@ export const ProductCategoryCard = ({
 			key={category.slug}
 			className="block [&>div]:h-full"
 		>
-			<div className="group relative flex h-full flex-row justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl lg:flex-col">
-				<div className="flex h-full flex-col space-y-2 px-4 py-5">
+			<div className="group relative flex h-full flex-col justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl md:flex-row lg:flex-col">
+				<div className="flex h-full w-full flex-col space-y-2 px-4 py-5">
 					<p className="font-bold text-2xl">{category.name}</p>
 					<div className="flex min-h-20 flex-1 flex-col justify-between">
 						<div
@@ -23,9 +23,9 @@ export const ProductCategoryCard = ({
 						<p className="font-bold">See all {category.name}</p>
 					</div>
 				</div>
-				<div className="mt-auto ml-auto">
+				<div className="mt-auto ml-auto flex w-full justify-end">
 					<Image
-						className="aspect-square h-auto w-full max-w-52 origin-bottom-right object-contain transition-all delay-100 duration-300 ease-in-out group-hover:scale-115"
+						className="aspect-square h-auto w-full max-w-52 origin-bottom-right object-contain transition-all delay-100 duration-300 ease-in-out group-hover:scale-105"
 						src={category.thumbnail_url}
 						alt={category.name}
 						loading="lazy"

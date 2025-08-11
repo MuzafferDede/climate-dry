@@ -42,7 +42,7 @@ export const Breadcrumb = ({ className }: { className?: string }) => {
 										className="flex items-center text-navy-darkest/50 hover:text-teal"
 										aria-label="Go to home page"
 									>
-										<HomeIcon className="h-4 w-4" />
+										<HomeIcon className="h-6 w-6" />
 									</Link>
 								) : isLast ? (
 									<span

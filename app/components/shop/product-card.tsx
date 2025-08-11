@@ -1,9 +1,10 @@
-import { ArrowRightIcon } from "@heroicons/react/16/solid";
+import {} from "@headlessui/react";
+import { ArrowRightIcon, ShoppingCartIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { Form, NavLink, href } from "react-router";
-import { Button, Image, VariantSelector } from "~/components";
+import { Form, NavLink, href, useNavigation } from "react-router";
+import { Button, Image, Price, VariantSelector } from "~/components";
 import type { Product } from "~/types";
-import { calculateSave, currency, structured } from "~/utils";
+import { structured } from "~/utils";
 import { PaymentAndShipping } from "../ui/payment-and-shipping";
 import { Rating } from "./rating";
 import { StockStatus } from "./stock-status";
@@ -28,9 +29,16 @@ export const ProductCard = (product: Product) => {
 
 	const inStock = variants.some((variant) => variant.in_stock);
 
+	const navigation = useNavigation();
+
+	const id = navigation?.formData?.get("id");
+
+	const loading =
+		id !== null && id !== undefined && Number(id) === default_variant.id;
+
 	return (
 		<div className="[&>div]:h-full">
-			<div className="@container boder relative isolate h-full rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-105 hover:shadow-gray hover:shadow-xl">
+			<div className="@container boder relative isolate h-full rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-102 hover:shadow-gray hover:shadow-lg">
 				<div className="absolute top-0 left-4 z-10 flex items-center px-4">
 					{most_popular && (
 						<span className="bg-teal px-2 py-1 text-white text-xs">
@@ -70,24 +78,7 @@ export const ProductCard = (product: Product) => {
 
 						<div className="flex w-full @xl:max-w-56 grow flex-col @xl:justify-start justify-end gap-2">
 							<div className="flex flex-col">
-								{default_variant.retail_price > default_variant.price && (
-									<p className="font-bold text-red">
-										save{" "}
-										{calculateSave(
-											default_variant.price,
-											default_variant.retail_price,
-										)}
-										%
-									</p>
-								)}
-								<div className="flex items-end gap-1 font-bold">
-									<span className="text-xl">
-										{currency(default_variant.price)}
-									</span>
-									<span className="text-gray-light text-lg line-through">
-										{currency(default_variant.retail_price)}
-									</span>
-								</div>
+								<Price variant={default_variant} />
 								<PaymentAndShipping
 									freeShipping={Boolean(default_variant.free_shipping)}
 									premiumShipping={Boolean(
@@ -97,7 +88,6 @@ export const ProductCard = (product: Product) => {
 								/>
 							</div>
 							<StockStatus inStock={inStock} />
-
 							<div className="@xl:mt-auto flex flex-col gap-2">
 								<Form
 									method="post"
@@ -115,17 +105,19 @@ export const ProductCard = (product: Product) => {
 										name="id"
 										disabled={!inStock}
 										type={hasVariants ? "button" : "submit"}
-										value={variants[0].id}
+										value={default_variant.id}
 										onClick={() => {
 											setOpen(hasVariants);
 										}}
+										variant="destructive"
 										className="w-full"
 										icon={
-											<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
+											<ShoppingCartIcon className="size-6 rounded-full border border-current p-1" />
 										}
+										loading={loading}
 									>
 										<span>
-											{variants.length > 1 ? "Choose a variant" : "Buy Now"}
+											{hasVariants ? "Choose a variant" : "Add to Basket"}
 										</span>
 									</Button>
 								</Form>

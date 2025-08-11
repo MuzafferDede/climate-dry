@@ -1,21 +1,15 @@
-import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/16/solid";
-import { NavLink, data, useSearchParams } from "react-router";
+import {} from "@heroicons/react/16/solid";
+import { data } from "react-router";
 import {
 	addToCart,
-	commitSession,
+	buildHeaders,
 	getBrand,
 	getBrandProducts,
 	getSession,
 } from "~/.server";
-import {
-	Breadcrumb,
-	Button,
-	Pagination,
-	ProductCard,
-	Select,
-} from "~/components";
-import { type Brand, type Product, ToastType } from "~/types";
-import { cn, isNonEmptyArray, putToast } from "~/utils";
+import { Breadcrumb, Button, ProductList } from "~/components";
+import { type Brand, ToastType } from "~/types";
+import { isNonEmptyArray, putToast } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const handle = {
@@ -48,18 +42,14 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
 	const { slug } = params;
 
-	const { response: brand } = await getBrand(session, slug);
+	const { response: brand, error } = await getBrand(session, slug);
 	const { response: products } = await getBrandProducts(session, url, slug);
 
-	const pagination =
-		products.data.length > 0 && products.meta?.links
-			? products.meta.links
-			: null;
+	if (error) throw new Response(error, { status: 404 });
 
 	return {
 		brand,
 		products,
-		pagination,
 	};
 }
 
@@ -81,40 +71,17 @@ export async function action({ request }: Route.ActionArgs) {
 	return data(
 		{ response },
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 }
 
-const SortBy = [
-	{
-		label: "Best Selling",
-		value: "sales_count",
-	},
-	{
-		label: "Best Rating",
-		value: "rating",
-	},
-	{
-		label: "Price Low",
-		value: "price-low",
-	},
-	{
-		label: "Price High",
-		value: "price-high",
-	},
-];
-
 export default function BrandPage({ loaderData }: Route.ComponentProps) {
-	const { brand, products, pagination } = loaderData;
-	const [searchParams, setSearchParams] = useSearchParams();
-	const cardView = searchParams.get("view") === "card";
+	const { brand, products } = loaderData;
 
 	return (
-		<div className="space-y-8 px-5 py-8">
-			<div className="mx-auto max-w-7xl space-y-8">
+		<div className="space-y-8 py-8">
+			<div className="mx-auto max-w-7xl space-y-8 px-5 ">
 				<Breadcrumb />
 				<div className="space-y-2">
 					<h1 className="font-bold text-4xl text-navy-darkest">{brand.name}</h1>
@@ -135,64 +102,12 @@ export default function BrandPage({ loaderData }: Route.ComponentProps) {
 				<div className="relative isolate bg-gray-lightest">
 					<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
 						<main className="lg:col-span-4">
-							<div className="mb-4 flex items-center justify-end gap-4">
-								<div className="flex items-center gap-1">
-									<label
-										htmlFor="sort"
-										className="block whitespace-nowrap text-gray text-xs"
-									>
-										Sort By:
-									</label>
-									<Select
-										id="sort"
-										name="sort"
-										value={searchParams.get("sort") || "price-low"}
-										options={SortBy}
-										onChange={(val: string) => {
-											const newParams = new URLSearchParams(searchParams);
-											newParams.set("sort", val);
-											setSearchParams(newParams, { preventScrollReset: true });
-										}}
-										className="w-40"
-									/>
-								</div>
-								<Button
-									as={NavLink}
-									to={(() => {
-										const newParams = new URLSearchParams(searchParams);
-										newParams.set("view", cardView ? "grid" : "card");
-										return `?${newParams.toString()}`;
-									})()}
-									variant="secondary"
-									size="icon"
-									aria-label={
-										cardView ? "Switch to grid view" : "Switch to card view"
-									}
-									icon={
-										cardView ? (
-											<Squares2X2Icon className="h-5 w-5" />
-										) : (
-											<ListBulletIcon className="h-5 w-5" />
-										)
-									}
-								/>
-							</div>
-
-							<div
-								className={cn(
-									"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",
-									cardView && "lg:grid-cols-1",
-								)}
-							>
-								{(products.data ?? []).map((product: Product) => (
-									<ProductCard {...product} key={product.id} />
-								))}
-							</div>
+							<ProductList products={products} />
 						</main>
 					</div>
 				</div>
 			)}
-			{pagination && <Pagination links={pagination} />}
+
 			{brand.description && (
 				<div className="mx-auto max-w-7xl scroll-mt-40" id="description">
 					<div

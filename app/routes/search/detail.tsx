@@ -1,40 +1,41 @@
-import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/16/solid";
+import {} from "@heroicons/react/16/solid";
 import {
 	type LinkDescriptor,
-	NavLink,
 	data,
 	href,
 	useNavigation,
 	useSearchParams,
 } from "react-router";
-import { addToCart, commitSession, getProducts, getSession } from "~/.server";
-import { Alert, Button, Loading, Pagination, ProductCard } from "~/components";
-import { type Product, ToastType } from "~/types";
-import { cn, isNonEmptyArray, putToast } from "~/utils";
+import { addToCart, buildHeaders, getProducts, getSession } from "~/.server";
+import { Alert, Loading, ProductList } from "~/components";
+import { ToastType } from "~/types";
+import { isNonEmptyArray, putToast } from "~/utils";
 import type { Route } from "./+types/detail";
 
+export const meta = () => {
+	return [
+		{
+			name: "robots",
+			content: "noindex",
+		},
+	];
+};
+
 export const handle = {
-	dynamicLinks: ({ data }: Route.MetaArgs) => {
-		if (!data?.products?.meta) return [];
+	dynamicLinks: ({ data, url }: Route.MetaArgs & { url: URL }) => {
+		const { current_page, last_page } = data?.products?.meta ?? {};
+		if (!current_page || !last_page) return [];
 
-		const meta = data.products.meta;
-		const links: LinkDescriptor[] = [];
+		const makeHref = (page: number) =>
+			page === 1 ? url.origin : `${url.origin}?page=${page}`;
 
-		if (meta.current_page > 1) {
-			links.push({
-				rel: "prev",
-				href: `${meta.path}?page=${meta.current_page - 1}`,
-			});
-		}
-
-		if (meta.current_page < meta.last_page) {
-			links.push({
+		return [
+			current_page > 1 && { rel: "prev", href: makeHref(current_page - 1) },
+			current_page < last_page && {
 				rel: "next",
-				href: `${meta.path}?page=${meta.current_page + 1}`,
-			});
-		}
-
-		return links;
+				href: makeHref(current_page + 1),
+			},
+		].filter(Boolean) as LinkDescriptor[];
 	},
 };
 
@@ -57,9 +58,7 @@ export async function action({ request }: Route.ActionArgs) {
 			cartItem,
 		},
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 }
@@ -75,23 +74,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 	const { response: products } = await getProducts(session, url);
 
-	const pagination =
-		isNonEmptyArray(products.data) && products.meta?.links
-			? products.meta.links
-			: null;
-
 	return {
 		products,
-		pagination,
 	};
 };
 
 export const SearchResult = ({ loaderData }: Route.ComponentProps) => {
-	const { products, pagination } = loaderData || {};
+	const { products } = loaderData || {};
 	const [searchParams] = useSearchParams();
 	const navigation = useNavigation();
-
-	const cardView = searchParams.get("view") === "card";
 
 	const rawQuery = searchParams.get("q")?.trim() ?? "";
 	const isSearching = rawQuery.length > 0;
@@ -115,47 +106,14 @@ export const SearchResult = ({ loaderData }: Route.ComponentProps) => {
 					<Loading className="size-6" />
 				</div>
 			) : (
-				<>
+				<div className="px-4">
 					<h1 className="flex gap-2 text-lg">
 						<span>Search results for:</span>
 						<span className="font-semibold text-teal">{rawQuery}</span>
 					</h1>
 
 					{hasResults ? (
-						<>
-							<div className="flex justify-end">
-								<Button
-									as={NavLink}
-									to={(() => {
-										const newParams = new URLSearchParams(searchParams);
-										newParams.set("view", cardView ? "grid" : "card");
-										return `?${newParams.toString()}`;
-									})()}
-									size="icon"
-									aria-label={
-										cardView ? "Switch to grid view" : "Switch to card view"
-									}
-									icon={
-										cardView ? (
-											<Squares2X2Icon className="h-5 w-5" />
-										) : (
-											<ListBulletIcon className="h-5 w-5" />
-										)
-									}
-								/>
-							</div>
-							<div
-								className={cn(
-									"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",
-									cardView && "lg:grid-cols-1",
-								)}
-							>
-								{products.data.map((product: Product) => (
-									<ProductCard {...product} key={product.id} />
-								))}
-							</div>
-							{pagination && <Pagination links={pagination} />}
-						</>
+						<ProductList products={products} />
 					) : (
 						<Alert>
 							We couldn't find anything matching{" "}
@@ -165,7 +123,7 @@ export const SearchResult = ({ loaderData }: Route.ComponentProps) => {
 							. Try a different search term.
 						</Alert>
 					)}
-				</>
+				</div>
 			)}
 		</div>
 	);

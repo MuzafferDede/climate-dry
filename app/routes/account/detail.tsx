@@ -1,4 +1,6 @@
+import { getCustomer, getSession } from "~/.server";
 import { authMiddleware } from "~/middlewares";
+import type { Route } from "./+types/detail";
 
 export function meta() {
 	return [
@@ -7,66 +9,69 @@ export function meta() {
 	];
 }
 
+export const loader = async ({ request }: Route.LoaderArgs) => {
+	const session = await getSession(request.headers.get("Cookie"));
+	const customer = await getCustomer(session);
+	return { customer };
+};
+
 export const unstable_middleware = [authMiddleware];
 
-export default function AccountPage() {
-	return (
-		<div className="mx-auto max-w-7xl px-4 py-12">
-			{/* Header placeholders */}
-			<header className="mb-10 flex items-center justify-between">
-				<div className="h-10 w-48 animate-pulse rounded bg-teal" />
-				<div className="h-10 w-32 animate-pulse rounded bg-gray-light" />
-			</header>
+export default function AccountPage({ loaderData }: Route.ComponentProps) {
+	const { customer } = loaderData;
 
-			<div className="flex flex-col gap-8 md:flex-row">
-				{/* Sidebar placeholder */}
-				<aside className="w-full shrink-0 md:w-64">
-					<div className="animate-pulse rounded-lg bg-gray-lightest p-6">
-						<div className="space-y-4">
-							<div className="mb-4 h-8 w-32 rounded bg-teal" />
-							<div className="h-6 w-full rounded bg-gray-light" />
-							<div className="h-6 w-full rounded bg-gray-light" />
-							<div className="h-6 w-full rounded bg-gray-light" />
-
-							<div className="mt-8 mb-4 h-8 w-40 rounded bg-teal" />
-							<div className="h-6 w-full rounded bg-gray-light" />
-							<div className="h-6 w-full rounded bg-gray-light" />
-						</div>
-					</div>
-				</aside>
-
-				{/* Main dashboard placeholders */}
-				<main className="flex-1 space-y-10">
-					{/* Carbon Usage Summary */}
-					<section className="animate-pulse rounded-lg bg-white p-6 shadow-md">
-						<div className="mb-6 h-8 w-48 rounded bg-teal" />
-						<div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-							<div className="h-32 rounded-lg bg-gray-lightest" />
-							<div className="h-32 rounded-lg bg-gray-lightest" />
-							<div className="h-32 rounded-lg bg-gray-lightest" />
-						</div>
-					</section>
-
-					{/* Recent Activity */}
-					<section className="animate-pulse rounded-lg bg-white p-6 shadow-md">
-						<div className="mb-6 h-8 w-40 rounded bg-teal" />
-						<div className="space-y-4">
-							<div className="h-16 w-full rounded-lg bg-gray-lightest" />
-							<div className="h-16 w-full rounded-lg bg-gray-lightest" />
-							<div className="h-16 w-full rounded-lg bg-gray-lightest" />
-						</div>
-					</section>
-
-					{/* Carbon Reduction Goals */}
-					<section className="animate-pulse rounded-lg bg-white p-6 shadow-md">
-						<div className="mb-6 h-8 w-56 rounded bg-teal" />
-						<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-							<div className="h-40 rounded-lg bg-gray-lightest" />
-							<div className="h-40 rounded-lg bg-gray-lightest" />
-						</div>
-					</section>
-				</main>
+	if (!customer) {
+		return (
+			<div className="account-page mx-auto max-w-3xl p-6 text-center">
+				<p className="text-gray-600">Loading account details…</p>
 			</div>
+		);
+	}
+
+	return (
+		<div className="account-page mx-auto my-10 max-w-3xl rounded-md bg-white p-8 shadow">
+			<h1 className="mb-6 font-semibold text-3xl text-gray-900">
+				Welcome to your Customer Dashboard, {customer.first_name}.
+			</h1>
+
+			<p className="mb-4 text-gray-700 leading-relaxed">
+				To enhance your shopping experience, any contact or address information
+				added during checkout is securely saved for future purchases.
+			</p>
+
+			<p className="mb-8 text-gray-700 italic leading-relaxed">
+				More features, including order history and address management, are
+				coming soon.
+			</p>
+
+			<section className="account-info mb-10 border-gray-200 border-t pt-6">
+				<h2 className="mb-4 font-semibold text-2xl text-gray-800">
+					Account Information
+				</h2>
+				<ul className="space-y-3 text-gray-700">
+					<li>
+						<span className="font-medium">Full Name:</span>{" "}
+						{customer.first_name} {customer.last_name}
+					</li>
+					<li>
+						<span className="font-medium">Email:</span> {customer.email}
+					</li>
+					<li>
+						<span className="font-medium">Phone:</span> {customer.phone}
+					</li>
+				</ul>
+			</section>
+
+			<section className="reviews-section border-gray-200 border-t pt-6">
+				<h2 className="mb-4 font-semibold text-2xl text-gray-800">
+					Share Your Feedback
+				</h2>
+				<p className="text-gray-600">
+					We value your input. Visit the product pages to leave reviews and help
+					us improve.
+				</p>
+				{/* Optional: Add button/link to product reviews here */}
+			</section>
 		</div>
 	);
 }

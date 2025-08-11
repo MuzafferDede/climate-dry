@@ -3,10 +3,9 @@ import { cn } from "~/utils";
 import { Loading } from "./loading";
 
 export const Image = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
-	const [loaded, setLoaded] = useState(false);
-	const imgRef = useRef<HTMLImageElement>(null);
-
 	const { className, src = "", alt = "", ...rest } = props;
+	const imgRef = useRef<HTMLImageElement>(null);
+	const [loaded, setLoaded] = useState(false);
 
 	useEffect(() => {
 		if (imgRef.current?.complete && src) {
@@ -28,12 +27,11 @@ export const Image = (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
 				ref={imgRef}
 				src={src}
 				alt={alt || "image"}
+				loading="lazy" // Native lazy loading here
 				onLoad={() => setLoaded(true)}
 				className={cn(
 					"fade-in h-full w-full animate-in object-cover duration-500",
-					{
-						"opacity-0": !loaded,
-					},
+					{ "opacity-0": !loaded },
 				)}
 			/>
 		</div>

@@ -1,14 +1,13 @@
-import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/16/solid";
+import {} from "@heroicons/react/16/solid";
 import {
 	type LinkDescriptor,
-	NavLink,
 	data,
 	useLocation,
 	useSearchParams,
 } from "react-router";
 import {
 	addToCart,
-	commitSession,
+	buildHeaders,
 	getProductCategory,
 	getProducts,
 	getSession,
@@ -18,14 +17,12 @@ import {
 	Breadcrumb,
 	Button,
 	FilterComponents,
-	Pagination,
-	ProductCard,
 	ProductCategoryCard,
-	Select,
+	ProductList,
 	Service,
 } from "~/components";
-import { type Product, ToastType } from "~/types";
-import { cn, generateBreadcrumb, isNonEmptyArray, putToast } from "~/utils";
+import { ToastType } from "~/types";
+import { generateBreadcrumb, isNonEmptyArray, putToast } from "~/utils";
 import type { Route } from "./+types/list";
 
 export const handle = {
@@ -37,27 +34,20 @@ export const handle = {
 		const allItems = [...ancestry, category];
 		return generateBreadcrumb(allItems, "/c");
 	},
-	dynamicLinks: ({ data }: Route.MetaArgs) => {
-		if (!data?.products?.meta) return [];
+	dynamicLinks: ({ data, url }: Route.MetaArgs & { url: URL }) => {
+		const { current_page, last_page } = data?.products?.meta ?? {};
+		if (!current_page || !last_page) return [];
 
-		const meta = data.products.meta;
-		const links: LinkDescriptor[] = [];
+		const makeHref = (page: number) =>
+			page === 1 ? url.origin : `${url.origin}?page=${page}`;
 
-		if (meta.current_page > 1) {
-			links.push({
-				rel: "prev",
-				href: `${meta.path}?page=${meta.current_page - 1}`,
-			});
-		}
-
-		if (meta.current_page < meta.last_page) {
-			links.push({
+		return [
+			current_page > 1 && { rel: "prev", href: makeHref(current_page - 1) },
+			current_page < last_page && {
 				rel: "next",
-				href: `${meta.path}?page=${meta.current_page + 1}`,
-			});
-		}
-
-		return links;
+				href: makeHref(current_page + 1),
+			},
+		].filter(Boolean) as LinkDescriptor[];
 	},
 };
 
@@ -86,15 +76,12 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
 	url.searchParams.set("category", slug);
 
-	const { response: category } = await getProductCategory(session, slug);
+	const { response: category, error } = await getProductCategory(session, slug);
 	const { response: products } = await getProducts(session, url);
 
-	const filters = products?.filters;
+	if (error) throw new Response(error, { status: 404 });
 
-	const pagination =
-		isNonEmptyArray(products?.data) && products?.meta?.links
-			? products?.meta?.links
-			: null;
+	const filters = products?.filters;
 
 	// Build ancestry array from parent chain
 	const ancestry: { name: string; slug: string }[] = [];
@@ -109,7 +96,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 		category,
 		ancestry,
 		products,
-		pagination,
 		filters,
 	};
 }
@@ -133,9 +119,7 @@ export async function action({ request }: Route.ActionArgs) {
 			cartItem,
 		},
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 }
@@ -148,31 +132,11 @@ const TechnicalService = {
 	link: "/contact-us",
 };
 
-const SortBy = [
-	{
-		label: "Best Selling",
-		value: "sales_count",
-	},
-	{
-		label: "Best Rating",
-		value: "rating",
-	},
-	{
-		label: "Price Low",
-		value: "price-low",
-	},
-	{
-		label: "Price High",
-		value: "price-high",
-	},
-];
-
 export default function ProductCategoryPage({
 	loaderData,
 }: Route.ComponentProps) {
-	const { category, products, pagination, filters } = loaderData;
+	const { category, products, filters } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
-	const cardView = searchParams.get("view") === "card";
 
 	const handleFilter = (field: string, value: string | number | boolean) => {
 		const newParams = new URLSearchParams(searchParams);
@@ -224,7 +188,7 @@ export default function ProductCategoryPage({
 			<div className="relative isolate">
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
 					<aside className="lg:col-span-1">
-						<div className="sticky top-40 space-y-6">
+						<div className="sticky top-40 space-y-6 text-base">
 							<div className="flex justify-between gap-2">
 								<span className="font-medium text-lg text-navy-darkest">
 									Filters
@@ -239,22 +203,22 @@ export default function ProductCategoryPage({
 									Reset Filters
 								</Button>
 							</div>
-							<div className="grid gap-4">
-								<div className="grid gap-2">
-									<label className="flex gap-2">
+							<div className="grid max-h-screen gap-4 overflow-auto scroll-smooth text-base md:text-sm">
+								<div className="grid gap-3">
+									<label className="flex items-center gap-2">
 										<input
 											type="checkbox"
-											className="my-0.5 h-4 w-4 accent-teal"
+											className="size-4 accent-teal"
 											onChange={(e) =>
 												handleFilter("filter[in_stock]", e.target.checked)
 											}
 										/>
 										<span>In Stock</span>
 									</label>
-									<label className="flex gap-2">
+									<label className="flex items-center gap-2">
 										<input
 											type="checkbox"
-											className="my-0.5 h-4 w-4 accent-teal"
+											className="size-4 accent-teal"
 											onChange={(e) =>
 												handleFilter("filter[on_sale]", e.target.checked)
 											}
@@ -276,56 +240,8 @@ export default function ProductCategoryPage({
 					</aside>
 
 					<main className="lg:col-span-3">
-						<div className="mb-4 flex items-center justify-end gap-4">
-							<div className="flex items-center gap-1">
-								<label
-									htmlFor="sort"
-									className="block whitespace-nowrap text-gray text-xs"
-								>
-									Sort By:
-								</label>
-								<Select
-									id="sort"
-									name="sort"
-									value={searchParams.get("sort") || "price-low"}
-									options={SortBy}
-									onChange={(value) => handleFilter("sort", value)}
-									className="w-40"
-								/>
-							</div>
-							<Button
-								as={NavLink}
-								to={(() => {
-									const newParams = new URLSearchParams(searchParams);
-									newParams.set("view", cardView ? "grid" : "card");
-									return `?${newParams.toString()}`;
-								})()}
-								variant="secondary"
-								size="icon"
-								aria-label={
-									cardView ? "Switch to grid view" : "Switch to card view"
-								}
-								icon={
-									cardView ? (
-										<Squares2X2Icon className="h-5 w-5" />
-									) : (
-										<ListBulletIcon className="h-5 w-5" />
-									)
-								}
-							/>
-						</div>
-
 						{isNonEmptyArray(products?.data) ? (
-							<div
-								className={cn(
-									"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",
-									cardView && "lg:grid-cols-1",
-								)}
-							>
-								{(products?.data ?? []).map((product: Product) => (
-									<ProductCard {...product} key={product.id} />
-								))}
-							</div>
+							<ProductList products={products} />
 						) : (
 							<Alert>
 								We couldn’t find any products matching your search. Try
@@ -335,7 +251,7 @@ export default function ProductCategoryPage({
 					</main>
 				</div>
 			</div>
-			{pagination && <Pagination links={pagination} />}
+
 			{category.description && (
 				<div className="mx-auto max-w-7xl scroll-mt-40" id="description">
 					<div

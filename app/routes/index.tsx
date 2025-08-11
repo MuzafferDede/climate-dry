@@ -1,7 +1,7 @@
 import { data } from "react-router";
 import {
 	addToCart,
-	commitSession,
+	buildHeaders,
 	getBanners,
 	getBrands,
 	getFeaturedBlogPosts,
@@ -20,6 +20,7 @@ import {
 	ShopByCategory,
 	Solutions,
 	Support,
+	WhyChooseUs,
 } from "~/components";
 import { ToastType } from "~/types";
 import { isNonEmptyArray, putToast } from "~/utils";
@@ -80,9 +81,7 @@ export async function action({ request }: Route.ActionArgs) {
 			cartItem,
 		},
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 }
@@ -134,6 +133,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 				{isNonEmptyArray(featuredCategories?.data) && (
 					<FeaturedCategories categories={featuredCategories.data} />
 				)}
+
+				<WhyChooseUs />
 
 				{/* Two support images */}
 				<Support />

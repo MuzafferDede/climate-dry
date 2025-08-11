@@ -1,6 +1,6 @@
 import * as RadixSlider from "@radix-ui/react-slider";
 import { forwardRef, useEffect, useState } from "react";
-import { currency } from "~/utils";
+import { cn, currency } from "~/utils";
 
 export interface SliderProps {
 	className?: string;
@@ -69,9 +69,9 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
 		};
 
 		return (
-			<div className={className}>
-				<div className="flex flex-col gap-1">
-					<span className="font-bold">{label}</span>
+			<div className={cn(className)}>
+				<div className="flex flex-col gap-2">
+					<span className="border-gray-light border-b font-bold">{label}</span>
 					{showValue && (
 						<div className="flex items-center gap-1 font-medium text-gray-700 text-sm">
 							{prefix && !isCurrency && <span>{prefix}</span>}
@@ -88,29 +88,31 @@ export const Slider = forwardRef<HTMLSpanElement, SliderProps>(
 						</div>
 					)}
 				</div>
-				<RadixSlider.Root
-					ref={ref}
-					id={id}
-					min={min}
-					max={max}
-					step={step}
-					{...(value !== undefined ? { value } : { defaultValue })}
-					onValueChange={handleValueChange}
-					onValueCommit={onValueCommit}
-					disabled={disabled}
-					className="relative flex h-6 w-full touch-none select-none items-center"
-					{...props}
-				>
-					<RadixSlider.Track className="relative h-2 grow rounded-full bg-gray-light">
-						<RadixSlider.Range className="absolute h-2 rounded-full bg-teal" />
-					</RadixSlider.Track>
-					{Array.from({ length: thumbs }).map((_, i) => (
-						<RadixSlider.Thumb
-							key={`thumb-${i}-${(value ?? defaultValue)[i]}`}
-							className="block h-5 w-5 rounded-full border-2 border-white bg-teal shadow focus:outline-none focus:ring-2 focus:ring-teal disabled:bg-gray-light"
-						/>
-					))}
-				</RadixSlider.Root>
+				<div className="px-2">
+					<RadixSlider.Root
+						ref={ref}
+						id={id}
+						min={min}
+						max={max}
+						step={step}
+						{...(value !== undefined ? { value } : { defaultValue })}
+						onValueChange={handleValueChange}
+						onValueCommit={onValueCommit}
+						disabled={disabled}
+						className="relative flex h-6 w-full touch-none select-none items-center"
+						{...props}
+					>
+						<RadixSlider.Track className="relative h-2 grow rounded-full bg-gray-light">
+							<RadixSlider.Range className="absolute h-2 rounded-full bg-teal" />
+						</RadixSlider.Track>
+						{Array.from({ length: thumbs }).map((_, i) => (
+							<RadixSlider.Thumb
+								key={`thumb-${i}-${(value ?? defaultValue)[i]}`}
+								className="block h-5 w-5 rounded-full border-2 border-white bg-teal shadow focus:outline-none focus:ring-2 focus:ring-teal disabled:bg-gray-light"
+							/>
+						))}
+					</RadixSlider.Root>
+				</div>
 			</div>
 		);
 	},

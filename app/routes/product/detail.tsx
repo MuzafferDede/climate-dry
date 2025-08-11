@@ -1,23 +1,22 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import {
-	ArrowRightIcon,
 	ArrowTopRightOnSquareIcon,
-	CalculatorIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
 	MinusIcon,
 	PlayIcon,
 	PlusIcon,
 	ShieldCheckIcon,
+	ShoppingCartIcon,
 	StarIcon,
 } from "@heroicons/react/16/solid";
 
 import { useState } from "react";
-import { Form, data, useNavigation } from "react-router";
+import { Form, Link, data, href, useNavigation } from "react-router";
 import {
 	addReview,
 	addToCart,
-	commitSession,
+	buildHeaders,
 	getCustomer,
 	getProduct,
 	getSession,
@@ -26,9 +25,11 @@ import {
 	Alert,
 	Breadcrumb,
 	Button,
+	DryingCalculator,
 	Image,
 	Input,
 	PaymentAndShipping,
+	Price,
 	ProductCard,
 	Rating,
 	StockStatus,
@@ -43,7 +44,6 @@ import {
 } from "~/components";
 import { type Product, ToastType, type Variant } from "~/types";
 import {
-	calculateSave,
 	currency,
 	generateBreadcrumb,
 	pluralize,
@@ -57,11 +57,11 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 
 	const { slug } = params;
 
-	const { response: product } = await getProduct(session, slug);
+	const { response: product, error } = await getProduct(session, slug);
 
 	const customer = getCustomer(session);
 
-	if (!product) throw new Response("Not found", { status: 404 });
+	if (error) throw new Response(error, { status: 404 });
 
 	return { product, customer };
 }
@@ -83,10 +83,7 @@ export async function action({ request }: Route.ActionArgs) {
 				type: reviewError ? ToastType.Error : ToastType.Success,
 			});
 
-			return data(
-				{ review: review },
-				{ headers: { "Set-Cookie": await commitSession(session) } },
-			);
+			return data({ review: review }, { headers: await buildHeaders(session) });
 		}
 
 		case "addToCart": {
@@ -106,7 +103,7 @@ export async function action({ request }: Route.ActionArgs) {
 			});
 			return data(
 				{ cartItem: cartItem },
-				{ headers: { "Set-Cookie": await commitSession(session) } },
+				{ headers: await buildHeaders(session) },
 			);
 		}
 
@@ -176,6 +173,7 @@ export default function ProductPage({
 	const inStock = product.variants.some((v: Variant) => v.in_stock);
 	const loading = navigation.state === "submitting";
 	const hasVariants = product.variants.length > 1;
+	const hasReviews = product.reviews.count > 0;
 	const [open, setOpen] = useState(false);
 
 	// Combine images and videos into a single media array
@@ -298,6 +296,7 @@ export default function ProductPage({
 																	src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
 																	alt={`${product.name} video thumbnail`}
 																	className="h-full w-full object-cover"
+																	loading="lazy"
 																/>
 															) : (
 																<div className="flex h-full w-full items-center justify-center bg-gray-light">
@@ -348,14 +347,7 @@ export default function ProductPage({
 								dangerouslySetInnerHTML={{ __html: product.introduction }}
 							/>
 							<div className="space-y-4 py-4">
-								<Button
-									icon={
-										<CalculatorIcon className="size-6 rounded-full border border-current p-1" />
-									}
-									variant="secondary"
-								>
-									<span>Drying Calculator</span>
-								</Button>
+								<DryingCalculator product={product} />
 								<div className="flex gap-4">
 									{product.warranty_period > 0 && (
 										<div className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gray-lightest p-3 font-semibold text-teal">
@@ -381,32 +373,20 @@ export default function ProductPage({
 						{/* Right column: Price, Discount, Payment/Shipping, Stock, Actions */}
 						<div className="flex shrink-0 flex-col items-end gap-2 md:w-72">
 							<div className="flex flex-col items-end gap-1">
-								<div className="flex items-end gap-2 font-bold">
-									<span className="text-xl sm:text-2xl">
-										{currency(product.default_variant.price)}
+								<span className="text-gray text-xs">
+									Price for:{" "}
+									<span className="font-semibold text-teal">
+										{product.default_variant.sku}
 									</span>
-									<span className="text-base text-gray-light line-through sm:text-lg">
-										{currency(product.default_variant.retail_price)}
-									</span>
-								</div>
-								{product.default_variant.retail_price >
-									product.default_variant.price && (
-									<p className="font-bold text-red">
-										save{" "}
-										{calculateSave(
-											product.default_variant.price,
-											product.default_variant.retail_price,
-										)}
-										%
-									</p>
-								)}
-								<div className="flex gap-1">
-									<span>
+								</span>
+								<Price variant={product.default_variant} />
+								<div className="flex items-center gap-1">
+									<span className="text-gray text-xs">(inc VAT)</span>
+									<span className="font-semibold text-teal">
 										{currency(
 											product.tax_amount + product.default_variant.price,
 										)}
 									</span>
-									<span>(inc VAT)</span>
 								</div>
 							</div>
 							<PaymentAndShipping
@@ -530,29 +510,38 @@ export default function ProductPage({
 										</Button>
 									</div>
 								</div>
-								<Button
-									name="id"
-									value={product.default_variant.id}
-									type={hasVariants ? "button" : "submit"}
-									disabled={!inStock}
-									loading={loading}
-									className="w-full"
-									icon={
-										<ArrowRightIcon className="size-6 rounded-full border border-current p-1" />
-									}
-									onClick={() => {
-										if (hasVariants) setOpen(true);
-									}}
-								>
-									<span>
-										{hasVariants ? "Choose a variant" : "Add to Basket"}
-									</span>
-								</Button>
+								<div className="flex flex-col gap-1">
+									{hasVariants && (
+										<p className="font-semibold text-gray text-xs">
+											Available in multiple variants.
+										</p>
+									)}
+									<Button
+										name="id"
+										value={product.default_variant.id}
+										type={hasVariants ? "button" : "submit"}
+										disabled={!inStock}
+										variant="destructive"
+										loading={loading}
+										className="w-full"
+										icon={
+											<ShoppingCartIcon className="size-6 rounded-full border border-current p-1" />
+										}
+										onClick={() => {
+											if (hasVariants) setOpen(true);
+										}}
+									>
+										<span>
+											{hasVariants ? "Choose a variant" : "Add to Basket"}
+										</span>
+									</Button>
+								</div>
 								<StockStatus inStock={inStock} />
 								<img
 									className="mx-auto mt-5 w-full max-w-xs sm:max-w-full"
 									src="/images/layout/payments/all-color.webp"
 									alt="All cards"
+									loading="lazy"
 								/>
 							</Form>
 						</div>
@@ -567,284 +556,280 @@ export default function ProductPage({
 				/>
 
 				{/* Tabs Section */}
-				{(product.description ||
-					(product.specifications && product.specifications.length > 0) ||
-					(product.features && product.features.length > 0)) && (
-					<div className="mx-auto mt-10 max-w-7xl px-2 sm:px-4">
-						<TabGroup>
-							<TabList className="scrollbar-hidden mb-4 flex snap-x snap-mandatory flex-nowrap gap-2 overflow-auto scroll-smooth border-gray-lighter border-b">
-								{product.description && (
-									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-										Description
-									</Tab>
-								)}
-								{product.specifications &&
-									product.specifications.length > 0 && (
-										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-											Specifications
-										</Tab>
-									)}
-								{product.specifications_text && (
-									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-										Specifications
-									</Tab>
-								)}
-								{product.features && product.features.length > 0 && (
-									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-										Features
-									</Tab>
-								)}
-								{product.key_features && (
-									<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-										Key Features
-									</Tab>
-								)}
-
-								{product.included_items &&
-									product.included_items.length > 0 && (
-										<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-											Whats in the Box
-										</Tab>
-									)}
-
+				<div className="mx-auto mt-10 max-w-7xl px-2 sm:px-4">
+					<TabGroup>
+						<TabList className="scrollbar-hidden mb-4 flex snap-x snap-mandatory flex-nowrap gap-2 overflow-auto scroll-smooth border-gray-lighter border-b">
+							{product.description && (
 								<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
-									Reviews ({product.reviews.count + (review ? 1 : 0)})
+									Description
 								</Tab>
-							</TabList>
-							<TabPanels>
-								{product.description && (
-									<TabPanel
-										static
-										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-									>
-										<div
-											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
-											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
-											dangerouslySetInnerHTML={{ __html: product.description }}
-										/>
-									</TabPanel>
-								)}
-								{product.specifications &&
-									product.specifications.length > 0 && (
-										<TabPanel
-											static
-											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-										>
-											<Table>
-												<TableHead>
-													<TableRow>
-														<TableHeader>Specification</TableHeader>
-														<TableHeader>Detail</TableHeader>
-													</TableRow>
-												</TableHead>
-												<TableBody>
-													{product.specifications.map((spec, idx) => (
-														<TableRow key={spec.key || idx}>
-															<TableCellSecondary>
-																{spec.key}
-															</TableCellSecondary>
-															<TableCell>{spec.value}</TableCell>
-														</TableRow>
-													))}
-												</TableBody>
-											</Table>
-										</TabPanel>
-									)}
+							)}
+							{product.specifications && product.specifications.length > 0 && (
+								<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+									Specifications
+								</Tab>
+							)}
+							{product.specifications_text && (
+								<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+									Specifications
+								</Tab>
+							)}
+							{product.features && product.features.length > 0 && (
+								<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+									Features
+								</Tab>
+							)}
+							{product.key_features && (
+								<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+									Key Features
+								</Tab>
+							)}
 
-								{product.specifications_text && (
-									<TabPanel
-										static
-										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-									>
-										<div
-											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
-											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
-											dangerouslySetInnerHTML={{
-												__html: product.specifications_text,
-											}}
-										/>
-									</TabPanel>
-								)}
+							{product.included_items && product.included_items.length > 0 && (
+								<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+									Whats in the Box
+								</Tab>
+							)}
 
-								{product.features && product.features.length > 0 && (
-									<TabPanel
-										static
-										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-									>
-										<Table>
-											<TableHead>
-												<TableRow>
-													<TableHeader>Feature</TableHeader>
-													<TableHeader>Detail</TableHeader>
-												</TableRow>
-											</TableHead>
-											<TableBody>
-												{product.features.map((feature, idx) => (
-													<TableRow key={feature.key || idx}>
-														<TableCellSecondary>
-															{feature.key}
-														</TableCellSecondary>
-														<TableCell>{feature.value}</TableCell>
-													</TableRow>
-												))}
-											</TableBody>
-										</Table>
-									</TabPanel>
-								)}
-								{product.key_features && (
-									<TabPanel
-										static
-										className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-									>
-										<div
-											className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
-											// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
-											dangerouslySetInnerHTML={{ __html: product.key_features }}
-										/>
-									</TabPanel>
-								)}
-
-								{product.included_items &&
-									product.included_items.length > 0 && (
-										<TabPanel
-											static
-											className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
-										>
-											<ul>
-												{!Array.isArray(product.included_items) ? (
-													<p className="text-red">
-														Error: Items are not an array!
-													</p>
-												) : (
-													product.included_items.map((included, idx) => (
-														<li key={included || idx}>{included}</li>
-													))
-												)}
-											</ul>
-										</TabPanel>
-									)}
-
+							<Tab className="shrink-0 snap-start border-transparent border-b-2 px-4 py-2 font-semibold text-sm transition-colors duration-150 hover:text-navy-darkest focus:outline-none data-selected:border-teal data-selected:text-teal">
+								Reviews ({product.reviews.count + (review ? 1 : 0)})
+							</Tab>
+						</TabList>
+						<TabPanels>
+							{product.description && (
 								<TabPanel
 									static
 									className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
 								>
-									<ul className="mb-8 grid gap-6 md:grid-cols-2">
-										{!product.reviews.data.length && !review ? (
-											<Alert variant="info">
-												No reviews yet. Help others by writing the first one!
-											</Alert>
+									<div
+										className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+										// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+										dangerouslySetInnerHTML={{ __html: product.description }}
+									/>
+								</TabPanel>
+							)}
+							{product.specifications && product.specifications.length > 0 && (
+								<TabPanel
+									static
+									className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+								>
+									<Table>
+										<TableHead>
+											<TableRow>
+												<TableHeader>Specification</TableHeader>
+												<TableHeader>Detail</TableHeader>
+											</TableRow>
+										</TableHead>
+										<TableBody>
+											{product.specifications.map((spec, idx) => (
+												<TableRow key={spec.key || idx}>
+													<TableCellSecondary>{spec.key}</TableCellSecondary>
+													<TableCell>{spec.value}</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									</Table>
+								</TabPanel>
+							)}
+
+							{product.specifications_text && (
+								<TabPanel
+									static
+									className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+								>
+									<div
+										className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+										// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+										dangerouslySetInnerHTML={{
+											__html: product.specifications_text,
+										}}
+									/>
+								</TabPanel>
+							)}
+
+							{product.features && product.features.length > 0 && (
+								<TabPanel
+									static
+									className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+								>
+									<Table>
+										<TableHead>
+											<TableRow>
+												<TableHeader>Feature</TableHeader>
+												<TableHeader>Detail</TableHeader>
+											</TableRow>
+										</TableHead>
+										<TableBody>
+											{product.features.map((feature, idx) => (
+												<TableRow key={feature.key || idx}>
+													<TableCellSecondary>{feature.key}</TableCellSecondary>
+													<TableCell>{feature.value}</TableCell>
+												</TableRow>
+											))}
+										</TableBody>
+									</Table>
+								</TabPanel>
+							)}
+							{product.key_features && (
+								<TabPanel
+									static
+									className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+								>
+									<div
+										className="prose prose-sm lg:prose !max-w-none prose-img:mx-auto prose-figcaption:hidden prose-img:max-w-full"
+										// biome-ignore lint/security/noDangerouslySetInnerHtml: trusted HTML from backend
+										dangerouslySetInnerHTML={{ __html: product.key_features }}
+									/>
+								</TabPanel>
+							)}
+
+							{product.included_items && product.included_items.length > 0 && (
+								<TabPanel
+									static
+									className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+								>
+									<ul>
+										{!Array.isArray(product.included_items) ? (
+											<p className="text-red">Error: Items are not an array!</p>
 										) : (
-											[
-												...(review ? [review] : []),
-												...(product.reviews?.data || []),
-											].map((review) => (
-												<li
-													key={review.id}
-													className="rounded-md border border-gray-light bg-white p-4 shadow-sm"
-												>
-													<div className="mb-2 flex items-center justify-between">
-														<span className="font-semibold text-gray-800">
-															{review.customer.name}
-														</span>
-														<span className="text-gray-500 text-sm">
-															{new Date(review.created_at).toLocaleDateString(
-																undefined,
-																{
-																	year: "numeric",
-																	month: "short",
-																	day: "numeric",
-																},
-															)}
-														</span>
-													</div>
-
-													<div className="mb-2">
-														<Rating rating={review.rating} />
-													</div>
-
-													<p className="text-gray-700">{review.review}</p>
-												</li>
+											product.included_items.map((included, idx) => (
+												<li key={included || idx}>{included}</li>
 											))
 										)}
 									</ul>
-									{customer &&
-										!review &&
-										!product.reviews.data.some(
-											(review) => review.customer.id === customer.id,
-										) && (
-											<div className="max-w-3xl rounded-md border border-gray-light bg-white p-4 shadow-sm">
-												<h3 className="mb-4 font-bold text-lg text-navy-darkest">
-													Add Your Review
-												</h3>
-												<Form method="post" className="space-y-4 font-semibold">
-													<input
-														type="hidden"
-														name="_action"
-														value="addReview"
-													/>
-													<input
-														type="hidden"
-														name="slug"
-														value={product.slug}
-													/>
-													<div>
-														<label
-															htmlFor="rating"
-															className="mb-2 block font-medium text-gray-dark text-sm"
-														>
-															Your Rating
-														</label>
-														<div className="flex items-center gap-1">
-															{[1, 2, 3, 4, 5].map((star) => (
-																<StarIcon
-																	key={star}
-																	className={`h-6 w-6 cursor-pointer ${
-																		star <= reviewRating
-																			? "text-yellow-400"
-																			: "text-gray-300"
-																	}`}
-																	onClick={() => setReviewRating(star)}
-																/>
-															))}
-															<input
-																type="hidden"
-																name="rating"
-																value={reviewRating}
+								</TabPanel>
+							)}
+
+							<TabPanel
+								static
+								className="fade-in slide-in-from-top-5 hidden animate-in data-selected:block"
+							>
+								{!hasReviews && (
+									<div className="space-y-4">
+										<Alert variant="info">
+											<p>
+												No reviews yet. Be the first to review by sharing your
+												experience.
+											</p>
+										</Alert>
+									</div>
+								)}
+								<ul className="mb-8 grid gap-6 md:grid-cols-2">
+									{hasReviews &&
+										[
+											...(review ? [review] : []),
+											...(product.reviews?.data || []),
+										].map((review) => (
+											<li
+												key={review.id}
+												className="rounded-md border border-gray-light bg-white p-4 shadow-sm"
+											>
+												<div className="mb-2 flex items-center justify-between">
+													<span className="font-semibold text-gray-800">
+														{review.customer.name}
+													</span>
+													<span className="text-gray-500 text-sm">
+														{new Date(review.created_at).toLocaleDateString(
+															undefined,
+															{
+																year: "numeric",
+																month: "short",
+																day: "numeric",
+															},
+														)}
+													</span>
+												</div>
+
+												<div className="mb-2">
+													<Rating rating={review.rating} />
+												</div>
+
+												<p className="text-gray-700">{review.review}</p>
+											</li>
+										))}
+								</ul>
+								{customer &&
+									!review &&
+									!product.reviews.data.some(
+										(review) => review.customer.id === customer.id,
+									) && (
+										<div className="max-w-3xl rounded-md border border-gray-light bg-white p-4 shadow-sm">
+											<h3 className="mb-4 font-bold text-lg text-navy-darkest">
+												Add Your Review
+											</h3>
+											<Form method="post" className="space-y-4 font-semibold">
+												<input type="hidden" name="_action" value="addReview" />
+												<input type="hidden" name="slug" value={product.slug} />
+												<div>
+													<label
+														htmlFor="rating"
+														className="mb-2 block font-medium text-gray-dark text-sm"
+													>
+														Your Rating
+													</label>
+													<div className="flex items-center gap-1">
+														{[1, 2, 3, 4, 5].map((star) => (
+															<StarIcon
+																key={star}
+																className={`h-6 w-6 cursor-pointer ${
+																	star <= reviewRating
+																		? "text-yellow-400"
+																		: "text-gray-300"
+																}`}
+																onClick={() => setReviewRating(star)}
 															/>
-														</div>
-													</div>
-													<div>
-														<label
-															htmlFor="review"
-															className="mb-2 block font-medium text-gray-700 text-sm"
-														>
-															Your Review
-														</label>
-														<textarea
-															id="review"
-															name="review"
-															rows={4}
-															className="w-full rounded-lg border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal disabled:bg-gray-lighter"
-															value={reviewText}
-															onChange={(e) => setReviewText(e.target.value)}
-															required
+														))}
+														<input
+															type="hidden"
+															name="rating"
+															value={reviewRating}
 														/>
 													</div>
-													<Button
-														type="submit"
-														disabled={loading}
-														loading={loading}
+												</div>
+												<div>
+													<label
+														htmlFor="review"
+														className="mb-2 block font-medium text-gray-700 text-sm"
 													>
-														Submit Review
-													</Button>
-												</Form>
-											</div>
-										)}
-								</TabPanel>
-							</TabPanels>
-						</TabGroup>
-					</div>
-				)}
+														Your Review
+													</label>
+													<textarea
+														id="review"
+														name="review"
+														rows={4}
+														className="w-full rounded-lg border-2 border-gray-light bg-white px-3 py-2 text-navy-darkest placeholder-gray outline-none transition focus:border-teal disabled:bg-gray-lighter"
+														value={reviewText}
+														onChange={(e) => setReviewText(e.target.value)}
+														required
+													/>
+												</div>
+												<Button
+													type="submit"
+													disabled={loading}
+													loading={loading}
+												>
+													Submit Review
+												</Button>
+											</Form>
+										</div>
+									)}
+								{!customer && (
+									<Alert variant="note">
+										<p>
+											<Link
+												to={href("/login")}
+												className="underline hover:no-underline"
+											>
+												Login
+											</Link>{" "}
+											to share your experience.
+										</p>
+									</Alert>
+								)}
+							</TabPanel>
+						</TabPanels>
+					</TabGroup>
+				</div>
 			</div>
 			{/* Similar Products Section */}
 			{product.related_products && product.related_products.length > 0 && (

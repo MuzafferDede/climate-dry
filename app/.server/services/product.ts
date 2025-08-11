@@ -1,10 +1,9 @@
-import type { Session } from "react-router";
 import type { ApiListResponse, Product, ProductCategory } from "~/types";
 import { queryBuilder } from "~/utils";
-import { fetcher } from "../libs";
+import { type TSession, fetcher } from "../libs";
 
 export async function getProductCategory(
-	session: Session,
+	session: TSession,
 	slug: string | undefined,
 ) {
 	const api = fetcher(session);
@@ -14,7 +13,7 @@ export async function getProductCategory(
 	);
 }
 
-export async function getProductCategories(session: Session) {
+export async function getProductCategories(session: TSession) {
 	const api = fetcher(session);
 
 	return await api.get<ApiListResponse<ProductCategory>>(
@@ -22,7 +21,7 @@ export async function getProductCategories(session: Session) {
 	);
 }
 
-export async function getProducts(session: Session, url?: URL) {
+export async function getProducts(session: TSession, url?: URL) {
 	const searchParams = url
 		? new URLSearchParams(url.search)
 		: new URLSearchParams();
@@ -67,7 +66,7 @@ export async function getProducts(session: Session, url?: URL) {
 }
 
 export async function getBrandProducts(
-	session: Session,
+	session: TSession,
 	url: URL,
 	brand: string | undefined,
 ) {
@@ -88,14 +87,14 @@ export async function getBrandProducts(
 	return response;
 }
 
-export async function getProduct(session: Session, slug: string | undefined) {
+export async function getProduct(session: TSession, slug: string | undefined) {
 	const api = fetcher(session);
 	return await api.get<Product>(
-		`/products/${slug}?include=brand,discount,category,relatedProducts,extras,variants,approvedReviews`,
+		`/products/${slug}?include=brand,discount,category,categories,relatedProducts,extras,variants,approvedReviews`,
 	);
 }
 
-export async function addReview(session: Session, formData: FormData) {
+export async function addReview(session: TSession, formData: FormData) {
 	const api = fetcher(session);
 	const rating = formData.get("rating");
 	const review = formData.get("review");

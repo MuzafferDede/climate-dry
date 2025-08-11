@@ -1,14 +1,13 @@
-import type { Session } from "react-router";
 import { z } from "zod";
 import { validator } from "~/utils";
-import { fetcher } from "../libs";
+import { type TSession, fetcher } from "../libs";
 
 // Schema for validating the email input
 const subscribeSchema = z.object({
 	email: z.string().email("Please enter a valid email"),
 });
 
-export const subsucribe = async (session: Session, formData: FormData) => {
+export const subsucribe = async (session: TSession, formData: FormData) => {
 	// Get form data from the request
 	const formValues = Object.fromEntries(formData);
 

@@ -21,7 +21,9 @@ export const Bottom = () => {
 			</div>
 			{sisterLogos.map((logo) => (
 				<div key={logo.label} className="min-w-max">
-					<span className="font-semibold text-sm text-white">Our sister company</span>
+					<span className="font-semibold text-sm text-white">
+						Our sister company
+					</span>
 					<a
 						href={logo.path}
 						className="flex w-26 max-w-full flex-col"

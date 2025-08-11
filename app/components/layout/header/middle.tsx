@@ -32,7 +32,7 @@ export const Middle = () => {
 		<div className="relative z-300 bg-white md:py-2">
 			<div className="mx-auto max-w-7xl">
 				<div
-					className="group/search flex flex-wrap items-center justify-between gap-2 p-2 md:flex-nowrap md:py-0"
+					className="group/search flex flex-wrap items-center justify-between gap-2 px-2 py-3 md:flex-nowrap md:py-0"
 					data-show={showSearch}
 				>
 					{/* Mobile toggle button */}
@@ -50,6 +50,7 @@ export const Middle = () => {
 									<Bars3Icon className="block h-6 w-6" />
 								)
 							}
+							aria-label="Toggle Navigation"
 						/>
 					</div>
 					<Link to="/" className="order-1 flex-1 md:flex-none">
@@ -59,12 +60,13 @@ export const Middle = () => {
 						/>
 					</Link>
 					<Search />
-					<div className="order-2 flex justify-end gap-1 md:order-3">
+					<div className="order-2 flex justify-end gap-2 md:order-3">
 						<Button
 							variant="plain"
-							size="none"
+							size="icon"
 							onClick={() => setShowSerach((prev) => !prev)}
 							className="md:hidden"
+							aria-label="Toggle Search"
 						>
 							<MagnifyingGlassIcon className="size-6 group-data-[show=true]/search:hidden" />
 							<XMarkIcon className="hidden size-6 group-data-[show=true]/search:block" />
@@ -78,6 +80,7 @@ export const Middle = () => {
 									size="icon"
 									variant="ghost"
 									icon={<ShoppingCartIcon className="size-6" />}
+									aria-label="Shopping Cart"
 								/>
 							</Link>
 						</div>
@@ -88,6 +91,7 @@ export const Middle = () => {
 										size="icon"
 										variant="ghost"
 										icon={<UserCircleIcon className="size-6" />}
+										aria-label="Customer Account"
 									/>
 								</MenuButton>
 								<MenuItems
@@ -122,7 +126,7 @@ export const Middle = () => {
 												className="flex w-full justify-start gap-2 p-2 hover:text-teal"
 											>
 												<KeyIcon className="size-4" />
-												<span>Sign in</span>
+												<span>Login</span>
 											</MenuItem>
 
 											<MenuItem

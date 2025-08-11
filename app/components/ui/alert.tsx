@@ -47,7 +47,7 @@ export function Alert({ variant = "info", title, children }: AlertProps) {
 		>
 			<Icon className="size-8 flex-shrink-0" aria-hidden="true" />
 			<div className="py-1.5">
-				{title && <strong className="mb-1 block font-semibold">{title}</strong>}
+				{title && <strong className="mb-1 block">{title}</strong>}
 				<div>{children}</div>
 			</div>
 		</div>

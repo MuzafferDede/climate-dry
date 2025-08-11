@@ -1,38 +1,37 @@
-import type { Session } from "react-router";
 import type {
 	ApiListResponse,
 	HeroBanner,
 	Navigation,
 	ProductCategory,
 } from "~/types";
-import { fetcher } from "../libs";
+import { type TSession, fetcher } from "../libs";
 
-export const getNavigation = async (session: Session) => {
+export const getNavigation = async (session: TSession) => {
 	const api = fetcher(session);
 
 	return await api.get<ApiListResponse<Navigation>>("/sites/navigation");
 };
 
-export const getFeaturedCategories = async (session: Session) => {
+export const getFeaturedCategories = async (session: TSession) => {
 	const api = fetcher(session);
 	return await api.get<ApiListResponse<ProductCategory>>(
 		"/product-categories?include=products&filter[is_featured]=true&has_products=true&product_limit=4&per_page=4&sort=created_at",
 	);
 };
 
-export const getShopByCategories = async (session: Session) => {
+export const getShopByCategories = async (session: TSession) => {
 	const api = fetcher(session);
 	return await api.get<ApiListResponse<ProductCategory>>(
 		"/product-categories?filter[slug]=dehumidifiers,industrial-fans,floor-dryers,bundles&per_page=4&sort=created_at",
 	);
 };
 
-export const getBanners = async (session: Session) => {
+export const getBanners = async (session: TSession) => {
 	const api = fetcher(session);
 	return await api.get<ApiListResponse<HeroBanner>>("/sites/hero-banners");
 };
 
-export const contact = async (session: Session, formData: FormData) => {
+export const contact = async (session: TSession, formData: FormData) => {
 	const { first_name, last_name, email, phone, message } =
 		Object.fromEntries(formData);
 

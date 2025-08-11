@@ -29,6 +29,7 @@ export const Search = () => {
 						<button
 							type="submit"
 							className="absolute inset-y-0 right-0 m-2 cursor-pointer hover:text-teal"
+							aria-label="Search"
 						>
 							<MagnifyingGlassIcon className="size-6" />
 						</button>

@@ -89,8 +89,9 @@ function IconWithTextGrid({
 }) {
 	return (
 		<div
-			className={`grid grid-cols-1 gap-8 md:grid-cols-2 ${smallCols ? "lg:grid-cols-3" : "lg:grid-cols-4"
-				}`}
+			className={`grid grid-cols-1 gap-8 md:grid-cols-2 ${
+				smallCols ? "lg:grid-cols-3" : "lg:grid-cols-4"
+			}`}
 		>
 			{items.map((item) => (
 				<div key={item.title} className="text-center">
@@ -128,8 +129,9 @@ function ProductSection({
 	return (
 		<section className="py-2">
 			<div
-				className={`mx-auto flex max-w-7xl flex-col items-center gap-6 lg:flex-row lg:items-start ${reverse ? "lg:flex-row-reverse" : ""
-					}`}
+				className={`mx-auto flex max-w-7xl flex-col items-center gap-6 lg:flex-row lg:items-start ${
+					reverse ? "lg:flex-row-reverse" : ""
+				}`}
 			>
 				<div className="flex-1 lg:w-1/2">
 					<div className="space-y-4 bg-gray-lightest p-10">

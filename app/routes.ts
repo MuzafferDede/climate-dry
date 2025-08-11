@@ -35,6 +35,8 @@ export default [
 	route("brands", "routes/brand/list.tsx"),
 	route("brand/:slug", "routes/brand/detail.tsx"),
 
+	route("promotions/:slug", "routes/promotion/detail.tsx"),
+
 	route("pages/:slug?", "routes/page/detail.tsx"),
 
 	route("c/:slug", "routes/product-category/list.tsx"),

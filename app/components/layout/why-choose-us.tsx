@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { useMatch } from "react-router";
 import { SectionHeader } from "~/components";
 
 const CARDS = [
@@ -29,29 +29,37 @@ const HIDDEN_AT = [
 	"/drying-calculator",
 	"/water-damage-restoration",
 ];
+
 const HIDDEN_PREFIXES = ["/pages", "/c"];
 
 export const WhyChooseUs = () => {
-	const location = useLocation();
-	const { pathname } = location;
+	// Call useMatch for exact paths
+	const exactMatches = HIDDEN_AT.map((path) => useMatch(path));
+	// Call useMatch for prefixes with wildcard matching
+	const prefixMatches = HIDDEN_PREFIXES.map((prefix) =>
+		useMatch(`${prefix}/*`),
+	);
 
-	if (
-		HIDDEN_AT.includes(pathname) ||
-		HIDDEN_PREFIXES.some((prefix) => pathname.startsWith(prefix))
-	) {
+	// Check if any exact match exists
+	const isHiddenExact = exactMatches.some(Boolean);
+	// Check if any prefix match exists
+	const isHiddenPrefix = prefixMatches.some(Boolean);
+
+	if (isHiddenExact || isHiddenPrefix) {
 		return null;
 	}
+
 	return (
 		<div className="mx-auto max-w-5xl space-y-8 px-5 py-16">
 			<SectionHeader
 				category="Why Choose Us"
 				title="Specialists in humidity control"
 				description="At Climate Dry, we are your one-stop shop for cutting-edge drying
-						equipment designed to tackle moisture-related challenges
-						effectively. We provide premium dehumidifiers, water pumps, air
-						movers, heaters, and other products that help maintain optimal
-						humidity levels, combat dampness, and protect your spaces from water
-						damage."
+            equipment designed to tackle moisture-related challenges
+            effectively. We provide premium dehumidifiers, water pumps, air
+            movers, heaters, and other products that help maintain optimal
+            humidity levels, combat dampness, and protect your spaces from water
+            damage."
 			/>
 			<div className="grid grid-cols-1 gap-20 md:grid-cols-3">
 				{CARDS.map((card) => (
@@ -67,7 +75,7 @@ export const WhyChooseUs = () => {
 						/>
 						<div className="flex flex-col gap-2">
 							<h4 className="font-bold text-lg">{card.title}</h4>
-							<p className="text-xs">{card.description}</p>
+							<p className="text-sm">{card.description}</p>
 						</div>
 					</div>
 				))}

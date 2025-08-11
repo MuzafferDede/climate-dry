@@ -5,6 +5,7 @@ export * from "./cart";
 export * from "./customer";
 export * from "./mail";
 export * from "./page";
+export * from "./promotion";
 export * from "./solution";
 export * from "./payment";
 export * from "./product";

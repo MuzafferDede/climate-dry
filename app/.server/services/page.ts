@@ -1,16 +1,17 @@
-import type { Session } from "react-router";
 import type { ApiListResponse, Page } from "~/types";
-import { fetcher } from "../libs";
+import { type TSession, fetcher } from "../libs";
 
-export async function getPage(session: Session, slug?: string) {
+export async function getPage(session: TSession, slug?: string) {
 	const api = fetcher(session);
 
-	const { response, error } = await api.get<Page>(`/pages/${slug}`);
+	const endpoint = slug ? `/pages/${slug}` : "/pages";
+
+	const { response, error } = await api.get<Page>(endpoint);
 
 	return { response, error };
 }
 
-export async function getPages(session: Session) {
+export async function getPages(session: TSession) {
 	const api = fetcher(session);
 
 	const { response, error } = await api.get<ApiListResponse<Page>>(

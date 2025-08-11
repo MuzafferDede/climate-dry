@@ -7,7 +7,7 @@ import {
 	redirect,
 	useNavigation,
 } from "react-router";
-import { commitSession, getSession, login } from "~/.server";
+import { buildHeaders, getSession, login } from "~/.server";
 import { Button, Input, Loading } from "~/components";
 import { guestMiddleware } from "~/middlewares";
 import { ToastType } from "~/types";
@@ -27,6 +27,7 @@ export async function action({ request }: ActionFunctionArgs) {
 			id: customer.id,
 			email: customer.email,
 			token: customer.token,
+			phone: customer.phone,
 		});
 
 		putToast(session, {
@@ -35,9 +36,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		});
 
 		return redirect("/account", {
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		});
 	}
 
@@ -49,9 +48,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	return data(
 		{ errors },
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 }
@@ -68,7 +65,7 @@ export default function LoginPage({ actionData }: Route.ComponentProps) {
 		<div className="mx-auto max-w-7xl px-4 py-12">
 			<div className="fade-in-90 zoom-in-90 mx-auto my-16 max-w-lg animate-in rounded-xl border border-gray-lighter bg-white px-6 py-8 shadow-sm">
 				<h1 className="mb-8 text-center font-bold text-2xl">
-					Sign in to your account
+					Login to your account
 				</h1>
 
 				<Form method="post" className="space-y-6">
@@ -98,7 +95,7 @@ export default function LoginPage({ actionData }: Route.ComponentProps) {
 						disabled={isSubmitting}
 						icon={isSubmitting && <Loading />}
 					>
-						<span>Signin</span>
+						<span>Login</span>
 					</Button>
 				</Form>
 

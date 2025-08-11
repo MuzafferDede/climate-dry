@@ -6,6 +6,7 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import type React from "react";
+import { cn } from "~/utils";
 
 export interface SelectOption {
 	label: string;
@@ -20,6 +21,7 @@ interface SelectProps {
 	id?: string;
 	name?: string;
 	className?: string;
+	error?: string;
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -30,13 +32,17 @@ export const Select: React.FC<SelectProps> = ({
 	id,
 	name,
 	className = "",
+	error,
 }) => {
 	return (
 		<div
-			className={`group/input w-full space-y-1.5 font-semibold ${className}`}
+			className={`group/input w-full space-y-1.5 font-semibold text-sm ${className}`}
 		>
 			{label && (
-				<label htmlFor={id} className="mb-1 block">
+				<label
+					htmlFor={id}
+					className={cn("mb-1 block text-gray-dark", error && "text-red")}
+				>
 					{label}
 				</label>
 			)}
@@ -44,7 +50,10 @@ export const Select: React.FC<SelectProps> = ({
 				<div className="relative">
 					<ListboxButton
 						id={id}
-						className="w-full rounded-full border-2 border-gray-light bg-white px-3 py-2 text-left text-navy-darkest text-sm outline-none transition focus:border-teal"
+						className={cn(
+							"w-full rounded-full border-2 border-gray-light bg-white px-3 py-2 text-left text-navy-darkest text-sm outline-none transition focus:border-teal",
+							error && "border-red",
+						)}
 					>
 						<span className="block truncate pr-5">
 							{options.find((o) => o.value === value)?.label || ""}
@@ -56,7 +65,7 @@ export const Select: React.FC<SelectProps> = ({
 							/>
 						</span>
 					</ListboxButton>
-					<ListboxOptions className="absolute z-20 mt-0 max-h-60 w-full overflow-auto rounded-lg border border-gray-lighter bg-white py-1 text-base ring-opacity-5 focus:outline-none sm:text-sm">
+					<ListboxOptions className="absolute z-20 mt-0.5 max-h-60 w-full overflow-auto rounded-2xl border-2 border-gray-lighter bg-white ring-opacity-5 focus:outline-none sm:text-sm">
 						{options.map((option) => (
 							<ListboxOption
 								key={option.value}
@@ -73,6 +82,7 @@ export const Select: React.FC<SelectProps> = ({
 					</ListboxOptions>
 				</div>
 			</Listbox>
+			{error && <p className="mt-1 text-red">{error}</p>}
 		</div>
 	);
 };

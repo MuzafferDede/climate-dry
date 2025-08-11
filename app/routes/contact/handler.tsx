@@ -1,5 +1,5 @@
 import { data } from "react-router";
-import { commitSession, contact, getSession } from "~/.server";
+import { buildHeaders, contact, getSession } from "~/.server";
 import { ToastType } from "~/types";
 import { putToast } from "~/utils";
 import type { Route } from "./+types/handler";
@@ -19,9 +19,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	return data(
 		{ success: !error },
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 };

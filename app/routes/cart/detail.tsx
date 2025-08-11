@@ -3,7 +3,7 @@ import { Form, data, useRouteLoaderData } from "react-router";
 import {
 	addToCart,
 	applyDiscount,
-	commitSession,
+	buildHeaders,
 	getPaymentIntentSecret,
 	getSession,
 	removeCartItem,
@@ -69,9 +69,7 @@ export async function action({ request }: Route.ActionArgs) {
 	return data(
 		{ response, error },
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 }

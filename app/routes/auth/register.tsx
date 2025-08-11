@@ -9,7 +9,7 @@ import {
 } from "react-router";
 import { Button, Input, Loading } from "~/components";
 
-import { commitSession, getSession, register } from "~/.server";
+import { buildHeaders, getSession, register } from "~/.server";
 import { guestMiddleware } from "~/middlewares";
 import { ToastType } from "~/types";
 import { putToast } from "~/utils";
@@ -30,9 +30,7 @@ export async function action({ request }: ActionFunctionArgs) {
 			type: ToastType.Success,
 		});
 		return redirect("/login", {
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		});
 	}
 
@@ -44,9 +42,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	return data(
 		{ error, errors },
 		{
-			headers: {
-				"Set-Cookie": await commitSession(session),
-			},
+			headers: await buildHeaders(session),
 		},
 	);
 }
@@ -151,7 +147,7 @@ export default function RegisterPage({ actionData }: Route.ComponentProps) {
 						to={href("/login")}
 						className="font-medium text-teal underline-offset-4 hover:underline"
 					>
-						Sign in
+						Login
 					</Link>
 				</p>
 			</div>

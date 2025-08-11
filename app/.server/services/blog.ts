@@ -1,14 +1,13 @@
-import type { Session } from "react-router";
 import type { ApiListResponse, BlogPost } from "~/types";
 import { queryBuilder } from "~/utils";
-import { fetcher } from "../libs";
+import { type TSession, fetcher } from "../libs";
 
-export async function getBlogPost(session: Session, slug: string) {
+export async function getBlogPost(session: TSession, slug: string) {
 	const api = fetcher(session);
 	return await api.get<BlogPost>(`/blog-posts/${slug}`);
 }
 
-export async function getBlogPosts(session: Session, category?: string) {
+export async function getBlogPosts(session: TSession, category?: string) {
 	const api = fetcher(session);
 
 	const query: Record<string, string> = {};
@@ -22,7 +21,7 @@ export async function getBlogPosts(session: Session, category?: string) {
 	return await api.get<ApiListResponse<BlogPost>>(`/blog-posts?${queryString}`);
 }
 
-export async function getFeaturedBlogPosts(session: Session) {
+export async function getFeaturedBlogPosts(session: TSession) {
 	const api = fetcher(session);
 
 	const query = queryBuilder({

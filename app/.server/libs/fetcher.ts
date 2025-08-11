@@ -1,6 +1,5 @@
-// utils/fetcher.ts
-import type { Session } from "react-router";
 import { getCustomer } from "./customer";
+import type { TSession } from "./session";
 
 const BACKEND_URL = process.env.BACKEND_URL || "/api";
 const SITE_CODE = process.env.SITE_CODE || "CD";
@@ -17,7 +16,7 @@ type FetcherResponse<T> =
 	| { response: T; error: never }
 	| { response: never; error: string };
 
-export function fetcher(session: Session) {
+export function fetcher(session: TSession) {
 	const customer = getCustomer(session);
 
 	async function call<T = unknown>(

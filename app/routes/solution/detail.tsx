@@ -20,9 +20,11 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 	const { slug } = params;
 
-	const { response: solution } = await getSolution(session, slug);
+	const { response: solution, error } = await getSolution(session, slug);
 
 	const { response: solutions } = await getSolutions(session);
+
+	if (error) throw new Response(error, { status: 404 });
 
 	return { solution, solutions };
 }

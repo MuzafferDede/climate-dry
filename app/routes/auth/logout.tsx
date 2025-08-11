@@ -1,5 +1,5 @@
 import { redirect } from "react-router";
-import { destroySession, getSession, logout } from "~/.server";
+import { buildHeaders, destroySession, getSession, logout } from "~/.server";
 import { authMiddleware } from "~/middlewares";
 import { ToastType } from "~/types";
 import { putToast } from "~/utils";
@@ -13,9 +13,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 		putToast(session, { message: "Logout failed!", type: ToastType.Error });
 
 		return redirect("/account", {
-			headers: {
-				"Set-Cookie": await destroySession(session),
-			},
+			headers: await buildHeaders(session),
 		});
 	}
 

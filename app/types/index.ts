@@ -111,6 +111,7 @@ export type Product = {
 		name: string;
 	};
 	category: ProductCategory;
+	categories: ProductCategory[];
 	default_variant: Variant;
 	description: string;
 	discount?: {
@@ -154,6 +155,22 @@ export type Review = {
 		name: string;
 	};
 	created_at: string;
+};
+
+export type Discount = {
+	id: number;
+	name: string;
+	value: number;
+};
+
+export type Promotion = {
+	cover_url: string;
+	description: string;
+	discount: Discount;
+	id: number;
+	name: string;
+	products: Product[];
+	slug: string;
 };
 
 export type Solution = {
@@ -212,6 +229,7 @@ export type Cart = {
 
 export type Customer = {
 	email: string;
+	phone: string;
 	first_name: string;
 	id: string;
 	last_name: string;

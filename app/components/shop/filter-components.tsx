@@ -77,9 +77,11 @@ export function FilterComponents({
 
 			case "checkbox":
 				return (
-					<div key={filter.title} className="flex flex-col gap-1">
-						<span className="font-bold">{filter.title}</span>
-						<div className="grid gap-2">
+					<div key={filter.title} className="flex flex-col gap-2">
+						<span className="border-gray-light border-b font-bold">
+							{filter.title}
+						</span>
+						<div className="grid gap-3">
 							{filter.options.map((option) => {
 								const inputId = `filter-${filter.name}-${option.value}`;
 								const selectedValues = (
@@ -91,14 +93,11 @@ export function FilterComponents({
 								const isChecked = selectedValues.includes(String(option.value));
 
 								return (
-									<label
-										key={option.id}
-										className="flex items-center gap-2 text-sm"
-									>
+									<label key={option.id} className="flex items-center gap-2">
 										<input
 											id={inputId}
 											type="checkbox"
-											className="h-4 w-4 accent-teal"
+											className="size-4 shrink-0 accent-teal"
 											checked={isChecked}
 											onChange={(e) =>
 												handleFilterChange(
@@ -108,8 +107,12 @@ export function FilterComponents({
 												)
 											}
 										/>
-										<span>{option.name}</span>
-										<span className="text-gray">({option.count})</span>
+										<span>
+											<span>{option.name}</span>
+											<span className="inline pl-1 text-gray">
+												({option.count})
+											</span>
+										</span>
 									</label>
 								);
 							})}
@@ -119,5 +122,5 @@ export function FilterComponents({
 		}
 	};
 
-	return <div className="grid gap-4">{filters.map(renderFilter)}</div>;
+	return <div className="grid gap-6">{filters.map(renderFilter)}</div>;
 }

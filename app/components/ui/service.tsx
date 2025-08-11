@@ -51,6 +51,7 @@ export const Service: React.FC<ServiceProps> = ({
 						animation="zoom"
 						className="absolute right-2 bottom-2 text-white hover:bg-white hover:text-navy-darkest"
 						icon={<ArrowRightIcon className="size-4" />}
+						aria-label="View details"
 					/>
 				</Link>
 			</div>
