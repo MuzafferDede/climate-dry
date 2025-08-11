@@ -1,6 +1,6 @@
 # Climate-Dry
 
-A modern, production-ready React application with built-in authentication, responsive UI, and optimized for performance.
+A modern, production-ready React application with built-in authentication, responsive UI, and optimized for performance..
 
 ## Features
 
