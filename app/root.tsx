@@ -22,6 +22,7 @@ import {
 	ExclamationTriangleIcon,
 	HomeIcon,
 } from "@heroicons/react/16/solid";
+import { LiveChatWidget } from "@livechat/widget-react";
 import type { ReactNode } from "react";
 import {
 	Button,
@@ -35,6 +36,7 @@ import {
 import { AppProvider } from "~/contexts";
 import { useInViewport } from "~/hooks";
 import { buildHeaders, getCustomer, getSession } from "./.server";
+
 import {
 	getCart,
 	getNavigation,
@@ -140,8 +142,6 @@ export function Layout({ children }: { children: ReactNode }) {
 				{children}
 				<ScrollRestoration />
 				<Scripts />
-
-				<script src="/live-chat.js" />
 			</body>
 		</html>
 	);
@@ -183,6 +183,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
 					</div>
 				)}
 				<ContactUsWidget />
+				<LiveChatWidget license="1215771" />
 			</main>
 		</AppProvider>
 	);
