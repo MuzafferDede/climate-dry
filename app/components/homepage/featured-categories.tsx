@@ -9,8 +9,8 @@ export const FeaturedCategories = ({
 	return (
 		<div className="space-y-8 px-5 py-16">
 			<SectionHeader
-				category="Our Top Humidity Reducers"
-				title="Dehumidifiers"
+				category="Selected especially for you"
+				title="Our Latest Offers"
 			/>
 			<TabGroup className="isolate mx-auto max-w-7xl">
 				<TabList className="scrollbar-hidden mx-auto flex max-w-min snap-x snap-mandatory justify-items-center overflow-auto pb-px">
