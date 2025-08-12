@@ -15,7 +15,7 @@ export const getNavigation = async (session: TSession) => {
 export const getFeaturedCategories = async (session: TSession) => {
 	const api = fetcher(session);
 	return await api.get<ApiListResponse<ProductCategory>>(
-		"/product-categories?include=products&filter[is_featured]=true&has_products=true&product_limit=4&per_page=4&sort=created_at",
+		"/product-categories?include=products&filter[is_featured]=true&has_products=true&product_limit=4&per_page=6&sort=created_at",
 	);
 };
 
