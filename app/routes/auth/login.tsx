@@ -21,14 +21,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	const { response: customer, error, errors } = await login(session, formData);
 
 	if (customer) {
-		session.set("customer", {
-			first_name: customer.first_name,
-			last_name: customer.last_name,
-			id: customer.id,
-			email: customer.email,
-			token: customer.token,
-			phone: customer.phone,
-		});
+		session.set("customer", customer);
 
 		putToast(session, {
 			message: "Login successful!",

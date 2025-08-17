@@ -110,13 +110,20 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 														{item.quantity}
 													</td>
 												</tr>
-												{item.totals?.discount_amount > 0 && (
+												{item.discount && (
 													<tr className="border-gray-lighter border-b transition-colors odd:bg-white even:bg-gray-lightest hover:bg-teal/10">
 														<td className="px-4 py-2 text-navy-darkest">
-															Item Discount
+															Discount{" "}
+															<span className="text-red text-xs">
+																({item.discount.name})
+															</span>
 														</td>
 														<td className="px-4 py-2 text-right font-semibold text-red">
-															- {currency(item.totals.discount_amount ?? 0)}
+															{Boolean(item.totals.discount_amount) && (
+																<span>
+																	- {currency(item.totals.discount_amount ?? 0)}
+																</span>
+															)}
 														</td>
 													</tr>
 												)}

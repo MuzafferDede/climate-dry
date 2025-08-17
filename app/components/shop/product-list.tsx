@@ -7,7 +7,8 @@ import { cn } from "~/utils";
 
 const sortByOptions = [
 	{ label: "Best Selling", value: "sales_count" },
-	{ label: "Best Rating", value: "rating" },
+	{ label: "Best Rating", value: "averageRating" },
+	{ label: "Most Popular", value: "most_popular" },
 	{ label: "Price Low", value: "price-low" },
 	{ label: "Price High", value: "price-high" },
 ];

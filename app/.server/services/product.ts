@@ -9,7 +9,7 @@ export async function getProductCategory(
 	const api = fetcher(session);
 
 	return await api.get<ProductCategory>(
-		`/product-categories/${slug}?include=parent,children`,
+		`/product-categories/${slug}?include=parent,children,products`,
 	);
 }
 

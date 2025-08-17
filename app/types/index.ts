@@ -106,6 +106,7 @@ export type ProductCategory = {
 } & MetaInfo;
 
 export type Product = {
+	banner_url: string;
 	brand: {
 		logo_url: string;
 		name: string;
@@ -196,6 +197,7 @@ export type CartTotals = {
 	shipping_total: number;
 	tax_amount: number;
 	discount_amount: number;
+	total_items_discount: number;
 	total: number;
 };
 
@@ -206,6 +208,7 @@ export type CartItem = {
 	shipping_methods: ShippingMethods;
 	totals: CartTotals;
 	variant: Variant;
+	discount: Discount;
 };
 
 export type Cart = {
@@ -228,12 +231,28 @@ export type Cart = {
 // ============================================================================
 
 export type Customer = {
+	token: string;
 	email: string;
 	phone: string;
 	first_name: string;
 	id: string;
 	last_name: string;
-	token: string;
+	shipping_address_line_1: string;
+	shipping_address_line_2: string;
+	shipping_city: string;
+	shipping_county: string;
+	shipping_country: string;
+	shipping_postal_code: string;
+	shipping_phone: string;
+	shipping_delivery_instructions: string;
+	billing_address_line_1: string;
+	billing_address_line_2: string;
+	billing_city: string;
+	billing_county: string;
+	billing_country: string;
+	billing_postal_code: string;
+	billing_phone: string;
+	use_shipping_for_billing: boolean;
 };
 
 // ============================================================================

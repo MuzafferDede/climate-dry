@@ -17,7 +17,7 @@ import {
 	Input,
 } from "~/components";
 import { type Cart, ToastType } from "~/types";
-import { putToast } from "~/utils";
+import { currency, putToast } from "~/utils";
 import type { Route } from "./+types/detail";
 
 export const meta = () => [
@@ -76,6 +76,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export default function ({ actionData }: Route.ComponentProps) {
 	const { cart } = useRouteLoaderData<{ cart: Cart }>("root") || {};
+
 	const clientSecret = (actionData as { response: { client_secret: string } })
 		?.response?.client_secret;
 
@@ -127,27 +128,32 @@ export default function ({ actionData }: Route.ComponentProps) {
 							<CartSummary cart={cart} />
 							<div className="mt-4 space-y-4">
 								{/* Discount Code Form and Checkout Button remain here */}
-								<Form method="post" className="flex items-start gap-2">
-									<Input
-										name="code"
-										placeholder="Enter discount code"
-										className="peer flex-1"
-										defaultValue={cart?.discount?.code}
-										error={error}
-										disabled={Boolean(cart?.totals.discount_amount)}
-										required
-									/>
-									<Button
-										name="_action"
-										value="discount"
-										type="submit"
-										className="peer-invalid:hidden"
-										variant={
-											cart?.totals.discount_amount ? "destructive" : "default"
-										}
-									>
-										{cart?.totals.discount_amount ? "Remove" : "Apply"}
-									</Button>
+								<Form method="post" className="space-y-2">
+									<div className="flex items-start gap-2">
+										<Input
+											name="code"
+											placeholder="Enter discount code"
+											className="peer flex-1"
+											defaultValue={cart?.discount?.code}
+											error={error}
+											disabled={Boolean(cart?.discount)}
+										/>
+										<Button
+											name="_action"
+											value="discount"
+											type="submit"
+											className="peer-invalid:hidden"
+											variant={cart?.discount ? "destructive" : "default"}
+										>
+											{cart?.discount ? "Remove" : "Apply"}
+										</Button>
+									</div>
+									{cart?.discount && (
+										<p className="text-red">
+											- {currency(cart.totals.discount_amount ?? 0)} discount
+											has been applied.
+										</p>
+									)}
 								</Form>
 								<Button
 									type="button"

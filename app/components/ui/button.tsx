@@ -23,14 +23,15 @@ const buttonVariants = cva(
 			},
 			size: {
 				none: "",
-				default: "gap-2 px-4 py-2 has-[*:nth-child(2)]:pr-2",
+				default: "gap-2 px-4 py-2",
 				icon: "p-2",
 				sm: "gap-1.5 py-3 text-sm",
 				lg: "gap-2 py-4 text-base",
 			},
 			iconPosition: {
-				left: "flex-row-reverse",
-				right: "flex-row",
+				none: "",
+				left: "flex-row-reverse pl-2",
+				right: "flex-row pr-2",
 			},
 			animation: {
 				none: "",
@@ -41,7 +42,7 @@ const buttonVariants = cva(
 		defaultVariants: {
 			variant: "default",
 			size: "default",
-			iconPosition: "right",
+			iconPosition: "none",
 			animation: "none",
 		},
 	},
@@ -86,7 +87,12 @@ function Button<T extends React.ElementType = "button">({
 	return (
 		<Component
 			className={cn(
-				buttonVariants({ variant, size, iconPosition, animation }),
+				buttonVariants({
+					variant,
+					size,
+					iconPosition: iconPosition || (icon ? "right" : "none"),
+					animation,
+				}),
 				className,
 			)}
 			{...props}

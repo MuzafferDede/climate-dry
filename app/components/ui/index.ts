@@ -2,6 +2,7 @@ export * from "./alert";
 export * from "./animate-on-scroll";
 export * from "./breadcrumb";
 export * from "./button";
+export * from "./category-banner";
 export * from "./icon";
 export * from "./image";
 export * from "./input";

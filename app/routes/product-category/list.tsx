@@ -1,10 +1,11 @@
-import {} from "@heroicons/react/16/solid";
+import { AdjustmentsHorizontalIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import {
 	type LinkDescriptor,
 	data,
 	useLocation,
 	useSearchParams,
 } from "react-router";
+import { useState } from "react";
 import {
 	addToCart,
 	buildHeaders,
@@ -16,6 +17,7 @@ import {
 	Alert,
 	Breadcrumb,
 	Button,
+	CategoryBanner,
 	FilterComponents,
 	ProductCategoryCard,
 	ProductList,
@@ -137,6 +139,7 @@ export default function ProductCategoryPage({
 }: Route.ComponentProps) {
 	const { category, products, filters } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
+	const [isFilterOpen, setIsFilterOpen] = useState(false);
 
 	const handleFilter = (field: string, value: string | number | boolean) => {
 		const newParams = new URLSearchParams(searchParams);
@@ -156,6 +159,7 @@ export default function ProductCategoryPage({
 	return (
 		<div className="space-y-8 px-5 py-8">
 			<div className="mx-auto max-w-7xl space-y-8">
+				<CategoryBanner category={category} />
 				<Breadcrumb />
 				<div className="space-y-2">
 					<h1 className="font-bold text-4xl text-navy-darkest">
@@ -186,8 +190,106 @@ export default function ProductCategoryPage({
 			</div>
 
 			<div className="relative isolate">
+				{/* Mobile Filter Toggle */}
+				<div className="mx-auto max-w-7xl px-4 lg:hidden">
+					<Button
+						type="button"
+						variant="outline"
+						className="flex items-center gap-2"
+						onClick={() => setIsFilterOpen(true)}
+					>
+						<AdjustmentsHorizontalIcon className="size-4" />
+						Filters
+					</Button>
+				</div>
+
+				{/* Mobile Filter Overlay */}
+				{isFilterOpen && (
+					<div className="fixed inset-0 z-50 lg:hidden">
+						{/* Backdrop */}
+						<div
+							className="absolute inset-0 bg-black/50 animate-fade-in"
+							onClick={() => setIsFilterOpen(false)}
+						/>
+
+						{/* Bottom Slide Panel */}
+						<div className="absolute bottom-0 left-0 right-0 max-h-[80vh] bg-white rounded-t-xl animate-slide-in-bottom">
+							<div className="flex h-full max-h-[65vh] flex-col">
+								{/* Handle Bar */}
+								<div className="flex justify-center py-3">
+									<div className="h-1 w-12 rounded-full bg-gray-light" />
+								</div>
+
+								{/* Header */}
+								<div className="flex items-center justify-between border-b border-gray-light px-4 pb-4">
+									<span className="font-medium text-lg text-navy-darkest">
+										Filters
+									</span>
+									<div className="flex items-center gap-2">
+										<Button
+											type="button"
+											size="none"
+											variant="plain"
+											className="text-teal hover:text-navy-darkest"
+											onClick={reset}
+										>
+											Reset
+										</Button>
+										<Button
+											type="button"
+											size="none"
+											variant="plain"
+											onClick={() => setIsFilterOpen(false)}
+										>
+											<XMarkIcon className="size-5" />
+										</Button>
+									</div>
+								</div>
+
+								{/* Filter Content */}
+								<div className="flex-1 overflow-auto p-4">
+									<div className="space-y-6">
+										<div className="grid gap-3">
+											<label className="flex items-center gap-2">
+												<input
+													type="checkbox"
+													className="size-4 accent-teal"
+													onChange={(e) =>
+														handleFilter("filter[in_stock]", e.target.checked)
+													}
+												/>
+												<span>In Stock</span>
+											</label>
+											<label className="flex items-center gap-2">
+												<input
+													type="checkbox"
+													className="size-4 accent-teal"
+													onChange={(e) =>
+														handleFilter("filter[on_sale]", e.target.checked)
+													}
+												/>
+												<span>On Sale</span>
+											</label>
+										</div>
+
+										{/*Dynamic Filters*/}
+										{filters && (
+											<FilterComponents
+												filters={filters}
+												searchParams={searchParams}
+												setSearchParams={setSearchParams}
+											/>
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				)}
+
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
-					<aside className="lg:col-span-1">
+					{/* Desktop Sidebar */}
+					<aside className="hidden lg:block lg:col-span-1">
 						<div className="sticky top-40 space-y-6 text-base">
 							<div className="flex justify-between gap-2">
 								<span className="font-medium text-lg text-navy-darkest">
