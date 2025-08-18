@@ -167,12 +167,12 @@ export const CheckoutFormWizard = ({
 				3: billingSameAsShipping
 					? []
 					: [
-							"billing_address_line_1",
-							"billing_city",
-							"billing_country",
-							"billing_postal_code",
-							"billing_phone",
-						],
+						"billing_address_line_1",
+						"billing_city",
+						"billing_country",
+						"billing_postal_code",
+						"billing_phone",
+					],
 			};
 
 			const fieldsToValidate = stepFields[stepNumber] || [];
@@ -466,7 +466,7 @@ export const CheckoutFormWizard = ({
 					<span>
 						I agree to the{" "}
 						<a
-							href="/terms"
+							href="/pages/terms"
 							className="font-medium text-teal hover:underline"
 							target="_blank"
 							rel="noreferrer"
@@ -475,7 +475,7 @@ export const CheckoutFormWizard = ({
 						</a>{" "}
 						and{" "}
 						<a
-							href="/privacy"
+							href="/pages/privacy-policy"
 							className="font-medium text-teal hover:underline"
 							target="_blank"
 							rel="noreferrer"
