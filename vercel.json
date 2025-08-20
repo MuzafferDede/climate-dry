@@ -3,11 +3,11 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/s3/:path*", 
+      "source": "/s3/:path*",
       "destination": "https://fls-9f649510-70dd-40c4-a4b9-572dc5dbe23e.laravel.cloud/:path*"
     }
   ],
-   "headers": [
+  "headers": [
     {
       "source": "/s3/:path*",
       "headers": [
@@ -16,6 +16,18 @@
           "value": "index, follow"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/returns",
+      "destination": "/pages/returns",
+      "permanent": true
+    },
+    {
+      "source": "/payment",
+      "destination": "/pages/payment",
+      "permanent": true
     }
   ]
 }
