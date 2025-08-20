@@ -3,4 +3,7 @@ Disallow: /
 Disallow: *?view=*
 Disallow: /search=*
 
-Sitemap: https://www.climatedry.co.uk/sitemap-index.xml
+User-agent: AhrefsSiteAudit
+Allow: /
+User-agent: AhrefsBot
+Allow: /
