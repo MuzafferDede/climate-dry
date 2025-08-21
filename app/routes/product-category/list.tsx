@@ -131,7 +131,7 @@ const TechnicalService = {
 	description:
 		"Our team are on hand to advise you on the best solution for your requirements and environment. Get in touch with us today to discuss your project",
 	phone: "0808 196 6381",
-	link: "/contact-us",
+	link: "/pages/contact-us",
 };
 
 export default function ProductCategoryPage({
