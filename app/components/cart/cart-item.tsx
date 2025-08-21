@@ -45,18 +45,24 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 				</div>
 				<div className="w-full min-w-0 flex-1">
 					<h3 className="truncate font-bold text-base text-navy-darkest md:text-lg">
-						<Link
-							to={href("/p/:slug", { slug: item.variant.product.slug })}
-							className="capitalize hover:text-teal"
-						>
-							<span>{item.variant.product.name}</span>
-						</Link>
+						{item.variant.product.product_type === "optional_extra" ? (
+							<span className="capitalize">{item.variant.product.name}</span>
+						) : (
+							<Link
+								to={href("/p/:slug", { slug: item.variant.product.slug })}
+								className="capitalize hover:text-teal"
+							>
+								<span>{item.variant.product.name}</span>
+							</Link>
+						)}
 					</h3>
+
 					<p className="flex gap-2 text-gray-dark text-sm">
-						<span className="font-semibold text-teal">{item.variant.name}</span>
-					</p>
-					<p className="flex gap-2 text-gray-dark text-sm">
-						<span className="text-gray">SKU: {item.variant.sku}</span>
+						<span className="text-gray">
+							{item.variant.product.product_type === "optional_extra"
+								? "Optional Extra"
+								: `SKU: ${item.variant.sku}`}
+						</span>
 					</p>
 					{item.variant.attributes && item.variant.attributes.length > 0 && (
 						<div className="mt-2 font-medium text-gray-dark text-xs">
@@ -95,7 +101,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 														{currency(item.variant.price ?? 0)}
 														{item.variant.retail_price &&
 															item.variant.retail_price >
-																(item.variant.price ?? 0) && (
+															(item.variant.price ?? 0) && (
 																<span className="ml-2 text-gray-light line-through">
 																	{currency(item.variant.retail_price)}
 																</span>

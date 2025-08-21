@@ -159,7 +159,6 @@ export default function ProductCategoryPage({
 	return (
 		<div className="space-y-8 px-5 py-8">
 			<div className="mx-auto max-w-7xl space-y-8">
-				<CategoryBanner category={category} />
 				<Breadcrumb />
 				<div className="space-y-2">
 					<h1 className="font-bold text-4xl text-navy-darkest">

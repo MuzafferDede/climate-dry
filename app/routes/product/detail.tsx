@@ -280,11 +280,10 @@ export default function ProductPage({
 											type="button"
 											aria-label={`Show ${item.type} ${idx + 1}`}
 											onClick={() => setActiveIndex(idx)}
-											className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
-												activeIndex === idx
-													? "border-teal ring-2 ring-teal/20"
-													: "border-gray-lighter hover:border-gray-light"
-											}`}
+											className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 ${activeIndex === idx
+												? "border-teal ring-2 ring-teal/20"
+												: "border-gray-lighter hover:border-gray-light"
+												}`}
 										>
 											{item.type === "video" ? (
 												<>
@@ -438,6 +437,7 @@ export default function ProductPage({
 																(Out of stock)
 															</span>
 														)}
+														{/* temp removed as dont want optional extras as product pages 
 														<a
 															href={`/p/${extra.slug}`}
 															target="_blank"
@@ -449,6 +449,7 @@ export default function ProductPage({
 														>
 															<ArrowTopRightOnSquareIcon className="h-4 w-4" />
 														</a>
+														*/}
 													</span>
 												</label>
 											);
@@ -771,11 +772,10 @@ export default function ProductPage({
 														{[1, 2, 3, 4, 5].map((star) => (
 															<StarIcon
 																key={star}
-																className={`h-6 w-6 cursor-pointer ${
-																	star <= reviewRating
-																		? "text-yellow-400"
-																		: "text-gray-300"
-																}`}
+																className={`h-6 w-6 cursor-pointer ${star <= reviewRating
+																	? "text-yellow-400"
+																	: "text-gray-300"
+																	}`}
 																onClick={() => setReviewRating(star)}
 															/>
 														))}

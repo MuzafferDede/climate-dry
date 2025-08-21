@@ -131,6 +131,7 @@ export type Product = {
 	key_features: string;
 	most_popular: boolean;
 	name: string;
+	product_type: "standard" | "optional_extra" | "variation";
 	related_products?: Product[];
 	reviews: {
 		data: [Review];
