@@ -29,19 +29,35 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 			{/* Product Info Row */}
 			<div className="flex flex-col gap-4 md:flex-row">
 				<div className="w-full flex-shrink-0 md:w-auto">
-					<Link to={href("/p/:slug", { slug: item.variant.product.slug })}>
-						{item.variant.product.images?.[0]?.url ? (
-							<Image
-								src={item.variant.product.images[0].url}
-								alt={item.variant.name}
-								className="h-32 w-full rounded-lg object-cover shadow-sm md:h-32 md:w-32"
-							/>
-						) : (
-							<div className="flex h-32 w-full items-center justify-center rounded-lg bg-gray-lightest md:h-32 md:w-32">
-								<span className="text-gray-light">No image</span>
-							</div>
-						)}
-					</Link>
+					{item.variant.product.product_type === "optional_extra" ? (
+						<>
+							{item.variant.product.images?.[0]?.url ? (
+								<Image
+									src={item.variant.product.images[0].url}
+									alt={item.variant.name}
+									className="h-32 w-full rounded-lg object-cover shadow-sm md:h-32 md:w-32"
+								/>
+							) : (
+								<div className="flex h-32 w-full items-center justify-center rounded-lg bg-gray-lightest md:h-32 md:w-32">
+									<span className="text-gray-light">No image</span>
+								</div>
+							)}
+						</>
+					) : (
+						<Link to={href("/p/:slug", { slug: item.variant.product.slug })}>
+							{item.variant.product.images?.[0]?.url ? (
+								<Image
+									src={item.variant.product.images[0].url}
+									alt={item.variant.name}
+									className="h-32 w-full rounded-lg object-cover shadow-sm md:h-32 md:w-32"
+								/>
+							) : (
+								<div className="flex h-32 w-full items-center justify-center rounded-lg bg-gray-lightest md:h-32 md:w-32">
+									<span className="text-gray-light">No image</span>
+								</div>
+							)}
+						</Link>
+					)}
 				</div>
 				<div className="w-full min-w-0 flex-1">
 					<h3 className="truncate font-bold text-base text-navy-darkest md:text-lg">
