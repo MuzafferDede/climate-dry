@@ -61,7 +61,7 @@ export const CartItem: React.FC<CartItemProps> = ({ cartItem: item }) => {
 						<span className="text-gray">
 							{item.variant.product.product_type === "optional_extra"
 								? "Optional Extra"
-								: `SKU: ${item.variant.sku}`}
+								: `SKU: ${item.variant.product.product_type}`}
 						</span>
 					</p>
 					{item.variant.attributes && item.variant.attributes.length > 0 && (
