@@ -2,7 +2,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { Link } from "react-router";
-import { Button, SectionHeader, Select } from "~/components";
+import { Button, SectionHeaderMulti, Select } from "~/components";
 import type { Solution } from "~/types";
 
 export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
@@ -17,9 +17,11 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 		<div className="bg-gray-lightest">
 			<div className="mx-auto max-w-6xl space-y-8 px-5 py-16">
 				<div className="mx-auto max-w-5xl space-y-8">
-					<SectionHeader
+					<SectionHeaderMulti
 						category="Solutions Centre"
+						category_tag="h3"
 						title="Find the right solution for you"
+						title_tag="h3"
 						description="We've compiled solutions for your businesses, storage
 								requirements and humidity control in one handy guide"
 					/>
@@ -59,7 +61,7 @@ export const Solutions = ({ solutions }: { solutions: Solution[] }) => {
 										alt={solution.name || "image"}
 									/>
 									<div className="space-y-6 p-8">
-										<h3 className="font-bold text-3xl">{solution.name}</h3>
+										<h4 className="font-bold text-3xl">{solution.name}</h4>
 										<div
 											// biome-ignore lint/security/noDangerouslySetInnerHtml: safe backend HTML
 											dangerouslySetInnerHTML={{

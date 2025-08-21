@@ -42,7 +42,7 @@ export const FeaturedPosts = ({
 								loading="lazy"
 							/>
 							<div className="space-y-4 p-6">
-								<h4 className="font-bold text-3xl">{mainPost.title}</h4>
+								<h3 className="font-bold text-3xl">{mainPost.title}</h3>
 								<p className="text-sm">{mainPost.introduction}</p>
 								<Button
 									to={`/info-hub/article/${mainPost.slug}`}

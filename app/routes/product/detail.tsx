@@ -331,10 +331,11 @@ export default function ProductPage({
 								</span>
 								<h1 className="font-bold text-2xl capitalize leading-tight sm:text-3xl">
 									{product.name}
+									<br />
+									<span className="text-sm capitalize font-normal ">
+										{product.main_feature_title}
+									</span>
 								</h1>
-								<span className="text-sm capitalize">
-									{product.main_feature_title}
-								</span>
 							</div>
 							<Rating
 								rating={product.reviews.rating}

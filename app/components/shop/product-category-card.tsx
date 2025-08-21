@@ -13,7 +13,7 @@ export const ProductCategoryCard = ({
 		>
 			<div className="group relative flex h-full flex-col justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl md:flex-row lg:flex-col">
 				<div className="flex h-full w-full flex-col space-y-2 px-4 py-5">
-					<p className="font-bold text-2xl">{category.name}</p>
+					<h2 className="font-bold text-2xl">{category.name}</h2>
 					<div className="flex min-h-20 flex-1 flex-col justify-between">
 						<div
 							className="mb-4 line-clamp-4"

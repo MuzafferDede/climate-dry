@@ -20,11 +20,21 @@ export const handle = {
 		return crumbs;
 	},
 };
+export const meta: MetaFunction = ({ params }) => {
+	const { category } = params;
 
-export const meta: MetaFunction = () => [
-	{ title: "Blog Posts" },
-	{ name: "description", content: "Latest blog posts from Climate Dry" },
-];
+	if (category) {
+		return [
+			{ title: "Case Studies" },
+			{ name: "description", content: "Explore real-world case studies and proven solutions from Climate Dry." },
+		];
+	}
+
+	return [
+		{ title: "Info Hub | Advice & Articles" },
+		{ name: "description", content: "Welcome to the Info Hub by Climate Dry. Expert insights, advice, and articles." },
+	];
+};
 
 export async function loader({ request, params }: Route.LoaderArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
@@ -45,9 +55,9 @@ export default function BlogPostListPage({
 	const { category } = params;
 	const titles = category
 		? {
-				h2: "Tried and Tested Solutions",
-				h3: "Case studies",
-			}
+			h2: "Tried and Tested Solutions",
+			h3: "Case studies",
+		}
 		: { h1: "Expert Articles", h3: "Advice & Article" };
 
 	if (!Array.isArray(posts.data)) {
