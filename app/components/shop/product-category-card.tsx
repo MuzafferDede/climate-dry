@@ -1,10 +1,14 @@
-import { NavLink, href } from "react-router";
+import { NavLink, href, useLocation } from "react-router";
 import { Image } from "~/components";
 import type { ProductCategory } from "~/types";
 
 export const ProductCategoryCard = ({
 	category,
 }: { category: ProductCategory }) => {
+	const location = useLocation();
+	const isHome = location.pathname === "/";
+	// change heading depending on if coming from home page
+	const HeadingTag = isHome ? "h4" : "h2";
 	return (
 		<NavLink
 			to={href("/c/:slug", { slug: category.slug })}
@@ -13,7 +17,7 @@ export const ProductCategoryCard = ({
 		>
 			<div className="group relative flex h-full flex-col justify-between bg-gray-lightest text-xs shadow-navy-darkest transition-all hover:scale-105 hover:shadow-2xl md:flex-row lg:flex-col">
 				<div className="flex h-full w-full flex-col space-y-2 px-4 py-5">
-					<h2 className="font-bold text-2xl">{category.name}</h2>
+					<HeadingTag className="font-bold text-2xl">{category.name}</HeadingTag>
 					<div className="flex min-h-20 flex-1 flex-col justify-between">
 						<div
 							className="mb-4 line-clamp-4"

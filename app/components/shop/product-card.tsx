@@ -1,7 +1,7 @@
-import {} from "@headlessui/react";
+import { } from "@headlessui/react";
 import { ArrowRightIcon, ShoppingCartIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { Form, NavLink, href, useNavigation } from "react-router";
+import { Form, NavLink, href, useNavigation, useLocation } from "react-router";
 import { Button, Image, Price, VariantSelector } from "~/components";
 import type { Product } from "~/types";
 import { structured } from "~/utils";
@@ -36,6 +36,11 @@ export const ProductCard = (product: Product) => {
 	const loading =
 		id !== null && id !== undefined && Number(id) === default_variant.id;
 
+	const location = useLocation();
+	const isHome = location.pathname === "/";
+	// change heading depending on if coming from home page
+	const HeadingTag = isHome ? "h4" : "h2";
+
 	return (
 		<div className="[&>div]:h-full">
 			<div className="@container boder relative isolate h-full rounded-lg bg-white p-4 shadow-gray-light shadow-md transition-all hover:scale-102 hover:shadow-gray hover:shadow-lg">
@@ -67,7 +72,7 @@ export const ProductCard = (product: Product) => {
 								<p className="font-bold text-teal uppercase">
 									{brand?.name ?? "No Brand"}
 								</p>
-								<h2 className="min-h-10 capitalize">{name}</h2>
+								<HeadingTag className="min-h-10 capitalize">{name}</HeadingTag>
 							</div>
 							<div
 								className="prose-sm @max-xl:hidden prose-li:list-disc prose-li:text-xs"
