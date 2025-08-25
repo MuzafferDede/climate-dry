@@ -1,9 +1,5 @@
 User-agent: *
-Disallow: /
 Disallow: *?view=*
 Disallow: /search=*
 
-User-agent: AhrefsSiteAudit
-Allow: /
-User-agent: AhrefsBot
-Allow: /
+Sitemap: https://www.climatedry.co.uk/sitemap.xml

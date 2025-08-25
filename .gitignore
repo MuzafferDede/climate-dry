@@ -6,3 +6,5 @@
 /build/
 .env
 .cursor/
+localhost-key.pem
+localhost.pem

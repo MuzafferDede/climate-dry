@@ -20,6 +20,591 @@
   ],
   "redirects": [
     {
+      "source": "/category/drying-rooms",
+      "destination": "/solution/drying-rooms",
+      "permanent": true
+    },
+    {
+      "source": "/category/agriculture",
+      "destination": "/solution/agriculture",
+      "permanent": true
+    },
+    {
+      "source": "/category/data-centres",
+      "destination": "/solution/data-centres",
+      "permanent": true
+    },
+    {
+      "source": "/category/pharmaceutical",
+      "destination": "/solution/pharmaceutical",
+      "permanent": true
+    },
+    {
+      "source": "/category/classic-car-storage",
+      "destination": "/solution/classic-car-storage",
+      "permanent": true
+    },
+    {
+      "source": "/category/construction-drying",
+      "destination": "/solution/construction-drying",
+      "permanent": true
+    },
+    {
+      "source": "/category/food-and-drink-production",
+      "destination": "/solution/food-and-drink-production",
+      "permanent": true
+    },
+    {
+      "source": "/category/water-damage-restoration",
+      "destination": "/solution/water-damage-restoration",
+      "permanent": true
+    },
+    {
+      "source": "/category/damp-and-mould",
+      "destination": "/solution/damp-and-mould",
+      "permanent": true
+    },
+    {
+      "source": "/category/factories",
+      "destination": "/solution/factories",
+      "permanent": true
+    },
+    {
+      "source": "/category/it-and-electronics",
+      "destination": "/solution/it-and-electronics",
+      "permanent": true
+    },
+    {
+      "source": "/category/lofts-and-attics",
+      "destination": "/solution/lofts-and-attics",
+      "permanent": true
+    },
+    {
+      "source": "/category/manufacturing",
+      "destination": "/solution/manufacturing",
+      "permanent": true
+    },
+    {
+      "source": "/category/warehouses",
+      "destination": "/solution/warehouses",
+      "permanent": true
+    },
+    {
+      "source": "/category/workshops",
+      "destination": "/solution/workshops",
+      "permanent": true
+    },
+    {
+      "source": "/category/storage-and-preservation",
+      "destination": "/solution/storage-and-preservation",
+      "permanent": true
+    },
+    {
+      "source": "/category/spa-dehumidifiers",
+      "destination": "/category/dehumidifiers-by-application",
+      "permanent": true
+    },
+    {
+      "source": "/category/swimming-pool-dehumidifiers",
+      "destination": "/category/dehumidifiers-by-application",
+      "permanent": true
+    },
+    {
+      "source": "/category/dantherm",
+      "destination": "/brand/dantherm",
+      "permanent": true
+    },
+    {
+      "source": "/category/dri-eaz",
+      "destination": "/brand/dri-eaz",
+      "permanent": true
+    },
+    {
+      "source": "/category/ebac-industrial-products",
+      "destination": "/brand/ebac-industrial-products",
+      "permanent": true
+    },
+    {
+      "source": "/category/ecor-pro",
+      "destination": "/brand/ecor-pro",
+      "permanent": true
+    },
+    {
+      "source": "/category/elite",
+      "destination": "/brand/elite",
+      "permanent": true
+    },
+    {
+      "source": "/category/master-climate-solutions",
+      "destination": "/brand/master-climate-solutions",
+      "permanent": true
+    },
+    {
+      "source": "/category/thermobile-industries",
+      "destination": "/brand/thermobile-industries",
+      "permanent": true
+    },
+    {
+      "source": "/category/woods-dehumidifiers",
+      "destination": "/brand/woods-dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/category/breweries",
+      "destination": "/solution/breweries",
+      "permanent": true
+    },
+    {
+      "source": "/category/garages",
+      "destination": "/solution/garages",
+      "permanent": true
+    },
+    {
+      "source": "/category/condensation",
+      "destination": "/solution/condensation",
+      "permanent": true
+    },
+    {
+      "source": "/category/basements",
+      "destination": "/solution/basements",
+      "permanent": true
+    },
+    {
+      "source": "/category/cellars",
+      "destination": "/solution/cellars",
+      "permanent": true
+    },
+    {
+      "source": "/category/aerial-climate-solutions",
+      "destination": "/brand/aerial-climate-solutions",
+      "permanent": true
+    },
+    {
+      "source": "/category/arcotherm",
+      "destination": "/brand/arcotherm",
+      "permanent": true
+    },
+    {
+      "source": "/category/broughton-eap",
+      "destination": "/brand/broughton-eap",
+      "permanent": true
+    },
+    {
+      "source": "/category/calorex-uk",
+      "destination": "/brand/calorex-uk",
+      "permanent": true
+    },
+    {
+      "source": "/p/small-arcotherm-indirect-space-heater-package",
+      "destination": "/p/medium-arcotherm-indirect-space-heater-package",
+      "permanent": true
+    },
+    {
+      "source": "/p/small-master-space-heater-package",
+      "destination": "/p/medium-master-space-heater-package",
+      "permanent": true
+    },
+    {
+      "source": "/p/sip-fireball-170xd-plus-diesel-space-heater-230v",
+      "destination": "/c/direct-space-heaters",
+      "permanent": true
+    },
+    {
+      "source": "/c/ventilation-1",
+      "destination": "/c/ventilation",
+      "permanent": true
+    },
+    {
+      "source": "/c/destratification-fans-1",
+      "destination": "/c/destratification-fans",
+      "permanent": true
+    },
+    {
+      "source": "/c/cooling-fans-1",
+      "destination": "/c/cooling-fans",
+      "permanent": true
+    },
+    {
+      "source": "/c/carpet-dryers-1",
+      "destination": "/c/carpet-dryers",
+      "permanent": true
+    },
+    {
+      "source": "/c/water-pumps-1",
+      "destination": "/c/water-pumps",
+      "permanent": true
+    },
+    {
+      "source": "/c/heating",
+      "destination": "/c/heaters",
+      "permanent": true
+    },
+    {
+      "source": "/c/infrared-heater",
+      "destination": "/c/infrared-heaters",
+      "permanent": true
+    },
+    {
+      "source": "/c/cooling-1",
+      "destination": "/c/cooling",
+      "permanent": true
+    },
+    {
+      "source": "/c/sale",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/mensa-heating-statio-infrared-table-heater-square",
+      "destination": "/c/heaters",
+      "permanent": true
+    },
+    {
+      "source": "/p/mensa-imus-infrared-patio-heater",
+      "destination": "/c/heaters",
+      "permanent": true
+    },
+    {
+      "source": "/p/stadler-form-theo-dehumidifier",
+      "destination": "/c/home-dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/stadler-form-lukas-dehumidifier",
+      "destination": "/c/home-dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/stadler-form-albert-dehumidifier",
+      "destination": "/c/home-dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/stiebel-dhc-e-set-compact-instantaneous-water-heater",
+      "destination": "/c/heaters",
+      "permanent": true
+    },
+    {
+      "source": "/p/electriq-storm80e-evaporative-cooler",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/air-conditioning-centre-kfr37ciwx1cm-air-conditioner",
+      "destination": "/p/brolin-br18p-portable-air-conditioner",
+      "permanent": true
+    },
+    {
+      "source": "/p/dri-eaz-td3000-dryer",
+      "destination": "/p/ecor-pro-dh800-dryfan-desiccant-dehumidifier",
+      "permanent": true
+    },
+    {
+      "source": "/c/diesel-infrared-space-heaters",
+      "destination": "/c/infrared-heaters",
+      "permanent": true
+    },
+    {
+      "source": "/c/brands",
+      "destination": "/brands",
+      "permanent": true
+    },
+    {
+      "source": "/p/thermobile-bx9-electric-heater",
+      "destination": "/p/thermobile-ba9-electric-heater",
+      "permanent": true
+    },
+    {
+      "source": "/p/thermobile-ba3-electric-heater",
+      "destination": "/p/thermobile-er-electric-heater",
+      "permanent": true
+    },
+    {
+      "source": "/p/elite-heat-portable-infrared-heater",
+      "destination": "/p/elite-heat-mk3-portable-infrared-heater",
+      "permanent": true
+    },
+    {
+      "source": "/p/master-b3-electric-heater",
+      "destination": "/p/elite-ehfh-industrial-heater",
+      "permanent": true
+    },
+    {
+      "source": "/c/dehumidifiers-by-application",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/review",
+      "destination": "/p",
+      "permanent": true
+    },
+    {
+      "source": "/p/ecor-pro-dh800-dryfan-multi-buy-bundle",
+      "destination": "/p/ecor-pro-dh800-dryfan-desiccant-dehumidifier",
+      "permanent": true
+    },
+    {
+      "source": "/p/ecor-pro-dh1200-dryfan-multi-buy-bundle",
+      "destination": "/p/ecor-pro-dh1200-desiccant-dehumidifier",
+      "permanent": true
+    },
+    {
+      "source": "/p/master-dh26-multi-buy-package",
+      "destination": "/p/master-dh26-dehumidifier",
+      "permanent": true
+    },
+    {
+      "source": "/p/master-dh44-multi-buy-package",
+      "destination": "/p/master-dh44-dehumidifier",
+      "permanent": true
+    },
+    {
+      "source": "/p/master-dhp65-multi-buy-package",
+      "destination": "/p/master-dhp65-industrial-dehumidifier",
+      "permanent": true
+    },
+    {
+      "source": "/p/dri-eaz-drizair-1200-multi-buy-package",
+      "destination": "/p/dri-eaz-drizair-1200-dehumidifier",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-vf17k-industrial-ventilation-fan",
+      "destination": "/c/ventilation",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-vf25k-industrial-ventilation-fan",
+      "destination": "/c/ventilation",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-vf9k-industrial-ventilation-fan",
+      "destination": "/c/ventilation",
+      "permanent": true
+    },
+    {
+      "source": "/p/arcotherm-jumbo-150-indirect-oil-fired-heater",
+      "destination": "/c/indirect-fired-diesel-heaters",
+      "permanent": true
+    },
+    {
+      "source": "/p/arcotherm-jumbo-200-indirect-oil-fired-heater",
+      "destination": "/c/indirect-fired-diesel-heaters",
+      "permanent": true
+    },
+    {
+      "source": "/p/ecor-pro-dsr12-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/ecor-pro-dsr20-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-ad20-drying-package",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-ad40-drying-package",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-ase200-desiccant-dehumidifier-large-bundle",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-ase200-desiccant-dehumidifier-small-bundle",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-ase300-desiccant-dehumidifier-large-bundle",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-ase300-desiccant-dehumidifier-small-bundle",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-cr40-drying-package",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-cr40-multi-buy-package",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-cr70-multi-buy-package",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/dantherm-cdt30-dehumidifier-package-deal",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/dantherm-cdt30s-dehumidifier-package-deal",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/dantherm-cdt40-dehumidifier-package-deal",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/dantherm-cdt60-dehumidifier-package-deal",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-cr40-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-ad740-drying-package",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-vf600-extractor-fans",
+      "destination": "/c/ventilation",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-vf600-extractor-fan-ducting",
+      "destination": "/c/ventilation",
+      "permanent": true
+    },
+    {
+      "source": "/c/heritage-sites",
+      "destination": "/solution/heritage-sites",
+      "permanent": true
+    },
+    {
+      "source": "/national-coverage",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/c/water-pumps-1",
+      "destination": "/c/water-pumps",
+      "permanent": true
+    },
+    {
+      "source": "/c/drying-equipment",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/p/150mm-elbow",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/p/broughton-cr70-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/aerial-amh100-hepa-air-scrubber",
+      "destination": "/c/air-scrubbers",
+      "permanent": true
+    },
+    {
+      "source": "/c/shipping-containers",
+      "destination": "/solution/shipping-containers",
+      "permanent": true
+    },
+    {
+      "source": "/c/museums-and-galleries",
+      "destination": "/solution/museums-and-galleries",
+      "permanent": true
+    },
+    {
+      "source": "/payment-and-delivery",
+      "destination": "/pages/payment",
+      "permanent": true
+    },
+    {
+      "source": "/solution/solution/condensation",
+      "destination": "/solution/condensation",
+      "permanent": true
+    },
+    {
+      "source": "/category/pumps",
+      "destination": "/category/water-pumps",
+      "permanent": true
+    },
+    {
+      "source": "/p/ebac-pd200-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/ebac-bd75p-industrial-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/ebac-bd75-industrial-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/ebac-rm4500-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/ebac-cs90h-commercial-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/ebac-k100p-commercial-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/p/ebac-k100e-smart-dehumidifier",
+      "destination": "/c/dehumidifiers",
+      "permanent": true
+    },
+    {
+      "source": "/1000",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/category",
+      "destination": "/c",
+      "permanent": true
+    },
+    {
+      "source": "/product",
+      "destination": "/p",
+      "permanent": true
+    },
+    {
+      "source": "/rapid-delivery",
+      "destination": "/pages/rapid-delivery",
+      "permanent": true
+    },
+    {
       "source": "/returns",
       "destination": "/pages/returns",
       "permanent": true
@@ -27,6 +612,56 @@
     {
       "source": "/payment",
       "destination": "/pages/payment",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/pages/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/terms",
+      "destination": "/pages/terms",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/pages/about-us",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/pages/contact-us",
+      "permanent": true
+    },
+    {
+      "source": "/warranty",
+      "destination": "/pages/warranty",
+      "permanent": true
+    },
+    {
+      "source": "/servicing",
+      "destination": "/pages/servicing",
+      "permanent": true
+    },
+    {
+      "source": "/price-match",
+      "destination": "/pages/price-match",
+      "permanent": true
+    },
+    {
+      "source": "/paypal-pay-in-3",
+      "destination": "/pages/paypal-pay-in-3",
+      "permanent": true
+    },
+    {
+      "source": "/trade-account",
+      "destination": "/pages/trade-account",
+      "permanent": true
+    },
+    {
+      "source": "/become-a-supplier",
+      "destination": "/pages/become-a-supplier",
       "permanent": true
     }
   ]

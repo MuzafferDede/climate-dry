@@ -14,7 +14,7 @@ export const Banners = ({ banners }: { banners: HeroBanner[] }) => {
 			ref={containerRef}
 			className="scrollbar-hidden flex snap-x snap-mandatory overflow-x-auto scroll-smooth bg-gray-lightest lg:max-h-[32rem]"
 		>
-			{banners.map((banner) => (
+			{banners.map((banner, index) => (
 				<div
 					key={banner.title}
 					className="group grid h-lg w-full flex-shrink-0 snap-center snap-always grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1" // fixed height on mobile
@@ -25,9 +25,15 @@ export const Banners = ({ banners }: { banners: HeroBanner[] }) => {
 								type="fadeInRight"
 								className="flex flex-col gap-2"
 							>
-								<h1 className="font-bold text-3xl lg:text-5xl">
-									{banner.title}
-								</h1>
+								{index === 0 ? (
+									<h1 className="font-bold text-3xl lg:text-5xl">
+										{banner.title}
+									</h1>
+								) : (
+									<p className="font-bold text-3xl lg:text-5xl">
+										{banner.title}
+									</p>
+								)}
 								<p className="text-base lg:text-lg">{banner.description}</p>
 							</AnimateOnScroll>
 							<Button
