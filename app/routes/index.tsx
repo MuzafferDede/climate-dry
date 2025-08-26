@@ -28,7 +28,7 @@ import type { Route } from "./+types/index";
 
 export function meta() {
 	return [
-		{ title: "Drying Equipment Specialists | Climate Dr" },
+		{ title: "Drying Equipment Specialists | Climate Dry" },
 		{
 			name: "description",
 			content:
