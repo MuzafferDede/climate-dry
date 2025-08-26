@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: *?view=*
+Disallow: *&view=*
 Disallow: /search=*
 
 Sitemap: https://www.climatedry.co.uk/sitemap.xml

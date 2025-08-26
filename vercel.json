@@ -340,6 +340,16 @@
       "permanent": true
     },
     {
+      "source": "/p/powrmatic-vision-36dw-h2o-air-conditioner",
+      "destination": "/c/wall-mounted-air-conditioners",
+      "permanent": true
+    },
+    {
+      "source": "/p/dantherm-cdf-50-wall-mounted-dehumidifier",
+      "destination": "/c/wall-mounted-dehumidifiers",
+      "permanent": true
+    },
+    {
       "source": "/p/ecor-pro-dh800-dryfan-multi-buy-bundle",
       "destination": "/p/ecor-pro-dh800-dryfan-desiccant-dehumidifier",
       "permanent": true
