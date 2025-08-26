@@ -335,8 +335,8 @@
       "permanent": true
     },
     {
-      "source": "/review",
-      "destination": "/p",
+      "source": "/review/:path*",
+      "destination": "/p/:path*",
       "permanent": true
     },
     {
@@ -585,13 +585,13 @@
       "permanent": true
     },
     {
-      "source": "/1000",
-      "destination": "/",
+      "source": "/:path*/1000",
+      "destination": "/:path*",
       "permanent": true
     },
     {
-      "source": "/category",
-      "destination": "/c",
+      "source": "/category/:path*",
+      "destination": "/c/:path*",
       "permanent": true
     },
     {
