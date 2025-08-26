@@ -595,8 +595,8 @@
       "permanent": true
     },
     {
-      "source": "/product",
-      "destination": "/p",
+      "source": "/product/:path*",
+      "destination": "/p/:path*",
       "permanent": true
     },
     {
