@@ -12,13 +12,13 @@ export const Bottom = () => {
 			<div className="mx-auto max-w-7xl bg-white">
 				<div
 					ref={containerRef}
-					className="scrollbar-hidden flex snap-x snap-mandatory items-center gap-0.5 overflow-x-auto scroll-smooth"
+					className="scrollbar-hidden flex snap-x snap-mandatory items-stretch gap-0.5 overflow-x-auto scroll-smooth"
 				>
 					{headerTools.map((tool) => (
 						<Link
 							key={tool.label}
 							to={tool.path}
-							className="flex w-full shrink-0 snap-center flex-col items-center justify-center gap-2 bg-gray-lightest p-6 transition-all hover:scale-98 hover:bg-blue-lighter hover:shadow-2xl md:shrink"
+							className="flex w-full shrink-0 snap-center flex-col items-center justify-center gap-2 bg-gray-lightest p-6 text-center transition-all hover:scale-98 hover:bg-blue-lighter hover:shadow-2xl md:shrink"
 						>
 							<img
 								className="size-6"

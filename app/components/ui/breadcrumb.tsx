@@ -1,12 +1,15 @@
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/16/solid";
 import { useMemo } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useRouteLoaderData } from "react-router";
 import { useBreadcrumbs } from "~/hooks";
+import type { loader } from "~/root";
 import { cn } from "~/utils";
 
 export const Breadcrumb = ({ className }: { className?: string }) => {
 	const items = useBreadcrumbs();
-	const location = useLocation();
+	const root = useRouteLoaderData<typeof loader>("root");
+
+	const url = root?.url;
 
 	if (items.length === 0) {
 		return null;
@@ -20,12 +23,10 @@ export const Breadcrumb = ({ className }: { className?: string }) => {
 				"@type": "ListItem",
 				position: index + 1,
 				name: item.label,
-				...(index !== items.length - 1 && {
-					item: `${location.pathname || ""}${item.path}`,
-				}),
+				item: `${url?.origin}${item.path}`.replace(/\/$/, ""),
 			})),
 		};
-	}, [location, items]);
+	}, [items, url]);
 
 	return (
 		<>

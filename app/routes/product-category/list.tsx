@@ -1,11 +1,14 @@
-import { AdjustmentsHorizontalIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import {
+	AdjustmentsHorizontalIcon,
+	XMarkIcon,
+} from "@heroicons/react/16/solid";
+import { useState } from "react";
 import {
 	type LinkDescriptor,
 	data,
 	useLocation,
 	useSearchParams,
 } from "react-router";
-import { useState } from "react";
 import {
 	addToCart,
 	buildHeaders,
@@ -17,7 +20,6 @@ import {
 	Alert,
 	Breadcrumb,
 	Button,
-	CategoryBanner,
 	FilterComponents,
 	ProductCategoryCard,
 	ProductList,
@@ -206,13 +208,14 @@ export default function ProductCategoryPage({
 				{isFilterOpen && (
 					<div className="fixed inset-0 z-50 lg:hidden">
 						{/* Backdrop */}
-						<div
-							className="absolute inset-0 bg-black/50 animate-fade-in"
+						<button
+							type="button"
+							className="absolute inset-0 animate-fade-in bg-black/50"
 							onClick={() => setIsFilterOpen(false)}
 						/>
 
 						{/* Bottom Slide Panel */}
-						<div className="absolute bottom-0 left-0 right-0 max-h-[80vh] bg-white rounded-t-xl animate-slide-in-bottom">
+						<div className="absolute right-0 bottom-0 left-0 max-h-[80vh] animate-slide-in-bottom rounded-t-xl bg-white">
 							<div className="flex h-full max-h-[65vh] flex-col">
 								{/* Handle Bar */}
 								<div className="flex justify-center py-3">
@@ -220,7 +223,7 @@ export default function ProductCategoryPage({
 								</div>
 
 								{/* Header */}
-								<div className="flex items-center justify-between border-b border-gray-light px-4 pb-4">
+								<div className="flex items-center justify-between border-gray-light border-b px-4 pb-4">
 									<span className="font-medium text-lg text-navy-darkest">
 										Filters
 									</span>
@@ -288,8 +291,8 @@ export default function ProductCategoryPage({
 
 				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 py-8 lg:grid-cols-4">
 					{/* Desktop Sidebar */}
-					<aside className="hidden lg:block lg:col-span-1">
-						<div className="sticky top-40 space-y-6 text-base">
+					<aside className="hidden lg:col-span-1 lg:block">
+						<div className="tce-y-6 lg:blockase sticky text-b">
 							<div className="flex justify-between gap-2">
 								<span className="font-medium text-lg text-navy-darkest">
 									Filters
