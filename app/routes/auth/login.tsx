@@ -14,6 +14,17 @@ import { ToastType } from "~/types";
 import { putToast } from "~/utils";
 import type { Route } from "./+types/login";
 
+import type { MetaFunction } from "react-router";
+
+export const meta: MetaFunction = () => [
+	{ title: "Login to your Climate Dry Account" },
+	{
+		name: "description",
+		content:
+			"Login page to allow you to access all the information you have in your Climate Dry account.",
+	},
+];
+
 export async function action({ request }: ActionFunctionArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 	const formData = await request.formData();

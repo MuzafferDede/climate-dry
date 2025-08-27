@@ -55,8 +55,8 @@ export default function BlogPostListPage({
 	const { category } = params;
 	const titles = category
 		? {
-			h2: "Tried and Tested Solutions",
-			h3: "Case studies",
+			h1: "Case studies",
+			h3: "Tried and Tested Solutions",
 		}
 		: { h1: "Expert Articles", h3: "Advice & Article" };
 
@@ -73,8 +73,17 @@ export default function BlogPostListPage({
 				<BlogIntroText />
 				<PageNavigation />
 				<div className="flex flex-col items-center justify-center gap-1 text-center">
-					<h1 className="font-bold text-teal uppercase">{titles?.h1}</h1>
-					<p className="text-5xl">{titles?.h3}</p>
+					{category ? (
+						<>
+							<p className="font-bold text-teal uppercase">{titles?.h3}</p>
+							<h1 className="text-5xl">{titles?.h1}</h1>
+						</>
+					) : (
+						<>
+							<h1 className="font-bold text-teal uppercase">{titles?.h1}</h1>
+							<p className="text-5xl">{titles?.h3}</p>
+						</>
+					)}
 				</div>
 				<div className="grid gap-6 py-4 lg:grid-cols-2">
 					{posts.data.map((post) => (

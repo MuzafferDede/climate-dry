@@ -235,6 +235,11 @@
       "permanent": true
     },
     {
+      "source": "/c/desiccant-dehumidifiers-1",
+      "destination": "/c/desiccant-dehumidifiers",
+      "permanent": true
+    },
+    {
       "source": "/c/heating",
       "destination": "/c/heaters",
       "permanent": true
