@@ -3,12 +3,7 @@ import {
 	XMarkIcon,
 } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import {
-	type LinkDescriptor,
-	data,
-	useLocation,
-	useSearchParams,
-} from "react-router";
+import { data, useLocation, useSearchParams } from "react-router";
 import {
 	addToCart,
 	buildHeaders,
@@ -38,21 +33,7 @@ export const handle = {
 		const allItems = [...ancestry, category];
 		return generateBreadcrumb(allItems, "/c");
 	},
-	dynamicLinks: ({ data, url }: Route.MetaArgs & { url: URL }) => {
-		const { current_page, last_page } = data?.products?.meta ?? {};
-		if (!current_page || !last_page) return [];
-
-		const makeHref = (page: number) =>
-			page === 1 ? url.origin : `${url.origin}?page=${page}`;
-
-		return [
-			current_page > 1 && { rel: "prev", href: makeHref(current_page - 1) },
-			current_page < last_page && {
-				rel: "next",
-				href: makeHref(current_page + 1),
-			},
-		].filter(Boolean) as LinkDescriptor[];
-	},
+	shouldAddLinks: true,
 };
 
 export const meta = ({ data }: Route.MetaArgs) => {

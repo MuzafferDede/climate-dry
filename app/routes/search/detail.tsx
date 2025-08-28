@@ -1,11 +1,5 @@
 import {} from "@heroicons/react/16/solid";
-import {
-	type LinkDescriptor,
-	data,
-	href,
-	useNavigation,
-	useSearchParams,
-} from "react-router";
+import { data, href, useNavigation, useSearchParams } from "react-router";
 import { addToCart, buildHeaders, getProducts, getSession } from "~/.server";
 import { Alert, Loading, ProductList } from "~/components";
 import { ToastType } from "~/types";
@@ -22,21 +16,7 @@ export const meta = () => {
 };
 
 export const handle = {
-	dynamicLinks: ({ data, url }: Route.MetaArgs & { url: URL }) => {
-		const { current_page, last_page } = data?.products?.meta ?? {};
-		if (!current_page || !last_page) return [];
-
-		const makeHref = (page: number) =>
-			page === 1 ? url.origin : `${url.origin}?page=${page}`;
-
-		return [
-			current_page > 1 && { rel: "prev", href: makeHref(current_page - 1) },
-			current_page < last_page && {
-				rel: "next",
-				href: makeHref(current_page + 1),
-			},
-		].filter(Boolean) as LinkDescriptor[];
-	},
+	shouldAddLinks: true,
 };
 
 export async function action({ request }: Route.ActionArgs) {

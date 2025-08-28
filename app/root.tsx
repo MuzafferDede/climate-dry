@@ -112,19 +112,51 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	);
 };
 
+type ProductsMeta = {
+	current_page: number;
+	last_page: number;
+};
+
+type ProductsData = {
+	products?: {
+		meta?: ProductsMeta;
+	};
+};
+
+const buildPageLink = (url: URL, pageNumber: number) => {
+	const baseUrl = `${url.origin}${url.pathname}`;
+	return pageNumber === 1 ? baseUrl : `${baseUrl}?page=${pageNumber}`;
+};
+
 export function Layout({ children }: { children: ReactNode }) {
 	const data = useLoaderData<typeof loader>();
 	const url = data?.url ?? "";
 
 	const links: LinkDescriptor[] = useMatches().flatMap((match) => {
-		//@ts-ignore
-		const fn = match.handle?.dynamicLinks;
-		if (typeof fn !== "function") return [];
-		return fn({ data: match.data, url });
+		const shouldAddLinks = (match.handle as { shouldAddLinks?: boolean })
+			?.shouldAddLinks;
+
+		if (!shouldAddLinks) return [];
+
+		const meta = (match.data as ProductsData)?.products?.meta;
+		if (!meta?.current_page || !meta?.last_page) return [];
+
+		const { current_page, last_page } = meta;
+
+		const prevPageLink: LinkDescriptor | false =
+			current_page > 1
+				? { rel: "prev", href: buildPageLink(url, current_page - 1) }
+				: false;
+
+		const nextPageLink: LinkDescriptor | false =
+			current_page < last_page
+				? { rel: "next", href: buildPageLink(url, current_page + 1) }
+				: false;
+
+		return [prevPageLink, nextPageLink].filter(Boolean) as LinkDescriptor[];
 	});
 
-	let canonicalUrl = url.toString();
-	canonicalUrl = canonicalUrl.replace(/\/$/, "");
+	const canonicalUrl = url.toString().replace(/\/$/, "");
 
 	return (
 		<html lang="en" className="scroll-smooth">
@@ -138,22 +170,25 @@ export function Layout({ children }: { children: ReactNode }) {
 					<link {...link} key={link.integrity || JSON.stringify(link)} />
 				))}
 
-
-				<script dangerouslySetInnerHTML={{
-					__html: `(function(w,d,s,l,i){w[l] = w[l] || [];w[l].push({'gtm.start':
-						new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-											j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-											'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-						})(window,document,'script','dataLayer','GTM-K8B77TQ');`,
-				}}
+				<script
+					async
+					src="https://www.googletagmanager.com/gtm.js?id=GTM-K8B77TQ"
 				/>
-
-
 			</head>
+
 			<body className="scroll-smooth text-navy-darkest text-sm antialiased has-[div[data-navigation-open=true]]:overflow-hidden">
-				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8B77TQ"
-					height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe></noscript>
+				<noscript>
+					<iframe
+						title="Google Tag Manager"
+						src="https://www.googletagmanager.com/ns.html?id=GTM-K8B77TQ"
+						height="0"
+						width="0"
+						style={{ display: "none", visibility: "hidden" }}
+					/>
+				</noscript>
+
 				{children}
+
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -192,7 +227,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
 					<ChevronUpIcon className="size-10" />
 				</Link>
 				{isLoading && (
-					<div className="fixed right-0 bottom-0 z-50 m-4 flex animate-bounce items-center justify-center gap-4 rounded-full bg-teal p-4 font-bold text-white shadow-md">
+					<div className="fixed top-0 right-0 z-50 m-4 flex animate-bounce items-center justify-center gap-4 rounded-full bg-teal p-4 font-bold text-white shadow-md">
 						<Loading className="text-white" /> <span>Loading...</span>
 					</div>
 				)}
