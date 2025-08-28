@@ -1,0 +1,1 @@
+Hello world, static file test.
