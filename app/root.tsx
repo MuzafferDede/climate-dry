@@ -170,22 +170,27 @@ export function Layout({ children }: { children: ReactNode }) {
 					<link {...link} key={link.integrity || JSON.stringify(link)} />
 				))}
 
-				<script
-					async
-					src="https://www.googletagmanager.com/gtm.js?id=GTM-K8B77TQ"
-				/>
 			</head>
 
 			<body className="scroll-smooth text-navy-darkest text-sm antialiased has-[div[data-navigation-open=true]]:overflow-hidden">
-				<noscript>
-					<iframe
-						title="Google Tag Manager"
-						src="https://www.googletagmanager.com/ns.html?id=GTM-K8B77TQ"
-						height="0"
-						width="0"
-						style={{ display: "none", visibility: "hidden" }}
-					/>
-				</noscript>
+
+				{/* GA4 script loader */}
+				<script
+					async
+					src="https://www.googletagmanager.com/gtag/js?id=G-GW1SNVJDFW"
+				/>
+
+				{/* GA4 config */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'G-GW1SNVJDFW');
+						`,
+					}}
+				/>
 
 				{children}
 
