@@ -1,12 +1,18 @@
 import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/16/solid";
 import { useFetcher } from "react-router";
+import { useEffect, useState } from "react";
 import type { action } from "~/routes/contact/handler";
 import { Button, Input } from "../ui";
 
 export const ContactUsForm = () => {
 	const fetcher = useFetcher<typeof action>();
+	const [formStartTime, setFormStartTime] = useState<number>(0);
 
 	const success = fetcher.data?.success;
+
+	useEffect(() => {
+		setFormStartTime(Date.now());
+	}, []);
 
 	return (
 		<div className="@container">
@@ -43,6 +49,15 @@ export const ContactUsForm = () => {
 						label="Phone"
 						placeholder="+44 20 7123 4567"
 					/>
+					{/* Simple spam protection */}
+					<input
+						type="text"
+						className="sr-only"
+						name="website"
+						tabIndex={-1}
+						autoComplete="off"
+					/>
+					<input type="hidden" name="_form_time" value={String(Date.now() - formStartTime)} />
 					<div className="@lg:col-span-2">
 						<Input
 							required

@@ -32,7 +32,7 @@ export const getBanners = async (session: TSession) => {
 };
 
 export const contact = async (session: TSession, formData: FormData) => {
-	const { first_name, last_name, email, phone, message } =
+	const { first_name, last_name, email, phone, message, website,_form_time } =
 		Object.fromEntries(formData);
 
 	const api = fetcher(session);
@@ -43,5 +43,7 @@ export const contact = async (session: TSession, formData: FormData) => {
 		email,
 		phone,
 		message,
+		website,
+		_form_time
 	});
 };
