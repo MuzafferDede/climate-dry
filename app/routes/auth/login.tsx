@@ -9,7 +9,6 @@ import {
 } from "react-router";
 import { buildHeaders, getSession, login } from "~/.server";
 import { Button, Input, Loading } from "~/components";
-import { guestMiddleware } from "~/middlewares";
 import { ToastType } from "~/types";
 import { putToast } from "~/utils";
 import type { Route } from "./+types/login";
@@ -56,8 +55,6 @@ export async function action({ request }: ActionFunctionArgs) {
 		},
 	);
 }
-
-export const unstable_middleware = [guestMiddleware];
 
 export default function LoginPage({ actionData }: Route.ComponentProps) {
 	const { errors } = actionData || {};

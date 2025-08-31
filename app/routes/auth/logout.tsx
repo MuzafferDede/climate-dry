@@ -1,6 +1,5 @@
 import { redirect } from "react-router";
 import { buildHeaders, destroySession, getSession, logout } from "~/.server";
-import { authMiddleware } from "~/middlewares";
 import { ToastType } from "~/types";
 import { putToast } from "~/utils";
 import type { Route } from "./+types/logout";
@@ -23,5 +22,3 @@ export async function loader({ request }: Route.LoaderArgs) {
 		},
 	});
 }
-
-export const unstable_middleware = [authMiddleware];

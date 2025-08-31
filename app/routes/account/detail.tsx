@@ -1,5 +1,4 @@
 import { getCustomer, getSession } from "~/.server";
-import { authMiddleware } from "~/middlewares";
 import type { Route } from "./+types/detail";
 
 export function meta() {
@@ -14,8 +13,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	const customer = await getCustomer(session);
 	return { customer };
 };
-
-export const unstable_middleware = [authMiddleware];
 
 export default function AccountPage({ loaderData }: Route.ComponentProps) {
 	const { customer } = loaderData;

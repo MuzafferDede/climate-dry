@@ -10,7 +10,6 @@ import {
 import { Button, Input, Loading } from "~/components";
 
 import { buildHeaders, getSession, register } from "~/.server";
-import { guestMiddleware } from "~/middlewares";
 import { ToastType } from "~/types";
 import { putToast } from "~/utils";
 import type { Route } from "./+types/register";
@@ -56,8 +55,6 @@ export async function action({ request }: ActionFunctionArgs) {
 		},
 	);
 }
-
-export const unstable_middleware = [guestMiddleware];
 
 export default function RegisterPage({ actionData }: Route.ComponentProps) {
 	const { errors, error } = actionData || {};
