@@ -44,12 +44,22 @@ export function meta() {
 export async function loader({ request }: Route.LoaderArgs) {
 	const session = await getSession(request.headers.get("Cookie"));
 
-	const { response: banners } = await getBanners(session);
-	const { response: brands } = await getBrands(session);
-	const { response: featuredBlogPosts } = await getFeaturedBlogPosts(session);
-	const { response: featuredCategories } = await getFeaturedCategories(session);
-	const { response: shopByCategories } = await getShopByCategories(session);
-	const { response: solutions } = await getSolutions(session);
+	// Parallelize all API calls for faster loading
+	const [
+		{ response: banners },
+		{ response: brands },
+		{ response: featuredBlogPosts },
+		{ response: featuredCategories },
+		{ response: shopByCategories },
+		{ response: solutions },
+	] = await Promise.all([
+		getBanners(session),
+		getBrands(session),
+		getFeaturedBlogPosts(session),
+		getFeaturedCategories(session),
+		getShopByCategories(session),
+		getSolutions(session),
+	]);
 
 	return {
 		banners,
@@ -112,7 +122,8 @@ const corporationSchema = {
 
 export function headers(_: Route.HeadersArgs) {
 	return {
-		"Cache-Control": "s-maxage=1, stale-while-revalidate=59",
+		"Cache-Control": "s-maxage=300, stale-while-revalidate=3600", // Cache for 5 minutes, serve stale for 1 hour
+		"Vary": "Accept-Encoding",
 	};
 }
 

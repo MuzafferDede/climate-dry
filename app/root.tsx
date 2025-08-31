@@ -52,6 +52,11 @@ export const links: Route.LinksFunction = () => [
 		rel: "stylesheet",
 		href: "https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap",
 	},
+	// Preconnect to your backend API
+	{ rel: "preconnect", href: process.env.BACKEND_URL || "" },
+	// Preconnect to external services
+	{ rel: "preconnect", href: "https://www.googletagmanager.com" },
+	{ rel: "preconnect", href: "https://cdn.livechatinc.com" },
 ];
 
 export const handle = {
@@ -65,8 +70,14 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	const customer = getCustomer(session);
 	const toast = popToast(session);
 
-	const { response: menu, error: menuError } = await getNavigation(session);
-	const { response: pages, error: pagesError } = await getPages(session);
+	// Parallelize menu and pages loading
+	const [
+		{ response: menu, error: menuError },
+		{ response: pages, error: pagesError }
+	] = await Promise.all([
+		getNavigation(session),
+		getPages(session)
+	]);
 
 	const error = menuError || pagesError;
 

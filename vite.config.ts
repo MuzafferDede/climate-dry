@@ -23,7 +23,25 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 				? {
 						input: "./server/app.ts",
 					}
-				: undefined,
+				: {
+						output: {
+							manualChunks: {
+								vendor: ['react', 'react-dom', 'react-router'],
+								ui: ['@headlessui/react', '@heroicons/react', '@radix-ui/react-slider', '@radix-ui/react-slot'],
+								stripe: ['@stripe/react-stripe-js', '@stripe/stripe-js'],
+							},
+						},
+					},
+		},
+		optimizeDeps: {
+			include: [
+				'react',
+				'react-dom',
+				'react-router',
+				'@headlessui/react',
+				'@heroicons/react/16/solid',
+				'@heroicons/react/24/outline',
+			],
 		},
 		plugins: [
 			tailwindcss(),

@@ -26,22 +26,55 @@ export const getNavigation = async (session: TSession) => {
 };
 
 export const getFeaturedCategories = async (session: TSession) => {
+	const cachedFeaturedCategories = cached.get<ApiListResponse<ProductCategory>>("featured-categories");
+	if (cachedFeaturedCategories) {
+		return { response: cachedFeaturedCategories, error: undefined };
+	}
+
 	const api = fetcher(session);
-	return await api.get<ApiListResponse<ProductCategory>>(
+	const { response, error } = await api.get<ApiListResponse<ProductCategory>>(
 		"/product-categories?include=products&filter[is_featured]=true&has_products=true&product_limit=4&per_page=6&sort=sort",
 	);
+
+	if (response) {
+		cached.set("featured-categories", response, 30 * 60 * 1000); // 30 minutes
+	}
+
+	return { response, error };
 };
 
 export const getShopByCategories = async (session: TSession) => {
+	const cachedShopByCategories = cached.get<ApiListResponse<ProductCategory>>("shop-by-categories");
+	if (cachedShopByCategories) {
+		return { response: cachedShopByCategories, error: undefined };
+	}
+
 	const api = fetcher(session);
-	return await api.get<ApiListResponse<ProductCategory>>(
+	const { response, error } = await api.get<ApiListResponse<ProductCategory>>(
 		"/product-categories?filter[slug]=dehumidifiers,industrial-fans,floor-dryers,bundles&per_page=4&sort=created_at",
 	);
+
+	if (response) {
+		cached.set("shop-by-categories", response, 30 * 60 * 1000); // 30 minutes
+	}
+
+	return { response, error };
 };
 
 export const getBanners = async (session: TSession) => {
+	const cachedBanners = cached.get<ApiListResponse<HeroBanner>>("hero-banners");
+	if (cachedBanners) {
+		return { response: cachedBanners, error: undefined };
+	}
+
 	const api = fetcher(session);
-	return await api.get<ApiListResponse<HeroBanner>>("/sites/hero-banners");
+	const { response, error } = await api.get<ApiListResponse<HeroBanner>>("/sites/hero-banners");
+
+	if (response) {
+		cached.set("hero-banners", response, 15 * 60 * 1000); // 15 minutes
+	}
+
+	return { response, error };
 };
 
 export const contact = async (session: TSession, formData: FormData) => {
