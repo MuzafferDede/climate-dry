@@ -23,6 +23,11 @@ import {
 import { ToastType } from "~/types";
 import { generateBreadcrumb, isNonEmptyArray, putToast } from "~/utils";
 import type { Route } from "./+types/list";
+export function headers(_: Route.HeadersArgs) {
+	return {
+		"Cache-Control": "s-maxage=1, stale-while-revalidate=59",
+	};
+}
 
 export const handle = {
 	breadcrumb: (data: {
