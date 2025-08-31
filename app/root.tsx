@@ -33,16 +33,11 @@ import {
 	ToastContainer,
 	WhyChooseUs,
 } from "~/components";
-import { AppProvider } from "~/contexts";
+import { AppProvider, CartProvider } from "~/contexts";
 import { useInViewport } from "~/hooks";
 import { buildHeaders, getCustomer, getSession } from "./.server";
 
-import {
-	getCart,
-	getNavigation,
-	getPages,
-	subsucribe,
-} from "./.server/services";
+import { getNavigation, getPages, subsucribe } from "./.server/services";
 import { ToastType } from "./types";
 import { popToast, putToast } from "./utils";
 
@@ -72,13 +67,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 	const { response: menu, error: menuError } = await getNavigation(session);
 	const { response: pages, error: pagesError } = await getPages(session);
-	const { response: cart, error: cartError } = await getCart(session);
 
-	if (cart?.guest_id) {
-		session.set("guestId", cart.guest_id);
-	}
-
-	const error = menuError || pagesError || cartError;
+	const error = menuError || pagesError;
 
 	if (error) {
 		putToast(session, {
@@ -87,7 +77,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		});
 	}
 	return data(
-		{ customer, menu, pages, toast, cart, url },
+		{ customer, menu, pages, toast, url },
 		{
 			headers: await buildHeaders(session),
 		},
@@ -169,11 +159,9 @@ export function Layout({ children }: { children: ReactNode }) {
 				{links.map((link) => (
 					<link {...link} key={link.integrity || JSON.stringify(link)} />
 				))}
-
 			</head>
 
 			<body className="scroll-smooth text-navy-darkest text-sm antialiased has-[div[data-navigation-open=true]]:overflow-hidden">
-
 				{/* GA4 script loader */}
 				<script
 					async
@@ -182,6 +170,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
 				{/* GA4 config */}
 				<script
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
 					dangerouslySetInnerHTML={{
 						__html: `
 						window.dataLayer = window.dataLayer || [];
@@ -211,34 +200,36 @@ export default function App({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<AppProvider>
-			<main className="relative isolate" id="main">
-				<div
-					ref={ref}
-					className="pointer-events-none absolute inset-x-0 top-0 px-0"
-				/>
-				<Header />
-				<div className="isolote relative z-20">
-					<Outlet />
-				</div>
-				{!home && <WhyChooseUs />}
-				<Footer />
-				<ToastContainer toast={toast} />
-				<Link
-					aria-label="go to top"
-					data-state={inView ? "hide" : "show"}
-					to="#main"
-					className="fade-in zoom-in zoom-out fixed right-4 bottom-12 z-40 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
-				>
-					<ChevronUpIcon className="size-10" />
-				</Link>
-				{isLoading && (
-					<div className="fixed top-0 right-0 z-50 m-4 flex animate-bounce items-center justify-center gap-4 rounded-full bg-teal p-4 font-bold text-white shadow-md">
-						<Loading className="text-white" /> <span>Loading...</span>
+			<CartProvider>
+				<main className="relative isolate" id="main">
+					<div
+						ref={ref}
+						className="pointer-events-none absolute inset-x-0 top-0 px-0"
+					/>
+					<Header />
+					<div className="isolote relative z-20">
+						<Outlet />
 					</div>
-				)}
-				<ContactUsWidget />
-				<LiveChatWidget license="1215771" />
-			</main>
+					{!home && <WhyChooseUs />}
+					<Footer />
+					<ToastContainer toast={toast} />
+					<Link
+						aria-label="go to top"
+						data-state={inView ? "hide" : "show"}
+						to="#main"
+						className="fade-in zoom-in zoom-out fixed right-4 bottom-12 z-40 flex items-center justify-center border border-white bg-green fill-mode-forwards text-white hover:bg-gray data-[state=hide]:animate-out data-[state=show]:animate-in"
+					>
+						<ChevronUpIcon className="size-10" />
+					</Link>
+					{isLoading && (
+						<div className="fixed top-0 right-0 z-50 m-4 flex animate-bounce items-center justify-center gap-4 rounded-full bg-teal p-4 font-bold text-white shadow-md">
+							<Loading className="text-white" /> <span>Loading...</span>
+						</div>
+					)}
+					<ContactUsWidget />
+					<LiveChatWidget license="1215771" />
+				</main>
+			</CartProvider>
 		</AppProvider>
 	);
 }

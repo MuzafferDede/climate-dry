@@ -1,6 +1,8 @@
 import { XCircleIcon } from "@heroicons/react/16/solid";
+import { useEffect } from "react";
 import { Link } from "react-router";
 import { Button } from "~/components";
+import { useCart } from "~/hooks";
 
 export const meta = () => [
 	{ title: "Payment Cancelled | Climate Dry" },
@@ -12,6 +14,12 @@ export const meta = () => [
 ];
 
 export default function CheckoutCancel() {
+	const { invalidateCart } = useCart();
+
+	useEffect(() => {
+		invalidateCart();
+	}, [invalidateCart]);
+
 	return (
 		<div className="mx-auto max-w-2xl px-4 py-12">
 			{/* Cancel header */}

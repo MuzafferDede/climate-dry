@@ -1,6 +1,5 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import {
-	ArrowTopRightOnSquareIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
 	MinusIcon,
@@ -280,10 +279,11 @@ export default function ProductPage({
 											type="button"
 											aria-label={`Show ${item.type} ${idx + 1}`}
 											onClick={() => setActiveIndex(idx)}
-											className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 ${activeIndex === idx
-												? "border-teal ring-2 ring-teal/20"
-												: "border-gray-lighter hover:border-gray-light"
-												}`}
+											className={`relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:scale-105 ${
+												activeIndex === idx
+													? "border-teal ring-2 ring-teal/20"
+													: "border-gray-lighter hover:border-gray-light"
+											}`}
 										>
 											{item.type === "video" ? (
 												<>
@@ -332,7 +332,7 @@ export default function ProductPage({
 								<h1 className="font-bold text-2xl capitalize leading-tight sm:text-3xl">
 									{product.name}
 									<br />
-									<span className="text-sm capitalize font-normal ">
+									<span className="font-normal text-sm capitalize ">
 										{product.main_feature_title}
 									</span>
 								</h1>
@@ -373,7 +373,7 @@ export default function ProductPage({
 						{/* Right column: Price, Discount, Payment/Shipping, Stock, Actions */}
 						<div className="flex shrink-0 flex-col items-end gap-2 md:w-72">
 							<div className="flex flex-col items-end gap-1">
-								<span className="text-gray text-xs">
+								<span className="text-gray-dark text-xs">
 									Price for:{" "}
 									<span className="font-semibold text-teal">
 										{product.default_variant.sku}
@@ -381,7 +381,7 @@ export default function ProductPage({
 								</span>
 								<Price variant={product.default_variant} />
 								<div className="flex items-center gap-1">
-									<span className="text-gray text-xs">(inc VAT)</span>
+									<span className="text-gray-dark text-xs">(inc VAT)</span>
 									<span className="font-semibold text-teal">
 										{currency(
 											product.tax_amount + product.default_variant.price,
@@ -773,10 +773,11 @@ export default function ProductPage({
 														{[1, 2, 3, 4, 5].map((star) => (
 															<StarIcon
 																key={star}
-																className={`h-6 w-6 cursor-pointer ${star <= reviewRating
-																	? "text-yellow-400"
-																	: "text-gray-300"
-																	}`}
+																className={`h-6 w-6 cursor-pointer ${
+																	star <= reviewRating
+																		? "text-yellow-400"
+																		: "text-gray-300"
+																}`}
 																onClick={() => setReviewRating(star)}
 															/>
 														))}

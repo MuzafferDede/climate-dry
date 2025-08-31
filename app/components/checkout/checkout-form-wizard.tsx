@@ -9,10 +9,11 @@ import {
 	useElements,
 	useStripe,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { type Stripe, loadStripe } from "@stripe/stripe-js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Form, useRouteLoaderData } from "react-router";
 
+import { useCart } from "~/hooks";
 import type { loader } from "~/root";
 import { cn } from "~/utils";
 import { CartSummary } from "../cart/cart-summary";
@@ -28,7 +29,15 @@ interface CheckoutFormWizardProps {
 	secret: string;
 }
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+// Lazy load Stripe only when needed
+let stripePromise: Promise<Stripe | null> | null = null;
+
+const getStripe = () => {
+	if (!stripePromise) {
+		stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+	}
+	return stripePromise;
+};
 
 const CheckoutPaymentForm = ({ pay }: { pay: boolean }) => {
 	const stripe = useStripe();
@@ -61,11 +70,11 @@ export const CheckoutFormWizard = ({
 	onClose,
 	secret,
 }: CheckoutFormWizardProps) => {
+	const { cart } = useCart();
 	// Country options - only UK for now
 	const countryOptions = [{ label: "United Kingdom", value: "United Kingdom" }];
 
 	const rootData = useRouteLoaderData<typeof loader>("root");
-	const cart = rootData?.cart;
 	const customer = rootData?.customer;
 
 	const {
@@ -167,12 +176,12 @@ export const CheckoutFormWizard = ({
 				3: billingSameAsShipping
 					? []
 					: [
-						"billing_address_line_1",
-						"billing_city",
-						"billing_country",
-						"billing_postal_code",
-						"billing_phone",
-					],
+							"billing_address_line_1",
+							"billing_city",
+							"billing_country",
+							"billing_postal_code",
+							"billing_phone",
+						],
 			};
 
 			const fieldsToValidate = stepFields[stepNumber] || [];
@@ -799,10 +808,7 @@ export const CheckoutFormWizard = ({
 
 					{secret && (
 						<div className="rounded-lg border border-gray-light bg-white p-4">
-							<Elements
-								options={{ clientSecret: secret }}
-								stripe={stripePromise}
-							>
+							<Elements options={{ clientSecret: secret }} stripe={getStripe()}>
 								<CheckoutPaymentForm pay={pay} />
 							</Elements>
 						</div>

@@ -59,8 +59,6 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 	const url = new URL(request.url);
 	const { slug } = params;
 
-	url.searchParams.set("category", slug);
-
 	const { response: category, error } = await getProductCategory(session, slug);
 	const { response: products } = await getProducts(session, url);
 

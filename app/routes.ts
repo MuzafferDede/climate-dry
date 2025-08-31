@@ -45,8 +45,10 @@ export default [
 	route("solution/:slug?", "routes/solution/detail.tsx"),
 
 	route("sitemap", "routes/sitemap/detail.tsx"),
+	route("search", "routes/search/detail.tsx"),
 
 	// Handlers
-	route("contact", "routes/contact/handler.tsx"),
-	route("search", "routes/search/detail.tsx"),
+	route("resources/contact", "routes/contact/resource.ts"),
+	route("resources/cart", "routes/cart/resource.ts"),
+	route("site/clear-cache", "routes/site/cache.ts"),
 ] satisfies RouteConfig;

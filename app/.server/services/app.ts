@@ -4,12 +4,25 @@ import type {
 	Navigation,
 	ProductCategory,
 } from "~/types";
-import { type TSession, fetcher } from "../libs";
+import { type TSession, cached, fetcher } from "../libs";
 
 export const getNavigation = async (session: TSession) => {
+	const cachedNavigation =
+		cached.get<ApiListResponse<Navigation>>("navigation");
+	if (cachedNavigation) {
+		return { response: cachedNavigation, error: undefined };
+	}
+
 	const api = fetcher(session);
 
-	return await api.get<ApiListResponse<Navigation>>("/sites/navigation");
+	const { response, error } =
+		await api.get<ApiListResponse<Navigation>>("/sites/navigation");
+
+	if (response) {
+		cached.set("navigation", response);
+	}
+
+	return { response, error };
 };
 
 export const getFeaturedCategories = async (session: TSession) => {
@@ -32,7 +45,7 @@ export const getBanners = async (session: TSession) => {
 };
 
 export const contact = async (session: TSession, formData: FormData) => {
-	const { first_name, last_name, email, phone, message, website,_form_time } =
+	const { first_name, last_name, email, phone, message, website, _form_time } =
 		Object.fromEntries(formData);
 
 	const api = fetcher(session);
@@ -44,6 +57,6 @@ export const contact = async (session: TSession, formData: FormData) => {
 		phone,
 		message,
 		website,
-		_form_time
+		_form_time,
 	});
 };

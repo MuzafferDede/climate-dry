@@ -1,7 +1,7 @@
 import { ArrowRightIcon, CheckCircleIcon } from "@heroicons/react/16/solid";
-import { useFetcher } from "react-router";
 import { useEffect, useState } from "react";
-import type { action } from "~/routes/contact/handler";
+import { useFetcher } from "react-router";
+import type { action } from "~/routes/contact/resource";
 import { Button, Input } from "../ui";
 
 export const ContactUsForm = () => {
@@ -20,7 +20,7 @@ export const ContactUsForm = () => {
 				<fetcher.Form
 					method="post"
 					className="grid @lg:grid-cols-2 gap-4"
-					action="/contact"
+					action="/resources/contact"
 				>
 					<Input
 						required
@@ -52,12 +52,16 @@ export const ContactUsForm = () => {
 					{/* Simple spam protection */}
 					<input
 						type="text"
-						className="sr-only"
 						name="website"
-						tabIndex={-1}
 						autoComplete="off"
+						tabIndex={-1}
+						style={{ position: "absolute", left: "-9999px" }}
 					/>
-					<input type="hidden" name="_form_time" value={String(Date.now() - formStartTime)} />
+					<input
+						type="hidden"
+						name="_form_time"
+						value={String(Date.now() - formStartTime)}
+					/>
 					<div className="@lg:col-span-2">
 						<Input
 							required

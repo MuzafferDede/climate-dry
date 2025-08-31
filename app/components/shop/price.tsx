@@ -3,11 +3,11 @@ import { calculateSave, currency } from "~/utils";
 
 export const Price = ({ variant }: { variant: Variant }) => {
 	return (
-		<div className="relative isolate z-20 flex items-start justify-between gap-2">
+		<div className="relative isolate z-20 flex items-end justify-between gap-2">
 			<div className="group relative flex cursor-pointer items-center justify-end gap-2 font-bold">
 				<span className="flex flex-col items-start text-xl">
 					<span>{currency(variant.price)}</span>
-					<span className="font-normal text-gray text-xs">(ex VAT)</span>
+					<span className="font-normal text-gray-dark text-xs">(ex VAT)</span>
 				</span>
 
 				<div className="absolute top-full right-0 hidden flex-col items-start rounded-lg bg-navy-darkest px-2 py-1 text-white shadow group-hover:flex">

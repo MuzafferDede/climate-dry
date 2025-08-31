@@ -13,8 +13,9 @@ import {
 import { useState } from "react";
 import { Link, href, useRouteLoaderData } from "react-router";
 import { Fragment } from "react/jsx-runtime";
-import { Button, Icon } from "~/components";
+import { Button, Icon, Loading } from "~/components";
 import { useAppContext } from "~/contexts";
+import { useCart } from "~/hooks";
 import type { loader } from "~/root";
 import type {} from "~/types";
 import { Search } from "./search";
@@ -23,7 +24,7 @@ export const Middle = () => {
 	const rootData = useRouteLoaderData<typeof loader>("root");
 
 	const customer = rootData?.customer;
-	const cart = rootData?.cart;
+	const { cart, isLoading } = useCart();
 
 	const [showSearch, setShowSerach] = useState(false);
 	const { state, updateState } = useAppContext();
@@ -74,7 +75,10 @@ export const Middle = () => {
 						<div className="relative flex">
 							<Link to={href("/cart")} className="relative" rel="nofollow">
 								<span className="-mt-1 -mr-1 absolute top-0 right-0 z-10 flex h-5 min-w-5 items-center justify-center rounded-full bg-teal font-bold text-white text-xs">
-									<span className="px-1.5">{cart?.items?.length || 0}</span>
+									<span className="px-1.5">
+										{cart?.items?.length ||
+											(isLoading ? <Loading className="size-3" /> : 0)}
+									</span>
 								</span>
 								<Button
 									size="icon"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, data, useRouteLoaderData } from "react-router";
+import { Form, data } from "react-router";
 import {
 	addToCart,
 	applyDiscount,
@@ -9,14 +9,10 @@ import {
 	removeCartItem,
 	updateCartItem,
 } from "~/.server";
-import {
-	Button,
-	CartItem,
-	CartSummary,
-	CheckoutFormWizard,
-	Input,
-} from "~/components";
-import { type Cart, ToastType } from "~/types";
+import { Button, CartItem, CartSummary, Input, Loading } from "~/components";
+import { CheckoutFormWizard } from "~/components/checkout/checkout-form-wizard";
+import { useCart } from "~/hooks";
+import { ToastType } from "~/types";
 import { currency, putToast } from "~/utils";
 import type { Route } from "./+types/detail";
 
@@ -75,7 +71,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function ({ actionData }: Route.ComponentProps) {
-	const { cart } = useRouteLoaderData<{ cart: Cart }>("root") || {};
+	const { cart, isLoading } = useCart();
 
 	const clientSecret = (actionData as { response: { client_secret: string } })
 		?.response?.client_secret;
@@ -101,22 +97,26 @@ export default function ({ actionData }: Route.ComponentProps) {
 			{/* Main Content */}
 			<div className="flex flex-col gap-8 lg:flex-row">
 				{/* Cart Items List */}
-				<div className="w-full lg:w-2/3">
+				<div className="relative w-full lg:w-2/3">
 					<div className="rounded-xl bg-white p-4 shadow-gray-lighter shadow-sm ring-1 ring-gray-lighter md:p-6">
 						<h2 className="mb-6 font-bold text-navy-darkest text-xl">
 							Cart Items
 						</h2>
+
 						{items.length === 0 ? (
 							<div className="py-12 text-center">
-								<p className="text-gray-dark text-sm">Your cart is empty</p>
+								<p className="text-gray-dark text-sm">
+									{isLoading ? "Loading..." : "Your cart is empty"}
+								</p>
 							</div>
 						) : (
-							<>
-								{/* Cart Items */}
-								{items.map((item) => (
-									<CartItem key={item.id} cartItem={item} />
-								))}
-							</>
+							items.map((item) => <CartItem key={item.id} cartItem={item} />)
+						)}
+
+						{isLoading && (
+							<div className="absolute inset-0 flex items-center justify-center bg-white/20">
+								<Loading className="size-6 text-teal" />
+							</div>
 						)}
 					</div>
 				</div>

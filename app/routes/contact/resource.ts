@@ -2,7 +2,7 @@ import { data } from "react-router";
 import { buildHeaders, contact, getSession } from "~/.server";
 import { ToastType } from "~/types";
 import { putToast } from "~/utils";
-import type { Route } from "./+types/handler";
+import type { Route } from "./+types/resource";
 
 export const action = async ({ request }: Route.ActionArgs) => {
 	const formData = await request.formData();
